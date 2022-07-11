@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ECF7EC95-A46C-4724-BAA4-B778D234FA88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.Token.API", "src\Alpha.Token.API\Alpha.Token.API.csproj", "{74C9CF87-3851-47EC-A6B5-36AD36E7171D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74C9CF87-3851-47EC-A6B5-36AD36E7171D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74C9CF87-3851-47EC-A6B5-36AD36E7171D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74C9CF87-3851-47EC-A6B5-36AD36E7171D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74C9CF87-3851-47EC-A6B5-36AD36E7171D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{74C9CF87-3851-47EC-A6B5-36AD36E7171D} = {ECF7EC95-A46C-4724-BAA4-B778D234FA88}
+	EndGlobalSection
+EndGlobal
