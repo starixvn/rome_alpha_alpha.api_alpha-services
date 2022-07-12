@@ -5,4 +5,6 @@ public record AccessToken(int CustId, string Name, string Token, string[] Scopes
     public DateTime DateCreated { get; } = DateTime.Now;
 
     public DateTime? LastUsed { get; set; } = default!;
+
+    public bool IsExpired { get; } = ExpirationDate != null && ExpirationDate.Value < DateTime.Now;
 }

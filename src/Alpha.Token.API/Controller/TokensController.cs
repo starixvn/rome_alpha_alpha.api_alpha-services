@@ -23,4 +23,16 @@ public class TokensController : ControllerBase
     [HttpPost]
     public async Task<string> CreateToken(CreateTokenParam param)
         => await tokenService.CreateToken(param.CustId, param.TokenName, param.Scopes, param.ExpirationDate);
+
+    [HttpGet("verify/{token}")]
+    public async Task<VerifyTokenResult> VerifyToken(string token)
+    {
+        var accessToken = await tokenService.Get(token);
+        if (accessToken == null || accessToken.IsExpired)
+        {
+            return new VerifyTokenResult(false);
+        }
+
+        return new VerifyTokenResult(true) { Scopes = accessToken.Scopes };
+    }
 }

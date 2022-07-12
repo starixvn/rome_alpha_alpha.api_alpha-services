@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using System.Text.Json;
 using Alpha.Token.API.Models;
 using Fanex.Caching;
 
@@ -9,6 +10,8 @@ public interface ITokenService
     Task<string> CreateToken(int custId, string tokenName, string[] scopes, DateTime? expirationDate);
 
     Task<IEnumerable<AccessToken>> GetUserTokens(int custId);
+
+    Task<AccessToken> Get(string token);
 }
 
 public class TokenService : ITokenService
@@ -24,12 +27,12 @@ public class TokenService : ITokenService
     public async Task<string> CreateToken(int custId, string tokenName, string[] scopes, DateTime? expirationDate)
     {
         var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
-        var tokenNames = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.TokenNames") ?? new List<string>();
-        tokenNames.Add(tokenName);
+        var tokens = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.Tokens") ?? new List<string>();
+        tokens.Add(token);
         AccessToken accessToken = new(custId, tokenName, token, scopes, expirationDate);
         await Task.WhenAll(
-            cacheService.SetAsync($"{CacheKey}.{custId}.{tokenName}", accessToken),
-            cacheService.SetAsync($"{CacheKey}.{custId}.TokenNames", tokenNames));
+            cacheService.SetAsync($"{CacheKey}.{token}", accessToken, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))),
+            cacheService.SetAsync($"{CacheKey}.{custId}.Tokens", tokens, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))));
 
         return token;
     }
@@ -37,18 +40,25 @@ public class TokenService : ITokenService
     public async Task<IEnumerable<AccessToken>> GetUserTokens(int custId)
     {
         var accessTokens = new List<AccessToken>();
-        var tokenNames = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.TokenNames");
+        var tokens = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.Tokens");
 
-        if (tokenNames == null || !tokenNames.Any())
+        if (tokens == null || !tokens.Any())
         {
             return accessTokens;
         }
 
-        foreach (var tokenName in tokenNames)
+        foreach (var token in tokens)
         {
-            accessTokens.Add(await cacheService.GetAsync<AccessToken>($"{CacheKey}.{custId}.{tokenName}"));
+            accessTokens.Add(await cacheService.GetAsync<AccessToken>($"{CacheKey}.{token}"));
         }
 
         return accessTokens;
+    }
+
+    public async Task<AccessToken> Get(string token)
+    {
+        var accessToken = await cacheService.GetAsync<AccessToken>($"{CacheKey}.{token}");
+        Console.WriteLine(JsonSerializer.Serialize(accessToken));
+        return accessToken;
     }
 }
