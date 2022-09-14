@@ -1,0 +1,38 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/reports",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7253
+                }
+            ],
+            "UpstreamPathTemplate": "/api/reports",
+            "UpstreamHttpMethod": ["GET"],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "BasicAuthentication",
+                "AllowedScopes": ["super", "master"]
+            },
+            "RouteClaimsRequirement": {
+                "scope": "super"
+            },
+            "RateLimitOptions": {
+                "ClientWhitelist": [],
+                "EnableRateLimiting": true,
+                "Period": "10s",
+                "PeriodTimespan": 10,
+                "Limit": 2
+            }
+        }
+    ],
+    "GlobalConfiguration": {
+        "RateLimitOptions": {
+            "DisableRateLimitHeaders": false,
+            "QuotaExceededMessage": "Too many requests!",
+            "HttpStatusCode": 429,
+            "ClientIdHeader": "token"
+        }
+    }
+}
