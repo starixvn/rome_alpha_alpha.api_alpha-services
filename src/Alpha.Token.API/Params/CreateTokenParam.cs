@@ -6,6 +6,8 @@ public class CreateTokenParam
 
     public string TokenName { get; set; } = default!;
 
+    public string PassPhrase { get; set; } = default!;
+
     public string[] Scopes { get; set; } = Array.Empty<string>();
 
     public DateTime? ExpirationDate { get; set; }

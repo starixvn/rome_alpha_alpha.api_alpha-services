@@ -21,18 +21,10 @@ public class TokensController : ControllerBase
         => await tokenService.GetUserTokens(custId);
 
     [HttpPost]
-    public async Task<string> CreateToken(CreateTokenParam param)
-        => await tokenService.CreateToken(param.CustId, param.TokenName, param.Scopes, param.ExpirationDate);
+    public async Task<TokenResult> CreateToken(CreateTokenParam param)
+        => await tokenService.CreateToken(param.CustId, param.TokenName, param.PassPhrase, param.Scopes, param.ExpirationDate);
 
-    [HttpGet("verify/{token}")]
-    public async Task<VerifyTokenResult> VerifyToken(string token)
-    {
-        var accessToken = await tokenService.Get(token);
-        if (accessToken == null || accessToken.IsExpired)
-        {
-            return new VerifyTokenResult(false);
-        }
-
-        return new VerifyTokenResult(true) { Scopes = accessToken.Scopes };
-    }
+    [HttpPost("verify")]
+    public async Task<VerifyTokenResult> VerifyToken(VerifyTokenParam param)
+        => await tokenService.VerifyToken(param.ApiKey, param.PassPhrase, param.ApiSign, param.TimeSpan);
 }

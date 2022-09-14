@@ -1,3 +1,4 @@
+using System.Text;
 using System.Security.Cryptography;
 using System.Text.Json;
 using Alpha.Token.API.Models;
@@ -7,11 +8,13 @@ namespace Alpha.Token.Alpha.Services;
 
 public interface ITokenService
 {
-    Task<string> CreateToken(int custId, string tokenName, string[] scopes, DateTime? expirationDate);
+    Task<TokenResult> CreateToken(int custId, string tokenName, string passPhrase, string[] scopes, DateTime? expirationDate);
+
+    Task<VerifyTokenResult> VerifyToken(string apiKey, string passPhrase, string apiSign, string timeSpan);
 
     Task<IEnumerable<AccessToken>> GetUserTokens(int custId);
 
-    Task<AccessToken> Get(string token);
+    Task<AccessToken> Get(string apiKey);
 }
 
 public class TokenService : ITokenService
@@ -24,17 +27,47 @@ public class TokenService : ITokenService
         this.cacheService = cacheService;
     }
 
-    public async Task<string> CreateToken(int custId, string tokenName, string[] scopes, DateTime? expirationDate)
+    public async Task<TokenResult> CreateToken(int custId, string tokenName, string passPhrase, string[] scopes, DateTime? expirationDate)
     {
-        var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+        var apiKeyBytes = RandomNumberGenerator.GetBytes(24);
+        var tokenBytes = RandomNumberGenerator.GetBytes(32);
+        var apiKey = Convert.ToBase64String(apiKeyBytes);
+        var token = Convert.ToBase64String(tokenBytes);
+
         var tokens = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.Tokens") ?? new List<string>();
-        tokens.Add(token);
-        AccessToken accessToken = new(custId, tokenName, token, scopes, expirationDate);
+        tokens.Add(apiKey);
+
+        using var hmac = new HMACSHA256(tokenBytes);
+        var passPhraseEncrypt = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(passPhrase)));
+
+        AccessToken accessToken = new(custId, tokenName, apiKey, passPhraseEncrypt, token, scopes, expirationDate);
         await Task.WhenAll(
-            cacheService.SetAsync($"{CacheKey}.{token}", accessToken, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))),
+            cacheService.SetAsync($"{CacheKey}.{apiKey}", accessToken, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))),
             cacheService.SetAsync($"{CacheKey}.{custId}.Tokens", tokens, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))));
 
-        return token;
+        return new TokenResult(tokenName, apiKey, token);
+    }
+
+    public async Task<VerifyTokenResult> VerifyToken(string apiKey, string passPhrase, string apiSign, string timeSpan)
+    {
+        var accessToken = await Get(apiKey);
+        if (accessToken == null)
+        {
+            return new VerifyTokenResult(false);
+        }
+
+        using var hmac = new HMACSHA256(Convert.FromBase64String(accessToken.Token));
+        var signValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(timeSpan));
+        var verifyApiKey = apiKey.Equals(accessToken.ApiKey);
+        var verifyPassPhrase = passPhrase.Equals(accessToken.PassPhrase);
+        var verifyApiSign = apiSign.Equals(Convert.ToBase64String(signValue));
+
+        if (accessToken.IsExpired || !verifyApiKey || !verifyPassPhrase || !verifyApiSign)
+        {
+            return new VerifyTokenResult(false);
+        }
+
+        return new VerifyTokenResult(true) { Scopes = accessToken.Scopes };
     }
 
     public async Task<IEnumerable<AccessToken>> GetUserTokens(int custId)
@@ -55,10 +88,9 @@ public class TokenService : ITokenService
         return accessTokens;
     }
 
-    public async Task<AccessToken> Get(string token)
+    public async Task<AccessToken> Get(string apiKey)
     {
-        var accessToken = await cacheService.GetAsync<AccessToken>($"{CacheKey}.{token}");
-        Console.WriteLine(JsonSerializer.Serialize(accessToken));
+        var accessToken = await cacheService.GetAsync<AccessToken>($"{CacheKey}.{apiKey}");
         return accessToken;
     }
 }
