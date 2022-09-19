@@ -22,9 +22,9 @@ public class TokensController : ControllerBase
 
     [HttpPost]
     public async Task<TokenResult> CreateToken(CreateTokenParam param)
-        => await tokenService.CreateToken(param.CustId, param.TokenName, param.PassPhrase, param.Scopes, param.ExpirationDate);
+        => await tokenService.CreateToken(param.CustId, param.ApiName, param.PassPhrase, param.Scopes, param.ExpirationDate);
 
     [HttpPost("verify")]
     public async Task<VerifyTokenResult> VerifyToken(VerifyTokenParam param)
-        => await tokenService.VerifyToken(param.ApiKey, param.PassPhrase, param.ApiSign, param.TimeSpan);
+        => await tokenService.VerifyToken(param.ApiKey, param.PassPhrase, param.ApiSignature, param.TimeSpan);
 }

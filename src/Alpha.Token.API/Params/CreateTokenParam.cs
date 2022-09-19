@@ -4,7 +4,7 @@ public class CreateTokenParam
 {
     public int CustId { get; set; }
 
-    public string TokenName { get; set; } = default!;
+    public string ApiName { get; set; } = default!;
 
     public string PassPhrase { get; set; } = default!;
 

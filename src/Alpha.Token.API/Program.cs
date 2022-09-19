@@ -13,8 +13,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRedisCache(builder.Configuration.GetSection("Fanex.Caching.Redis"));
 
 var app = builder.Build();
-app.MapControllers();
 
+app.MapControllers();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
