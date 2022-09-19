@@ -3,7 +3,6 @@ using Alpha.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,15 +41,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseRouting();
-
-app.UseHttpMetrics();
-
 app.UseAuthentication();
 
 app.MapControllers();
-
-app.MapMetrics();
 
 app.UseOcelot().Wait();
 
