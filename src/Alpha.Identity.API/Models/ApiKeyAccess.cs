@@ -1,6 +1,6 @@
-namespace Alpha.Token.API.Models;
+namespace Alpha.Identity.API.Models;
 
-public record AccessToken(int CustId, string ApiName, string ApiKey, string PassPhrase, string ApiSecret, string[] Scopes, DateTime? ExpirationDate)
+public record ApiKeyAccess(int CustId, string ApiName, string Key, string PassPhrase, string ApiSecret, string[] Scopes, DateTime? ExpirationDate)
 {
     public DateTime DateCreated { get; } = DateTime.Now;
 

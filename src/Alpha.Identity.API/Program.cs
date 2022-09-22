@@ -1,9 +1,9 @@
-using Alpha.Token.Alpha.Services;
+using Alpha.Identity.API.Services;
 using Fanex.Caching.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddSingleton<IApiKeyService, ApiKeyService>();
 
 
 // Add services to the container.
@@ -25,6 +25,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Alpha Token API !!!");
+app.MapGet("/", () => "Alpha Identity API !!!");
 
 app.Run();

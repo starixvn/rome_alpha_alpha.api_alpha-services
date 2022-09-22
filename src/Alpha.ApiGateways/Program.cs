@@ -27,8 +27,8 @@ builder.Services.AddAuthentication("BasicAuthentication")
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ITokenService, TokenService>();
-builder.Services.AddHttpClient<ITokenService, TokenService>();
+builder.Services.AddSingleton<IApiKeyService, ApiKeyService>();
+builder.Services.AddHttpClient<IApiKeyService, ApiKeyService>();
 
 var app = builder.Build();
 

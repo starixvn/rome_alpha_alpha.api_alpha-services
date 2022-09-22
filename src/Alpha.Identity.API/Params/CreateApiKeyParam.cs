@@ -1,6 +1,6 @@
-namespace Alpha.Token.Alpha.Params;
+namespace Alpha.Identity.API.Params;
 
-public class CreateTokenParam
+public class CreateApiKeyParam
 {
     public int CustId { get; set; }
 

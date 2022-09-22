@@ -8,30 +8,30 @@ namespace Alpha.ApiGateways.Middlewares;
 
 public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    private readonly ITokenService tokenService;
+    private readonly IApiKeyService apiKeyService;
 
-    public BasicAuthenticationHandler(ITokenService tokenService, IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
+    public BasicAuthenticationHandler(IApiKeyService apiKeyService, IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
     : base(options, logger, encoder, clock)
     {
-        this.tokenService = tokenService;
+        this.apiKeyService = apiKeyService;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        var apiKey = Request.Headers["ApiKey"].ToString();
+        var key = Request.Headers["Key"].ToString();
         var passPhrase = Request.Headers["PassPhrase"].ToString();
-        var apiSignature = Request.Headers["ApiSignature"].ToString();
+        var signature = Request.Headers["Signature"].ToString();
         var timeSpan = Request.Headers["TimeSpan"].ToString();
 
-        if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(passPhrase) || string.IsNullOrEmpty(apiSignature) || string.IsNullOrEmpty(timeSpan))
+        if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(passPhrase) || string.IsNullOrEmpty(signature) || string.IsNullOrEmpty(timeSpan))
         {
             Response.StatusCode = 401;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
             return AuthenticateResult.Fail("Invalid Authorization Header");
         }
 
-        var verifyTokenResult = await tokenService.VerifyApiKey(apiKey, passPhrase, apiSignature, timeSpan);
-        if (verifyTokenResult != null && verifyTokenResult.IsAuthenticated)
+        var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, passPhrase, signature, timeSpan);
+        if (verifyApiKeyResult != null && verifyApiKeyResult.IsAuthenticated)
         {
             var claims = new List<Claim>
             {

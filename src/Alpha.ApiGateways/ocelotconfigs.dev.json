@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/winloss",
+            "DownstreamPathTemplate": "/api/reports",
             "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
@@ -32,7 +32,7 @@
             "DisableRateLimitHeaders": false,
             "QuotaExceededMessage": "Too many requests!",
             "HttpStatusCode": 429,
-            "ClientIdHeader": "ApiKey"
+            "ClientIdHeader": "Key"
         }
     }
 }
