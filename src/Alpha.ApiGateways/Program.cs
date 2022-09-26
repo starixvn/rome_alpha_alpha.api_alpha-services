@@ -38,12 +38,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+    builder.WebHost.UseUrls("http://0.0.0.0:5000");
+}
 
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
 app.MapControllers();
+
+app.MapGet("/", () => "Alpha API Gateways !!!");
 
 app.UseOcelot().Wait();
 

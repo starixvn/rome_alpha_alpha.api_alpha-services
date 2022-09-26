@@ -28,4 +28,3 @@ COPY --from=builder /app .
 ENV TZ="America/La_Paz"
 
 ENTRYPOINT ["dotnet", "Alpha.Identity.API.dll"]
-
