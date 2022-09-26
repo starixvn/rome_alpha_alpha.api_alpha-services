@@ -1,6 +1,7 @@
 using Alpha.ApiGateways.Middlewares;
 using Alpha.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -26,6 +27,7 @@ builder.Services.AddAuthentication("BasicAuthentication")
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddSingleton<IApiKeyService, ApiKeyService>();
 builder.Services.AddHttpClient<IApiKeyService, ApiKeyService>();
@@ -47,10 +49,15 @@ else
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+app.UseRouting();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDefaultControllerRoute().RequireAuthorization();
 
-app.MapGet("/", () => "Alpha API Gateways !!!");
+    endpoints.MapHealthChecks("/health").WithMetadata(new AllowAnonymousAttribute());
+
+});
 
 app.UseOcelot().Wait();
 

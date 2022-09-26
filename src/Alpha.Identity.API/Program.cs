@@ -15,14 +15,11 @@ builder.Services.AddRedisCache(builder.Configuration.GetSection("Fanex.Caching.R
 var app = builder.Build();
 
 app.MapControllers();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-else
+if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
     builder.WebHost.UseUrls("http://0.0.0.0:5000");
