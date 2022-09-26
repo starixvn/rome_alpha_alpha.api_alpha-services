@@ -7,6 +7,8 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
 builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
 {
     config
@@ -30,7 +32,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 
 builder.Services.AddSingleton<IApiKeyService, ApiKeyService>();
-builder.Services.AddHttpClient<IApiKeyService, ApiKeyService>();
+builder.Services.AddHttpClient<IApiKeyService, ApiKeyService>(httpClient =>
+{
+    httpClient.BaseAddress = new Uri(configuration["IdentityUrl"]);
+});
 
 var app = builder.Build();
 

@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/Customer",
+            "DownstreamPathTemplate": "/api/WinLoss/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -9,7 +9,7 @@
                     "Port": 5000
                 }
             ],
-            "UpstreamPathTemplate": "/Customer",
+            "UpstreamPathTemplate": "/WinLoss/{everything}",
             "UpstreamHttpMethod": ["GET"],
             "AuthenticationOptions": {
                 "AuthenticationProviderKey": "BasicAuthentication",

@@ -15,7 +15,7 @@ public class ApiKeyService : IApiKeyService
     public ApiKeyService(HttpClient httpClient)
     {
         this.httpClient = httpClient;
-        this.httpClient.BaseAddress = new Uri("https://localhost:7047");
+        // this.httpClient.BaseAddress = new Uri("https://localhost:7047");
     }
 
     public async Task<VerifyApiKeyResult?> VerifyApiKey(string key, string passPhrase, string signature, string timeSpan)
