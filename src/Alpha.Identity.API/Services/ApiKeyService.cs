@@ -36,7 +36,7 @@ public class ApiKeyService : IApiKeyService
         var apiSecrets = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.ApiKeys") ?? new List<string>();
         apiSecrets.Add(key);
 
-        using var hmac = new HMACSHA256(apiSecretBytes);
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
         var passPhraseEncrypt = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(passPhrase)));
 
         ApiKeyAccess accessToken = new(custId, apiName, key, passPhraseEncrypt, apiSecret, scopes, expirationDate);
@@ -55,7 +55,7 @@ public class ApiKeyService : IApiKeyService
             return new VerifyApiKeyResult(false);
         }
 
-        using var hmac = new HMACSHA256(Convert.FromBase64String(apiKeyAccess.ApiSecret));
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKeyAccess.ApiSecret));
         var signatureValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(timeSpan));
         var verifyApiKey = key.Equals(apiKeyAccess.Key);
         var verifyPassPhrase = passPhrase.Equals(apiKeyAccess.PassPhrase);
