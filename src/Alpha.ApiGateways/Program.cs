@@ -1,3 +1,5 @@
+using Alpha.ApiGateways.Extensions;
+using Alpha.ApiGateways.Filters;
 using Alpha.ApiGateways.Middlewares;
 using Alpha.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -13,11 +15,16 @@ builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
 {
     config
     .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+    .AddJsonFile("appsettings.json", true, true)
     .AddJsonFile("ocelotconfigs.dev.json", optional: false, reloadOnChange: true);
 });
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddOneBookUm(configuration);
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CheckUMFilter>();
+});
 
 builder.Services.AddOcelot();
 
@@ -59,8 +66,7 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute().RequireAuthorization();
-
-    endpoints.MapHealthChecks("/health").WithMetadata(new AllowAnonymousAttribute());
+    endpoints.MapHealthChecks("/health").AllowAnonymous();
 
 });
 
