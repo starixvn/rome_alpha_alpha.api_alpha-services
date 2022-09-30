@@ -3,7 +3,6 @@ using Alpha.ApiGateways.Filters;
 using Alpha.ApiGateways.Middlewares;
 using Alpha.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -20,24 +19,18 @@ builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
 });
 
 // Add services to the container.
-builder.Services.AddOneBookUm(configuration);
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<CheckUMFilter>();
-});
+builder.Services
+    .AddFanexLogging(configuration)
+    .AddOneBookUm(configuration);
 
+builder.Services.AddControllers(options => options.Filters.Add<CheckUMFilter>());
 builder.Services.AddOcelot();
 
-builder.Services.AddDistributedMemoryCache();
+builder.Services
+    .AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-builder.Services.AddAuthentication("BasicAuthentication")
-                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
-
 builder.Services.AddSingleton<IApiKeyService, ApiKeyService>();
 builder.Services.AddHttpClient<IApiKeyService, ApiKeyService>(httpClient =>
 {
@@ -49,17 +42,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
     app.UseHsts();
+    app.ConfigureExceptionHandler();
     builder.WebHost.UseUrls("http://0.0.0.0:5000");
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseRouting();
 
@@ -67,7 +59,6 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute().RequireAuthorization();
     endpoints.MapHealthChecks("/health").AllowAnonymous();
-
 });
 
 app.UseOcelot().Wait();
