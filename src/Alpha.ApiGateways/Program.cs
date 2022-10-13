@@ -1,40 +1,25 @@
+using System.Reflection;
 using Alpha.ApiGateways.Extensions;
-using Alpha.ApiGateways.Filters;
-using Alpha.ApiGateways.Middlewares;
-using Alpha.ApiGateways.Services;
-using Microsoft.AspNetCore.Authentication;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
-{
-    config
-    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-    .AddJsonFile("appsettings.json", true, true)
-    .AddJsonFile("ocelotconfigs.dev.json", optional: false, reloadOnChange: true);
-});
-
-// Add services to the container.
 builder.Services
     .AddFanexLogging(configuration)
-    .AddOneBookUm(configuration);
+    .AddOneBookUm(configuration)
+    .AddCustomAuthentication()
+    .AddApplicationServices(configuration)
+    .AddHealthChecks();
 
-builder.Services.AddControllers(options => options.Filters.Add<CheckUMFilter>());
-builder.Services.AddOcelot();
-
-builder.Services
-    .AddAuthentication("BasicAuthentication")
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-
-builder.Services.AddHealthChecks();
-builder.Services.AddSingleton<IApiKeyService, ApiKeyService>();
-builder.Services.AddHttpClient<IApiKeyService, ApiKeyService>(httpClient =>
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
 {
-    httpClient.BaseAddress = new Uri(configuration["IdentityUrl"]);
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Alpha API Gateways", Version = "v1" });
+    options.CustomSchemaIds(type => type.FullName);
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 var app = builder.Build();
@@ -52,15 +37,17 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
 app.UseRouting();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapDefaultControllerRoute().RequireAuthorization();
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapControllers();
     endpoints.MapHealthChecks("/health").AllowAnonymous();
 });
 
-app.UseOcelot().Wait();
+app.UseSwagger();
+app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Alpha API Gateways v1"));
 
 app.Run();

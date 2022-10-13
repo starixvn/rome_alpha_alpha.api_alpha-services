@@ -20,11 +20,7 @@ public static class ExceptionMiddlewareExtensions
                 if (contextFeature != null)
                 {
                     await ExceptionHandler.HandleAsync(contextFeature.Error, context).ConfigureAwait(false);
-                    await context.Response.WriteAsync(new
-                    {
-                        context.Response.StatusCode,
-                        Message = "Internal Server Error."
-                    }.ToString());
+                    await context.Response.WriteAsync("Internal Server Error.");
                 }
             });
         });

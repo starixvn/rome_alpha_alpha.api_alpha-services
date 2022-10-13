@@ -1,8 +1,12 @@
+using Alpha.ApiGateways.Filters;
+using Alpha.ApiGateways.Middlewares;
+using Alpha.ApiGateways.Services;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
 using Fanex.Logging.RabbitMQ;
 using Fanex.Logging.Sentry;
+using Microsoft.AspNetCore.Authentication;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
@@ -21,6 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMaintenanceService, MaintenanceService>();
         services.AddSingleton<IUMCacheService, UMCacheService>();
         services.AddSingleton<IUMRestClient, UMRestClient>();
+        services.AddControllers(options => options.Filters.Add<CheckUMFilter>());
 
         return services;
     }
@@ -48,6 +53,24 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(Logger.Log);
 
         ExceptionHandler.UseConfig(new LoggingConfiguration().GetHttpHeaderInfo());
+
+        return services;
+    }
+
+    public static IServiceCollection AddCustomAuthentication(this IServiceCollection services)
+    {
+        services.AddAuthentication("BasicAuthentication")
+            .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+        return services;
+    }
+
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHttpClient<IApiKeyService, ApiKeyService>(httpClient =>
+        {
+            httpClient.BaseAddress = new Uri(configuration["IdentityUrl"]);
+        });
 
         return services;
     }
