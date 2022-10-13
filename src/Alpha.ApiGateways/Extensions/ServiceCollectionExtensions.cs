@@ -1,3 +1,4 @@
+using Alpha.ApiGateways.Constants;
 using Alpha.ApiGateways.Filters;
 using Alpha.ApiGateways.Middlewares;
 using Alpha.ApiGateways.Services;
@@ -47,8 +48,8 @@ public static class ServiceCollectionExtensions
         }
 
         LogManager
-                .SetDefaultLogCategory(configuration["Fanex.Logging:DefaultCategory"])
-                .Use(logEngines);
+            .SetDefaultLogCategory(configuration["Fanex.Logging:DefaultCategory"])
+            .Use(logEngines);
 
         services.AddSingleton(Logger.Log);
 
@@ -61,6 +62,17 @@ public static class ServiceCollectionExtensions
     {
         services.AddAuthentication("BasicAuthentication")
             .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+        return services;
+    }
+
+    public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(PolicyConstants.Outstanding, policy => policy.RequireClaim("scope", "outstanding"));
+            options.AddPolicy(PolicyConstants.WinLossDetail, policy => policy.RequireClaim("scope", "winloss_detail"));
+        });
 
         return services;
     }

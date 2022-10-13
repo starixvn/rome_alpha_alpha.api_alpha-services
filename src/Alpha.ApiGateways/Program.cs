@@ -10,6 +10,7 @@ builder.Services
     .AddFanexLogging(configuration)
     .AddOneBookUm(configuration)
     .AddCustomAuthentication()
+    .AddCustomAuthorization()
     .AddApplicationServices(configuration)
     .AddHealthChecks();
 
