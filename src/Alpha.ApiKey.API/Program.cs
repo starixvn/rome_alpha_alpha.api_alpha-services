@@ -4,7 +4,7 @@ using GrpcApiKey;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IApiKeyService, ApiKeyService>();
+builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
 builder.Services.AddGrpc();
 
 // Add services to the container.

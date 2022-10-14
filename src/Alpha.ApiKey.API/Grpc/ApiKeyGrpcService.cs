@@ -1,14 +1,15 @@
 using Alpha.ApiKey.Api.Services;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GrpcApiKey;
 
 public class ApiKeyGrpcService : ApiKey.ApiKeyBase
 {
-    private readonly ApiKeyService apiKeyService;
+    private readonly IApiKeyService apiKeyService;
     private readonly ILogger<ApiKeyGrpcService> logger;
 
-    public ApiKeyGrpcService(ApiKeyService apiKeyService, ILogger<ApiKeyGrpcService> logger)
+    public ApiKeyGrpcService(IApiKeyService apiKeyService, ILogger<ApiKeyGrpcService> logger)
     {
         this.apiKeyService = apiKeyService;
         this.logger = logger;
