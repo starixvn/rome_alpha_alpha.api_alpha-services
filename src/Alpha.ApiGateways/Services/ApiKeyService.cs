@@ -1,5 +1,6 @@
 using Alpha.ApiGateways.Extensions;
 using Alpha.ApiGateways.Models;
+using GrpcApiKeyClient;
 
 namespace Alpha.ApiGateways.Services;
 
@@ -10,13 +11,21 @@ public interface IApiKeyService
 
 public class ApiKeyService : IApiKeyService
 {
-    private readonly HttpClient httpClient;
+    private readonly ApiKey.ApiKeyClient apiKeyClient;
+    private readonly Fanex.Logging.ILogger logger;
 
-    public ApiKeyService(HttpClient httpClient)
+    public ApiKeyService(ApiKey.ApiKeyClient apiKeyClient, Fanex.Logging.ILogger logger)
     {
-        this.httpClient = httpClient;
+        this.apiKeyClient = apiKeyClient;
+        this.logger = logger;
     }
 
     public async Task<VerifyApiKeyResult?> VerifyApiKey(string key, string passPhrase, string signature, string timeSpan)
-        => await httpClient.PostAsJsonAsync<VerifyApiKeyResult>($"/api/apikey/verify", new { key, passPhrase, signature, timeSpan });
+    {
+        await logger.DebugAsync("grpc client created, api key = {@key}", key);
+        var response = await apiKeyClient.VerifyApiKeyAsync(new VerifyApiKeyRequest { Key = key, Passphrase = passPhrase, Signature = signature, Timespan = timeSpan });
+        await logger.DebugAsync("grpc response {@response}", response);
+
+        return new VerifyApiKeyResult { IsAuthenticated = response.Isauthenticated, Scopes = response.Scopes.ToArray() };
+    }
 }

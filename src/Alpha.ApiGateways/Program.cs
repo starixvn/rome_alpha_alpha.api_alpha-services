@@ -9,6 +9,7 @@ var configuration = builder.Configuration;
 builder.Services
     .AddFanexLogging(configuration)
     .AddOneBookUm(configuration)
+    .AddCustomMVC(configuration)
     .AddCustomAuthentication()
     .AddCustomAuthorization()
     .AddApplicationServices(configuration)

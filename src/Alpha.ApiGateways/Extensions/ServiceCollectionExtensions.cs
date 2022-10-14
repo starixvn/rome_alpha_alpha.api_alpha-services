@@ -13,6 +13,10 @@ using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using Sentry;
+using GrpcApiKeyClient;
+using Alpha.ApiGateways.Configurations;
+using Microsoft.Extensions.Options;
+using Alpha.ApiGateways.Infrastructure;
 
 namespace Alpha.ApiGateways.Extensions;
 
@@ -26,7 +30,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IMaintenanceService, MaintenanceService>();
         services.AddSingleton<IUMCacheService, UMCacheService>();
         services.AddSingleton<IUMRestClient, UMRestClient>();
-        services.AddControllers(options => options.Filters.Add<CheckUMFilter>());
 
         return services;
     }
@@ -58,6 +61,17 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddCustomMVC(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOptions();
+        services.Configure<UrlsConfig>(configuration.GetSection(UrlsConfig.Urls));
+
+        services.AddControllers(options => options.Filters.Add<CheckUMFilter>())
+            .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true);
+
+        return services;
+    }
+
     public static IServiceCollection AddCustomAuthentication(this IServiceCollection services)
     {
         services.AddAuthentication("BasicAuthentication")
@@ -79,10 +93,12 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHttpClient<IApiKeyService, ApiKeyService>(httpClient =>
+        services.AddScoped<IApiKeyService, ApiKeyService>();
+        services.AddGrpcClient<ApiKey.ApiKeyClient>((services, options) =>
         {
-            httpClient.BaseAddress = new Uri(configuration["IdentityUrl"]);
-        });
+            var apiKeyApi = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcApiKey;
+            options.Address = new Uri(apiKeyApi);
+        }).AddInterceptor<GrpcExceptionInterceptor>();
 
         return services;
     }

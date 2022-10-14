@@ -1,0 +1,14 @@
+namespace Alpha.ApiKey.Api.Params;
+
+public class CreateApiKeyParam
+{
+    public int CustId { get; set; }
+
+    public string ApiName { get; set; } = default!;
+
+    public string PassPhrase { get; set; } = default!;
+
+    public string[] Scopes { get; set; } = Array.Empty<string>();
+
+    public DateTime? ExpirationDate { get; set; }
+}
