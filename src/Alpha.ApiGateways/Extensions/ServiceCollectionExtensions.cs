@@ -93,6 +93,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddTransient<GrpcExceptionInterceptor>();
         services.AddScoped<IApiKeyService, ApiKeyService>();
         services.AddGrpcClient<ApiKey.ApiKeyClient>((services, options) =>
         {
