@@ -5,7 +5,6 @@ using Fanex.Caching;
 
 namespace Alpha.ApiKey.API.Services;
 
-    Task<ApiKeyResult> CreateApiKey(int custId, byte roleId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate);
 public class ApiKeyService : IApiKeyService
 {
     private const string CacheKey = "Alpha.ApiKey.API.Services.TokenService";
@@ -16,7 +15,7 @@ public class ApiKeyService : IApiKeyService
         this.cacheService = cacheService;
     }
 
-    public async Task<ApiKeyResult> CreateApiKey(int custId, byte roleId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate)
+    public async Task<ApiKeyResult> CreateApiKey(int custId, byte roleId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate, string restrictIps)
     {
         var keyBytes = RandomNumberGenerator.GetBytes(24);
         var apiSecretBytes = RandomNumberGenerator.GetBytes(32);

@@ -14,5 +14,5 @@ public class CreateApiKeyParam
 
     public DateTime? ExpirationDate { get; set; }
 
-    public string? RestrictIps { get; set; }
+    public string RestrictIps { get; set; }
 }

@@ -22,5 +22,5 @@ public class ApiKeyController : ControllerBase
 
     [HttpPost]
     public async Task<ApiKeyResult> CreateApiKey(CreateApiKeyParam param)
-        => await apiKeyService.CreateApiKey(param.CustId, param.RoleId, param.ApiName, param.PassPhrase, param.Scopes, param.ExpirationDate);
+        => await apiKeyService.CreateApiKey(param.CustId, param.RoleId, param.ApiName, param.PassPhrase, param.Scopes, param.ExpirationDate, param.RestrictIps);
 }

@@ -4,7 +4,7 @@ namespace Alpha.ApiKey.API.Services;
 
 public interface IApiKeyService
 {
-    Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate, string? restrictIps);
+    Task<ApiKeyResult> CreateApiKey(int custId, byte roleId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate, string restrictIps);
 
     Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string apiSignature, string timeSpan);
 
