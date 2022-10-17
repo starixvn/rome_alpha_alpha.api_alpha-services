@@ -12,12 +12,12 @@ message VerifyApiKeyRequest {
     string key = 1;
     string passphrase = 2;
     string signature = 3;
-    string timespan = 4;
+    string timestamp = 4;
 }
 
 message VerifyApiKeyResponse {
-    bool isauthenticated = 1;
-    int32 custid = 2;
-    int32 roleid = 3;
+    bool isAuthenticated = 1;
+    int32 custId = 2;
+    int32 roleId = 3;
     repeated string scopes = 4;
 }

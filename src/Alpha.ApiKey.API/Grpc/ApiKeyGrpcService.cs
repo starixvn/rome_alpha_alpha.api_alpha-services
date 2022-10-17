@@ -18,11 +18,16 @@ public class ApiKeyGrpcService : ApiKey.ApiKeyBase
     {
         logger.LogInformation("Begin grpc call from method {Method} for verify api key {Id}", context.Method, request.Key);
 
-        var result = await apiKeyService.VerifyApiKey(request.Key, request.Passphrase, request.Signature, request.Timespan);
+        var result = await apiKeyService.VerifyApiKey(request.Key, request.Passphrase, request.Signature, request.Timestamp);
 
         if (result != null)
         {
-            var response = new VerifyApiKeyResponse { Isauthenticated = result.IsAuthenticated };
+            var response = new VerifyApiKeyResponse
+            {
+                IsAuthenticated = result.IsAuthenticated,
+                CustId = result.CustId,
+                RoleId = result.RoleId
+            };
 
             foreach (var scope in result.Scopes)
             {

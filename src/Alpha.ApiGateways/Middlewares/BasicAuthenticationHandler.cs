@@ -21,22 +21,22 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         var key = Request.Headers["Key"].ToString();
         var passPhrase = Request.Headers["PassPhrase"].ToString();
         var signature = Request.Headers["Signature"].ToString();
-        var timeSpan = Request.Headers["TimeSpan"].ToString();
+        var timestamp = Request.Headers["Timestamp"].ToString();
 
-        if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(passPhrase) || string.IsNullOrEmpty(signature) || string.IsNullOrEmpty(timeSpan))
+        if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(passPhrase) || string.IsNullOrEmpty(signature) || string.IsNullOrEmpty(timestamp))
         {
-            Response.StatusCode = 401;
+            Response.StatusCode = 400;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-            return AuthenticateResult.Fail("Invalid Authorization Header");
+            return AuthenticateResult.Fail("Bad Request");
         }
 
-        var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, passPhrase, signature, timeSpan);
+        var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, passPhrase, signature, timestamp);
         if (verifyApiKeyResult != null && verifyApiKeyResult.IsAuthenticated)
         {
             var claims = new List<Claim>
             {
-                new Claim("CustId", verifyApiKeyResult.CustId.ToString()),
-                new Claim("RoleId", verifyApiKeyResult.RoleId.ToString())
+                new Claim(ClaimTypes.NameIdentifier, verifyApiKeyResult.CustId.ToString()),
+                new Claim(ClaimTypes.Role, verifyApiKeyResult.RoleId.ToString())
             };
             foreach (var scope in verifyApiKeyResult.Scopes)
             {
@@ -50,7 +50,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         {
             Response.StatusCode = 401;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-            return AuthenticateResult.Fail("Invalid Authorization Header");
+            return AuthenticateResult.Fail("Unauthorized");
         }
     }
 }

@@ -36,10 +36,10 @@ public class ApiKeyService : IApiKeyService
         return new ApiKeyResult(apiName, key, apiSecret);
     }
 
-    public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string apiSignature, string timeSpan)
+    public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timestamp)
     {
         var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        if (long.TryParse(timeSpan, out long requestTimeSpan) || (now - requestTimeSpan) > 5000)
+        if (long.TryParse(timestamp, out long requestTimeSpan) || (now - requestTimeSpan) > 5000)
         {
             return new VerifyApiKeyResult(false);
         }
@@ -51,10 +51,10 @@ public class ApiKeyService : IApiKeyService
         }
 
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKeyAccess.ApiSecret));
-        var signatureValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(timeSpan));
+        var signatureValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(timestamp));
         var verifyApiKey = key.Equals(apiKeyAccess.Key);
         var verifyPassPhrase = passPhrase.Equals(apiKeyAccess.PassPhrase);
-        var verifyApiSignature = apiSignature.Equals(Convert.ToBase64String(signatureValue));
+        var verifyApiSignature = signature.Equals(Convert.ToBase64String(signatureValue));
 
         if (apiKeyAccess.IsExpired || !verifyApiKey || !verifyPassPhrase || !verifyApiSignature)
         {
