@@ -16,7 +16,7 @@ public class ApiKeyGrpcService : ApiKey.ApiKeyBase
 
     public override async Task<VerifyApiKeyResponse> VerifyApiKey(VerifyApiKeyRequest request, ServerCallContext context)
     {
-        logger.LogInformation("Begin grpc call from method {Method} for basket id {Id}", context.Method, request.Key);
+        logger.LogInformation("Begin grpc call from method {Method} for verify api key {Id}", context.Method, request.Key);
 
         var result = await apiKeyService.VerifyApiKey(request.Key, request.Passphrase, request.Signature, request.Timespan);
 

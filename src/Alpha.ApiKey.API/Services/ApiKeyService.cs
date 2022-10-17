@@ -5,17 +5,6 @@ using Fanex.Caching;
 
 namespace Alpha.ApiKey.API.Services;
 
-public interface IApiKeyService
-{
-    Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate);
-
-    Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string apiSignature, string timeSpan);
-
-    Task<IEnumerable<ApiKeyAccess>> GetUserApiKeyAccess(int custId);
-
-    Task<ApiKeyAccess> Get(string key);
-}
-
 public class ApiKeyService : IApiKeyService
 {
     private const string CacheKey = "Alpha.ApiKey.API.Services.TokenService";
@@ -26,7 +15,7 @@ public class ApiKeyService : IApiKeyService
         this.cacheService = cacheService;
     }
 
-    public async Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate)
+    public async Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate, string? restrictIps)
     {
         var keyBytes = RandomNumberGenerator.GetBytes(24);
         var apiSecretBytes = RandomNumberGenerator.GetBytes(32);
@@ -91,5 +80,20 @@ public class ApiKeyService : IApiKeyService
     {
         var apiKeyAccess = await cacheService.GetAsync<ApiKeyAccess>($"{CacheKey}.{key}");
         return apiKeyAccess;
+    }
+
+    public Task RevokeApiKey(int custId, string key)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ApiKeyAccess> UpdateApiKey(int custId, ApiKeyAccess apiKeyAccess)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ApiKeyAccess> RenewApiKey(int custId, string key, DateTime expirationDate)
+    {
+        throw new NotImplementedException();
     }
 }

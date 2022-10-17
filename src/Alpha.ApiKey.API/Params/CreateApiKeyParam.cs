@@ -11,4 +11,6 @@ public class CreateApiKeyParam
     public string[] Scopes { get; set; } = Array.Empty<string>();
 
     public DateTime? ExpirationDate { get; set; }
+
+    public string? RestrictIps { get; set; }
 }
