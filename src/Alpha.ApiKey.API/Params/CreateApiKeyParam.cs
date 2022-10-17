@@ -1,4 +1,4 @@
-namespace Alpha.ApiKey.Api.Params;
+namespace Alpha.ApiKey.API.Params;
 
 public class CreateApiKeyParam
 {

@@ -2,13 +2,13 @@ FROM hub.nexdev.net/base/dotnet/core/sdk:6.0 AS builder
 WORKDIR /src
 
 # Copy csproj and restore as distinct layers
-COPY ./src/Alpha.ApiKey.Api/Alpha.ApiKey.Api.csproj ./Alpha.ApiKey.Api/Alpha.ApiKey.Api.csproj
+COPY ./src/Alpha.ApiKey.API/Alpha.ApiKey.API.csproj ./Alpha.ApiKey.API/Alpha.ApiKey.API.csproj
 RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
-RUN dotnet restore Alpha.ApiKey.Api/Alpha.ApiKey.Api.csproj -v n
+RUN dotnet restore Alpha.ApiKey.API/Alpha.ApiKey.API.csproj -v n
 
 # Copy everything else and build
-COPY /src/Alpha.ApiKey.Api ./Alpha.ApiKey.Api
-WORKDIR /src/Alpha.ApiKey.Api
+COPY /src/Alpha.ApiKey.API ./Alpha.ApiKey.API
+WORKDIR /src/Alpha.ApiKey.API
 RUN dotnet publish -r linux-x64 --self-contained false -o /app
 
 FROM hub.nexdev.net/base/dotnet/core/aspnet:6.0 as base
@@ -27,4 +27,4 @@ WORKDIR /app
 COPY --from=builder /app .
 ENV TZ="America/La_Paz"
 
-ENTRYPOINT ["dotnet", "Alpha.ApiKey.Api.dll"]
+ENTRYPOINT ["dotnet", "Alpha.ApiKey.API.dll"]

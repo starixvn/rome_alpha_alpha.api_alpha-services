@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Alpha.ApiKey.Api.Params;
-using Alpha.ApiKey.Api.Services;
-using Alpha.ApiKey.Api.Models;
+using Alpha.ApiKey.API.Params;
+using Alpha.ApiKey.API.Services;
+using Alpha.ApiKey.API.Models;
 
-namespace Alpha.ApiKey.Api.Controller;
+namespace Alpha.ApiKey.API.Controller;
 
 [Route("/api/[controller]")]
 [ApiController]

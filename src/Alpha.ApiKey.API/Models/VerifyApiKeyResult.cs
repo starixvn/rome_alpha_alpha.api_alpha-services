@@ -1,4 +1,4 @@
-namespace Alpha.ApiKey.Api.Models;
+namespace Alpha.ApiKey.API.Models;
 
 public record VerifyApiKeyResult(bool IsAuthenticated)
 {

@@ -1,6 +1,5 @@
-using Alpha.ApiKey.Api.Services;
+using Alpha.ApiKey.API.Services;
 using Grpc.Core;
-using Microsoft.AspNetCore.Authorization;
 
 namespace GrpcApiKey;
 

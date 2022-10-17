@@ -9,7 +9,7 @@
         }
     },
     "profiles": {
-        "Alpha.ApiKey.Api": {
+        "Alpha.ApiKey.API": {
             "commandName": "Project",
             "dotnetRunMessages": true,
             "launchBrowser": true,

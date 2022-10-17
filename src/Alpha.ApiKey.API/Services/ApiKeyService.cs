@@ -1,9 +1,9 @@
 using System.Text;
 using System.Security.Cryptography;
-using Alpha.ApiKey.Api.Models;
+using Alpha.ApiKey.API.Models;
 using Fanex.Caching;
 
-namespace Alpha.ApiKey.Api.Services;
+namespace Alpha.ApiKey.API.Services;
 
 public interface IApiKeyService
 {
@@ -18,7 +18,7 @@ public interface IApiKeyService
 
 public class ApiKeyService : IApiKeyService
 {
-    private const string CacheKey = "Alpha.ApiKey.Api.Services.TokenService";
+    private const string CacheKey = "Alpha.ApiKey.API.Services.TokenService";
     private readonly ICacheService cacheService;
 
     public ApiKeyService(ICacheService cacheService)
