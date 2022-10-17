@@ -5,6 +5,7 @@ using Fanex.Caching;
 
 namespace Alpha.ApiKey.API.Services;
 
+    Task<ApiKeyResult> CreateApiKey(int custId, byte roleId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate);
 public class ApiKeyService : IApiKeyService
 {
     private const string CacheKey = "Alpha.ApiKey.API.Services.TokenService";
@@ -15,7 +16,7 @@ public class ApiKeyService : IApiKeyService
         this.cacheService = cacheService;
     }
 
-    public async Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate, string? restrictIps)
+    public async Task<ApiKeyResult> CreateApiKey(int custId, byte roleId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate)
     {
         var keyBytes = RandomNumberGenerator.GetBytes(24);
         var apiSecretBytes = RandomNumberGenerator.GetBytes(32);
@@ -28,7 +29,7 @@ public class ApiKeyService : IApiKeyService
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
         var passPhraseEncrypt = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(passPhrase)));
 
-        ApiKeyAccess accessToken = new(custId, apiName, key, passPhraseEncrypt, apiSecret, scopes, expirationDate);
+        ApiKeyAccess accessToken = new(custId, roleId, apiName, key, passPhraseEncrypt, apiSecret, scopes, expirationDate);
         await Task.WhenAll(
             cacheService.SetAsync($"{CacheKey}.{key}", accessToken, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))),
             cacheService.SetAsync($"{CacheKey}.{custId}.ApiKeys", apiSecrets, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))));
@@ -38,6 +39,12 @@ public class ApiKeyService : IApiKeyService
 
     public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string apiSignature, string timeSpan)
     {
+        var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        if (long.TryParse(timeSpan, out long requestTimeSpan) || (now - requestTimeSpan) > 5000)
+        {
+            return new VerifyApiKeyResult(false);
+        }
+
         var apiKeyAccess = await Get(key);
         if (apiKeyAccess == null)
         {
@@ -55,7 +62,7 @@ public class ApiKeyService : IApiKeyService
             return new VerifyApiKeyResult(false);
         }
 
-        return new VerifyApiKeyResult(true) { Scopes = apiKeyAccess.Scopes };
+        return new VerifyApiKeyResult(true) { CustId = apiKeyAccess.CustId, RoleId = apiKeyAccess.RoleId, Scopes = apiKeyAccess.Scopes };
     }
 
     public async Task<IEnumerable<ApiKeyAccess>> GetUserApiKeyAccess(int custId)

@@ -4,6 +4,8 @@ public class CreateApiKeyParam
 {
     public int CustId { get; set; }
 
+    public byte RoleId { get; set; }
+
     public string ApiName { get; set; } = default!;
 
     public string PassPhrase { get; set; } = default!;

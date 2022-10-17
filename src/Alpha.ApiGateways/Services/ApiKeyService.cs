@@ -1,4 +1,3 @@
-using Alpha.ApiGateways.Extensions;
 using Alpha.ApiGateways.Models;
 using GrpcApiKeyClient;
 
@@ -6,7 +5,7 @@ namespace Alpha.ApiGateways.Services;
 
 public interface IApiKeyService
 {
-    Task<VerifyApiKeyResult?> VerifyApiKey(string key, string passPhrase, string signature, string timeSpan);
+    Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timeSpan);
 }
 
 public class ApiKeyService : IApiKeyService
@@ -20,12 +19,12 @@ public class ApiKeyService : IApiKeyService
         this.logger = logger;
     }
 
-    public async Task<VerifyApiKeyResult?> VerifyApiKey(string key, string passPhrase, string signature, string timeSpan)
+    public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timeSpan)
     {
         logger.LogDebug("grpc client created, api key = {@key}", key);
         var response = await apiKeyClient.VerifyApiKeyAsync(new VerifyApiKeyRequest { Key = key, Passphrase = passPhrase, Signature = signature, Timespan = timeSpan });
         logger.LogDebug("grpc response {@response}", response);
 
-        return new VerifyApiKeyResult { IsAuthenticated = response.Isauthenticated, Scopes = response.Scopes.ToArray() };
+        return new VerifyApiKeyResult { IsAuthenticated = response.Isauthenticated, CustId = response.Custid, RoleId = response.Roleid, Scopes = response.Scopes.ToArray() };
     }
 }

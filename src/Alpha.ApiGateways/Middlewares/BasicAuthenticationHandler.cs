@@ -33,7 +33,11 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, passPhrase, signature, timeSpan);
         if (verifyApiKeyResult != null && verifyApiKeyResult.IsAuthenticated)
         {
-            var claims = new List<Claim>();
+            var claims = new List<Claim>
+            {
+                new Claim("CustId", verifyApiKeyResult.CustId.ToString()),
+                new Claim("RoleId", verifyApiKeyResult.RoleId.ToString())
+            };
             foreach (var scope in verifyApiKeyResult.Scopes)
             {
                 claims.Add(new Claim("scope", scope));

@@ -1,6 +1,6 @@
 namespace Alpha.ApiKey.API.Models;
 
-public record ApiKeyAccess(int CustId, string ApiName, string Key, string PassPhrase, string ApiSecret, string[] Scopes, DateTime? ExpirationDate)
+public record ApiKeyAccess(int CustId, int RoleId, string ApiName, string Key, string PassPhrase, string ApiSecret, string[] Scopes, DateTime? ExpirationDate)
 {
     public DateTime DateCreated { get; } = DateTime.Now;
 
