@@ -1,7 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Alpha.ApiGateways.Extensions;
+namespace Alpha.ApiGateways.Shared.Extensions;
 
 public static class HttpClientExtensions
 {

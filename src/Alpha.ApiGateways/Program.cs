@@ -1,5 +1,6 @@
 using System.Reflection;
 using Alpha.ApiGateways.Extensions;
+using Alpha.ApiGateways.RateLimit.Middlewares;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services
     .AddCustomAuthorization()
     .AddApplicationServices(configuration)
     .AddHealthChecks();
+
+builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -42,6 +45,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<RateLimitMiddleware>();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute();
