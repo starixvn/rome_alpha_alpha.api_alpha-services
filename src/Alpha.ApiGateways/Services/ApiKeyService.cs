@@ -1,5 +1,5 @@
 using Alpha.ApiGateways.Models;
-using GrpcApiKeyClient;
+using GrpcApiKey;
 
 namespace Alpha.ApiGateways.Services;
 

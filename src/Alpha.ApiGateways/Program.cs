@@ -1,5 +1,6 @@
 using System.Reflection;
 using Alpha.ApiGateways.Extensions;
+using Alpha.ApiGateways.Middlewares;
 using Alpha.ApiGateways.RateLimit.Middlewares;
 using Microsoft.OpenApi.Models;
 
@@ -46,6 +47,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<RateLimitMiddleware>();
+app.UseMiddleware<CheckAccountStatusMiddleware>();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute();

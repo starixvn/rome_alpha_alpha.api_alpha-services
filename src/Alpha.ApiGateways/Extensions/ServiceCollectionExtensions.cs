@@ -13,7 +13,8 @@ using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using Sentry;
-using GrpcApiKeyClient;
+using GrpcApiKey;
+using GrpcCustomer;
 using Alpha.ApiGateways.Configurations;
 using Microsoft.Extensions.Options;
 using Alpha.ApiGateways.Infrastructure;
@@ -94,11 +95,19 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddTransient<GrpcExceptionInterceptor>();
+
         services.AddScoped<IApiKeyService, ApiKeyService>();
         services.AddGrpcClient<ApiKey.ApiKeyClient>((services, options) =>
         {
             var apiKeyApi = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcApiKey;
             options.Address = new Uri(apiKeyApi);
+        }).AddInterceptor<GrpcExceptionInterceptor>();
+
+        services.AddTransient<ICustomerService, CustomerService>();
+        services.AddGrpcClient<Customer.CustomerClient>((services, options) =>
+        {
+            var customerApi = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcCustomer;
+            options.Address = new Uri(customerApi);
         }).AddInterceptor<GrpcExceptionInterceptor>();
 
         return services;
