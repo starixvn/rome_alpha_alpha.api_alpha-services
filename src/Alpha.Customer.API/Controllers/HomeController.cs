@@ -1,8 +1,7 @@
 
-
 using Microsoft.AspNetCore.Mvc;
 
-namespace Alpha.Customers.API.Controllers;
+namespace Alpha.Customer.API.Controllers;
 
 public class HomeController : Controller
 {

@@ -1,5 +1,5 @@
-using Alpha.Customers.API.Params;
-using Alpha.Customers.API.Services;
+using Alpha.Customer.API.Params;
+using Alpha.Customer.API.Services;
 using Grpc.Core;
 
 namespace GrpcCustomer;

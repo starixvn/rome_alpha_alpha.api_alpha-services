@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.ApiKey.API", "src\Alp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.ApiGateways", "src\Alpha.ApiGateways\Alpha.ApiGateways.csproj", "{1ED48975-94EF-4579-8505-7189241E86BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.Customers.API", "src\Alpha.Customers.API\Alpha.Customers.API.csproj", "{68C915FE-1AAC-4A5E-8208-1E654BC3339C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.Customer.API", "src\Alpha.Customer.API\Alpha.Customer.API.csproj", "{68C915FE-1AAC-4A5E-8208-1E654BC3339C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

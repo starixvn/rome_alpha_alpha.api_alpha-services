@@ -1,6 +1,6 @@
 using Fanex.Data.Repository;
 
-namespace Alpha.Customers.API.Criteria;
+namespace Alpha.Customer.API.Criteria;
 
 public class GetCustomerStatusCriteria : CriteriaBase
 {

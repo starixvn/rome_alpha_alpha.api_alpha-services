@@ -1,11 +1,10 @@
 using System.Net;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ONEbook.UM.Services;
 
 namespace Alpha.ApiGateways.Filters;
 
-public class CheckUMFilter : IAsyncActionFilter, IAllowAnonymousFilter
+public class CheckUMFilter : IAsyncActionFilter
 {
     private readonly IMaintenanceService maintenanceService;
 

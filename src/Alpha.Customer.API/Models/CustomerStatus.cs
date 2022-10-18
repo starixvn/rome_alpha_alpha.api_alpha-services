@@ -1,4 +1,4 @@
-namespace Alpha.Customers.API.Models;
+namespace Alpha.Customer.API.Models;
 /*
     [A]: Create
     [B]: Update

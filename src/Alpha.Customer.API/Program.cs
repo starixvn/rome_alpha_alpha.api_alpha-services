@@ -1,4 +1,4 @@
-using Alpha.Customers.API.Extensions;
+using Alpha.Customer.API.Extensions;
 using GrpcCustomer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +36,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapDefaultControllerRoute();
     endpoints.MapControllers();
 });
-
 
 await app.RunAsync();

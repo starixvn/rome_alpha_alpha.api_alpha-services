@@ -1,13 +1,13 @@
 using System.Text;
-using Alpha.Customers.API.Configurations;
-using Alpha.Customers.API.Criteria;
-using Alpha.Customers.API.Models;
-using Alpha.Customers.API.Params;
+using Alpha.Customer.API.Configurations;
+using Alpha.Customer.API.Criteria;
+using Alpha.Customer.API.Models;
+using Alpha.Customer.API.Params;
 using Fanex.Caching;
 using Fanex.Data.Repository;
 using Microsoft.Extensions.Options;
 
-namespace Alpha.Customers.API.Services;
+namespace Alpha.Customer.API.Services;
 
 public interface ICustomerService
 {
@@ -20,7 +20,7 @@ public interface ICustomerService
 
 public class CustomerService : ICustomerService
 {
-    private const string CustomerStatusCacheKey = "Alpha.Customers.API.CustomerStatus";
+    private const string CustomerStatusCacheKey = "Alpha.Customer.API.CustomerStatus";
 
     private readonly ICacheService cacheService;
     private readonly CustomerAppSettings appSettings;

@@ -1,4 +1,4 @@
-namespace Alpha.Customers.API.Params;
+namespace Alpha.Customer.API.Params;
 
 public record CustomerStatusParam(int CustId, int SubAccId)
 {

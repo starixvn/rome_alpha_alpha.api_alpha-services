@@ -3,7 +3,7 @@ using System.Net;
 using Fanex.Logging.Extensions.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace Alpha.Customers.API.Extensions;
+namespace Alpha.Customer.API.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class ExceptionMiddlewareExtensions

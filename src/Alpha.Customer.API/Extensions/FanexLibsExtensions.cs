@@ -9,7 +9,7 @@ using Fanex.Logging.RabbitMQ;
 using Fanex.Logging.Sentry;
 using Sentry;
 
-namespace Alpha.Customers.API.Extensions;
+namespace Alpha.Customer.API.Extensions;
 
 public static class FanexLibsExtensions
 {

@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Alpha.Customers.API.Configurations;
-using Alpha.Customers.API.Services;
+using Alpha.Customer.API.Configurations;
+using Alpha.Customer.API.Services;
 
-namespace Alpha.Customers.API.Extensions;
+namespace Alpha.Customer.API.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class CustomerDIExtensions

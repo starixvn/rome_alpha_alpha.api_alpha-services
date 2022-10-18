@@ -1,4 +1,4 @@
-namespace Alpha.Customers.API.Configurations;
+namespace Alpha.Customer.API.Configurations;
 
 public sealed class CustomerAppSettings
 {
