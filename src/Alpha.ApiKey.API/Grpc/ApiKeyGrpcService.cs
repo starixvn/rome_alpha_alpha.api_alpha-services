@@ -22,6 +22,8 @@ public class ApiKeyGrpcService : ApiKey.ApiKeyBase
 
         if (result != null)
         {
+            context.Status = new Status(StatusCode.OK, $"Verify api key {request.Key} success");
+
             var response = new VerifyApiKeyResponse
             {
                 IsAuthenticated = result.IsAuthenticated,

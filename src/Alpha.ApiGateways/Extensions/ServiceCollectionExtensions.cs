@@ -91,7 +91,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddTransient<GrpcExceptionInterceptor>();
         services.AddScoped<IApiKeyService, ApiKeyService>();

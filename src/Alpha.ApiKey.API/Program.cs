@@ -34,6 +34,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapGrpcService<ApiKeyGrpcService>();
 });
 
-app.MapGet("/", () => "Alpha Identity API !!!");
+var assemblyName = typeof(Program).Assembly.GetName().Name;
+app.MapGet("/", () => $"{assemblyName} is running");
 
 app.Run();

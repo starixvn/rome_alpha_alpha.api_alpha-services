@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.ApiKey.API", "src\Alp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.ApiGateways", "src\Alpha.ApiGateways\Alpha.ApiGateways.csproj", "{1ED48975-94EF-4579-8505-7189241E86BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpha.Customers.API", "src\Alpha.Customers.API\Alpha.Customers.API.csproj", "{68C915FE-1AAC-4A5E-8208-1E654BC3339C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,14 @@ Global
 		{1ED48975-94EF-4579-8505-7189241E86BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ED48975-94EF-4579-8505-7189241E86BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ED48975-94EF-4579-8505-7189241E86BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68C915FE-1AAC-4A5E-8208-1E654BC3339C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C915FE-1AAC-4A5E-8208-1E654BC3339C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C915FE-1AAC-4A5E-8208-1E654BC3339C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C915FE-1AAC-4A5E-8208-1E654BC3339C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{955167A6-3AAD-4024-88A7-052A863A5FD3} = {BFAA1BC1-9F81-42E2-99F8-329E52AE3988}
 		{1ED48975-94EF-4579-8505-7189241E86BA} = {BFAA1BC1-9F81-42E2-99F8-329E52AE3988}
+		{68C915FE-1AAC-4A5E-8208-1E654BC3339C} = {BFAA1BC1-9F81-42E2-99F8-329E52AE3988}
 	EndGlobalSection
 EndGlobal

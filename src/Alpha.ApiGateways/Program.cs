@@ -13,7 +13,7 @@ builder.Services
     .AddCustomMVC(configuration)
     .AddCustomAuthentication()
     .AddCustomAuthorization()
-    .AddApplicationServices(configuration)
+    .AddApplicationServices()
     .AddHealthChecks();
 
 builder.Services.AddDistributedMemoryCache();
