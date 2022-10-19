@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\src\Alpha.ApiKey.API\Proto\apikey.proto" GrpcServices="Client" />
-    <Protobuf Include="..\..\src\Alpha.Customer.API\Proto\customer.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\apikey.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\customer.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>
