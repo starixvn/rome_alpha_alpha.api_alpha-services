@@ -30,7 +30,6 @@ public class CustomerGrpcService : Customer.CustomerBase
                 IsActive = status.IsActive,
                 IsProtectedMode = status.IsProtectedMode,
                 IsLocked = status.IsLocked,
-                PageAccess = status.PageAccess,
                 IsSubAcc = status.IsSubAcc,
                 HasReportPermission = status.HasReportPermission,
                 HasMemberInformationPermission = status.HasMemberInformationPermission,

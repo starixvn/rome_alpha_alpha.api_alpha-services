@@ -39,7 +39,7 @@ public class ApiKeyService : IApiKeyService
     public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timestamp)
     {
         var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        if (long.TryParse(timestamp, out long requestTimeSpan) || (now - requestTimeSpan) > 5000)
+        if (!long.TryParse(timestamp, out long requestTimeSpan) || (now - requestTimeSpan) > 5000)
         {
             return new VerifyApiKeyResult(false);
         }

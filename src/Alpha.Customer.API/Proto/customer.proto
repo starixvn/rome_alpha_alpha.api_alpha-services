@@ -19,8 +19,7 @@ message GetCustomerStatusResponse {
     bool isActive = 3;
     bool isProtectedMode = 4;
     bool isLocked = 5;
-    string pageAccess = 6;
-    bool IsSubAcc = 7;
-    bool HasReportPermission = 8;
-    bool HasMemberInformationPermission = 9;
+    bool IsSubAcc = 6;
+    bool HasReportPermission = 7;
+    bool HasMemberInformationPermission = 8;
 }
