@@ -27,7 +27,6 @@ if (!isDevelopment)
 }
 
 // Configure the HTTP request pipeline.
-app.UseHttpsRedirection();
 app.UseSwagger().UseSwaggerUI();
 app.MapControllers();
 app.UseRouting();

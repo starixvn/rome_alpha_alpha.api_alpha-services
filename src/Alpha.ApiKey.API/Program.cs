@@ -26,7 +26,6 @@ if (!app.Environment.IsDevelopment())
     builder.WebHost.UseUrls("http://0.0.0.0:5000");
 }
 
-app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseEndpoints(endpoints =>
