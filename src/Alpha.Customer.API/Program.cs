@@ -12,6 +12,7 @@ builder.Services
     .AddCustomerServices(configuration)
     .AddControllers();
 
+builder.Services.AddHealthChecks();
 builder.Services.AddGrpc();
 
 builder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
@@ -36,6 +37,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapGrpcService<CustomerGrpcService>();
     endpoints.MapDefaultControllerRoute();
     endpoints.MapControllers();
+    endpoints.MapHealthChecks("/health").AllowAnonymous();
 });
 
 await app.RunAsync();
