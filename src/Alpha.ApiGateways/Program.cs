@@ -45,7 +45,7 @@ else
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<RateLimitMiddleware>();
+//app.UseMiddleware<RateLimitMiddleware>();
 app.UseMiddleware<CheckAccountStatusMiddleware>();
 app.UseEndpoints(endpoints =>
 {
