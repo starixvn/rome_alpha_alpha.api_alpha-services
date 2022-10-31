@@ -1,8 +1,10 @@
+using Alpha.ApiKey.API.Extensions;
 using Alpha.ApiKey.API.Services;
-using Fanex.Caching.Redis;
 using GrpcApiKey;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+builder.Services.AddFanexData(configuration);
 builder.Services.AddControllers();
 builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
 builder.Services.AddGrpc();
@@ -11,7 +13,6 @@ builder.Services.AddGrpc();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddRedisCache(builder.Configuration.GetSection("Fanex.Caching.Redis"));
 
 var app = builder.Build();
 
@@ -27,13 +28,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapGrpcService<ApiKeyGrpcService>();
 });
 
-var assemblyName = typeof(Program).Assembly.GetName().Name;
-app.MapGet("/", () => $"{assemblyName} is running");
+app.MapGet("/", () => $"{typeof(Program).Assembly.GetName().Name} is running");
 
 app.Run();

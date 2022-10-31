@@ -1,37 +1,30 @@
 using System.Text;
 using System.Security.Cryptography;
 using Alpha.ApiKey.API.Models;
-using Fanex.Caching;
+using Fanex.Data.Repository;
+using Alpha.ApiKey.API.Criteria;
 
 namespace Alpha.ApiKey.API.Services;
 
 public class ApiKeyService : IApiKeyService
 {
-    private const string CacheKey = "Alpha.ApiKey.API.Services.TokenService";
-    private readonly ICacheService cacheService;
+    private readonly IDynamicRepository dynamicRepository;
 
-    public ApiKeyService(ICacheService cacheService)
+    public ApiKeyService(IDynamicRepository dynamicRepository)
     {
-        this.cacheService = cacheService;
+        this.dynamicRepository = dynamicRepository;
     }
 
-    public async Task<ApiKeyResult> CreateApiKey(int custId, byte roleId, string apiName, string passPhrase, string[] scopes, DateTime? expirationDate, string restrictIps)
+    public async Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string scopes, DateTime? expirationDate)
     {
         var keyBytes = RandomNumberGenerator.GetBytes(24);
         var apiSecretBytes = RandomNumberGenerator.GetBytes(32);
         var key = Convert.ToBase64String(keyBytes);
         var apiSecret = Convert.ToBase64String(apiSecretBytes);
-
-        var apiSecrets = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.ApiKeys") ?? new List<string>();
-        apiSecrets.Add(key);
-
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
         var passPhraseEncrypt = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(passPhrase)));
 
-        ApiKeyAccess accessToken = new(custId, roleId, apiName, key, passPhraseEncrypt, apiSecret, scopes, expirationDate);
-        await Task.WhenAll(
-            cacheService.SetAsync($"{CacheKey}.{key}", accessToken, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))),
-            cacheService.SetAsync($"{CacheKey}.{custId}.ApiKeys", apiSecrets, new CacheItemOptions().SetAbsoluteExpiration(new TimeSpan(1, 0, 0))));
+        await dynamicRepository.ExecuteAsync(new CreateApiKeyCommand(custId, apiName, passPhraseEncrypt, scopes, key, apiSecret, expirationDate));
 
         return new ApiKeyResult(apiName, key, apiSecret);
     }
@@ -50,7 +43,7 @@ public class ApiKeyService : IApiKeyService
             return new VerifyApiKeyResult(false);
         }
 
-        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKeyAccess.ApiSecret));
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKeyAccess.Secret));
         var signatureValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(timestamp));
         var verifyApiKey = key.Equals(apiKeyAccess.Key);
         var verifyPassPhrase = passPhrase.Equals(apiKeyAccess.PassPhrase);
@@ -61,45 +54,18 @@ public class ApiKeyService : IApiKeyService
             return new VerifyApiKeyResult(false);
         }
 
-        return new VerifyApiKeyResult(true) { CustId = apiKeyAccess.CustId, RoleId = apiKeyAccess.RoleId, Scopes = apiKeyAccess.Scopes };
+        return new VerifyApiKeyResult(true) { CustId = apiKeyAccess.CustId };
     }
 
-    public async Task<IEnumerable<ApiKeyAccess>> GetUserApiKeyAccess(int custId)
-    {
-        var apiKeyAccess = new List<ApiKeyAccess>();
-        var apiSecrets = await cacheService.GetAsync<List<string>>($"{CacheKey}.{custId}.ApiKeys");
+    public Task<IEnumerable<ApiKeyEntity>> GetApiKeys(int custId)
+        => dynamicRepository.FetchAsync<ApiKeyEntity>(new GetCustomerApiKeysCriteria(custId));
 
-        if (apiSecrets == null || !apiSecrets.Any())
-        {
-            return apiKeyAccess;
-        }
+    public Task<ApiKeyEntity> Get(string key)
+        => dynamicRepository.GetAsync<ApiKeyEntity>(new GetApiKeyCriteria(key));
 
-        foreach (var apiSecret in apiSecrets)
-        {
-            apiKeyAccess.Add(await cacheService.GetAsync<ApiKeyAccess>($"{CacheKey}.{apiSecret}"));
-        }
+    public Task RevokeApiKey(string key, int custId)
+        => dynamicRepository.ExecuteAsync(new DeleteApiKeyCommand(key, custId));
 
-        return apiKeyAccess;
-    }
-
-    public async Task<ApiKeyAccess> Get(string key)
-    {
-        var apiKeyAccess = await cacheService.GetAsync<ApiKeyAccess>($"{CacheKey}.{key}");
-        return apiKeyAccess;
-    }
-
-    public Task RevokeApiKey(int custId, string key)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ApiKeyAccess> UpdateApiKey(int custId, ApiKeyAccess apiKeyAccess)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ApiKeyAccess> RenewApiKey(int custId, string key, DateTime expirationDate)
-    {
-        throw new NotImplementedException();
-    }
+    public Task UpdateApiKey(int custId, string key, string name, string scopes, DateTime? expirationDate)
+        => dynamicRepository.ExecuteAsync(new UpdateApiKeyCommand(custId, key, name, scopes, expirationDate));
 }

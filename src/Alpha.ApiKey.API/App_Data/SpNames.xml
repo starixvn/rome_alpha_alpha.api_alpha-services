@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Setting Key="Acc_ManageAPI_SelByCust" SpName="Acc_ManageAPI_SelByCust" DbName="DBCust.CustDB.BODBDownlineNet">
+        <Mappings>
+            <Mapping DataField="APIname" ObjectProperty="Name" />
+            <Mapping DataField="APIkey" ObjectProperty="Key" />
+        </Mappings>
+    </Setting>
+    <Setting Key="Acc_ManageAPI_SelByKey" SpName="Acc_ManageAPI_SelByKey" DbName="DBCust.CustDB.BODBDownlineNet"/>
+    <Setting Key="Acc_ManageAPI_Ins" SpName="Acc_ManageAPI_Ins" DbName="DBCust.CustDB.BODBDownlineNet"/>
+    <Setting Key="Acc_ManageAPI_Upd" SpName="Acc_ManageAPI_Upd" DbName="DBCust.CustDB.BODBDownlineNet"/>
+    <Setting Key="Acc_ManageAPI_Del" SpName="Acc_ManageAPI_Del" DbName="DBCust.CustDB.BODBDownlineNet"/>
+</Functions>
