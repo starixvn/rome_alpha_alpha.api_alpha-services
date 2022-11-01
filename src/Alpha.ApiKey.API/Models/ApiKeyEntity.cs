@@ -12,9 +12,7 @@ public record ApiKeyEntity()
 
     public string PassPhrase { get; init; }
 
-    public string ScopIdList { get; init; }
-
-    public int[] ScopIds => ScopIdList.Split(',')?.Select(int.Parse)?.ToArray();
+    public string ScopeIdList { get; init; }
 
     public DateTime CreatedDate { get; init; } = DateTime.Now;
 

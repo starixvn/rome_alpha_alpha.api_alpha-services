@@ -4,12 +4,12 @@ namespace Alpha.ApiKey.API.Criteria;
 
 public class UpdateApiKeyCommand : NonQueryCommand
 {
-    public UpdateApiKeyCommand(int custId, string apiKey, string apiName, string scopeList, DateTime? expiredDate)
+    public UpdateApiKeyCommand(int custId, string apiKey, string apiName, string scopeIDList, DateTime? expiredDate)
     {
         CustId = custId;
         ApiKey = apiKey;
         ApiName = apiName;
-        ScopeList = scopeList;
+        ScopeIDList = scopeIDList;
         ExpiredDate = expiredDate;
     }
 
@@ -17,7 +17,7 @@ public class UpdateApiKeyCommand : NonQueryCommand
 
     public string ApiName { get; }
 
-    public string ScopeList { get; }
+    public string ScopeIDList { get; }
 
     public string ApiKey { get; }
 
@@ -27,11 +27,11 @@ public class UpdateApiKeyCommand : NonQueryCommand
 
     public string ErrMsg { get; set; }
 
-    public override string GetSettingKey() => "Acc_ManageAPI_Upd";
+    public override string GetSettingKey() => "Age_ManageAPI_Upd";
 
     public override bool IsValid()
         => CustId > 0
         && !string.IsNullOrWhiteSpace(ApiName)
-        && !string.IsNullOrWhiteSpace(ScopeList)
+        && !string.IsNullOrWhiteSpace(ScopeIDList)
         && !string.IsNullOrWhiteSpace(ApiKey);
 }

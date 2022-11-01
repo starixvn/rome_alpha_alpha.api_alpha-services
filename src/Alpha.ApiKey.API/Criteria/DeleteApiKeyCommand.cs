@@ -14,7 +14,7 @@ public class DeleteApiKeyCommand : NonQueryCommand
 
     public int CustId { get; }
 
-    public override string GetSettingKey() => "Acc_ManageAPI_Del";
+    public override string GetSettingKey() => "Age_ManageAPI_Del";
 
     public override bool IsValid() => !string.IsNullOrWhiteSpace(ApiKey) && CustId > 0;
 }

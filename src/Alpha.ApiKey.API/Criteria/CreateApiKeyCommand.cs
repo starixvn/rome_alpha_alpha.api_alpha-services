@@ -4,12 +4,12 @@ namespace Alpha.ApiKey.API.Criteria;
 
 public class CreateApiKeyCommand : NonQueryCommand
 {
-    public CreateApiKeyCommand(int custId, string apiName, string passPhrase, string scopeList, string apiKey, string apiSecret, DateTime? expirationDate)
+    public CreateApiKeyCommand(int custId, string apiName, string passPhrase, string scopeIDList, string apiKey, string apiSecret, DateTime? expirationDate)
     {
         CustId = custId;
         ApiName = apiName;
         PassPhrase = passPhrase;
-        ScopeList = scopeList;
+        ScopeIDList = scopeIDList;
         ApiKey = apiKey;
         ApiSecret = apiSecret;
         ExpiredDate = expirationDate;
@@ -21,7 +21,7 @@ public class CreateApiKeyCommand : NonQueryCommand
 
     public string PassPhrase { get; }
 
-    public string ScopeList { get; }
+    public string ScopeIDList { get; }
 
     public string ApiKey { get; }
 
@@ -33,13 +33,13 @@ public class CreateApiKeyCommand : NonQueryCommand
 
     public string ErrMsg { get; set; }
 
-    public override string GetSettingKey() => "Acc_ManageAPI_Ins";
+    public override string GetSettingKey() => "Age_ManageAPI_Ins";
 
     public override bool IsValid()
         => CustId > 0
         && !string.IsNullOrWhiteSpace(ApiName)
         && !string.IsNullOrWhiteSpace(PassPhrase)
-        && !string.IsNullOrWhiteSpace(ScopeList)
+        && !string.IsNullOrWhiteSpace(ScopeIDList)
         && !string.IsNullOrWhiteSpace(ApiKey)
         && !string.IsNullOrWhiteSpace(ApiSecret);
 }

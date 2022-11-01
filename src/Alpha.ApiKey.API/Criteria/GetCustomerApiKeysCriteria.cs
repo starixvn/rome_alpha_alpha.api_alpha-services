@@ -9,7 +9,7 @@ public class GetCustomerApiKeysCriteria : CriteriaBase
 
     public int CustId { get; }
 
-    public override string GetSettingKey() => "Acc_ManageAPI_SelByCust";
+    public override string GetSettingKey() => "Age_ManageAPI_SelByCust";
 
     public override bool IsValid() => CustId > 0;
 }
