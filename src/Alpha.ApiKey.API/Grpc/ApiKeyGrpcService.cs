@@ -30,11 +30,7 @@ public class ApiKeyGrpcService : ApiKey.ApiKeyBase
                 CustId = result.CustId,
                 RoleId = result.RoleId
             };
-
-            foreach (var scope in result.Scopes)
-            {
-                response.Scopes.Add(scope);
-            }
+            result.Scopes?.Split(",")?.ToList().ForEach(scope => response.Scopes.Add(scope));
 
             return response;
         }

@@ -1,5 +1,8 @@
 using Alpha.ApiKey.API.Extensions;
 using Alpha.ApiKey.API.Services;
+using FanexLibs.Data;
+using FanexLibs.Logging;
+using GrpcApiKey;
 using Microsoft.OpenApi.Models;
 
 namespace Alpha.ApiKey.API;
@@ -57,6 +60,7 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+            endpoints.MapGrpcService<ApiKeyGrpcService>();
             endpoints.MapGet("/", () => $"{typeof(Startup).Assembly.GetName().Name} is running!");
         });
     }

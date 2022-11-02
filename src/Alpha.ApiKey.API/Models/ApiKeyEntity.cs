@@ -4,6 +4,8 @@ public record ApiKeyEntity()
 {
     public int CustId { get; init; }
 
+    public byte RoleId { get; init; }
+
     public string Name { get; init; }
 
     public string Key { get; init; }

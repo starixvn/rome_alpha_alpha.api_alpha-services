@@ -1,42 +1,45 @@
-using Alpha.Customer.API.Extensions;
-using GrpcCustomer;
+using System.Net;
+using Alpha.Customer.API;
+using Common.Logging;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+var appName = typeof(Program).Assembly.GetName().Name;
 
-var configuration = builder.Configuration;
-
-builder.Services
-    .AddFanexDataWithSqlServer(configuration)
-    .AddFanexLogging(configuration)
-    .AddFanexCachingMemory()
-    .AddCustomerServices(configuration)
-    .AddControllers();
-
-builder.Services.AddHealthChecks();
-builder.Services.AddGrpc();
-
-builder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
-
-var app = builder.Build();
-var isDevelopment = app.Environment.IsDevelopment();
-
-if (!isDevelopment)
+try
 {
-    app.UseHsts();
-    builder.WebHost.UseUrls("http://0.0.0.0:5000");
+    Log.Information("Configuring web host ({ApplicationContext})...", appName);
+    var host = CreateHostBuilder(args).Build();
+    Log.Information("Starting web host ({ApplicationContext})...", appName);
+    host.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Program terminated unexpectedly ({ApplicationContext})!", appName);
+}
+finally
+{
+    Log.CloseAndFlush();
 }
 
-// Configure the HTTP request pipeline.
-app.UseSwagger().UseSwaggerUI();
-app.MapControllers();
-app.UseRouting();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapGrpcService<CustomerGrpcService>();
-    endpoints.MapDefaultControllerRoute();
-    endpoints.MapControllers();
-    endpoints.MapHealthChecks("/health").AllowAnonymous();
-});
-
-await app.RunAsync();
+static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+            webBuilder.UseKestrel(options =>
+            {
+                options.Listen(IPAddress.Any, 5000, listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+                });
+                options.Listen(IPAddress.Any, 5001, listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http2;
+                });
+            });
+        })
+        .UseSerilog(SeriLogger.Configure);

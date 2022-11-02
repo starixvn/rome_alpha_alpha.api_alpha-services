@@ -1,5 +1,6 @@
 using System.Net;
 using Alpha.ApiKey.API;
+using Common.Logging;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Serilog;
 
@@ -41,4 +42,4 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
                 });
             });
         })
-        .UseSerilog();
+        .UseSerilog(SeriLogger.Configure);

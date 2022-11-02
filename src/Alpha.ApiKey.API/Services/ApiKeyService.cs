@@ -37,24 +37,24 @@ public class ApiKeyService : IApiKeyService
             return new VerifyApiKeyResult(false);
         }
 
-        var apiKeyAccess = await Get(key);
-        if (apiKeyAccess == null)
+        var apiKey = await Get(key);
+        if (apiKey == null)
         {
             return new VerifyApiKeyResult(false);
         }
 
-        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKeyAccess.Secret));
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKey.Secret));
         var signatureValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(timestamp));
-        var verifyApiKey = key.Equals(apiKeyAccess.Key);
-        var verifyPassPhrase = passPhrase.Equals(apiKeyAccess.PassPhrase);
+        var verifyApiKey = key.Equals(apiKey.Key);
+        var verifyPassPhrase = passPhrase.Equals(apiKey.PassPhrase);
         var verifyApiSignature = signature.Equals(Convert.ToBase64String(signatureValue));
 
-        if (apiKeyAccess.IsExpired || !verifyApiKey || !verifyPassPhrase || !verifyApiSignature)
+        if (apiKey.IsExpired || !verifyApiKey || !verifyPassPhrase || !verifyApiSignature)
         {
             return new VerifyApiKeyResult(false);
         }
 
-        return new VerifyApiKeyResult(true) { CustId = apiKeyAccess.CustId };
+        return new VerifyApiKeyResult(true) { CustId = apiKey.CustId, RoleId = apiKey.RoleId, Scopes = apiKey.ScopeIdList };
     }
 
     public Task<IEnumerable<ApiKeyEntity>> GetApiKeys(int custId)

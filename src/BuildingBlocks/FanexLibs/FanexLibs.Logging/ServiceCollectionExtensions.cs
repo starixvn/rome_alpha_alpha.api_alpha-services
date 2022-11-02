@@ -1,36 +1,17 @@
-using Fanex.Data;
-using Fanex.Data.Repository;
-using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.RabbitMQ;
 using Fanex.Logging.Sentry;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Sentry;
 
-namespace Alpha.ApiKey.API.Extensions;
+namespace FanexLibs.Logging;
 
-public static class ServiceCollectionExtentions
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddFanexData(this IServiceCollection services, IConfiguration configuration)
-    {
-        var connectionStrings = configuration
-            .GetSection("ConnectionStrings")
-            .GetChildren()
-            .ToDictionary(
-                connection => connection.Key,
-                connection => new ConnectionConfiguration(connection.Key, connection.Value), StringComparer.OrdinalIgnoreCase);
-
-        DbSettingProviderManager
-            .StartNewSession()
-            .WithSqlServer("App_Data/SpNames.xml")
-            .Use(connectionStrings)
-            .Run();
-
-        return services.AddSingleton<IDynamicRepository, DynamicRepository>();
-    }
-
     public static IServiceCollection AddFanexLogging(this IServiceCollection services, IConfiguration configuration)
     {
         LogManager
@@ -38,9 +19,9 @@ public static class ServiceCollectionExtentions
             .Use(GetLogEngines(configuration));
 
         ExceptionHandler
-                .UseConfig(new LoggingConfiguration()
-                .GetHttpHeaderInfo()
-                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo));
+            .UseConfig(new LoggingConfiguration()
+            .GetHttpHeaderInfo()
+            .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo));
 
         return services.AddSingleton(Logger.Log);
     }
