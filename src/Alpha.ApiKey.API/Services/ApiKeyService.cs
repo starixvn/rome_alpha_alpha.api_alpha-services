@@ -17,10 +17,10 @@ public class ApiKeyService : IApiKeyService
 
     public async Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string scopes, DateTime? expirationDate)
     {
-        var keyBytes = RandomNumberGenerator.GetBytes(24);
-        var apiSecretBytes = RandomNumberGenerator.GetBytes(32);
-        var key = Convert.ToBase64String(keyBytes);
-        var apiSecret = Convert.ToBase64String(apiSecretBytes);
+        var keyBytes = RandomNumberGenerator.GetBytes(12);
+        var apiSecretBytes = RandomNumberGenerator.GetBytes(16);
+        var key = Convert.ToHexString(keyBytes).ToLowerInvariant();
+        var apiSecret = Convert.ToHexString(apiSecretBytes).ToLowerInvariant();
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
         var passPhraseEncrypt = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(passPhrase)));
 
