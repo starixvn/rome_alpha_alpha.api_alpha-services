@@ -2,7 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ONEbook.UM.Services;
 
-namespace Alpha.ApiGateways.Filters;
+namespace Alpha.ApiGateways.Infrastructure.Filters;
 
 public class CheckUMFilter : IAsyncActionFilter
 {

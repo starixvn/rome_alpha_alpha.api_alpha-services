@@ -1,11 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Fanex.Logging.Extensions.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
-namespace Alpha.ApiGateways.Extensions;
+namespace FanexLibs.Logging;
 
-[ExcludeFromCodeCoverage]
 public static class ExceptionMiddlewareExtensions
 {
     public static void ConfigureExceptionHandler(this IApplicationBuilder app)

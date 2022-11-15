@@ -2,7 +2,7 @@ using System.Net;
 using System.Security.Claims;
 using Alpha.ApiGateways.Services;
 
-namespace Alpha.ApiGateways.Middlewares;
+namespace Alpha.ApiGateways.Infrastructure.Middlewares;
 
 public class CheckAccountStatusMiddleware
 {

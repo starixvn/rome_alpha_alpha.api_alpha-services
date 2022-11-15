@@ -4,7 +4,7 @@ using Alpha.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
-namespace Alpha.ApiGateways.Middlewares;
+namespace Alpha.ApiGateways.Infrastructure.Middlewares;
 
 public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {

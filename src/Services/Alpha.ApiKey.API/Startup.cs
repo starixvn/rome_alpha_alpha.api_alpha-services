@@ -1,4 +1,3 @@
-using Alpha.ApiKey.API.Extensions;
 using Alpha.ApiKey.API.Services;
 using FanexLibs.Data;
 using FanexLibs.Logging;

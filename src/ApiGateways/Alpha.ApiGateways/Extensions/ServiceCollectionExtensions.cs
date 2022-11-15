@@ -1,23 +1,19 @@
 using Alpha.ApiGateways.Constants;
-using Alpha.ApiGateways.Filters;
-using Alpha.ApiGateways.Middlewares;
+using Alpha.ApiGateways.Infrastructure.Filters;
+using Alpha.ApiGateways.Infrastructure.Middlewares;
 using Alpha.ApiGateways.Services;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.AspNetCore;
-using Fanex.Logging.RabbitMQ;
-using Fanex.Logging.Sentry;
 using Microsoft.AspNetCore.Authentication;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
-using Sentry;
 using GrpcApiKey;
 using GrpcCustomer;
 using Alpha.ApiGateways.Configurations;
 using Microsoft.Extensions.Options;
 using Alpha.ApiGateways.Infrastructure;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Alpha.ApiGateways.Extensions;
 
@@ -35,33 +31,6 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddFanexLogging(this IServiceCollection services, IConfiguration configuration)
-    {
-        var logEngines = new List<ILogEngine>
-        {
-            new RabbitMQLogging(configuration["Fanex.Logging:RabbitMQConnectionStrings"])
-        };
-
-        var sentryUrl = configuration["Fanex.Logging:SentryUrl"];
-        if (!string.IsNullOrWhiteSpace(sentryUrl))
-        {
-            logEngines.Add(new SentryLogging(new SentryEngineOptions
-            {
-                Dsn = new Dsn(sentryUrl)
-            }));
-        }
-
-        LogManager
-            .SetDefaultLogCategory(configuration["Fanex.Logging:DefaultCategory"])
-            .Use(logEngines);
-
-        services.AddSingleton(Logger.Log);
-
-        ExceptionHandler.UseConfig(new LoggingConfiguration().GetHttpHeaderInfo());
-
-        return services;
-    }
-
     public static IServiceCollection AddCustomMVC(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOptions();
@@ -69,6 +38,24 @@ public static class ServiceCollectionExtensions
 
         services.AddControllers(options => options.Filters.Add<CheckUMFilter>())
             .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true);
+
+        services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Alpha API Gateways", Version = "v1" });
+            options.CustomSchemaIds(type => type.FullName);
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                builder => builder
+                .SetIsOriginAllowed((host) => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+        });
 
         return services;
     }
