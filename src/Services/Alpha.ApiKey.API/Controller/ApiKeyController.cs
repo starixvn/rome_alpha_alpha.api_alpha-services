@@ -44,8 +44,8 @@ public class ApiKeyController : ControllerBase
     [HttpPut]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
-    public async Task<ActionResult> UpdateApiKey([FromBody] UpdateApiKeyParam param)
+    [ProducesResponseType(typeof(ActionResult<Result>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<Result>> UpdateApiKey([FromBody] UpdateApiKeyParam param)
     {
         var apiKey = await apiKeyService.Get(param.ApiKey);
         if (apiKey == null)
@@ -58,8 +58,8 @@ public class ApiKeyController : ControllerBase
             return BadRequest();
         }
 
-        await apiKeyService.UpdateApiKey(param.CustId, param.ApiKey, param.ApiName, param.Scopes, param.ExpirationDate);
-        return Ok();
+        var result = await apiKeyService.UpdateApiKey(param.CustId, param.ApiKey, param.ApiName, param.Scopes, param.ExpirationDate);
+        return Ok(result);
     }
 
 

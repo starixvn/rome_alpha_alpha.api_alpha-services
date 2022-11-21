@@ -15,7 +15,7 @@ public class ApiKeyService : IApiKeyService
         this.dynamicRepository = dynamicRepository;
     }
 
-    public async Task<ApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string scopes, DateTime? expirationDate)
+    public async Task<CreateApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string scopes, DateTime? expirationDate)
     {
         var keyBytes = RandomNumberGenerator.GetBytes(12);
         var apiSecretBytes = RandomNumberGenerator.GetBytes(16);
@@ -24,9 +24,15 @@ public class ApiKeyService : IApiKeyService
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
         var passPhraseEncrypt = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(passPhrase)));
 
-        await dynamicRepository.ExecuteAsync(new CreateApiKeyCommand(custId, apiName, passPhraseEncrypt, scopes, key, apiSecret, expirationDate));
+        var criteria = new CreateApiKeyCommand(custId, apiName, passPhraseEncrypt, scopes, key, apiSecret, expirationDate);
+        await dynamicRepository.ExecuteAsync(criteria);
 
-        return new ApiKeyResult(apiName, key, apiSecret);
+        if (criteria.ErrCode > 0)
+        {
+            return new CreateApiKeyResult { Result = new Result(criteria.ErrCode, criteria.ErrMsg) };
+        }
+
+        return new CreateApiKeyResult { ApiKeyResult = new ApiKeyResult(apiName, key, apiSecret) };
     }
 
     public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timestamp)
@@ -57,15 +63,20 @@ public class ApiKeyService : IApiKeyService
         return new VerifyApiKeyResult(true) { CustId = apiKey.CustId, RoleId = apiKey.RoleId, Scopes = apiKey.ScopeIdList };
     }
 
-    public Task<IEnumerable<ApiKeyEntity>> GetApiKeys(int custId)
-        => dynamicRepository.FetchAsync<ApiKeyEntity>(new GetCustomerApiKeysCriteria(custId));
+    public async Task<IEnumerable<ApiKeyEntity>> GetApiKeys(int custId)
+        => await dynamicRepository.FetchAsync<ApiKeyEntity>(new GetCustomerApiKeysCriteria(custId));
 
-    public Task<ApiKeyEntity> Get(string key)
-        => dynamicRepository.GetAsync<ApiKeyEntity>(new GetApiKeyCriteria(key));
+    public async Task<ApiKeyEntity> Get(string key)
+        => await dynamicRepository.GetAsync<ApiKeyEntity>(new GetApiKeyCriteria(key));
 
-    public Task RevokeApiKey(string key, int custId)
-        => dynamicRepository.ExecuteAsync(new DeleteApiKeyCommand(key, custId));
+    public async Task RevokeApiKey(string key, int custId)
+        => await dynamicRepository.ExecuteAsync(new DeleteApiKeyCommand(key, custId));
 
-    public Task UpdateApiKey(int custId, string key, string name, string scopes, DateTime? expirationDate)
-        => dynamicRepository.ExecuteAsync(new UpdateApiKeyCommand(custId, key, name, scopes, expirationDate));
+    public async Task<Result> UpdateApiKey(int custId, string key, string name, string scopes, DateTime? expirationDate)
+    {
+        var criteria = new UpdateApiKeyCommand(custId, key, name, scopes, expirationDate);
+        await dynamicRepository.ExecuteAsync(criteria);
+
+        return new Result(criteria.ErrCode, criteria.ErrMsg);
+    }
 }
