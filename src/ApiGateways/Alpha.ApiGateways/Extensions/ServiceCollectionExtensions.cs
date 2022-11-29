@@ -72,8 +72,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(PolicyConstants.Outstanding, policy => policy.RequireClaim("scope", "outstanding"));
-            options.AddPolicy(PolicyConstants.WinLossDetail, policy => policy.RequireClaim("scope", "winloss_detail"));
+            options.AddPolicy(PolicyConstants.Outstanding, policy => policy.RequireClaim("scope", ScopeConstants.Outstanding));
+            options.AddPolicy(PolicyConstants.WinLossDetail, policy => policy.RequireClaim("scope", ScopeConstants.WinLossDetail));
         });
 
         return services;
