@@ -10,3 +10,7 @@ include:
   - project: "ci/repos-ci/rome_alpha_customer_api" # Refer to field CI Script Repo at step #3
     ref: master
     file: "gitlab-ci-mixing.yml"
+
+  - project: "ci/repos-ci/rome_alpha_reports_api" # Refer to field CI Script Repo at step #3
+    ref: master
+    file: "gitlab-ci-mixing.yml"

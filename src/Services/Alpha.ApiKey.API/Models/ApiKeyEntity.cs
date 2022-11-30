@@ -10,7 +10,7 @@ public record ApiKeyEntity()
 
     public string Key { get; init; }
 
-    public string Secret { get; init; }
+    public string Secret { get; init; } 
 
     public string PassPhrase { get; init; }
 

@@ -3,16 +3,19 @@ using System.Security.Cryptography;
 using Alpha.ApiKey.API.Models;
 using Fanex.Data.Repository;
 using Alpha.ApiKey.API.Criteria;
+using Microsoft.Extensions.Options;
 
 namespace Alpha.ApiKey.API.Services;
 
 public class ApiKeyService : IApiKeyService
 {
     private readonly IDynamicRepository dynamicRepository;
+    private readonly IOptions<APIKeyAppSettings> settings;
 
-    public ApiKeyService(IDynamicRepository dynamicRepository)
+    public ApiKeyService(IDynamicRepository dynamicRepository, IOptions<APIKeyAppSettings> settings)
     {
         this.dynamicRepository = dynamicRepository;
+        this.settings = settings;
     }
 
     public async Task<CreateApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string scopes, DateTime? expirationDate)
@@ -38,7 +41,7 @@ public class ApiKeyService : IApiKeyService
     public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timestamp)
     {
         var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        if (!long.TryParse(timestamp, out long requestTimeSpan) || (now - requestTimeSpan) > 5000)
+        if (!long.TryParse(timestamp, out long requestTimeSpan) || (now - requestTimeSpan) > settings.Value.ExpireSignatureTime)
         {
             return new VerifyApiKeyResult(false);
         }

@@ -16,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="ONEbook.UM.AspNetCore" Version="3.1.0" />
     <PackageReference Include="ONEbook.UM.Transport" Version="3.1.1" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <Protobuf Include="Protos\apikey.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\customer.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\reports.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>

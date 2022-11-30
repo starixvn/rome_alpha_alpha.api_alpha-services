@@ -9,6 +9,9 @@
     </Setting>
     <Setting Key="Age_ManageAPI_SelByKey" SpName="Age_ManageAPI_SelByKey" DbName="DBCust.CustDB.BODBDownlineNet">
         <Mappings>
+            <Mapping DataField="APIname" ObjectProperty="Name" />
+            <Mapping DataField="APIkey" ObjectProperty="Key" />
+            <Mapping DataField="APISecret" ObjectProperty="Secret" />
             <Mapping DataField="ExpiredDate" ObjectProperty="ExpirationDate" />
         </Mappings>
     </Setting>

@@ -1,7 +1,7 @@
 using FanexLibs.Logging;
 using Alpha.ApiGateways.Extensions;
 using Alpha.ApiGateways.Infrastructure.Middlewares;
-
+using Alpha.ApiGateways.RateLimit.Middlewares;
 namespace Alpha.ApiGateways;
 
 public class Startup
@@ -21,6 +21,7 @@ public class Startup
             .AddCustomAuthentication()
             .AddCustomAuthorization()
             .AddApplicationServices()
+            .AddDistributedMemoryCache()
             .AddHealthChecks();
     }
 
@@ -46,6 +47,8 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseMiddleware<CheckAccountStatusMiddleware>();
+        app.UseMiddleware<RateLimitMiddleware>();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();

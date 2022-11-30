@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcReports";
+
+package Reports;
+
+service Reports {
+  rpc GetOutstandingReport (GetOutstandingReportRequest) returns (GetOutstandingReportResponse);
+}
+
+message GetOutstandingReportRequest {
+  string language = 1;
+  int32 custId = 2;
+  string custName = 3;
+  string site = 4;
+  int32 currencyId = 5;
+  sint32 custLevelId = 6;
+  int32 viewerId = 7;
+  sint32 viewerLevelId = 8;
+
+  string sortPropertyName = 9;
+  bool isDescendingSort = 10;
+  bool isFilterVisible = 11;
+  bool autoFollowBetIsDummyAgent = 12;
+}
+
+message GetOutstandingReportResponse {
+  string sortPropertyName = 1;
+  bool isDescendingSort = 2;
+}
