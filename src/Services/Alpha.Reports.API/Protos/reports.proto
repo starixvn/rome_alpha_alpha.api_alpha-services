@@ -17,14 +17,22 @@ message GetOutstandingReportRequest {
   sint32 custLevelId = 6;
   int32 viewerId = 7;
   sint32 viewerLevelId = 8;
+  bool autoFollowBetIsDummyAgent = 12;
 
   string sortPropertyName = 9;
   bool isDescendingSort = 10;
-  bool isFilterVisible = 11;
-  bool autoFollowBetIsDummyAgent = 12;
-}
+} 
 
 message GetOutstandingReportResponse {
-  string sortPropertyName = 1;
-  bool isDescendingSort = 2;
+  repeated OutstandingModel report = 1;
+  int32 custId = 2;
+}
+
+message OutstandingModel {
+  int32 custId = 1;
+  string custName = 2;
+  float memberOutstanding = 3;
+  double agentOutstanding = 4;
+  double superOutstanding = 5;
+  double masterOutstanding = 6;
 }

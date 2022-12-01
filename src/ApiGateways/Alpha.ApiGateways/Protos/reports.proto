@@ -25,6 +25,4 @@ message GetOutstandingReportRequest {
 }
 
 message GetOutstandingReportResponse {
-  string sortPropertyName = 1;
-  bool isDescendingSort = 2;
 }

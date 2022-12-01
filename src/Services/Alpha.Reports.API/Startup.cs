@@ -1,4 +1,6 @@
+using Alpha.ApiKey.API.Models;
 using Alpha.Reports.API.Extensions;
+using Alpha.Reports.API.Services;
 using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcReports;
@@ -17,11 +19,15 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.Configure<ReportsAppSettingsModel>(Configuration.GetSection("ReportsAppSettings"));
+
         services
-            .AddFanexData(Configuration)
-            .AddFanexLogging(Configuration)
-            .AddFanexCachingMemory()
-            .AddGrpc();
+           .AddFanexData(Configuration)
+           .AddFanexLogging(Configuration)
+           .AddFanexCachingMemory()
+           .AddGrpc();
+
+        AddReportDI(services);
 
         services
             .AddControllers()
@@ -65,5 +71,12 @@ public class Startup
             endpoints.MapGet("/", () => $"{typeof(Startup).Assembly.GetName().Name} is running!");
             endpoints.MapHealthChecks("/health").AllowAnonymous();
         });
+    }
+
+    private static void AddReportDI(IServiceCollection services)
+    {
+        services.AddTransient<IProductService, ProductService>();
+        services.AddTransient<IAutoFollowBetService, AutoFollowBetService>();
+        services.AddTransient<IOutstandingService, OutstandingService>();
     }
 }
