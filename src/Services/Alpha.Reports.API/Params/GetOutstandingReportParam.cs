@@ -26,5 +26,5 @@ public class GetOutstandingReportParam
     public bool AutoFollowBetIsDummyAgent { get; }
 
     public bool IsValid()
-        => CustId > 0 && UserLevelModel.IsUpline(UserLevel, CustLevel);
+        => CustId > 0 && !UserLevelModel.IsUpline(CustLevel, UserLevel);
 }

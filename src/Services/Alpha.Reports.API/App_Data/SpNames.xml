@@ -18,4 +18,12 @@
     
     <Setting Key="Acc_CustSetting_CheckMacauEnable" SpName="Acc_CustSetting_CheckMacauEnable" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
   </Function>
+  <Function Name="Partial UM">
+    <Setting Key="Acc_CheckUM_ByReport" SpName="Acc_CheckUM_ByReport" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+  </Function>
+  <Function Name="Customer information">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.BODBDownlineNet">
+      <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
+    </Setting>
+  </Function>
 </Functions>

@@ -22,6 +22,15 @@ public static class UserLevelModel
             _ => "Member",
         };
 
+    public static string GetDirectDownlineLevelName(byte level)
+        => level switch
+        {
+            Super => "Master",
+            Master => "Agent",
+            Agent => "Member",
+            _ => string.Empty,
+        };
+
     public static bool IsUpline(byte uplineLevelValue, byte downlineLevelValue)
         => GapBetweenTwoLevels(uplineLevelValue, downlineLevelValue) >= 1;
 

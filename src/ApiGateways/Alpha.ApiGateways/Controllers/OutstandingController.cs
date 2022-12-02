@@ -9,7 +9,7 @@ namespace Alpha.ApiGateways.Controllers;
 [Authorize(Policy = PolicyConstants.Outstanding)]
 [ApiController]
 public class OutstandingController : Controller
-{   
+{
     private readonly Reports.ReportsClient apiClient;
 
     public OutstandingController(Reports.ReportsClient apiClient)
@@ -19,9 +19,10 @@ public class OutstandingController : Controller
 
     [HttpGet]
     [HttpPost]
-    public  async Task<IActionResult> Index([FromBody] GetOutstandingReportRequest request) {
+    public async Task<IActionResult> Index([FromBody] GetOutstandingReportRequest request)
+    {
         var result = await apiClient.GetOutstandingReportAsync(request);
 
-        return  Json(result);
+        return Json(result);
     }
 }

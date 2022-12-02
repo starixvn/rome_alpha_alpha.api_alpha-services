@@ -17,10 +17,10 @@ message GetOutstandingReportRequest {
   sint32 custLevelId = 6;
   int32 viewerId = 7;
   sint32 viewerLevelId = 8;
-  bool autoFollowBetIsDummyAgent = 12;
+  bool autoFollowBetIsDummyAgent = 9;
 
-  string sortPropertyName = 9;
-  bool isDescendingSort = 10;
+  string sortPropertyName = 10;
+  bool isDescendingSort = 11;
 } 
 
 message GetOutstandingReportResponse {
@@ -32,7 +32,7 @@ message OutstandingModel {
   int32 custId = 1;
   string custName = 2;
   float memberOutstanding = 3;
-  double agentOutstanding = 4;
-  double superOutstanding = 5;
-  double masterOutstanding = 6;
+  float agentOutstanding = 4;
+  float superOutstanding = 5;
+  float masterOutstanding = 6;
 }

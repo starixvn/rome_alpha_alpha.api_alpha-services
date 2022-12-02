@@ -5,6 +5,7 @@ using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcReports;
 using Microsoft.OpenApi.Models;
+using Alpha.PartialUM;
 
 namespace Alpha.Reports.API;
 
@@ -19,12 +20,11 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.Configure<ReportsAppSettingsModel>(Configuration.GetSection("ReportsAppSettings"));
-
         services
            .AddFanexData(Configuration)
            .AddFanexLogging(Configuration)
            .AddFanexCachingMemory()
+           .ConfigurePartialUMServices(Configuration)
            .AddGrpc();
 
         AddReportDI(services);
@@ -73,8 +73,10 @@ public class Startup
         });
     }
 
-    private static void AddReportDI(IServiceCollection services)
+    private void AddReportDI(IServiceCollection services)
     {
+        services.Configure<ReportsAppSettingsModel>(Configuration.GetSection("ReportsAppSettings"));
+        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IProductService, ProductService>();
         services.AddTransient<IAutoFollowBetService, AutoFollowBetService>();
         services.AddTransient<IOutstandingService, OutstandingService>();

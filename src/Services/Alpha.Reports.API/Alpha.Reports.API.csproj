@@ -6,13 +6,8 @@
     <Nullable>disable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="App_Data\**">
@@ -21,6 +16,12 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="Protos\reports.proto" GrpcServices="Server" />
   </ItemGroup>
  
@@ -28,5 +29,6 @@
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Data\FanexLibs.Data.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Logging\FanexLibs.Logging.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Alpha.PartialUM\Alpha.PartialUM.csproj" />
   </ItemGroup>
 </Project>

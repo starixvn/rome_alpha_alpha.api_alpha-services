@@ -41,6 +41,7 @@ public class ReportGrpcService : Reports.ReportsBase
             .OrderBy(request.SortPropertyName, request.IsDescendingSort);
 
         var response = new GetOutstandingReportResponse();
+        response.CustId = request.CustId;
         response.Report.AddRange(outstandings.Select(o => new OutstandingModel
         {
             CustId = o.CustId,

@@ -1,0 +1,424 @@
+{
+  "PartialUMSettings": {
+    "SiteGroup": "IBCBET",
+    "BetListsCacheInSeconds": 15,
+    "Functions": [
+      {
+        "Name": "Group Win Loss Reports",
+        "Settings": [
+          {
+            "SettingKey": "Age_Rpt_MatchSelResultEntered"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLoss_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLoss_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLoss_Member"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Member"
+          },
+          {
+            "SettingKey": "Age_Rpt_MatchWinLossDetail_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_MatchWinLossDetail_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_MatchWinLossDetail_Member"
+          },
+          {
+            "SettingKey": "Age_Rpt_ConsolidatedGroupSelCurrency"
+          },
+          {
+            "SettingKey": "Age_Rpt_ConsolidatedGroup"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Member"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetailByPT_Super"
+          }
+        ]
+      },
+      {
+        "Name": "Outstandings",
+        "Settings": [
+          {
+            "SettingKey": "Age_Rpt_Outstanding_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_Outstanding_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_Outstanding_Member"
+          }
+        ]
+      },
+      {
+        "Name": "Group Win Loss Analysis",
+        "Settings": [
+          {
+            "SettingKey": "Age_Rpt_WinlossAnalysis_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinlossAnalysis_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinlossAnalysis_Member"
+          },
+          {
+            "SettingKey": "Age_Chart_WinlossAnalysis_Master"
+          },
+          {
+            "SettingKey": "Age_Chart_WinlossAnalysis_Agent"
+          },
+          {
+            "SettingKey": "Age_Chart_WinlossAnalysis_Member"
+          }
+        ]
+      },
+      {
+        "Name": "Win Loss by Product",
+        "Settings": [
+          {
+            "SettingKey": "Age_Rpt_WinLossByProduct_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossByProduct_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossByProduct_Member"
+          }
+        ]
+      },
+      {
+        "Name": "Commission by Bettype",
+        "Settings": [
+          {
+            "SettingKey": "Age_Rpt_CommByBettype_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_CommByBettype_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_CommByBettype_Member"
+          }
+        ]
+      },
+      {
+        "Name": "Results",
+        "Settings": [
+          {
+            "SettingKey": "Age_Result_SportSelByDate"
+          },
+          {
+            "SettingKey": "Age_Result_LeagueSelByDate"
+          },
+          {
+            "SettingKey": "Age_Result_MatchSelByLeague"
+          },
+          {
+            "SettingKey": "Age_Result_Outright"
+          }
+        ]
+      },
+      {
+        "Name": "Progressive Games Contribution",
+        "Settings": [
+          {
+            "SettingKey": "Age_Rpt_ProgressiveGamesContribution_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_ProgressiveGamesContribution_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_ProgressiveGamesContribution_Member"
+          }
+        ]
+      },
+      {
+        "Name": "Statement",
+        "Settings": [
+          {
+            "SettingKey": "Statement_Report_GetList",
+            "SPName": "Acc_StatementSel"
+          },
+          {
+            "SettingKey": "Statement_Report_GetList_14",
+            "SPName": "Acc_StatementSel_14"
+          },
+          {
+            "SettingKey": "Statement_Report_GetList_WH",
+            "SPName": "Acc_StatementSel_Old"
+          }
+        ]
+      },
+      {
+        "Name": "Risk Analysis",
+        "Settings": [
+          {
+            "SettingKey": "Age_BetStatistics_IPMatching_Master"
+          },
+          {
+            "SettingKey": "Age_BetStatistics_BetMatching_Master"
+          },
+          {
+            "SettingKey": "Age_Customer_Upline_Sel"
+          }
+        ]
+      },
+      {
+        "Name": "Group Bets & Forecast OST",
+        "Settings": [
+          {
+            "SettingKey": "Ost_NewTotalBetsForeCast_Main"
+          },
+          {
+            "SettingKey": "Age_NewTotalBetsForeCast_LeagueSel"
+          },
+          {
+            "SettingKey": "Age_NewTotalBetsForeCast_EventSel"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel1378_Master",
+            "SPName": "Age_TotalBets_1378_Master"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel1378_Agent",
+            "SPName": "Age_TotalBets_1378_Agent"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel1378_Member",
+            "SPName": "Age_TotalBets_1378_Member"
+          },
+          {
+            "SettingKey": "Age_LeagueSelRunning_SAg"
+          },
+          {
+            "SettingKey": "Age_LeagueSelRunning_MAg"
+          },
+          {
+            "SettingKey": "Age_LeagueSelRunning_Ag"
+          }
+        ]
+      },
+      {
+        "Name": "Group Bets & Forecast BOF",
+        "Settings": [
+          {
+            "SettingKey": "Age_TotalBets_Sel2021_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel2021_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel2021_Ag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel25_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel25_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel25_Ag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel6_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel6_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel6_Ag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel10_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel10_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel10_Ag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel16_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel16_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel16_Ag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel14_Sag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel14_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel14_Ag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel121_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel121_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel121_Ag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel161_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel161_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel161_Ag"
+          },
+          {
+            "SettingKey": "Age_ScoreMap_SelBettype"
+          },
+          {
+            "SettingKey": "Age_ScoreMap_SelLeague"
+          }
+        ]
+      },
+      {
+        "Name": "Last Bets",
+        "Settings": [
+          {
+            "SettingKey": "Ost_LastBets_All"
+          },
+          {
+            "SettingKey": "Ost_LastBets_HDP"
+          },
+          {
+            "SettingKey": "Ost_LastBets_OU"
+          },
+          {
+            "SettingKey": "Ost_LastBets_Other"
+          }
+        ]
+      },
+      {
+        "Name": "Group Bet List Drilldown",
+        "Settings": [
+          {
+            "SettingKey": "Age_BetList_SelWinLossByDate_Mem"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinLossByDate_Mem_Old"
+          },
+          {
+            "SettingKey": "Age_BetList_SelRunningByDate_Mem",
+            "SPName": "Age_BetList_SelRunning_Mem"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossParlay_SAg"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossParlay_Mag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossParlay_Ag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossByBettypeMatch"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinLossByBetType"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossHR_Sag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossHR_Mag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossHR_Ag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossOutright_Ag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossOutright_MAg"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinlossOutright_SAg"
+          },
+          {
+            "SettingKey": "Age_BetList_SelAllByDate_Mem"
+          },
+          {
+            "SettingKey": "Age_BetList_SelByDayAll_Mem"
+          },
+          {
+            "SettingKey": "Age_BetList_SelByDayAll_Mem_WH",
+            "SPName": "Age_BetList_SelByDayAll_Mem_Old"
+          },
+          {
+            "SettingKey": "Age_BetList_IPMatching"
+          },
+          {
+            "SettingKey": "Age_BetList_SelMovingEventByTransId"
+          }
+        ]
+      },
+      {
+        "Name": "Group Bet List",
+        "Settings": [
+          {
+            "SettingKey": "Age_BetList_SelDeleted"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel430_SAg"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel430_Mag"
+          },
+          {
+            "SettingKey": "Age_TotalBets_Sel430_Ag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelRunningByBettype_SAg"
+          },
+          {
+            "SettingKey": "Age_BetList_SelRunningByBettype_Mag"
+          },
+          {
+            "SettingKey": "Age_BetList_SelRunningByBettype_Ag"
+          }
+        ]
+      },
+      {
+        "Name": "Bet Credit Tracking",
+        "Settings": [
+          {
+            "SettingKey": "Age_Rpt_BetCreditHistory"
+          },
+          {
+            "SettingKey": "Age_Rpt_StatementMovement"
+          }
+        ]
+      }
+    ]
+  }
+}

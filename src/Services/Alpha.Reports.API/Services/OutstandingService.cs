@@ -2,6 +2,7 @@ using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Params;
 using Alpha.Reports.API.Criteria;
 using Fanex.Data.Repository;
+using Alpha.PartialUM.Services;
 
 namespace Alpha.Reports.API.Services;
 
@@ -14,13 +15,16 @@ public class OutstandingService : IOutstandingService
 {
     private readonly IDynamicRepository dynamicRepository;
     private readonly IAutoFollowBetService autoFollowBetService;
+    private readonly IPartialUMService partialUMService;
 
     public OutstandingService(
         IDynamicRepository dynamicRepository,
-        IAutoFollowBetService autoFollowBetService)
+        IAutoFollowBetService autoFollowBetService,
+        IPartialUMService partialUMService)
     {
         this.dynamicRepository = dynamicRepository;
         this.autoFollowBetService = autoFollowBetService;
+        this.partialUMService = partialUMService;
     }
 
     public async Task<IEnumerable<OutstandingModel>> GetReport(GetOutstandingReportParam param)
@@ -31,6 +35,7 @@ public class OutstandingService : IOutstandingService
         }
 
         var criteria = new OutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds);
+        partialUMService.ThrowIfUM(criteria.GetSettingKey());
 
         return param.AutoFollowBetIsDummyAgent
             ? await GetReport(param.ProductIds, await autoFollowBetService.GetFollowBetAccounts(param.CustId))

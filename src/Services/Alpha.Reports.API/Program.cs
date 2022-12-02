@@ -25,10 +25,12 @@ finally
     Log.CloseAndFlush();
 }
 
-static IHostBuilder CreateHostBuilder(string[] args) {
+static IHostBuilder CreateHostBuilder(string[] args)
+{
     var config = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
         .AddJsonFile("appsettings.json", optional: true)
+        .AddJsonFile("./App_Data/PartialUM.json", optional: true)
         .AddCommandLine(args)
         .Build();
 
@@ -47,8 +49,8 @@ static IHostBuilder CreateHostBuilder(string[] args) {
                     listenOptions.Protocols = HttpProtocols.Http2;
                 });
             });
-        }) 
+        })
         .UseSerilog(SeriLogger.Configure);
 
-        return builder;
+    return builder;
 }

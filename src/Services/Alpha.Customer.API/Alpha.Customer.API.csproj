@@ -29,5 +29,4 @@
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Logging\FanexLibs.Logging.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
   </ItemGroup>
-
 </Project>

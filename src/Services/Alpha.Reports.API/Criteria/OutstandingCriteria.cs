@@ -21,7 +21,7 @@ public class OutstandingCriteria : CriteriaBase
     public string ProductIds { get; }
 
     public override string GetSettingKey()
-        => "Age_Rpt_Outstanding_" + UserLevelModel.GetLevelName(CustLevel);
+        => "Age_Rpt_Outstanding_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);
 
     public override bool IsValid() => !UserLevelModel.IsMemberLevel(CustLevel);
 }

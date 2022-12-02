@@ -23,24 +23,18 @@ public class ProductService : IProductService
 {
     private const int CustProductsCacheTimeInMinutes = 5;
     private const string ProductsCacheKey = "Alpha.Reports.Services.Impl.ProductServiceImpl.Products";
-    private readonly Func<int, bool> canViewProduct;
-    private readonly Func<int, string> getProductName;
     private readonly IDynamicRepository dynamicRepository;
     private readonly ICacheService cacheService;
-    private readonly IOptions<ReportsAppSettingsModel> settings;
+    private readonly ReportsAppSettingsModel settings;
 
     public ProductService(
         IDynamicRepository dynamicRepository,
         ICacheService cacheService,
-        IOptions<ReportsAppSettingsModel> settings,
-        Func<int, bool> canViewProduct,
-        Func<int, string> getProductName)
+        IOptions<ReportsAppSettingsModel> settings)
     {
         this.dynamicRepository = dynamicRepository;
         this.cacheService = cacheService;
-        this.settings = settings;
-        this.canViewProduct = canViewProduct;
-        this.getProductName = getProductName;
+        this.settings = settings.Value;
     }
 
     public IEnumerable<int> FilterProductIdsByCustomer(
@@ -77,8 +71,8 @@ public class ProductService : IProductService
             .GetOrSet(
             $"Alpha.Reports.Services.Impl.ProductsForCustomer-{viewerId}",
             () => GetProductsForReport()
-                .Where(product => canViewProduct(product.Id) || CanViewBySite(viewerId, site, currencyId, product.Id))
-                .Select(product => new ProductModel(product.Id, product.Name, product.EndOfSupportDate, product.Type, product.OrderNo, getProductName)),
+                .Where(product => CanViewBySite(viewerId, site, currencyId, product.Id))
+                .Select(product => new ProductModel(product.Id, product.Name, product.EndOfSupportDate, product.Type, product.OrderNo, this.GetProductName)),
             new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CustProductsCacheTimeInMinutes)));
 
         if (custProducts != null)
@@ -89,7 +83,7 @@ public class ProductService : IProductService
         if (isEnableSabaPromotion)
         {
             var endOfSupportDate = custProducts.Max(product => product.EndOfSupportDate);
-            var sabaProduct = new ProductModel(ProductIds.SabaPromotion, null, endOfSupportDate, 0, 0, getProductName);
+            var sabaProduct = new ProductModel(ProductIdConstants.SabaPromotion, null, endOfSupportDate, 0, 0, this.GetProductName);
             var sabaProducts = new List<ProductModel> { sabaProduct };
             custProducts = sabaProducts.Concat(custProducts);
         }
@@ -102,7 +96,7 @@ public class ProductService : IProductService
         var custProducts = cacheService
             .GetOrSet(
             $"Alpha.Reports.Services.Impl.ProductsBySite-{viewerId}",
-            () => dynamicRepository.Fetch<ProductBySiteModel>(new GetOfferedProductsBySiteCriteria(viewerId, site, currencyId, settings.Value.SettingStatus)),
+            () => dynamicRepository.Fetch<ProductBySiteModel>(new GetOfferedProductsBySiteCriteria(viewerId, site, currencyId, settings.SettingStatus)),
             new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CustProductsCacheTimeInMinutes)));
 
         return custProducts.Any(i => i.ProductId == productId);
@@ -122,5 +116,10 @@ public class ProductService : IProductService
             new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
 
         return products;
+    }
+
+    public string GetProductName(int productId)
+    {
+        return "Name";
     }
 }
