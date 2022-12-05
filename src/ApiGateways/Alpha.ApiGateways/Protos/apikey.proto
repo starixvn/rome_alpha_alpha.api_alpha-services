@@ -6,6 +6,7 @@ package ApiKey;
 
 service ApiKey {
     rpc VerifyApiKey(VerifyApiKeyRequest) returns (VerifyApiKeyResponse) {}
+    rpc GetApiKey(GetApiKeyRequest) returns (GetApiKeyResponse) {}
 }
 
 message VerifyApiKeyRequest {
@@ -20,4 +21,13 @@ message VerifyApiKeyResponse {
     int32 custId = 2;
     int32 roleId = 3;
     repeated string scopes = 4;
+}
+
+message GetApiKeyRequest {
+    string key = 1;
+}
+
+message GetApiKeyResponse {
+    int32 custId = 1;
+    int32 roleId = 2;
 }

@@ -1,15 +1,9 @@
+using Alpha.Utilities.Models;
+
 namespace Alpha.ApiKey.API.Models;
 
-public record ReportsAppSettingsModel()
+public class ReportsAppSettingsModel : BaseAppSettingsModel
 {
-    public byte SettingStatus { get; init; }
-    public bool IsNeutralSite { get; init; }
-    public bool DisabledNumberGame { get; init; }
-    public bool IsEnableKeno { get; init; }
-    public bool IsShowSportsbook2 { get; init; }
-
-    public IEnumerable<int> EnableProducts { get; init; }
-
-    public bool IsEnabledProduct(int productId)
-        => EnableProducts != null && EnableProducts.Any(p => p == productId);
+    public string GrpcCustomer { get; init; }
+    public string RemoteRefURL { get; init; }
 }

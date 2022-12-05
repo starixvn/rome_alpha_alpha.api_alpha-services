@@ -39,4 +39,15 @@ public class ApiKeyGrpcService : ApiKey.ApiKeyBase
 
         return new VerifyApiKeyResponse();
     }
+
+    public override async Task<GetApiKeyResponse> GetApiKey(GetApiKeyRequest request, ServerCallContext context)
+    {
+        var result = await apiKeyService.Get(request.Key);
+
+        return new GetApiKeyResponse
+        {
+            CustId = result.CustId,
+            RoleId = result.RoleId
+        };
+    }
 }

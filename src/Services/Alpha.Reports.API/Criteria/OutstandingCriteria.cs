@@ -1,4 +1,4 @@
-using Alpha.Reports.API.Models;
+using Alpha.Utilities.Models;
 using Fanex.Data;
 using Fanex.Data.Repository;
 

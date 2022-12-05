@@ -3,6 +3,7 @@ using Alpha.Reports.API.Params;
 using Alpha.Reports.API.Criteria;
 using Fanex.Data.Repository;
 using Alpha.PartialUM.Services;
+using Alpha.Utilities.Models;
 
 namespace Alpha.Reports.API.Services;
 

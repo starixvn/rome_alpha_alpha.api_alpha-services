@@ -6,6 +6,7 @@ namespace Alpha.ApiGateways.Services;
 public interface IApiKeyService
 {
     Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timestamp);
+    Task<GetApiKeyResult> GetApiKey(string key);
 }
 
 public class ApiKeyService : IApiKeyService
@@ -31,6 +32,17 @@ public class ApiKeyService : IApiKeyService
             CustId = response.CustId,
             RoleId = response.RoleId,
             Scopes = response.Scopes.ToArray()
+        };
+    }
+
+    public async Task<GetApiKeyResult> GetApiKey(string key)
+    {
+        var response = await apiKeyClient.GetApiKeyAsync(new GetApiKeyRequest { Key = key });
+
+        return new GetApiKeyResult
+        {
+            CustId = response.CustId,
+            RoleId = (byte)response.RoleId,
         };
     }
 }

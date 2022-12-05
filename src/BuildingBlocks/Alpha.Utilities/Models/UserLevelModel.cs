@@ -1,4 +1,4 @@
-namespace Alpha.Reports.API.Models;
+namespace Alpha.Utilities.Models;
 
 public static class UserLevelModel
 {

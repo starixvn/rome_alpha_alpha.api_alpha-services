@@ -40,4 +40,31 @@ public class CustomerGrpcService : Customer.CustomerBase
 
         return new GetCustomerStatusResponse();
     }
+
+    public override async Task<GetCustomerInfoResponse> GetCustomerInfo(GetCustomerInfoRequest request, ServerCallContext context)
+    {
+        var customerInfo = await customerService.GetCustomerInfo(request.CustId, request.Username);
+
+        return new GetCustomerInfoResponse
+        {
+            CustId = customerInfo.CustId,
+            RoleId = customerInfo.RoleId,
+            Site = customerInfo.Site,
+            Currency = customerInfo.Currency
+        };
+    }
+
+    public override async Task<GetCustomerProductsResponse> GetCustomerProducts(GetCustomerProductsRequest request, ServerCallContext context)
+    {
+        var products = await customerService.GetCustomerProducts(request.CustId);
+        var response = new GetCustomerProductsResponse();
+        response.Products.AddRange(products.Select(p => new ProductsResponse
+        {
+            Id = p.Id,
+            IsSynced = p.IsSynced,
+            IsHidden = p.IsHidden,
+        }));
+
+        return response;
+    }
 }

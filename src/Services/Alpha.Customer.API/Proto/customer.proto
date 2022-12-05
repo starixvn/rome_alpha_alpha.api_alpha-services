@@ -6,6 +6,8 @@ package Customer;
 
 service Customer {
     rpc GetCustomerStatus(GetCustomerStatusRequest) returns (GetCustomerStatusResponse) {}
+    rpc GetCustomerInfo(GetCustomerInfoRequest) returns (GetCustomerInfoResponse) {}
+    rpc GetCustomerProducts(GetCustomerProductsRequest) returns (GetCustomerProductsResponse) {}
 }
 
 message GetCustomerStatusRequest {
@@ -22,4 +24,30 @@ message GetCustomerStatusResponse {
     bool IsSubAcc = 6;
     bool HasReportPermission = 7;
     bool HasMemberInformationPermission = 8;
+}
+
+message GetCustomerInfoRequest {
+    int32 custId = 1;
+    string username = 2;
+}
+
+message GetCustomerInfoResponse {
+    int32 custId = 1;
+    int32 roleId = 2;
+    string site = 3;
+    int32 currency = 4;
+}
+
+message GetCustomerProductsRequest {
+    int32 custId = 1;
+}
+
+message GetCustomerProductsResponse {
+    repeated ProductsResponse products = 1;
+}
+
+message ProductsResponse {
+    int32 id = 1;
+    bool isSynced = 2;
+    bool isHidden = 3;
 }

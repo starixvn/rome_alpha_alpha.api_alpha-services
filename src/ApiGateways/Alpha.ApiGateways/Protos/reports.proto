@@ -5,7 +5,14 @@ option csharp_namespace = "GrpcReports";
 package Reports;
 
 service Reports {
-  rpc GetOutstandingReport (GetOutstandingReportRequest) returns (GetOutstandingReportResponse);
+  rpc GetSuperOutstanding(GetOutstandingReportRequest) returns (GetSuperOutstandingResponse);
+  rpc GetSuperOnMasterOutstanding(GetOutstandingReportRequest) returns (GetSuperOnMasterOutstandingResponse);
+  rpc GetSuperOnAgentOutstanding(GetOutstandingReportRequest) returns (GetSuperOnAgentOutstandingResponse);
+  
+  rpc GetMasterOutstanding(GetOutstandingReportRequest) returns (GetMasterOutstandingResponse);
+  rpc GetMasterOnAgentOutstanding(GetOutstandingReportRequest) returns (GetMasterOnAgentOutstandingResponse);
+
+  rpc GetAgentOutstanding(GetOutstandingReportRequest) returns (GetAgentOutstandingResponse);
 }
 
 message GetOutstandingReportRequest {
@@ -23,16 +30,79 @@ message GetOutstandingReportRequest {
   bool isDescendingSort = 11;
 } 
 
-message GetOutstandingReportResponse {
-  repeated OutstandingModel report = 1;
-  int32 custId = 2;
+message GetSuperOutstandingResponse {
+  repeated SuperOutstandingModel report = 1;
+  SuperOutstandingModel total = 2;
 }
 
-message OutstandingModel {
+message GetSuperOnMasterOutstandingResponse {
+  repeated SuperOnMasterOutstandingModel report = 1;
+  SuperOnMasterOutstandingModel total = 2;
+}
+
+message GetSuperOnAgentOutstandingResponse {
+  repeated SuperOnAgentOutstandingModel report = 1;
+  SuperOnAgentOutstandingModel total = 2;
+}
+
+message GetMasterOutstandingResponse {
+  repeated MasterOutstandingModel report = 1;
+  MasterOutstandingModel total = 2;
+}
+
+message GetMasterOnAgentOutstandingResponse {
+  repeated MasterOnAgentOutstandingModel report = 1;
+  MasterOnAgentOutstandingModel total = 2;
+}
+
+message GetAgentOutstandingResponse {
+  repeated AgentOutstandingModel report = 1;
+  AgentOutstandingModel total = 2;
+}
+
+message SuperOutstandingModel {
+  int32 custId = 1;
+  string custName = 2;
+  float memberOutstanding = 3;
+  float superOutstanding = 5;
+}
+
+message SuperOnMasterOutstandingModel {
+  int32 custId = 1;
+  string custName = 2;
+  float memberOutstanding = 3;
+  float masterOutstanding = 6;
+  float superOutstanding = 5;
+}
+
+message SuperOnAgentOutstandingModel {
   int32 custId = 1;
   string custName = 2;
   float memberOutstanding = 3;
   float agentOutstanding = 4;
+  float masterOutstanding = 6;
   float superOutstanding = 5;
+}
+
+message MasterOutstandingModel {
+  int32 custId = 1;
+  string custName = 2;
+  float memberOutstanding = 3;
   float masterOutstanding = 6;
 }
+
+message MasterOnAgentOutstandingModel {
+  int32 custId = 1;
+  string custName = 2;
+  float memberOutstanding = 3;
+  float agentOutstanding = 4;
+  float masterOutstanding = 5;
+}
+
+message AgentOutstandingModel {
+  int32 custId = 1;
+  string custName = 2;
+  float memberOutstanding = 3;
+  float agentOutstanding = 4;
+}
+

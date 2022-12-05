@@ -11,13 +11,7 @@ public class ProductModel
         EndOfSupportDate = endOfSupportDate;
         Type = type;
         OrderNo = orderNo;
-    }
-
-    internal ProductModel(int id, string name, DateTime? endOfSupportDate, int type, int orderNo, Func<int, string> getProductDisplayName)
-        : this(id, name, endOfSupportDate, type, orderNo)
-    {
-        DisplayName = getProductDisplayName == null ? name : getProductDisplayName(id);
-        TypeName = type == 0 ? string.Empty : (getProductDisplayName == null ? name : getProductDisplayName(type));
+        TypeName = type == 0 ? string.Empty : name;
     }
 
     public int Id { get; protected set; }
@@ -30,7 +24,13 @@ public class ProductModel
 
     public int Type { get; protected set; }
 
-    public string TypeName { get; }
+    public string TypeName { get; protected set; }
 
     public int OrderNo { get; protected set; }
+
+    public void UpdateProductName(string name)
+    {
+        Name = name;
+        TypeName = name;
+    }
 }

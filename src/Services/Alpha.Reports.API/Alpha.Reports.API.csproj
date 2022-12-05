@@ -17,11 +17,20 @@
   
   <ItemGroup>
     <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
+    <PackageReference Include="Fanex.RemotingRef" Version="1.5.0.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.21.9" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.49.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\customer.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\reports.proto" GrpcServices="Server" />
   </ItemGroup>
  
@@ -30,5 +39,7 @@
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Logging\FanexLibs.Logging.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\Alpha.PartialUM\Alpha.PartialUM.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Alpha.Utilities\Alpha.Utilities.csproj" />
   </ItemGroup>
 </Project>
+ 

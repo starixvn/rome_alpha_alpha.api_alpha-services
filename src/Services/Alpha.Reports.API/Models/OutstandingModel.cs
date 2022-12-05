@@ -1,3 +1,5 @@
+using Alpha.Utilities.Models;
+
 namespace Alpha.Reports.API.Models;
 
 public class OutstandingModel

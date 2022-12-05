@@ -1,5 +1,5 @@
 
-using Alpha.Reports.API.Models;
+using Alpha.Utilities.Models;
 
 namespace Alpha.Reports.API.Params;
 

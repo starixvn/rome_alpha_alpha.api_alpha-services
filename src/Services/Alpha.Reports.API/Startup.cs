@@ -6,6 +6,10 @@ using FanexLibs.Logging;
 using GrpcReports;
 using Microsoft.OpenApi.Models;
 using Alpha.PartialUM;
+using GrpcCustomer;
+using Microsoft.Extensions.Options;
+using Alpha.Reports.API.Interceptors;
+using Fanex.RemotingRef;
 
 namespace Alpha.Reports.API;
 
@@ -76,9 +80,22 @@ public class Startup
     private void AddReportDI(IServiceCollection services)
     {
         services.Configure<ReportsAppSettingsModel>(Configuration.GetSection("ReportsAppSettings"));
+        services.AddSingleton<IRemotingRefService, RemotingRefService>();
+        services.AddTransient<ICacheRefService, CacheRefService>();
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IProductService, ProductService>();
         services.AddTransient<IAutoFollowBetService, AutoFollowBetService>();
         services.AddTransient<IOutstandingService, OutstandingService>();
+
+        services.AddTransient<GrpcExceptionInterceptor>();
+        services.AddGrpcClient<Customer.CustomerClient>((services, options) =>
+        {
+            var customerApi = services.GetRequiredService<IOptions<ReportsAppSettingsModel>>().Value.GrpcCustomer;
+            options.Address = new Uri(customerApi);
+        }).AddInterceptor<GrpcExceptionInterceptor>();
+
+        RefDataTypeContainer
+            .ConnectTo(new Uri(Configuration["ReportsAppSettings:RemoteRefURL"]))
+            .FromApplication("Alpha.Reports.Site");
     }
 }
