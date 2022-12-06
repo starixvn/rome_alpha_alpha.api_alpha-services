@@ -8,6 +8,7 @@ service Customer {
     rpc GetCustomerStatus(GetCustomerStatusRequest) returns (GetCustomerStatusResponse) {}
     rpc GetCustomerInfo(GetCustomerInfoRequest) returns (GetCustomerInfoResponse) {}
     rpc GetCustomerProducts(GetCustomerProductsRequest) returns (GetCustomerProductsResponse) {}
+    rpc GetDownlineInfo(GetDownlineInfoRequest) returns (GetDownlineInfoResponse) {}
 }
 
 message GetCustomerStatusRequest {
@@ -50,4 +51,13 @@ message ProductsResponse {
     int32 id = 1;
     bool isSynced = 2;
     bool isHidden = 3;
+}
+
+message GetDownlineInfoRequest {
+    int32 viewerId = 1;
+    string downlineUsername = 2;
+}
+
+message GetDownlineInfoResponse {
+    bool isBelonging = 1;
 }

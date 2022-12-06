@@ -6,6 +6,7 @@ package Customer;
 
 service Customer {
     rpc GetCustomerProducts(GetCustomerProductsRequest) returns (GetCustomerProductsResponse) {}
+    rpc GetDownlineInfo(GetDownlineInfoRequest) returns (GetDownlineInfoResponse) {}
 }
 
 message GetCustomerProductsRequest {
@@ -20,4 +21,13 @@ message ProductsResponse {
     int32 id = 1;
     bool isSynced = 2;
     bool isHidden = 3;
+}
+
+message GetDownlineInfoRequest {
+    int32 viewerId = 1;
+    string downlineUsername = 2;
+}
+
+message GetDownlineInfoResponse {
+    bool isBelonging = 1;
 }

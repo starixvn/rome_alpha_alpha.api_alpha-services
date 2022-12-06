@@ -58,11 +58,23 @@ public class CustomerDataAccess : ICustomerDataAccess
 
                 while (reader.Read())
                 {
-                    var productId = (byte)reader["ProductID"];
-                    var isSync = (bool)reader["IsSync"];
-                    var isHidden = (bool)reader["isHidden"];
-                    var product = new ProductModel(productId, isSync, isHidden);
-                    result.Add(product);
+                    var product = new ProductModel
+                    {
+                        Id = (byte)reader["ProductID"],
+                        IsSynced = (bool)reader["IsSync"],
+                        IsHidden = (bool)reader["isHidden"]
+                    };
+
+                    var existProduct = result.FirstOrDefault(p => p.Id == product.Id);
+
+                    if (existProduct == null)
+                    {
+                        result.Add(product);
+                        continue;
+                    }
+
+                    existProduct.IsHidden = existProduct.IsHidden && product.IsHidden;
+                    existProduct.IsSynced = existProduct.IsSynced && product.IsSynced;
                 }
 
                 return result;

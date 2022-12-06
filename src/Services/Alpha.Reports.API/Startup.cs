@@ -68,6 +68,7 @@ public class Startup
         app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Reports.API v1"));
 
         app.UseRouting();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
@@ -97,5 +98,7 @@ public class Startup
         RefDataTypeContainer
             .ConnectTo(new Uri(Configuration["ReportsAppSettings:RemoteRefURL"]))
             .FromApplication("Alpha.Reports.Site");
+
+        services.AddGrpc(c => c.Interceptors.Add<CheckBelongingInterceptor>());
     }
 }

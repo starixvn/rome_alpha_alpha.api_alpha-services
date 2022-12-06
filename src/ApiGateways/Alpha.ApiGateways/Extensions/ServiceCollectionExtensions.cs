@@ -8,8 +8,8 @@ using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using GrpcApiKey;
-using GrpcCustomer; 
-using GrpcReports; 
+using GrpcCustomer;
+using GrpcReports;
 using Alpha.ApiGateways.Configurations;
 using Microsoft.Extensions.Options;
 using Alpha.ApiGateways.Infrastructure;
@@ -36,7 +36,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddOptions();
         services.Configure<UrlsConfig>(configuration.GetSection(UrlsConfig.Urls));
- 
+
         services.AddControllers(options => options.Filters.Add<CheckUMFilter>())
             .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true);
 

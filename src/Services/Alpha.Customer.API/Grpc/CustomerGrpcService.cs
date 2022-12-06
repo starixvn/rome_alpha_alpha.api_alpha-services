@@ -41,6 +41,16 @@ public class CustomerGrpcService : Customer.CustomerBase
         return new GetCustomerStatusResponse();
     }
 
+    public override async Task<GetDownlineInfoResponse> GetDownlineInfo(GetDownlineInfoRequest request, ServerCallContext context)
+    {
+        var downlineInfo = await customerService.GetDownlineInfo(request.ViewerId, request.DownlineUsername);
+
+        return new GetDownlineInfoResponse
+        {
+            IsBelonging = downlineInfo != null && downlineInfo.CustId > 0
+        };
+    }
+
     public override async Task<GetCustomerInfoResponse> GetCustomerInfo(GetCustomerInfoRequest request, ServerCallContext context)
     {
         var customerInfo = await customerService.GetCustomerInfo(request.CustId, request.Username);

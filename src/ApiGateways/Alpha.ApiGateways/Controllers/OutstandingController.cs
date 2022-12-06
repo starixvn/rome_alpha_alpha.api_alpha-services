@@ -5,7 +5,6 @@ using GrpcReports;
 using Alpha.ApiGateways.Services;
 using Alpha.ApiGateways.Requests;
 using Alpha.Utilities.Models;
-using Newtonsoft.Json;
 
 namespace Alpha.ApiGateways.Controllers;
 
