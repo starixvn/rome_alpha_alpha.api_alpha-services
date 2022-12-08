@@ -34,47 +34,61 @@ public class OutstandingController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] ApiKeyRequest apiKeyRequest,
-        [FromBody] GetOutstandingReportRequest request)
+        [FromHeader] string key,
+        [FromHeader] string passPhrase,
+        [FromHeader] string signature,
+        [FromHeader] string timestamp,
+        [FromBody] OutstandingRequest request)
     {
+        var apiKeyRequest = new ApiKeyRequest
+        {
+            Key = key,
+            PassPhrase = passPhrase,
+            Signature = signature,
+            Timestamp = timestamp
+        };
+
         logger.Info($"Get OutStanding report with key {apiKeyRequest.Key} {request}");
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
 
-        request.CustId = downlineInfo.CustId;
-        request.CustLevelId = downlineInfo.RoleId;
-        request.Site = viewerInfo.Site;
-        request.CurrencyId = downlineInfo.Currency;
-        request.ViewerId = downlineInfo.CustId;
-        request.ViewerLevelId = downlineInfo.RoleId;
+        var reportRequest = new GetOutstandingReportRequest
+        {
+            CustId = downlineInfo.CustId,
+            CustLevelId = downlineInfo.RoleId,
+            Site = viewerInfo.Site,
+            CurrencyId = downlineInfo.Currency,
+            ViewerId = downlineInfo.CustId,
+            ViewerLevelId = downlineInfo.RoleId
+        };
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)
         {
-            return await SuperOutstanding(request);
+            return await SuperOutstanding(reportRequest);
         }
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Master)
         {
-            return await SuperOnMasterOutstanding(request);
+            return await SuperOnMasterOutstanding(reportRequest);
         }
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Agent)
         {
-            return await SuperOnAgentOutstanding(request);
+            return await SuperOnAgentOutstanding(reportRequest);
         }
 
         if (viewerInfo.RoleId == UserLevelModel.Master && downlineInfo.RoleId == UserLevelModel.Master)
         {
-            return await MasterOutstanding(request);
+            return await MasterOutstanding(reportRequest);
         }
 
         if (viewerInfo.RoleId == UserLevelModel.Master && downlineInfo.RoleId == UserLevelModel.Agent)
         {
-            return await MasterOnAgentOutstanding(request);
+            return await MasterOnAgentOutstanding(reportRequest);
         }
 
-        return await AgentOutstanding(request);
+        return await AgentOutstanding(reportRequest);
     }
 
     private async Task<IActionResult> SuperOutstanding(GetOutstandingReportRequest request)

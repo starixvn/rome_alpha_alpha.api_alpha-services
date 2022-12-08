@@ -6,25 +6,25 @@ namespace Alpha.Reports.API.Params;
 public class GetOutstandingReportParam
 {
     public GetOutstandingReportParam(
-        byte userLevel,
+        byte viewerLevel,
         byte custLevel,
         int custId,
         string productIds,
         bool autoFollowBetIsDummyAgent)
     {
-        UserLevel = userLevel;
+        ViewerLevel = viewerLevel;
         CustLevel = custLevel;
         CustId = custId;
         ProductIds = productIds;
         AutoFollowBetIsDummyAgent = autoFollowBetIsDummyAgent;
     }
 
-    public byte UserLevel { get; }
+    public byte ViewerLevel { get; }
     public int CustId { get; }
     public byte CustLevel { get; }
     public string ProductIds { get; }
     public bool AutoFollowBetIsDummyAgent { get; }
 
     public bool IsValid()
-        => CustId > 0 && !UserLevelModel.IsUpline(CustLevel, UserLevel);
+        => CustId > 0 && !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
 }

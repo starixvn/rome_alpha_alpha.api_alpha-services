@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="106" SiteName="Alpha">
+  <Function Name="Base Functions">
+    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
+  </Function>
+
   <Function Name="Outstanding">
     <!--Group 3-->
     <Setting Key="Age_Rpt_Outstanding_Master" SpName="Age_Rpt_Outstanding_Master" DbName="DBBOF.bodb02.BODBDownlineNet" Plain="0" />
@@ -17,6 +21,7 @@
     </Setting> 
     
     <Setting Key="Acc_CustSetting_CheckMacauEnable" SpName="Acc_CustSetting_CheckMacauEnable" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+    <Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
   </Function>
   <Function Name="Partial UM">
     <Setting Key="Acc_CheckUM_ByReport" SpName="Acc_CheckUM_ByReport" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
@@ -26,4 +31,11 @@
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
   </Function>
+   <Function Name="Win Loss Detail">
+    <!--Group 4-->
+    <Setting Key="Age_Rpt_WinLossDetail_Master" SpName="Age_Rpt_WinLossDetail_Master" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
+    <Setting Key="Age_Rpt_WinLossDetail_Agent" SpName="Age_Rpt_WinLossDetail_Agent" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
+    <Setting Key="Age_Rpt_WinLossDetail_Member" SpName="Age_Rpt_WinLossDetail_Member" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
+    <!--Group 4-->
+   </Function>
 </Functions>

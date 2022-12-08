@@ -35,7 +35,7 @@ public class OutstandingService : IOutstandingService
             return Enumerable.Empty<OutstandingModel>();
         }
 
-        var criteria = new OutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds);
+        var criteria = new GetOutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds);
         partialUMService.ThrowIfUM(criteria.GetSettingKey());
 
         return param.AutoFollowBetIsDummyAgent
@@ -65,7 +65,7 @@ public class OutstandingService : IOutstandingService
     {
         var agentId = followBetAccount.Item1;
         var followBetAccountEntitys = followBetAccount.Item2;
-        var criteria = new OutstandingCriteria(UserLevelModel.Agent, agentId, productIds);
+        var criteria = new GetOutstandingCriteria(UserLevelModel.Agent, agentId, productIds);
         var outstandingModels = await dynamicRepository.FetchAsync<OutstandingModel>(criteria);
 
         return outstandingModels.Join(

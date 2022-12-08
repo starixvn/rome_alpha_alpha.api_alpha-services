@@ -21,6 +21,20 @@ public interface IProductService
         IEnumerable<int> productIds,
         DateTime? minReportDate = null,
         bool isEnableSabaPromotion = false);
+
+    Task<IEnumerable<ProductModel>> GetProductsForCustomer(
+        int viewerId,
+        string site,
+        int currencyId,
+        string language,
+        DateTime? minReportDate = null,
+        bool isEnableSabaPromotion = false);
+
+    bool CanViewBySite(int viewerId, string site, int currencyId, int productId);
+
+    Task<IEnumerable<ProductStatusModel>> GetProductStatus(int viewerId);
+
+    bool CanViewProduct(int productId, string site, IEnumerable<ProductStatusModel> products, ReportsAppSettingsModel settings);
 }
 
 public class ProductService : IProductService
@@ -80,13 +94,7 @@ public class ProductService : IProductService
             return Enumerable.Empty<ProductModel>();
         }
 
-        var productStatus = (await customerClient.GetCustomerProductsAsync(new GetCustomerProductsRequest { CustId = viewerId }))
-            .Products.Select(p => new ProductStatusModel
-            {
-                Id = p.Id,
-                IsSynced = p.IsSynced,
-                IsHidden = p.IsHidden
-            });
+        var productStatus = await GetProductStatus(viewerId);
 
         var custProducts = cacheService
             .GetOrSet(
@@ -149,6 +157,19 @@ public class ProductService : IProductService
     {
         var result = UserPermissionHelper.HasPermissionOnProduct(productId, site, products, settings);
         return result;
+    }
+
+    public async Task<IEnumerable<ProductStatusModel>> GetProductStatus(int viewerId)
+    {
+        var productStatus = (await customerClient.GetCustomerProductsAsync(new GetCustomerProductsRequest { CustId = viewerId }))
+            .Products.Select(p => new ProductStatusModel
+            {
+                Id = p.Id,
+                IsSynced = p.IsSynced,
+                IsHidden = p.IsHidden
+            });
+
+        return productStatus;
     }
 
     public string GetProductName(int productId, string language)

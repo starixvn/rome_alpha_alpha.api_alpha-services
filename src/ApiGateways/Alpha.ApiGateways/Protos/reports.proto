@@ -13,6 +13,10 @@ service Reports {
   rpc GetMasterOnAgentOutstanding(GetOutstandingReportRequest) returns (GetMasterOnAgentOutstandingResponse);
 
   rpc GetAgentOutstanding(GetOutstandingReportRequest) returns (GetAgentOutstandingResponse);
+
+  rpc GetSuperWinLossDetail(GetWinLossDetailReportRequest) returns (GetSuperWinLossDetailResponse);
+  rpc GetMasterWinLossDetail(GetWinLossDetailReportRequest) returns (GetMasterWinLossDetailResponse);
+  rpc GetAgentWinLossDetail(GetWinLossDetailReportRequest) returns (GetAgentWinLossDetailResponse);
 }
 
 message GetOutstandingReportRequest {
@@ -106,3 +110,114 @@ message AgentOutstandingModel {
   float agentOutstanding = 4;
 }
 
+message GetWinLossDetailReportRequest {
+  string language = 1;
+  int32 custId = 2;
+  string custName = 3;
+  string site = 4;
+  int32 currencyId = 5;
+  sint32 custLevelId = 6;
+  int32 viewerId = 7;
+  sint32 viewerLevelId = 8;
+ 
+  string sortPropertyName = 9;
+  bool isDescendingSort = 10;
+  int32 pageSize = 11;
+  int32 pageIndex = 12;
+  string fromDate = 13;
+  string toDate = 14;
+} 
+
+message GetSuperWinLossDetailResponse {
+  repeated SuperWinLossDetailModel report = 1;
+  SuperWinLossDetailModel total = 2;
+  int32 pageSize = 3;
+  int32 pageIndex = 4;
+  int32 totalRecords = 5;
+}
+
+message GetMasterWinLossDetailResponse {
+  repeated MasterWinLossDetailModel report = 1;
+  MasterWinLossDetailModel total = 2;
+  int32 pageSize = 3;
+  int32 pageIndex = 4;
+  int32 totalRecords = 5;
+}
+
+message GetAgentWinLossDetailResponse {
+  repeated AgentWinLossDetailModel report = 1;
+  AgentWinLossDetailModel total = 2;
+  int32 pageSize = 3;
+  int32 pageIndex = 4;
+  int32 totalRecords = 5;
+}
+
+message SuperWinLossDetailModel {
+  int32 custId = 1;
+  string custName = 2;
+  int32 betCount = 3;
+  float turnover = 4;
+
+  float memberWinLoss = 5;
+  float memberComm = 6;
+  float memberTotal = 7;
+
+  float agentWinLoss = 8;
+  float agentComm = 9;
+  float agentTotal = 10;
+
+  float masterWinLoss = 11;
+  float masterComm = 12;
+  float masterTotal = 13;
+
+  float superWinLoss = 14;
+  float superComm = 15;
+  float superTotal = 16;
+
+  float companyWinLoss = 17;
+  float companyComm = 18;
+  float companyTotal = 19;
+}
+
+message MasterWinLossDetailModel {
+  int32 custId = 1;
+  string custName = 2;
+  int32 betCount = 3;
+  float turnover = 4;
+
+  float memberWinLoss = 5;
+  float memberComm = 6;
+  float memberTotal = 7;
+
+  float agentWinLoss = 8;
+  float agentComm = 9;
+  float agentTotal = 10;
+
+  float masterWinLoss = 11;
+  float masterComm = 12;
+  float masterTotal = 13;
+
+  float companyWinLoss = 14;
+  float companyComm = 15;
+  float companyTotal = 16;
+}
+
+
+message AgentWinLossDetailModel {
+  int32 custId = 1;
+  string custName = 2;
+  int32 betCount = 3;
+  float turnover = 4;
+
+  float memberWinLoss = 5;
+  float memberComm = 6;
+  float memberTotal = 7;
+
+  float agentWinLoss = 8;
+  float agentComm = 9;
+  float agentTotal = 10;
+
+  float companyWinLoss = 11;
+  float companyComm = 12;
+  float companyTotal = 13;
+}

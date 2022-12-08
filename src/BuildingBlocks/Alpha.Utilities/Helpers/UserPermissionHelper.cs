@@ -18,7 +18,7 @@ public static class UserPermissionHelper
         => (!IsNeutral(site, settings) || IsCreditNeutral(site)) && !settings.DisabledNumberGame;
 
     public static bool IsShowKenoSetting(IEnumerable<ProductStatusModel> productStatus, BaseAppSettingsModel settings)
-        => settings.IsEnableKeno && IsShow(ProductIdConstants.Keno, productStatus, true);
+        => settings.IsEnableKeno && IsShow(ProductIdConstants.Keno, productStatus, false);
 
     public static bool IsShowSportsbook2(IEnumerable<ProductStatusModel> productStatus, BaseAppSettingsModel settings)
         => settings.IsShowSportsbook2 && IsShow(ProductIdConstants.Sportsbook2, productStatus, false);
@@ -32,7 +32,7 @@ public static class UserPermissionHelper
     public static bool IsShow(int productId, IEnumerable<ProductStatusModel> productStatus, bool defaultValue)
     {
         var p = productStatus.FirstOrDefault(p => p.Id == productId);
-        return p == null ? defaultValue : p.IsHidden;
+        return p == null ? defaultValue : !p.IsHidden;
     }
 
     public static bool IsSynced(int productId, IEnumerable<ProductStatusModel> productStatus, bool defaultValue)

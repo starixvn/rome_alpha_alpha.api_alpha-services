@@ -1,9 +1,7 @@
-// using Alpha.PartialUM.Criteria;
 using Alpha.PartialUM.Extensions;
 using Alpha.PartialUM.Helpers;
 using Alpha.PartialUM.Models;
 using Fanex.Caching;
-using Fanex.Data.Repository;
 using Microsoft.Extensions.Options;
 
 namespace Alpha.PartialUM.Services;

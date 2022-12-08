@@ -58,10 +58,11 @@ public class CustomerDataAccess : ICustomerDataAccess
 
                 while (reader.Read())
                 {
+                    var isSync = reader["IsSync"];
                     var product = new ProductModel
                     {
                         Id = (byte)reader["ProductID"],
-                        IsSynced = (bool)reader["IsSync"],
+                        IsSynced = !Convert.IsDBNull(isSync) && (bool)isSync,
                         IsHidden = (bool)reader["isHidden"]
                     };
 

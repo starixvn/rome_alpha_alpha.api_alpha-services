@@ -6,4 +6,6 @@ public class ReportsAppSettingsModel : BaseAppSettingsModel
 {
     public string GrpcCustomer { get; init; }
     public string RemoteRefURL { get; init; }
+    public string OfferSabaPromotionSites { get; init; }
+    public string ProductOfferProductDetail { get; init; }
 }

@@ -10,6 +10,7 @@ using GrpcCustomer;
 using Microsoft.Extensions.Options;
 using Alpha.Reports.API.Interceptors;
 using Fanex.RemotingRef;
+using Alpha.Reports.API.DataAccesses;
 
 namespace Alpha.Reports.API;
 
@@ -81,12 +82,18 @@ public class Startup
     private void AddReportDI(IServiceCollection services)
     {
         services.Configure<ReportsAppSettingsModel>(Configuration.GetSection("ReportsAppSettings"));
+        services.AddTransient<IWinLossDetailDataAccess, WinLossDetailDataAccess>();
+
         services.AddSingleton<IRemotingRefService, RemotingRefService>();
         services.AddTransient<ICacheRefService, CacheRefService>();
         services.AddTransient<IUserService, UserService>();
-        services.AddTransient<IProductService, ProductService>();
         services.AddTransient<IAutoFollowBetService, AutoFollowBetService>();
+        services.AddTransient<IReportDateService, ReportDateService>();
+
+        services.AddTransient<IProductService, ProductService>();
+        services.AddTransient<IProductDetailService, ProductDetailService>();
         services.AddTransient<IOutstandingService, OutstandingService>();
+        services.AddTransient<IWinLossDetailService, WinLossDetailService>();
 
         services.AddTransient<GrpcExceptionInterceptor>();
         services.AddGrpcClient<Customer.CustomerClient>((services, options) =>

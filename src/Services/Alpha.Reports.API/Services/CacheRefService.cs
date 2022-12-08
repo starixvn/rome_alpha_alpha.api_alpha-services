@@ -5,6 +5,8 @@ namespace Alpha.Reports.API.Services;
 public interface ICacheRefService
 {
     string GetProductName(int productId, string language);
+
+    string GetResourceDataByRefIdAndResourceId(string refId, int resourceId, string language);
 }
 
 public class CacheRefService : ICacheRefService

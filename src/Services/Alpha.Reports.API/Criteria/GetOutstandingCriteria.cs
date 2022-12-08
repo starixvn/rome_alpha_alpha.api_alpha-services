@@ -4,9 +4,9 @@ using Fanex.Data.Repository;
 
 namespace Alpha.Reports.API.Criteria;
 
-public class OutstandingCriteria : CriteriaBase
+public class GetOutstandingCriteria : CriteriaBase
 {
-    public OutstandingCriteria(byte custLevel, int custId, string productIds)
+    public GetOutstandingCriteria(byte custLevel, int custId, string productIds)
     {
         CustLevel = custLevel;
         CustId = custId;
