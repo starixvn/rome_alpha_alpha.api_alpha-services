@@ -1,7 +1,8 @@
 using FanexLibs.Logging;
 using Alpha.ApiGateways.Extensions;
+using Alpha.ApiGateways.Infrastructure.RateLimits;
 using Alpha.ApiGateways.Infrastructure.Middlewares;
-using Alpha.ApiGateways.RateLimit.Middlewares;
+
 namespace Alpha.ApiGateways;
 
 public class Startup
@@ -44,16 +45,17 @@ public class Startup
 
         app.UseRouting();
         app.UseCors("CorsPolicy");
+        app.UseRateLimiter(CustomRateLimitOptions.GetIpRateLimiterOptions(Configuration));
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseRateLimiter(CustomRateLimitOptions.GetCustIdRateLimiterOptions(Configuration));
         app.UseMiddleware<CheckAccountStatusMiddleware>();
-        app.UseMiddleware<RateLimitMiddleware>();
 
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();
             endpoints.MapControllers();
-            endpoints.MapHealthChecks("/health").AllowAnonymous();
+            endpoints.MapHealthChecks("/health").AllowAnonymous().DisableRateLimiting();
         });
     }
 }
