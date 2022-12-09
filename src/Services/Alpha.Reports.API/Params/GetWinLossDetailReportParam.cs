@@ -1,5 +1,4 @@
 using Alpha.Utilities.Models;
-using Alpha.Utilities.Extensions;
 using GrpcReports;
 using Alpha.Reports.API.Constants;
 using Alpha.ApiKey.API.Models;
@@ -20,17 +19,6 @@ public class GetWinLossDetailReportParam
         Settings = settings;
         PageSize = request.PageSize == 0 ? DefaultVariables.PageSize : request.PageSize;
         PageIndex = request.PageIndex == 0 ? DefaultVariables.PageIndex : request.PageIndex;
-
-        var isHistoryReport = FromDate.IsSameMonthWith(ToDate);
-        FromDate = DateTime.TryParse(request.FromDate, out DateTime fromDate)
-            ? fromDate
-            : isHistoryReport ? SystemTimeModel.Today.FirstDayOfMonth() : SystemTimeModel.Today;
-
-        ToDate = DateTime.TryParse(request.ToDate, out DateTime toDate) ? toDate : SystemTimeModel.Today;
-
-        MinDate = isHistoryReport
-            ? SystemTimeModel.Today.AddYears(-3).FirstDayOfYear()
-            : SystemTimeModel.Today.AddMonths(-3).FirstDayOfMonth();
         IsEnableSabaPromotion = CheckEnableSabaPromotion();
     }
 
@@ -44,8 +32,6 @@ public class GetWinLossDetailReportParam
 
     public int PageSize { get; }
     public int PageIndex { get; }
-    public DateTime FromDate { get; }
-    public DateTime ToDate { get; }
     public ReportsAppSettingsModel Settings { get; }
 
     public IEnumerable<int> ProductIds { get; set; }
@@ -53,11 +39,7 @@ public class GetWinLossDetailReportParam
 
     public DateTime MinDate { get; }
 
-    public bool IsValid()
-        => CustId > 0
-        && !UserLevelModel.IsUpline(CustLevel, ViewerLevel)
-        && FromDate <= ToDate
-        && FromDate >= MinDate;
+    public bool IsValid() => CustId > 0 && !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
 
     private bool CheckEnableSabaPromotion()
     {

@@ -30,7 +30,6 @@ public class WinLossDetailController : Controller
         this.logger = logger;
     }
 
-    [HttpGet]
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(

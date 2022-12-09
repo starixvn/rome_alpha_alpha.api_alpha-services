@@ -124,8 +124,6 @@ message GetWinLossDetailReportRequest {
   bool isDescendingSort = 10;
   int32 pageSize = 11;
   int32 pageIndex = 12;
-  string fromDate = 13;
-  string toDate = 14;
 } 
 
 message GetSuperWinLossDetailResponse {

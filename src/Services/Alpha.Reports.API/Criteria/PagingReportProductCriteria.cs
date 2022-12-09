@@ -6,11 +6,9 @@ public class PagingReportProductCriteria : ReportProductCriteria
         int custId,
         int pageIndex,
         int pageSize,
-        DateTime fromDate,
-        DateTime toDate,
         DateTime balanceUpDay,
         DateTime moveBetsDay,
-        IEnumerable<int> productIds) : base(custId, fromDate, toDate, balanceUpDay, moveBetsDay, productIds)
+        IEnumerable<int> productIds) : base(custId, balanceUpDay, moveBetsDay, productIds)
     {
         PageIndex = pageIndex;
         PageSize = pageSize;

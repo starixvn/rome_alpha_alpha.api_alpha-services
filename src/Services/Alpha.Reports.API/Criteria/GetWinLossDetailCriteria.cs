@@ -9,14 +9,12 @@ public class GetWinLossDetailCriteria : PagingReportProductCriteria
         int custId,
         int pageIndex,
         int pageSize,
-        DateTime fromDate,
-        DateTime toDate,
         DateTime balanceUpDay,
         DateTime moveBetsDay,
         IEnumerable<int> productIds,
         byte custLevel,
         string productDetails)
-        : base(custId, pageIndex, pageSize, fromDate, toDate, balanceUpDay, moveBetsDay, productIds)
+        : base(custId, pageIndex, pageSize, balanceUpDay, moveBetsDay, productIds)
     {
         CustLevel = custLevel;
         ProductDetails = productDetails;
@@ -28,7 +26,7 @@ public class GetWinLossDetailCriteria : PagingReportProductCriteria
     public string ProductDetails { get; }
 
     public override string GetSettingKey()
-        => "Age_Rpt_WinLossDetail_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);
+        => "Age_Rpt_API_WinLossDetail_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);
 
     public override bool IsValid() => true;
 }
