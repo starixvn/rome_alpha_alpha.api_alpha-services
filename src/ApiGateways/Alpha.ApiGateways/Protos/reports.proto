@@ -65,49 +65,43 @@ message GetAgentOutstandingResponse {
 }
 
 message SuperOutstandingModel {
-  int32 custId = 1;
-  string custName = 2;
-  float memberOutstanding = 3;
-  float superOutstanding = 5;
+  string custName = 1;
+  float memberOutstanding = 2;
+  float superOutstanding = 3;
 }
 
 message SuperOnMasterOutstandingModel {
-  int32 custId = 1;
-  string custName = 2;
-  float memberOutstanding = 3;
-  float masterOutstanding = 6;
-  float superOutstanding = 5;
+  string custName = 1;
+  float memberOutstanding = 2;
+  float masterOutstanding = 3;
+  float superOutstanding = 4;
 }
 
 message SuperOnAgentOutstandingModel {
-  int32 custId = 1;
-  string custName = 2;
-  float memberOutstanding = 3;
-  float agentOutstanding = 4;
-  float masterOutstanding = 6;
+  string custName = 1;
+  float memberOutstanding = 2;
+  float agentOutstanding = 3;
+  float masterOutstanding = 4;
   float superOutstanding = 5;
 }
 
 message MasterOutstandingModel {
-  int32 custId = 1;
-  string custName = 2;
-  float memberOutstanding = 3;
-  float masterOutstanding = 6;
+  string custName = 1;
+  float memberOutstanding = 2;
+  float masterOutstanding = 3;
 }
 
 message MasterOnAgentOutstandingModel {
-  int32 custId = 1;
-  string custName = 2;
-  float memberOutstanding = 3;
-  float agentOutstanding = 4;
-  float masterOutstanding = 5;
+  string custName = 1;
+  float memberOutstanding = 2;
+  float agentOutstanding = 3;
+  float masterOutstanding = 4;
 }
 
 message AgentOutstandingModel {
-  int32 custId = 1;
-  string custName = 2;
-  float memberOutstanding = 3;
-  float agentOutstanding = 4;
+  string custName = 1;
+  float memberOutstanding = 2;
+  float agentOutstanding = 3;
 }
 
 message GetWinLossDetailReportRequest {
@@ -151,71 +145,68 @@ message GetAgentWinLossDetailResponse {
 }
 
 message SuperWinLossDetailModel {
-  int32 custId = 1;
-  string custName = 2;
-  int32 betCount = 3;
-  float turnover = 4;
+  string custName = 1;
+  int32 betCount = 2;
+  float turnover = 3;
 
-  float memberWinLoss = 5;
-  float memberComm = 6;
-  float memberTotal = 7;
+  float memberWinLoss = 4;
+  float memberComm = 5;
+  float memberTotal = 6;
 
-  float agentWinLoss = 8;
-  float agentComm = 9;
-  float agentTotal = 10;
+  float agentWinLoss = 7;
+  float agentComm = 8;
+  float agentTotal = 9;
 
-  float masterWinLoss = 11;
-  float masterComm = 12;
-  float masterTotal = 13;
+  float masterWinLoss = 10;
+  float masterComm = 11;
+  float masterTotal = 12;
 
-  float superWinLoss = 14;
-  float superComm = 15;
-  float superTotal = 16;
+  float superWinLoss = 13;
+  float superComm = 14;
+  float superTotal = 15;
 
-  float companyWinLoss = 17;
-  float companyComm = 18;
-  float companyTotal = 19;
+  float companyWinLoss = 16;
+  float companyComm = 17;
+  float companyTotal = 18;
 }
 
 message MasterWinLossDetailModel {
-  int32 custId = 1;
-  string custName = 2;
-  int32 betCount = 3;
-  float turnover = 4;
+  string custName = 1;
+  int32 betCount = 2;
+  float turnover = 3;
 
-  float memberWinLoss = 5;
-  float memberComm = 6;
-  float memberTotal = 7;
+  float memberWinLoss = 4;
+  float memberComm = 5;
+  float memberTotal = 6;
 
-  float agentWinLoss = 8;
-  float agentComm = 9;
-  float agentTotal = 10;
+  float agentWinLoss = 7;
+  float agentComm = 8;
+  float agentTotal = 9;
 
-  float masterWinLoss = 11;
-  float masterComm = 12;
-  float masterTotal = 13;
+  float masterWinLoss = 10;
+  float masterComm = 11;
+  float masterTotal = 12;
 
-  float companyWinLoss = 14;
-  float companyComm = 15;
-  float companyTotal = 16;
+  float companyWinLoss = 13;
+  float companyComm = 14;
+  float companyTotal = 15;
 }
 
 
 message AgentWinLossDetailModel {
-  int32 custId = 1;
-  string custName = 2;
-  int32 betCount = 3;
-  float turnover = 4;
+  string custName = 1;
+  int32 betCount = 2;
+  float turnover = 3;
 
-  float memberWinLoss = 5;
-  float memberComm = 6;
-  float memberTotal = 7;
+  float memberWinLoss = 4;
+  float memberComm = 5;
+  float memberTotal = 6;
 
-  float agentWinLoss = 8;
-  float agentComm = 9;
-  float agentTotal = 10;
+  float agentWinLoss = 7;
+  float agentComm = 8;
+  float agentTotal = 9;
 
-  float companyWinLoss = 11;
-  float companyComm = 12;
-  float companyTotal = 13;
+  float companyWinLoss = 10;
+  float companyComm = 11;
+  float companyTotal = 12;
 }

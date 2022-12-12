@@ -34,7 +34,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(reportData.DataSource.Select(o => new SuperWinLossDetailModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             BetCount = o.BetCount,
             Turnover = (float)o.Turnover,
@@ -77,7 +76,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(reportData.DataSource.Select(o => new MasterWinLossDetailModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             BetCount = o.BetCount,
             Turnover = (float)o.Turnover,
@@ -115,7 +113,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(reportData.DataSource.Select(o => new AgentWinLossDetailModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             BetCount = o.BetCount,
             Turnover = (float)o.Turnover,

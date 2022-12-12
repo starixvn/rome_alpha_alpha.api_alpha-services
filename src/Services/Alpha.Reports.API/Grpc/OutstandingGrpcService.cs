@@ -23,7 +23,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(outstandings.Select(o => new SuperOutstandingModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             MemberOutstanding = (float)o.MemberOutstanding,
             SuperOutstanding = (float)o.SuperOutstanding
@@ -49,7 +48,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(outstandings.Select(o => new SuperOnMasterOutstandingModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             MemberOutstanding = (float)o.MemberOutstanding,
             MasterOutstanding = (float)o.MasterOutstanding,
@@ -77,7 +75,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(outstandings.Select(o => new SuperOnAgentOutstandingModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             MemberOutstanding = (float)o.MemberOutstanding,
             AgentOutstanding = (float)o.AgentOutstanding,
@@ -104,7 +101,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(outstandings.Select(o => new MasterOutstandingModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             MemberOutstanding = (float)o.MemberOutstanding,
             MasterOutstanding = (float)o.MasterOutstanding
@@ -130,7 +126,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(outstandings.Select(o => new MasterOnAgentOutstandingModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             MemberOutstanding = (float)o.MemberOutstanding,
             AgentOutstanding = (float)o.AgentOutstanding,
@@ -156,7 +151,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         response.Report.AddRange(outstandings.Select(o => new AgentOutstandingModel
         {
-            CustId = o.CustId,
             CustName = o.CustName,
             MemberOutstanding = (float)o.MemberOutstanding,
             AgentOutstanding = (float)o.AgentOutstanding
