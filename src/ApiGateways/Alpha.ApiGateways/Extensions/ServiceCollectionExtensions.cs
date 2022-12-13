@@ -15,6 +15,9 @@ using Microsoft.Extensions.Options;
 using Alpha.ApiGateways.Infrastructure;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Threading.RateLimiting;
+using System.Globalization;
+using Alpha.ApiGateways.Infrastructure.RateLimits;
 
 namespace Alpha.ApiGateways.Extensions;
 
@@ -75,6 +78,46 @@ public static class ServiceCollectionExtensions
         {
             options.AddPolicy(PolicyConstants.Outstanding, policy => policy.RequireClaim("scope", ScopeConstants.Outstanding));
             options.AddPolicy(PolicyConstants.WinLossDetail, policy => policy.RequireClaim("scope", ScopeConstants.WinLossDetail));
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddCustomRateLimiter(this IServiceCollection services, IConfiguration configuration)
+    {
+        var ipRateLimitConfig = new IPRateLimitConfig();
+        configuration.GetSection(IPRateLimitConfig.IpRateLimit).Bind(ipRateLimitConfig);
+        services.Configure<CustomerRateLimitConfig>(configuration.GetSection(CustomerRateLimitConfig.CustomerRateLimit));
+
+        services.AddRateLimiter(options =>
+        {
+            options.OnRejected = (context, cancellationToken) =>
+            {
+                if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                {
+                    context.HttpContext.Response.Headers.RetryAfter =
+                        ((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
+                }
+
+                context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+
+                return new ValueTask();
+            };
+
+            options.GlobalLimiter = PartitionedRateLimiter.CreateChained(
+                PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                {
+                    var remoteIp = httpContext.Connection.RemoteIpAddress.ToString();
+                    return RateLimitPartition.GetSlidingWindowLimiter(remoteIp, partition => new SlidingWindowRateLimiterOptions
+                    {
+                        AutoReplenishment = ipRateLimitConfig.AutoReplenishment,
+                        PermitLimit = ipRateLimitConfig.PermitLimit,
+                        Window = ipRateLimitConfig.WindowByUnit,
+                        SegmentsPerWindow = ipRateLimitConfig.SegmentsPerWindow
+                    });
+                })
+                );
+            options.AddPolicy<string, CustomRateLimiterPolicy>("CustomRateLimit");
         });
 
         return services;

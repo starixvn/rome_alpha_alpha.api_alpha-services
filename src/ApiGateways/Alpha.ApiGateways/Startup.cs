@@ -19,6 +19,7 @@ public class Startup
         services.AddFanexLogging(Configuration)
             .AddOneBookUm(Configuration)
             .AddCustomMVC(Configuration)
+            .AddCustomRateLimiter(Configuration)
             .AddCustomAuthentication()
             .AddCustomAuthorization()
             .AddApplicationServices()
@@ -45,16 +46,15 @@ public class Startup
 
         app.UseRouting();
         app.UseCors("CorsPolicy");
-        app.UseRateLimiter(CustomRateLimitOptions.GetIpRateLimiterOptions(Configuration));
+        app.UseRateLimiter();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseRateLimiter(CustomRateLimitOptions.GetCustIdRateLimiterOptions(Configuration));
         app.UseMiddleware<CheckAccountStatusMiddleware>();
 
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();
-            endpoints.MapControllers();
+            endpoints.MapControllers().RequireRateLimiting("CustomRateLimit").RequireAuthorization();
             endpoints.MapHealthChecks("/health").AllowAnonymous().DisableRateLimiting();
         });
     }
