@@ -1,5 +1,6 @@
 
 using Alpha.Reports.API.Params;
+using Alpha.Utilities.Extensions;
 using Grpc.Core;
 
 namespace GrpcReports;
@@ -20,15 +21,15 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Total = new SuperWinLossDetailModel
             {
                 BetCount = reportData.TotalData.BetCount,
-                Turnover = (float)reportData.TotalData.Turnover,
-                MemberWinLoss = (float)reportData.TotalData.MemberWinLoss,
-                MemberComm = (float)reportData.TotalData.MemberComm,
-                AgentWinLoss = (float)reportData.TotalData.AgentWinLoss,
-                AgentComm = (float)reportData.TotalData.AgentComm,
-                MasterWinLoss = (float)reportData.TotalData.MasterWinLoss,
-                MasterComm = (float)reportData.TotalData.MasterComm,
-                SuperWinLoss = (float)reportData.TotalData.SuperWinLoss,
-                SuperComm = (float)reportData.TotalData.SuperComm
+                Turnover = reportData.TotalData.Turnover.FormatNumber(),
+                MemberWinLoss = reportData.TotalData.MemberWinLoss.FormatNumber(),
+                MemberComm = reportData.TotalData.MemberComm.FormatNumber(),
+                AgentWinLoss = reportData.TotalData.AgentWinLoss.FormatNumber(),
+                AgentComm = reportData.TotalData.AgentComm.FormatNumber(),
+                MasterWinLoss = reportData.TotalData.MasterWinLoss.FormatNumber(),
+                MasterComm = reportData.TotalData.MasterComm.FormatNumber(),
+                SuperWinLoss = reportData.TotalData.SuperWinLoss.FormatNumber(),
+                SuperComm = reportData.TotalData.SuperComm.FormatNumber()
             }
         };
 
@@ -36,15 +37,15 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             CustName = o.CustName,
             BetCount = o.BetCount,
-            Turnover = (float)o.Turnover,
-            MemberWinLoss = (float)o.MemberWinLoss,
-            MemberComm = (float)o.MemberComm,
-            AgentWinLoss = (float)o.AgentWinLoss,
-            AgentComm = (float)o.AgentComm,
-            MasterWinLoss = (float)o.MasterWinLoss,
-            MasterComm = (float)o.MasterComm,
-            SuperWinLoss = (float)o.SuperWinLoss,
-            SuperComm = (float)o.SuperComm
+            Turnover = o.Turnover.FormatNumber(),
+            MemberWinLoss = o.MemberWinLoss.FormatNumber(),
+            MemberComm = o.MemberComm.FormatNumber(),
+            AgentWinLoss = o.AgentWinLoss.FormatNumber(),
+            AgentComm = o.AgentComm.FormatNumber(),
+            MasterWinLoss = o.MasterWinLoss.FormatNumber(),
+            MasterComm = o.MasterComm.FormatNumber(),
+            SuperWinLoss = o.SuperWinLoss.FormatNumber(),
+            SuperComm = o.SuperComm.FormatNumber()
         }));
 
         return response;
@@ -64,13 +65,13 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Total = new MasterWinLossDetailModel
             {
                 BetCount = reportData.TotalData.BetCount,
-                Turnover = (float)reportData.TotalData.Turnover,
-                MemberWinLoss = (float)reportData.TotalData.MemberWinLoss,
-                MemberComm = (float)reportData.TotalData.MemberComm,
-                AgentWinLoss = (float)reportData.TotalData.AgentWinLoss,
-                AgentComm = (float)reportData.TotalData.AgentComm,
-                MasterWinLoss = (float)reportData.TotalData.MasterWinLoss,
-                MasterComm = (float)reportData.TotalData.MasterComm
+                Turnover = reportData.TotalData.Turnover.FormatNumber(),
+                MemberWinLoss = reportData.TotalData.MemberWinLoss.FormatNumber(),
+                MemberComm = reportData.TotalData.MemberComm.FormatNumber(),
+                AgentWinLoss = reportData.TotalData.AgentWinLoss.FormatNumber(),
+                AgentComm = reportData.TotalData.AgentComm.FormatNumber(),
+                MasterWinLoss = reportData.TotalData.MasterWinLoss.FormatNumber(),
+                MasterComm = reportData.TotalData.MasterComm.FormatNumber()
             }
         };
 
@@ -78,13 +79,13 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             CustName = o.CustName,
             BetCount = o.BetCount,
-            Turnover = (float)o.Turnover,
-            MemberWinLoss = (float)o.MemberWinLoss,
-            MemberComm = (float)o.MemberComm,
-            AgentWinLoss = (float)o.AgentWinLoss,
-            AgentComm = (float)o.AgentComm,
-            MasterWinLoss = (float)o.MasterWinLoss,
-            MasterComm = (float)o.MasterComm
+            Turnover = o.Turnover.FormatNumber(),
+            MemberWinLoss = o.MemberWinLoss.FormatNumber(),
+            MemberComm = o.MemberComm.FormatNumber(),
+            AgentWinLoss = o.AgentWinLoss.FormatNumber(),
+            AgentComm = o.AgentComm.FormatNumber(),
+            MasterWinLoss = o.MasterWinLoss.FormatNumber(),
+            MasterComm = o.MasterComm.FormatNumber()
         }));
 
         return response;
@@ -103,11 +104,11 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Total = new AgentWinLossDetailModel
             {
                 BetCount = reportData.TotalData.BetCount,
-                Turnover = (float)reportData.TotalData.Turnover,
-                MemberWinLoss = (float)reportData.TotalData.MemberWinLoss,
-                MemberComm = (float)reportData.TotalData.MemberComm,
-                AgentWinLoss = (float)reportData.TotalData.AgentWinLoss,
-                AgentComm = (float)reportData.TotalData.AgentComm
+                Turnover = reportData.TotalData.Turnover.FormatNumber(),
+                MemberWinLoss = reportData.TotalData.MemberWinLoss.FormatNumber(),
+                MemberComm = reportData.TotalData.MemberComm.FormatNumber(),
+                AgentWinLoss = reportData.TotalData.AgentWinLoss.FormatNumber(),
+                AgentComm = reportData.TotalData.AgentComm.FormatNumber()
             }
         };
 
@@ -115,11 +116,11 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             CustName = o.CustName,
             BetCount = o.BetCount,
-            Turnover = (float)o.Turnover,
-            MemberWinLoss = (float)o.MemberWinLoss,
-            MemberComm = (float)o.MemberComm,
-            AgentWinLoss = (float)o.AgentWinLoss,
-            AgentComm = (float)o.AgentComm
+            Turnover = o.Turnover.FormatNumber(),
+            MemberWinLoss = o.MemberWinLoss.FormatNumber(),
+            MemberComm = o.MemberComm.FormatNumber(),
+            AgentWinLoss = o.AgentWinLoss.FormatNumber(),
+            AgentComm = o.AgentComm.FormatNumber()
         }));
 
         return response;

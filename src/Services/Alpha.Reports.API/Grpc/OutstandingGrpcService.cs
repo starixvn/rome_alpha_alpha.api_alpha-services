@@ -2,6 +2,7 @@ using Alpha.Reports.API.Extensions;
 using Alpha.Reports.API.Params;
 using Grpc.Core;
 using Alpha.Reports.API.Models;
+using Alpha.Utilities.Extensions;
 
 namespace GrpcReports;
 
@@ -16,16 +17,16 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             Total = new SuperOutstandingModel
             {
-                MemberOutstanding = (float)total.MemberOutstanding,
-                SuperOutstanding = (float)total.SuperOutstanding
+                MemberOutstanding = total.MemberOutstanding.FormatNumber(),
+                SuperOutstanding = total.SuperOutstanding.FormatNumber()
             }
         };
 
         response.Report.AddRange(outstandings.Select(o => new SuperOutstandingModel
         {
             CustName = o.CustName,
-            MemberOutstanding = (float)o.MemberOutstanding,
-            SuperOutstanding = (float)o.SuperOutstanding
+            MemberOutstanding = o.MemberOutstanding.FormatNumber(),
+            SuperOutstanding = o.SuperOutstanding.FormatNumber()
         }));
 
         return response;
@@ -40,18 +41,18 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             Total = new SuperOnMasterOutstandingModel
             {
-                MemberOutstanding = (float)total.MemberOutstanding,
-                MasterOutstanding = (float)total.MasterOutstanding,
-                SuperOutstanding = (float)total.SuperOutstanding
+                MemberOutstanding = total.MemberOutstanding.FormatNumber(),
+                MasterOutstanding = total.MasterOutstanding.FormatNumber(),
+                SuperOutstanding = total.SuperOutstanding.FormatNumber()
             }
         };
 
         response.Report.AddRange(outstandings.Select(o => new SuperOnMasterOutstandingModel
         {
             CustName = o.CustName,
-            MemberOutstanding = (float)o.MemberOutstanding,
-            MasterOutstanding = (float)o.MasterOutstanding,
-            SuperOutstanding = (float)o.SuperOutstanding
+            MemberOutstanding = o.MemberOutstanding.FormatNumber(),
+            MasterOutstanding = o.MasterOutstanding.FormatNumber(),
+            SuperOutstanding = o.SuperOutstanding.FormatNumber()
         }));
 
         return response;
@@ -66,20 +67,20 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             Total = new SuperOnAgentOutstandingModel
             {
-                MemberOutstanding = (float)total.MemberOutstanding,
-                AgentOutstanding = (float)total.AgentOutstanding,
-                MasterOutstanding = (float)total.MasterOutstanding,
-                SuperOutstanding = (float)total.SuperOutstanding
+                MemberOutstanding = total.MemberOutstanding.FormatNumber(),
+                AgentOutstanding = total.AgentOutstanding.FormatNumber(),
+                MasterOutstanding = total.MasterOutstanding.FormatNumber(),
+                SuperOutstanding = total.SuperOutstanding.FormatNumber()
             }
         };
 
         response.Report.AddRange(outstandings.Select(o => new SuperOnAgentOutstandingModel
         {
             CustName = o.CustName,
-            MemberOutstanding = (float)o.MemberOutstanding,
-            AgentOutstanding = (float)o.AgentOutstanding,
-            MasterOutstanding = (float)o.MasterOutstanding,
-            SuperOutstanding = (float)o.SuperOutstanding
+            MemberOutstanding = o.MemberOutstanding.FormatNumber(),
+            AgentOutstanding = o.AgentOutstanding.FormatNumber(),
+            MasterOutstanding = o.MasterOutstanding.FormatNumber(),
+            SuperOutstanding = o.SuperOutstanding.FormatNumber()
         }));
 
         return response;
@@ -94,16 +95,16 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             Total = new MasterOutstandingModel
             {
-                MemberOutstanding = (float)total.MemberOutstanding,
-                MasterOutstanding = (float)total.MasterOutstanding,
+                MemberOutstanding = total.MemberOutstanding.FormatNumber(),
+                MasterOutstanding = total.MasterOutstanding.FormatNumber(),
             }
         };
 
         response.Report.AddRange(outstandings.Select(o => new MasterOutstandingModel
         {
             CustName = o.CustName,
-            MemberOutstanding = (float)o.MemberOutstanding,
-            MasterOutstanding = (float)o.MasterOutstanding
+            MemberOutstanding = o.MemberOutstanding.FormatNumber(),
+            MasterOutstanding = o.MasterOutstanding.FormatNumber()
         }));
 
         return response;
@@ -118,18 +119,18 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             Total = new MasterOnAgentOutstandingModel
             {
-                MemberOutstanding = (float)total.MemberOutstanding,
-                AgentOutstanding = (float)total.AgentOutstanding,
-                MasterOutstanding = (float)total.MasterOutstanding
+                MemberOutstanding = total.MemberOutstanding.FormatNumber(),
+                AgentOutstanding = total.AgentOutstanding.FormatNumber(),
+                MasterOutstanding = total.MasterOutstanding.FormatNumber()
             }
         };
 
         response.Report.AddRange(outstandings.Select(o => new MasterOnAgentOutstandingModel
         {
             CustName = o.CustName,
-            MemberOutstanding = (float)o.MemberOutstanding,
-            AgentOutstanding = (float)o.AgentOutstanding,
-            MasterOutstanding = (float)o.MasterOutstanding
+            MemberOutstanding = o.MemberOutstanding.FormatNumber(),
+            AgentOutstanding = o.AgentOutstanding.FormatNumber(),
+            MasterOutstanding = o.MasterOutstanding.FormatNumber()
         }));
 
         return response;
@@ -144,16 +145,16 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             Total = new AgentOutstandingModel
             {
-                MemberOutstanding = (float)total.MemberOutstanding,
-                AgentOutstanding = (float)total.AgentOutstanding
+                MemberOutstanding = total.MemberOutstanding.FormatNumber(),
+                AgentOutstanding = total.AgentOutstanding.FormatNumber()
             }
         };
 
         response.Report.AddRange(outstandings.Select(o => new AgentOutstandingModel
         {
             CustName = o.CustName,
-            MemberOutstanding = (float)o.MemberOutstanding,
-            AgentOutstanding = (float)o.AgentOutstanding
+            MemberOutstanding = o.MemberOutstanding.FormatNumber(),
+            AgentOutstanding = o.AgentOutstanding.FormatNumber()
         }));
 
         return response;
