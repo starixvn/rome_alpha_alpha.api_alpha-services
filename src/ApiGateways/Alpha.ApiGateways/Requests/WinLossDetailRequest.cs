@@ -12,10 +12,4 @@ public class WinLossDetailRequest
 
     [FromBody]
     public int PageIndex { get; set; }
-
-    [FromBody]
-    public DateTime FromDate { get; set; }
-
-    [FromBody]
-    public DateTime ToDate { get; set; }
 }

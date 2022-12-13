@@ -164,10 +164,8 @@ message SuperWinLossDetailModel {
   string superWinLoss = 13;
   string superComm = 14;
   string superTotal = 15;
-
-  string companyWinLoss = 16;
-  string companyComm = 17;
-  string companyTotal = 18;
+  
+  string company = 16;
 }
 
 message MasterWinLossDetailModel {
@@ -187,9 +185,7 @@ message MasterWinLossDetailModel {
   string masterComm = 11;
   string masterTotal = 12;
 
-  string companyWinLoss = 13;
-  string companyComm = 14;
-  string companyTotal = 15;
+  string company = 13;
 }
 
 
@@ -206,7 +202,5 @@ message AgentWinLossDetailModel {
   string agentComm = 8;
   string agentTotal = 9;
 
-  string companyWinLoss = 10;
-  string companyComm = 11;
-  string companyTotal = 12;
+  string company = 10;
 }
