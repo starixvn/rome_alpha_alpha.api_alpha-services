@@ -3,18 +3,16 @@ using Fanex.Data;
 
 namespace Alpha.Reports.API.Criteria;
 
-public class GetWinLossDetailCriteria : PagingReportProductCriteria
+public class GetWinLossDetailCriteria : ReportProductCriteria
 {
     public GetWinLossDetailCriteria(
         int custId,
-        int pageIndex,
-        int pageSize,
         DateTime balanceUpDay,
         DateTime moveBetsDay,
         IEnumerable<int> productIds,
         byte custLevel,
         string productDetails)
-        : base(custId, pageIndex, pageSize, balanceUpDay, moveBetsDay, productIds)
+        : base(custId, balanceUpDay, moveBetsDay, productIds)
     {
         CustLevel = custLevel;
         ProductDetails = productDetails;

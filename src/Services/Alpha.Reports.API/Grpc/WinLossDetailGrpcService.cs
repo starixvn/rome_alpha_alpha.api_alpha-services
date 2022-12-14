@@ -15,9 +15,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         var response = new GetSuperWinLossDetailResponse
         {
-            PageSize = param.PageSize,
-            PageIndex = param.PageIndex,
-            TotalRecords = reportData.TotalRecords,
             Total = new SuperWinLossDetailModel
             {
                 BetCount = reportData.TotalData.BetCount,
@@ -61,9 +58,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         var response = new GetMasterWinLossDetailResponse
         {
-            PageSize = param.PageSize,
-            PageIndex = param.PageIndex,
-            TotalRecords = reportData.TotalRecords,
             Total = new MasterWinLossDetailModel
             {
                 BetCount = reportData.TotalData.BetCount,
@@ -102,9 +96,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         var response = new GetAgentWinLossDetailResponse
         {
-            PageSize = param.PageSize,
-            PageIndex = param.PageIndex,
-            TotalRecords = reportData.TotalRecords,
             Total = new AgentWinLossDetailModel
             {
                 BetCount = reportData.TotalData.BetCount,

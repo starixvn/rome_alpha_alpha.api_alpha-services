@@ -116,32 +116,21 @@ message GetWinLossDetailReportRequest {
  
   string sortPropertyName = 9;
   bool isDescendingSort = 10;
-  int32 pageSize = 11;
-  int32 pageIndex = 12;
 } 
 
 message GetSuperWinLossDetailResponse {
   repeated SuperWinLossDetailModel report = 1;
   SuperWinLossDetailModel total = 2;
-  int32 pageSize = 3;
-  int32 pageIndex = 4;
-  int32 totalRecords = 5;
 }
 
 message GetMasterWinLossDetailResponse {
   repeated MasterWinLossDetailModel report = 1;
   MasterWinLossDetailModel total = 2;
-  int32 pageSize = 3;
-  int32 pageIndex = 4;
-  int32 totalRecords = 5;
 }
 
 message GetAgentWinLossDetailResponse {
   repeated AgentWinLossDetailModel report = 1;
   AgentWinLossDetailModel total = 2;
-  int32 pageSize = 3;
-  int32 pageIndex = 4;
-  int32 totalRecords = 5;
 }
 
 message SuperWinLossDetailModel {

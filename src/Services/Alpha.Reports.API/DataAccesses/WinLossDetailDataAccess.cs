@@ -9,14 +9,14 @@ namespace Alpha.Reports.API.DataAccesses;
 
 public interface IWinLossDetailDataAccess
 {
-    Task<PagedReportDataModel<SuperWinLossDetailModel>> GetSuperWinLossDetail(GetWinLossDetailCriteria criteria);
-    Task<PagedReportDataModel<MasterWinLossDetailModel>> GetMasterWinLossDetail(GetWinLossDetailCriteria criteria);
-    Task<PagedReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetWinLossDetailCriteria criteria);
+    Task<ReportDataModel<SuperWinLossDetailModel>> GetSuperWinLossDetail(GetWinLossDetailCriteria criteria);
+    Task<ReportDataModel<MasterWinLossDetailModel>> GetMasterWinLossDetail(GetWinLossDetailCriteria criteria);
+    Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetWinLossDetailCriteria criteria);
 }
 
 public class WinLossDetailDataAccess : IWinLossDetailDataAccess
 {
-    public async Task<PagedReportDataModel<SuperWinLossDetailModel>> GetSuperWinLossDetail(GetWinLossDetailCriteria criteria)
+    public async Task<ReportDataModel<SuperWinLossDetailModel>> GetSuperWinLossDetail(GetWinLossDetailCriteria criteria)
     {
         var winLossDetails = new List<SuperWinLossDetailModel>();
         var totalWinLoss = new SuperWinLossDetailModel();
@@ -39,15 +39,10 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             }
         }
 
-        return new PagedReportDataModel<SuperWinLossDetailModel>(
-            winLossDetails,
-            criteria.PageIndex,
-            criteria.PageSize,
-            criteria.TotalRecords,
-            totalWinLoss);
+        return new ReportDataModel<SuperWinLossDetailModel>(winLossDetails, totalWinLoss);
     }
 
-    public async Task<PagedReportDataModel<MasterWinLossDetailModel>> GetMasterWinLossDetail(GetWinLossDetailCriteria criteria)
+    public async Task<ReportDataModel<MasterWinLossDetailModel>> GetMasterWinLossDetail(GetWinLossDetailCriteria criteria)
     {
         var winLossDetails = new List<MasterWinLossDetailModel>();
         var totalWinLoss = new MasterWinLossDetailModel();
@@ -70,16 +65,12 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             }
         }
 
-        return new PagedReportDataModel<MasterWinLossDetailModel>(
-            winLossDetails,
-            criteria.PageIndex,
-            criteria.PageSize,
-            criteria.TotalRecords,
+        return new ReportDataModel<MasterWinLossDetailModel>(winLossDetails,
             totalWinLoss);
     }
 
 
-    public async Task<PagedReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetWinLossDetailCriteria criteria)
+    public async Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetWinLossDetailCriteria criteria)
     {
         var winLossDetails = new List<AgentWinLossDetailModel>();
         var totalWinLoss = new AgentWinLossDetailModel();
@@ -102,12 +93,7 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             }
         }
 
-        return new PagedReportDataModel<AgentWinLossDetailModel>(
-            winLossDetails,
-            criteria.PageIndex,
-            criteria.PageSize,
-            criteria.TotalRecords,
-            totalWinLoss);
+        return new ReportDataModel<AgentWinLossDetailModel>(winLossDetails, totalWinLoss);
     }
 
     private static SuperWinLossDetailModel BuildSuperWinLossDetail(IDataReader reader)

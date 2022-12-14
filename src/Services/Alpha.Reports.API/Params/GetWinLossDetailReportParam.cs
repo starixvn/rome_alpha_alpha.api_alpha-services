@@ -1,6 +1,5 @@
 using Alpha.Utilities.Models;
 using GrpcReports;
-using Alpha.Reports.API.Constants;
 using Alpha.ApiKey.API.Models;
 
 namespace Alpha.Reports.API.Params;
@@ -17,9 +16,9 @@ public class GetWinLossDetailReportParam
         CurrencyId = request.CurrencyId;
         Language = request.Language;
         Settings = settings;
-        PageSize = request.PageSize == 0 ? DefaultVariables.PageSize : request.PageSize;
-        PageIndex = request.PageIndex == 0 ? DefaultVariables.PageIndex : request.PageIndex;
         IsEnableSabaPromotion = CheckEnableSabaPromotion();
+
+        MinDate = DateTime.Now.Date.AddMonths(-1);
     }
 
     public int ViewerId { get; }
@@ -30,8 +29,6 @@ public class GetWinLossDetailReportParam
     public int CurrencyId { get; }
     public string Language { get; }
 
-    public int PageSize { get; }
-    public int PageIndex { get; }
     public ReportsAppSettingsModel Settings { get; }
 
     public IEnumerable<int> ProductIds { get; set; }
