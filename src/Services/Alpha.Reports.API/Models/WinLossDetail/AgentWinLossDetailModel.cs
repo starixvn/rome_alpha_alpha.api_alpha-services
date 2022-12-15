@@ -22,5 +22,5 @@ public class AgentWinLossDetailModel
 
     public decimal AgentTotal => AgentWinLoss + AgentComm;
 
-    public decimal Company => AgentTotal - MemberTotal;
+    public decimal Company => -(AgentTotal + MemberTotal);
 }

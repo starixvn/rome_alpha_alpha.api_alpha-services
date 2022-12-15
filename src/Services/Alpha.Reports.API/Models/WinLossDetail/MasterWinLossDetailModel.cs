@@ -8,5 +8,5 @@ public class MasterWinLossDetailModel : AgentWinLossDetailModel
 
     public decimal MasterTotal => MasterWinLoss + MasterComm;
 
-    public new decimal Company => MasterTotal + AgentTotal - MemberTotal;
+    public new decimal Company => -(MasterTotal + AgentTotal + MemberTotal);
 }

@@ -21,13 +21,17 @@ public partial class ReportGrpcService : Reports.ReportsBase
                 Turnover = reportData.TotalData.Turnover.FormatNumber(),
                 MemberWinLoss = reportData.TotalData.MemberWinLoss.FormatNumber(),
                 MemberComm = reportData.TotalData.MemberComm.FormatNumber(),
+                MemberTotal = reportData.TotalData.MemberTotal.FormatNumber(),
                 AgentWinLoss = reportData.TotalData.AgentWinLoss.FormatNumber(),
                 AgentComm = reportData.TotalData.AgentComm.FormatNumber(),
+                AgentTotal = reportData.TotalData.AgentTotal.FormatNumber(),
                 MasterWinLoss = reportData.TotalData.MasterWinLoss.FormatNumber(),
                 MasterComm = reportData.TotalData.MasterComm.FormatNumber(),
+                MasterTotal = reportData.TotalData.MasterTotal.FormatNumber(),
                 SuperWinLoss = reportData.TotalData.SuperWinLoss.FormatNumber(),
                 SuperComm = reportData.TotalData.SuperComm.FormatNumber(),
-                Company = reportData.TotalData.Company.FormatNumber()
+                SuperTotal = reportData.TotalData.SuperTotal.FormatNumber(),
+                Company = reportData.TotalData.Company.FormatNumber(),
             }
         };
 
@@ -38,12 +42,16 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Turnover = o.Turnover.FormatNumber(),
             MemberWinLoss = o.MemberWinLoss.FormatNumber(),
             MemberComm = o.MemberComm.FormatNumber(),
+            MemberTotal = o.MemberTotal.FormatNumber(),
             AgentWinLoss = o.AgentWinLoss.FormatNumber(),
             AgentComm = o.AgentComm.FormatNumber(),
+            AgentTotal = o.AgentTotal.FormatNumber(),
             MasterWinLoss = o.MasterWinLoss.FormatNumber(),
             MasterComm = o.MasterComm.FormatNumber(),
+            MasterTotal = o.MasterTotal.FormatNumber(),
             SuperWinLoss = o.SuperWinLoss.FormatNumber(),
             SuperComm = o.SuperComm.FormatNumber(),
+            SuperTotal = o.SuperTotal.FormatNumber(),
             Company = o.Company.FormatNumber()
         }));
 
@@ -64,11 +72,14 @@ public partial class ReportGrpcService : Reports.ReportsBase
                 Turnover = reportData.TotalData.Turnover.FormatNumber(),
                 MemberWinLoss = reportData.TotalData.MemberWinLoss.FormatNumber(),
                 MemberComm = reportData.TotalData.MemberComm.FormatNumber(),
+                MemberTotal = reportData.TotalData.MemberTotal.FormatNumber(),
                 AgentWinLoss = reportData.TotalData.AgentWinLoss.FormatNumber(),
                 AgentComm = reportData.TotalData.AgentComm.FormatNumber(),
+                AgentTotal = reportData.TotalData.AgentTotal.FormatNumber(),
                 MasterWinLoss = reportData.TotalData.MasterWinLoss.FormatNumber(),
                 MasterComm = reportData.TotalData.MasterComm.FormatNumber(),
-                Company = reportData.TotalData.Company.FormatNumber()
+                MasterTotal = reportData.TotalData.MasterTotal.FormatNumber(),
+                Company = reportData.TotalData.Company.FormatNumber(),
             }
         };
 
@@ -79,10 +90,13 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Turnover = o.Turnover.FormatNumber(),
             MemberWinLoss = o.MemberWinLoss.FormatNumber(),
             MemberComm = o.MemberComm.FormatNumber(),
+            MemberTotal = o.MemberTotal.FormatNumber(),
             AgentWinLoss = o.AgentWinLoss.FormatNumber(),
             AgentComm = o.AgentComm.FormatNumber(),
+            AgentTotal = o.AgentTotal.FormatNumber(),
             MasterWinLoss = o.MasterWinLoss.FormatNumber(),
             MasterComm = o.MasterComm.FormatNumber(),
+            MasterTotal = o.MasterTotal.FormatNumber(),
             Company = o.Company.FormatNumber()
         }));
 
@@ -102,9 +116,11 @@ public partial class ReportGrpcService : Reports.ReportsBase
                 Turnover = reportData.TotalData.Turnover.FormatNumber(),
                 MemberWinLoss = reportData.TotalData.MemberWinLoss.FormatNumber(),
                 MemberComm = reportData.TotalData.MemberComm.FormatNumber(),
+                MemberTotal = reportData.TotalData.MemberTotal.FormatNumber(),
                 AgentWinLoss = reportData.TotalData.AgentWinLoss.FormatNumber(),
                 AgentComm = reportData.TotalData.AgentComm.FormatNumber(),
-                Company = reportData.TotalData.Company.FormatNumber()
+                AgentTotal = reportData.TotalData.AgentTotal.FormatNumber(),
+                Company = reportData.TotalData.Company.FormatNumber(),
             }
         };
 
@@ -115,8 +131,10 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Turnover = o.Turnover.FormatNumber(),
             MemberWinLoss = o.MemberWinLoss.FormatNumber(),
             MemberComm = o.MemberComm.FormatNumber(),
+            MemberTotal = o.MemberTotal.FormatNumber(),
             AgentWinLoss = o.AgentWinLoss.FormatNumber(),
             AgentComm = o.AgentComm.FormatNumber(),
+            AgentTotal = o.AgentTotal.FormatNumber(),
             Company = o.Company.FormatNumber()
         }));
 

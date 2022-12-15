@@ -1,3 +1,4 @@
+using System.Net;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Alpha.ApiGateways.Services;
@@ -11,7 +12,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
     private readonly IApiKeyService apiKeyService;
 
     public BasicAuthenticationHandler(IApiKeyService apiKeyService, IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
-    : base(options, logger, encoder, clock)
+        : base(options, logger, encoder, clock)
     {
         this.apiKeyService = apiKeyService;
     }
@@ -25,7 +26,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
         if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(passPhrase) || string.IsNullOrEmpty(signature) || string.IsNullOrEmpty(timestamp))
         {
-            Response.StatusCode = 400;
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
             return AuthenticateResult.Fail("Bad Request");
         }
@@ -48,7 +49,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         }
         else
         {
-            Response.StatusCode = 401;
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
             return AuthenticateResult.Fail("Unauthorized");
         }

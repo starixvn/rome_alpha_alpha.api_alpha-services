@@ -1,4 +1,4 @@
-using Alpha.ApiGateways.Shared.Extensions;
+using Alpha.ApiGateways.Extensions;
 
 namespace Alpha.ApiGateways.Configurations;
 

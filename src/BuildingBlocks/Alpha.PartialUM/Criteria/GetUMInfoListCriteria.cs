@@ -11,8 +11,7 @@ public class GetUMInfoListCriteria : CriteriaBase
 
     public string MartketName { get; }
 
-    public override string GetSettingKey()
-        => "Acc_CheckUM_ByReport";
+    public override string GetSettingKey() => "Acc_CheckUM_ByReport";
 
     public override bool IsValid() => !string.IsNullOrEmpty(MartketName);
 }

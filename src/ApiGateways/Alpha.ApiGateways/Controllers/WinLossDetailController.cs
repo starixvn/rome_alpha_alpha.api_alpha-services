@@ -63,17 +63,12 @@ public class WinLossDetailController : Controller
             ViewerLevelId = downlineInfo.RoleId
         };
 
-        if (viewerInfo.RoleId == UserLevelModel.Super)
+        return viewerInfo.RoleId switch
         {
-            return await SuperWinLossDetail(reportRequest);
-        }
-
-        if (viewerInfo.RoleId == UserLevelModel.Master)
-        {
-            return await MasterWinLossDetail(reportRequest);
-        }
-
-        return await AgentWinLossDetail(reportRequest);
+            UserLevelModel.Super => await SuperWinLossDetail(reportRequest),
+            UserLevelModel.Master => await MasterWinLossDetail(reportRequest),
+            _ => await AgentWinLossDetail(reportRequest),
+        };
     }
 
     private async Task<IActionResult> SuperWinLossDetail(GetWinLossDetailReportRequest request)
