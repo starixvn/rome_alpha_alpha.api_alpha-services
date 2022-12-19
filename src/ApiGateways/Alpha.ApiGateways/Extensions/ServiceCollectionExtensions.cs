@@ -126,6 +126,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddTransient<GrpcExceptionInterceptor>();
+        services.AddTransient<ReportsGrpcExceptionInterceptor>();
 
         services.AddScoped<IApiKeyService, ApiKeyService>();
         services.AddGrpcClient<ApiKey.ApiKeyClient>((services, options) =>
@@ -145,7 +146,7 @@ public static class ServiceCollectionExtensions
         {
             var api = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcReports;
             options.Address = new Uri(api);
-        }).AddInterceptor<GrpcExceptionInterceptor>();
+        }).AddInterceptor<ReportsGrpcExceptionInterceptor>();
 
         return services;
     }

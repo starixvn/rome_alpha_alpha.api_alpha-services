@@ -28,7 +28,7 @@ public class CheckBelongingInterceptor : Interceptor
             return response;
         }
 
-        return null;
+        throw new RpcException(new Status(StatusCode.PermissionDenied, ((int)HttpStatusCode.Forbidden).ToString()));
     }
 
     private static Task HandleForbiddenResponse(ServerCallContext context, string message)

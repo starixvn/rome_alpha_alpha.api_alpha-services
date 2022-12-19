@@ -32,6 +32,7 @@ public class GrpcExceptionInterceptor : Interceptor
         catch (RpcException e)
         {
             await _logger.ErrorAsync($"Error calling via grpc: {e.Status} - {e.Message}", e);
+
             return default;
         }
     }

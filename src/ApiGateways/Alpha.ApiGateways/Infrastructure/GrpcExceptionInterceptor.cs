@@ -27,11 +27,13 @@ public class GrpcExceptionInterceptor : Interceptor
         try
         {
             var response = await task;
+
             return response;
         }
         catch (RpcException e)
         {
             await _logger.ErrorAsync($"Error calling via grpc: {e.Status} - {e.Message}", e);
+
             return default;
         }
     }

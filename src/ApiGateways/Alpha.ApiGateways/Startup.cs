@@ -1,6 +1,5 @@
 using FanexLibs.Logging;
 using Alpha.ApiGateways.Extensions;
-using Alpha.ApiGateways.Infrastructure.RateLimits;
 using Alpha.ApiGateways.Infrastructure.Middlewares;
 
 namespace Alpha.ApiGateways;
