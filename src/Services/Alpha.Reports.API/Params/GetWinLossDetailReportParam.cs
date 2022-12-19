@@ -36,7 +36,10 @@ public class GetWinLossDetailReportParam
 
     public DateTime MinDate { get; }
 
-    public bool IsValid() => CustId > 0 && !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
+    public bool IsValid() =>
+        CustLevel > UserLevelModel.Member &&
+        CustId > 0 &&
+        !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
 
     private bool CheckEnableSabaPromotion()
     {

@@ -64,7 +64,7 @@ public class WinLossDetailService : IWinLossDetailService
             balanceUpDay,
             moveBetsDay,
             products,
-            param.ViewerLevel,
+            param.CustLevel,
             productDetailsXML);
 
         partialUMService.ThrowIfUM(criteria.GetSettingKey());
@@ -101,7 +101,7 @@ public class WinLossDetailService : IWinLossDetailService
             balanceUpDay,
             moveBetsDay,
             products,
-            param.ViewerLevel,
+            param.CustLevel,
             productDetailsXML);
 
         partialUMService.ThrowIfUM(criteria.GetSettingKey());
@@ -140,7 +140,7 @@ public class WinLossDetailService : IWinLossDetailService
             balanceUpDay,
             moveBetsDay,
             products,
-            param.ViewerLevel,
+            param.CustLevel,
             productDetailsXML);
 
         partialUMService.ThrowIfUM(criteria.GetSettingKey());

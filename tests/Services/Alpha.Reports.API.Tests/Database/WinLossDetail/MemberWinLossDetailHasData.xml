@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WinLossDetail>
+  <TableWinLoss>
+    <CustId>1</CustId>
+    <CustName>Member1</CustName>
+    <Turnover>0</Turnover>
+    <NetTurnover>1</NetTurnover>
+    <GrossComm>2</GrossComm>
+    <MemberWinLoss>3</MemberWinLoss>
+    <MemberComm>4</MemberComm>
+    <AgWinLoss>5</AgWinLoss>
+    <AgComm>6</AgComm>
+    <NumberOfTickets>11</NumberOfTickets>
+    <RowNum>12</RowNum>
+  </TableWinLoss>
+  <TableWinLoss>
+    <CustId>11</CustId>
+    <CustName>Member2</CustName>
+    <Turnover>10</Turnover>
+    <NetTurnover>11</NetTurnover>
+    <GrossComm>12</GrossComm>
+    <MemberWinLoss>13</MemberWinLoss>
+    <MemberComm>14</MemberComm>
+    <AgWinLoss>15</AgWinLoss>
+    <AgComm>16</AgComm>
+    <NumberOfTickets>111</NumberOfTickets>
+    <RowNum>112</RowNum>
+  </TableWinLoss>
+  <TableTotal>
+    <CustId></CustId>
+    <CustName>Total</CustName>
+    <Turnover>20</Turnover>
+    <NetTurnover>21</NetTurnover>
+    <GrossComm>22</GrossComm>
+    <MemberWinLoss>23</MemberWinLoss>
+    <MemberComm>24</MemberComm>
+    <AgWinLoss>25</AgWinLoss>
+    <AgComm>26</AgComm>
+    <NumberOfTickets>211</NumberOfTickets>
+    <RowNum>212</RowNum>
+  </TableTotal>
+</WinLossDetail>

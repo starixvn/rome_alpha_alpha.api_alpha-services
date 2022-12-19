@@ -138,7 +138,7 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
 
     private static AgentWinLossDetailModel BuildAgentWinLossDetail(IDataReader reader)
     {
-        var winLossDetail = new SuperWinLossDetailModel
+        var winLossDetail = new AgentWinLossDetailModel
         {
             CustId = reader.ToInt("CustId"),
             CustName = reader.ToString("CustName"),

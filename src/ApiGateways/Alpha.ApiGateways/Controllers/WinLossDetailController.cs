@@ -59,11 +59,11 @@ public class WinLossDetailController : Controller
             CustLevelId = downlineInfo.RoleId,
             Site = viewerInfo.Site,
             CurrencyId = downlineInfo.Currency,
-            ViewerId = downlineInfo.CustId,
-            ViewerLevelId = downlineInfo.RoleId
+            ViewerId = viewerInfo.CustId,
+            ViewerLevelId = viewerInfo.RoleId
         };
 
-        return viewerInfo.RoleId switch
+        return downlineInfo.RoleId switch
         {
             UserLevelModel.Super => await SuperWinLossDetail(reportRequest),
             UserLevelModel.Master => await MasterWinLossDetail(reportRequest),

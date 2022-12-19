@@ -58,8 +58,9 @@ public class OutstandingController : Controller
             CustLevelId = downlineInfo.RoleId,
             Site = viewerInfo.Site,
             CurrencyId = downlineInfo.Currency,
-            ViewerId = downlineInfo.CustId,
-            ViewerLevelId = downlineInfo.RoleId
+            ViewerId = viewerInfo.CustId,
+            ViewerLevelId = viewerInfo.RoleId,
+            CustName = request.CustName
         };
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)

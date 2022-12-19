@@ -53,6 +53,15 @@
           },
           {
             "SettingKey": "Age_Rpt_WinLossDetailByPT_Super"
+          },
+          {
+            "SettingKey": "Age_Rpt_API_WinLossDetail_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_API_WinLossDetail_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_API_WinLossDetail_Member"
           }
         ]
       },
