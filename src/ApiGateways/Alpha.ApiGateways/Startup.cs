@@ -1,6 +1,10 @@
 using FanexLibs.Logging;
 using Alpha.ApiGateways.Extensions;
 using Alpha.ApiGateways.Infrastructure.Middlewares;
+using System.Net;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Diagnostics;
+using Alpha.ApiGateways.Models;
 
 namespace Alpha.ApiGateways;
 
@@ -37,6 +41,30 @@ public class Startup
             app.UseHsts();
             app.ConfigureExceptionHandler();
         }
+
+        app.UseExceptionHandler(appError =>
+        {
+            appError.Run(async context =>
+            {
+                var ex = context.Features.Get<IExceptionHandlerFeature>();
+                if (ex == null)
+                {
+                    return;
+                }
+
+                if (ex.Error is ReportsException)
+                {
+                    var info = ex.Error as ReportsException;
+
+                    context.Response.StatusCode = info.Code;
+                    context.Response.ContentType = Text.Plain;
+                    await context.Response.WriteAsync(info.Detail);
+                    return;
+                }
+
+                throw ex.Error;
+            });
+        });
 
         app.UseSwagger().UseSwaggerUI(options =>
         {

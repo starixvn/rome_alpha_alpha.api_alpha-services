@@ -1,4 +1,5 @@
 using System.Net;
+using Alpha.ApiGateways.Models;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
@@ -35,18 +36,19 @@ public class ReportsGrpcExceptionInterceptor : Interceptor
         {
             await _logger.ErrorAsync($"Error calling via grpc: {e.Status} - {e.Message}", e);
 
-            var responseVm = new { Code = int.TryParse(e.Status.Detail, out int code) ? code : (int)HttpStatusCode.Forbidden };
-
-            return MapResponse<TResponse>(responseVm);
+            throw new ReportsException
+            {
+                Code = (int)MapStatusCode(e.Status.StatusCode),
+                Detail = e.Status.Detail
+            };
         }
     }
 
-    private static TResponse MapResponse<TResponse>(dynamic responseViewModel)
-    {
-        var concreteResponse = Activator.CreateInstance<TResponse>();
-
-        concreteResponse?.GetType().GetProperty(nameof(responseViewModel.Code))?.SetValue(concreteResponse, responseViewModel.Code);
-
-        return concreteResponse;
-    }
+    private static HttpStatusCode MapStatusCode(StatusCode code)
+        => code switch
+        {
+            StatusCode.Unavailable => HttpStatusCode.ServiceUnavailable,
+            StatusCode.PermissionDenied => HttpStatusCode.Unauthorized,
+            _ => HttpStatusCode.ServiceUnavailable,
+        };
 }

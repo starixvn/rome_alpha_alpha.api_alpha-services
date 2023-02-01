@@ -2,6 +2,7 @@ using Alpha.PartialUM.Extensions;
 using Alpha.PartialUM.Helpers;
 using Alpha.PartialUM.Models;
 using Fanex.Caching;
+using Grpc.Core;
 using Microsoft.Extensions.Options;
 
 namespace Alpha.PartialUM.Services;
@@ -42,7 +43,9 @@ public class PartialUMService : IPartialUMService
         {
             if (umInfoDictionary.TryGetValue(function, out var umInfo))
             {
-                throw new PartialUMExceptionModel(umInfo.BeginTime.ToLongString(), umInfo.EndTime.ToLongString());
+                var info = new PartialUMExceptionModel(umInfo.BeginTime.ToLongString(), umInfo.EndTime.ToLongString());
+
+                throw new RpcException(new Status(StatusCode.Unavailable, info.Message));
             }
         }
     }

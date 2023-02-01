@@ -37,37 +37,31 @@ message GetOutstandingReportRequest {
 message GetSuperOutstandingResponse {
   repeated SuperOutstandingModel report = 1;
   SuperOutstandingModel total = 2;
-  int32 code = 3;
 }
 
 message GetSuperOnMasterOutstandingResponse {
   repeated SuperOnMasterOutstandingModel report = 1;
   SuperOnMasterOutstandingModel total = 2;
-  int32 code = 3;
 }
 
 message GetSuperOnAgentOutstandingResponse {
   repeated SuperOnAgentOutstandingModel report = 1;
   SuperOnAgentOutstandingModel total = 2;
-  int32 code = 3;
 }
 
 message GetMasterOutstandingResponse {
   repeated MasterOutstandingModel report = 1;
   MasterOutstandingModel total = 2;
-  int32 code = 3;
 }
 
 message GetMasterOnAgentOutstandingResponse {
   repeated MasterOnAgentOutstandingModel report = 1;
   MasterOnAgentOutstandingModel total = 2;
-  int32 code = 3;
 }
 
 message GetAgentOutstandingResponse {
   repeated AgentOutstandingModel report = 1;
   AgentOutstandingModel total = 2;
-  int32 code = 3;
 }
 
 message SuperOutstandingModel {
@@ -127,19 +121,16 @@ message GetWinLossDetailReportRequest {
 message GetSuperWinLossDetailResponse {
   repeated SuperWinLossDetailModel report = 1;
   SuperWinLossDetailModel total = 2;
-  int32 code = 3;
 }
 
 message GetMasterWinLossDetailResponse {
   repeated MasterWinLossDetailModel report = 1;
   MasterWinLossDetailModel total = 2;
-  int32 code = 3;
 }
 
 message GetAgentWinLossDetailResponse {
   repeated AgentWinLossDetailModel report = 1;
   AgentWinLossDetailModel total = 2;
-  int32 code = 3;
 }
 
 message SuperWinLossDetailModel {

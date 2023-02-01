@@ -1,6 +1,6 @@
 namespace Alpha.PartialUM.Models;
 
-public sealed class PartialUMExceptionModel : Exception
+public sealed class PartialUMExceptionModel
 {
     public PartialUMExceptionModel(string umFrom, string umTo)
     {
@@ -11,4 +11,6 @@ public sealed class PartialUMExceptionModel : Exception
     public string UMFrom { get; }
 
     public string UMTo { get; }
+
+    public string Message => "{\"UMFrom\":\"" + UMFrom + "\",\"UMTo\":\"" + UMTo + "\"}";
 }
