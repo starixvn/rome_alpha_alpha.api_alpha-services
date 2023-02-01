@@ -18,7 +18,7 @@ public class ApiKeyService : IApiKeyService
         this.settings = settings;
     }
 
-    public async Task<CreateApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string scopes, DateTime? expirationDate)
+    public async Task<CreateApiKeyResult> CreateApiKey(int custId, string apiName, string passPhrase, string scopes, string ip, DateTime? expirationDate)
     {
         var keyBytes = RandomNumberGenerator.GetBytes(12);
         var apiSecretBytes = RandomNumberGenerator.GetBytes(16);
@@ -27,7 +27,7 @@ public class ApiKeyService : IApiKeyService
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
         var passPhraseEncrypt = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(passPhrase)));
 
-        var criteria = new CreateApiKeyCommand(custId, apiName, passPhraseEncrypt, scopes, key, apiSecret, expirationDate);
+        var criteria = new CreateApiKeyCommand(custId, apiName, passPhraseEncrypt, scopes, key, apiSecret, ip, expirationDate);
         await dynamicRepository.ExecuteAsync(criteria);
 
         if (criteria.ErrCode > 0)
@@ -72,12 +72,12 @@ public class ApiKeyService : IApiKeyService
     public async Task<ApiKeyEntity> Get(string key)
         => await dynamicRepository.GetAsync<ApiKeyEntity>(new GetApiKeyCriteria(key));
 
-    public async Task RevokeApiKey(string key, int custId)
-        => await dynamicRepository.ExecuteAsync(new DeleteApiKeyCommand(key, custId));
+    public async Task RevokeApiKey(string key, int custId, string ip)
+        => await dynamicRepository.ExecuteAsync(new DeleteApiKeyCommand(key, custId, ip));
 
-    public async Task<Result> UpdateApiKey(int custId, string key, string name, string scopes, DateTime? expirationDate)
+    public async Task<Result> UpdateApiKey(int custId, string key, string name, string scopes, string ip, DateTime? expirationDate)
     {
-        var criteria = new UpdateApiKeyCommand(custId, key, name, scopes, expirationDate);
+        var criteria = new UpdateApiKeyCommand(custId, key, name, scopes, ip, expirationDate);
         await dynamicRepository.ExecuteAsync(criteria);
 
         return new Result(criteria.ErrCode, criteria.ErrMsg);

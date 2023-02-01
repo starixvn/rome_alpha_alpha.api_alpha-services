@@ -4,7 +4,7 @@ namespace Alpha.ApiKey.API.Criteria;
 
 public class CreateApiKeyCommand : NonQueryCommand
 {
-    public CreateApiKeyCommand(int custId, string apiName, string passPhrase, string scopeIDList, string apiKey, string apiSecret, DateTime? expirationDate)
+    public CreateApiKeyCommand(int custId, string apiName, string passPhrase, string scopeIDList, string apiKey, string apiSecret, string ip, DateTime? expirationDate)
     {
         CustId = custId;
         ApiName = apiName;
@@ -12,6 +12,7 @@ public class CreateApiKeyCommand : NonQueryCommand
         ScopeIDList = scopeIDList;
         ApiKey = apiKey;
         ApiSecret = apiSecret;
+        IP = ip;
         ExpiredDate = expirationDate;
     }
 
@@ -26,6 +27,8 @@ public class CreateApiKeyCommand : NonQueryCommand
     public string ApiKey { get; }
 
     public string ApiSecret { get; }
+
+    public string IP { get; }
 
     public DateTime? ExpiredDate { get; }
 

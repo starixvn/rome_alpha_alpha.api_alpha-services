@@ -10,5 +10,7 @@ public class UpdateApiKeyParam
 
     public string Scopes { get; set; } = default!;
 
+    public string IP { get; set; } = default!;
+
     public DateTime? ExpirationDate { get; set; }
 }

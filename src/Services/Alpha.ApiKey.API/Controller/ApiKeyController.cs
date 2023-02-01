@@ -37,7 +37,7 @@ public class ApiKeyController : ControllerBase
     [ProducesResponseType(typeof(ActionResult<ApiKeyResult>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<ApiKeyResult>> CreateApiKey(CreateApiKeyParam param)
     {
-        var result = await apiKeyService.CreateApiKey(param.CustId, param.ApiName, param.PassPhrase, param.Scopes, param.ExpirationDate);
+        var result = await apiKeyService.CreateApiKey(param.CustId, param.ApiName, param.PassPhrase, param.Scopes, param.IP, param.ExpirationDate);
         return Ok(result);
     }
 
@@ -58,7 +58,7 @@ public class ApiKeyController : ControllerBase
             return BadRequest();
         }
 
-        var result = await apiKeyService.UpdateApiKey(param.CustId, param.ApiKey, param.ApiName, param.Scopes, param.ExpirationDate);
+        var result = await apiKeyService.UpdateApiKey(param.CustId, param.ApiKey, param.ApiName, param.Scopes, param.IP, param.ExpirationDate);
         return Ok(result);
     }
 
@@ -66,7 +66,7 @@ public class ApiKeyController : ControllerBase
     [HttpDelete("{key}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public async Task<ActionResult> DeleteApiKey(string key)
+    public async Task<ActionResult> DeleteApiKey(string key, [FromQuery] string ip)
     {
         var apiKey = await apiKeyService.Get(key);
         if (apiKey == null)
@@ -74,7 +74,7 @@ public class ApiKeyController : ControllerBase
             return NotFound();
         }
 
-        await apiKeyService.RevokeApiKey(key, apiKey.CustId);
+        await apiKeyService.RevokeApiKey(key, apiKey.CustId, ip);
         return NoContent();
     }
 }
