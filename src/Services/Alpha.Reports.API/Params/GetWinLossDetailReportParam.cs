@@ -44,6 +44,6 @@ public class GetWinLossDetailReportParam
     private bool CheckEnableSabaPromotion()
     {
         var sites = Settings.OfferSabaPromotionSites.Split(new[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries);
-        return sites.Any(s => s == "*" || s.Equals(Site, StringComparison.OrdinalIgnoreCase)); ;
+        return sites.Any(s => s == "*" || s.Equals(Site, StringComparison.OrdinalIgnoreCase));
     }
 }

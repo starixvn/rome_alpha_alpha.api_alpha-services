@@ -10,7 +10,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
     public override async Task<GetSuperWinLossDetailResponse> GetSuperWinLossDetail(GetWinLossDetailReportRequest request, ServerCallContext context)
     {
         var param = new GetWinLossDetailReportParam(request, settings);
-        var products = productService.GetProductsForCustomer(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.MinDate, param.IsEnableSabaPromotion);
         var reportData = await winLossDetailService.GetSuperWinLossDetail(param);
 
         var response = new GetSuperWinLossDetailResponse
@@ -61,7 +60,6 @@ public partial class ReportGrpcService : Reports.ReportsBase
     public override async Task<GetMasterWinLossDetailResponse> GetMasterWinLossDetail(GetWinLossDetailReportRequest request, ServerCallContext context)
     {
         var param = new GetWinLossDetailReportParam(request, settings);
-        var products = productService.GetProductsForCustomer(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.MinDate, param.IsEnableSabaPromotion);
         var reportData = await winLossDetailService.GetMasterWinLossDetail(param);
 
         var response = new GetMasterWinLossDetailResponse

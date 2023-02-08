@@ -120,7 +120,6 @@ public class WinLossDetailService : IWinLossDetailService
 
         var balanceUpDay = reportDateService.GetBalanceUpDay();
         var moveBetsDay = reportDateService.GetMoveBetsDay();
-        var minDate = DateTime.Now.AddMonths(-1);
 
         var products = await productService.FilterProductIdsByCustomer(
             param.ViewerId,
