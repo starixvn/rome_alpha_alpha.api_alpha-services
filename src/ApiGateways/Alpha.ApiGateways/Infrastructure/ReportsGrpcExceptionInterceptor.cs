@@ -49,6 +49,6 @@ public class ReportsGrpcExceptionInterceptor : Interceptor
         {
             StatusCode.Unavailable => HttpStatusCode.ServiceUnavailable,
             StatusCode.PermissionDenied => HttpStatusCode.Unauthorized,
-            _ => HttpStatusCode.ServiceUnavailable,
+            _ => HttpStatusCode.InternalServerError,
         };
 }
