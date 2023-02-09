@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Alpha.Reports.API.Interceptors;
 using Fanex.RemotingRef;
 using Alpha.Reports.API.DataAccesses;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace Alpha.Reports.API;
 
@@ -64,6 +65,24 @@ public class Startup
             app.UseHsts();
             app.ConfigureExceptionHandler();
         }
+
+        app.UseExceptionHandler(appError =>
+        {
+            appError.Run(async context =>
+            {
+                var ex = context.Features.Get<IExceptionHandlerFeature>();
+
+                if (ex != null && ex.Error != null)
+                {
+                    var logger = app.ApplicationServices.GetService<Fanex.Logging.ILogger>();
+
+                    await logger.ErrorAsync("Error happens", ex.Error);
+                }
+
+                throw ex.Error;
+            });
+        });
+
 
         app.UseSwagger();
         app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Reports.API v1"));
