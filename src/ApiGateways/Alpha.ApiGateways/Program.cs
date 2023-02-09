@@ -10,7 +10,12 @@ var appName = typeof(Program).Assembly.GetName().Name;
 try
 {
     Log.Information("Configuring web host ({ApplicationContext})...", appName);
-    var host = CreateHostBuilder(args).Build();
+    Log.Information("CreateHostBuilder", appName);
+    var builder = CreateHostBuilder(args);
+
+    Log.Information("Build", appName);
+    var host = builder.Build();
+
     Log.Information("Starting web host ({ApplicationContext})...", appName);
     host.Run();
 }

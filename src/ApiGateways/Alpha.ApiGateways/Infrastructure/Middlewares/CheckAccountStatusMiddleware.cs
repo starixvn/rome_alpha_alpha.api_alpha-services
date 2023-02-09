@@ -24,6 +24,7 @@ public class CheckAccountStatusMiddleware
             var accountStatus = await customerService.GetCustomerStatus(custId);
             if (accountStatus == null || accountStatus.IsProtectedMode)
             {
+                await HandleForbiddenResponse(context, "Your account is Protected Mode");
                 return;
             }
 
