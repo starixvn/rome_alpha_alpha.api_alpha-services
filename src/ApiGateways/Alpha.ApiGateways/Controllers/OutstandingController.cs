@@ -5,6 +5,8 @@ using GrpcReports;
 using Alpha.ApiGateways.Services;
 using Alpha.ApiGateways.Requests;
 using Alpha.Utilities.Models;
+using Alpha.ApiGateways.Models;
+using System.Net;
 
 namespace Alpha.ApiGateways.Controllers;
 
@@ -52,6 +54,11 @@ public class OutstandingController : Controller
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
 
+        if (downlineInfo.RoleId == UserLevelModel.Member)
+        {
+            throw new ReportsException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+        }
+
         var reportRequest = new GetOutstandingReportRequest
         {
             CustId = downlineInfo.CustId,
@@ -61,9 +68,7 @@ public class OutstandingController : Controller
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
             CustName = request.CustName
-        };
-
-        if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)
+        }; if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)
         {
             return await SuperOutstanding(reportRequest);
         }

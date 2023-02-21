@@ -1,4 +1,6 @@
+using System.Net;
 using Alpha.ApiGateways.Constants;
+using Alpha.ApiGateways.Models;
 using Alpha.ApiGateways.Requests;
 using Alpha.ApiGateways.Services;
 using Alpha.Utilities.Models;
@@ -51,6 +53,11 @@ public class WinLossDetailController : Controller
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
+
+        if (downlineInfo.RoleId == UserLevelModel.Member)
+        {
+            throw new ReportsException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+        }
 
         var reportRequest = new GetWinLossDetailReportRequest
         {
