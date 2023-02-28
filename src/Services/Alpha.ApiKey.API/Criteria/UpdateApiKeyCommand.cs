@@ -4,13 +4,14 @@ namespace Alpha.ApiKey.API.Criteria;
 
 public class UpdateApiKeyCommand : NonQueryCommand
 {
-    public UpdateApiKeyCommand(int custId, string apiKey, string apiName, string scopeIDList, string ip, DateTime? expiredDate)
+    public UpdateApiKeyCommand(int custId, string apiKey, string apiName, string scopeIDList, string ip, string language, DateTime? expiredDate)
     {
         CustId = custId;
         ApiKey = apiKey;
         ApiName = apiName;
         ScopeIDList = scopeIDList;
         IP = ip;
+        Language = language;
         ExpiredDate = expiredDate;
     }
 
@@ -23,6 +24,8 @@ public class UpdateApiKeyCommand : NonQueryCommand
     public string ApiKey { get; }
 
     public string IP { get; }
+
+    public string Language { get; }
 
     public DateTime? ExpiredDate { get; }
 

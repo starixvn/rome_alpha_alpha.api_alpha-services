@@ -37,7 +37,7 @@ public class ApiKeyController : ControllerBase
     [ProducesResponseType(typeof(ActionResult<ApiKeyResult>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<ApiKeyResult>> CreateApiKey(CreateApiKeyParam param)
     {
-        var result = await apiKeyService.CreateApiKey(param.CustId, param.ApiName, param.PassPhrase, param.Scopes, param.IP, param.ExpirationDate);
+        var result = await apiKeyService.CreateApiKey(param.CustId, param.ApiName, param.PassPhrase, param.Scopes, param.IP, param.Language, param.ExpirationDate);
         return Ok(result);
     }
 
@@ -58,7 +58,7 @@ public class ApiKeyController : ControllerBase
             return BadRequest();
         }
 
-        var result = await apiKeyService.UpdateApiKey(param.CustId, param.ApiKey, param.ApiName, param.Scopes, param.IP, param.ExpirationDate);
+        var result = await apiKeyService.UpdateApiKey(param.CustId, param.ApiKey, param.ApiName, param.Scopes, param.IP, param.Language, param.ExpirationDate);
         return Ok(result);
     }
 

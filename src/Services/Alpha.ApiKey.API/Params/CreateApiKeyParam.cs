@@ -12,5 +12,7 @@ public class CreateApiKeyParam
 
     public string IP { get; set; } = default!;
 
+    public string Language { get; set; } = default!;
+
     public DateTime? ExpirationDate { get; set; }
 }
