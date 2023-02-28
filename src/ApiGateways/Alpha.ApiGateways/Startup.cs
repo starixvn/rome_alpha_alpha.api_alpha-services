@@ -68,7 +68,7 @@ public class Startup
 
         app.UseSwagger().UseSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Alpha API Gateways v1");
+            options.SwaggerEndpoint("../swagger/v1/swagger.json", "Alpha API Gateways v1");
         });
 
         app.UseRouting();
