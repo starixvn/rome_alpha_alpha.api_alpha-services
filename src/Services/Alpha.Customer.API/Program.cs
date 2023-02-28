@@ -25,30 +25,15 @@ finally
     Log.CloseAndFlush();
 }
 
-static IHostBuilder CreateHostBuilder(string[] args) {
-    var config = new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", optional: true)
-        .AddCommandLine(args)
-        .Build();
-
+static IHostBuilder CreateHostBuilder(string[] args)
+{
     var builder = Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();
-            webBuilder.UseKestrel(options =>
-            {
-                options.Listen(IPAddress.Any, int.Parse(config["CustomerAppSettings:Http1AndHttp2Port"]), listenOptions =>
-                {
-                    listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-                });
-                options.Listen(IPAddress.Any, int.Parse(config["CustomerAppSettings:Http2Port"]), listenOptions =>
-                {
-                    listenOptions.Protocols = HttpProtocols.Http2;
-                });
-            });
-        }) 
+            webBuilder.UseKestrel();
+        })
         .UseSerilog(SeriLogger.Configure);
 
-        return builder;
+    return builder;
 }

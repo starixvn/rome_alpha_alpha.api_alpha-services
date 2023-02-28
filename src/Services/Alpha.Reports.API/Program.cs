@@ -38,17 +38,7 @@ static IHostBuilder CreateHostBuilder(string[] args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();
-            webBuilder.UseKestrel(options =>
-            {
-                options.Listen(IPAddress.Any, int.Parse(config["ReportsAppSettings:Http1AndHttp2Port"]), listenOptions =>
-                {
-                    listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-                });
-                options.Listen(IPAddress.Any, int.Parse(config["ReportsAppSettings:Http2Port"]), listenOptions =>
-                {
-                    listenOptions.Protocols = HttpProtocols.Http2;
-                });
-            });
+            webBuilder.UseKestrel();
         })
         .UseSerilog(SeriLogger.Configure);
 

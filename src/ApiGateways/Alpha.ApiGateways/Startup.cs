@@ -5,6 +5,7 @@ using System.Net;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Diagnostics;
 using Alpha.ApiGateways.Models;
+using Microsoft.OpenApi.Models;
 
 namespace Alpha.ApiGateways;
 
@@ -66,9 +67,19 @@ public class Startup
             });
         });
 
-        app.UseSwagger().UseSwaggerUI(options =>
+        app.UseSwagger(c =>
         {
-            options.SwaggerEndpoint("../swagger/v1/swagger.json", "Alpha API Gateways v1");
+            c.PreSerializeFilters.Add((swagger, httpReq) =>
+            {
+                swagger.Servers = new List<OpenApiServer> {
+                    new OpenApiServer { Url = "https://alpha_gateways.starixuat.com/v2" }
+                };
+            });
+
+        }).UseSwaggerUI(options =>
+        {
+            string swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
+            options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Alpha API Gateways v1");
         });
 
         app.UseRouting();
