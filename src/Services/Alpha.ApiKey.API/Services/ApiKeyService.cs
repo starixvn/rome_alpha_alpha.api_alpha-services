@@ -41,7 +41,9 @@ public class ApiKeyService : IApiKeyService
     public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timestamp)
     {
         var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        if (!long.TryParse(timestamp, out long requestTimeSpan) || (now - requestTimeSpan) > settings.Value.ExpireSignatureTime)
+        if (!long.TryParse(timestamp, out long requestTimeSpan) ||
+            (now - requestTimeSpan) > settings.Value.ExpireSignatureTime ||
+            (requestTimeSpan - now) > settings.Value.AllowSignatureTimeTimeRange)
         {
             return new VerifyApiKeyResult(false);
         }
