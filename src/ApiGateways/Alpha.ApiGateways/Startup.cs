@@ -72,7 +72,7 @@ public class Startup
             c.PreSerializeFilters.Add((swagger, httpReq) =>
             {
                 swagger.Servers = new List<OpenApiServer> {
-                    new OpenApiServer { Url = "https://alpha_gateways.starixuat.com/v2" }
+                    new OpenApiServer { Url = Configuration.GetValue<string>("Urls:ApiServer") }
                 };
             });
 

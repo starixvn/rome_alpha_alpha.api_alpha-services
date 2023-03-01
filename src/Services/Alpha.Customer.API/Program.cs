@@ -27,11 +27,27 @@ finally
 
 static IHostBuilder CreateHostBuilder(string[] args)
 {
+    var config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: true)
+        .AddCommandLine(args)
+        .Build();
+
     var builder = Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();
-            webBuilder.UseKestrel();
+            webBuilder.UseKestrel(options =>
+            {
+                options.ListenAnyIP(int.Parse(config["CustomerAppSettings:Http1AndHttp2Port"]), listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+                });
+                options.ListenAnyIP(int.Parse(config["CustomerAppSettings:Http2Port"]), listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http2;
+                });
+            });
         })
         .UseSerilog(SeriLogger.Configure);
 

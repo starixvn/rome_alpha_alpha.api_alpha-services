@@ -3,6 +3,7 @@ using Alpha.ApiKey.API.Services;
 using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcApiKey;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.OpenApi.Models;
 
 namespace Alpha.ApiKey.API;
@@ -19,7 +20,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.Configure<APIKeyAppSettings>(Configuration.GetSection("APIKeyAppSettings"));
-        
+
         services
             .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
