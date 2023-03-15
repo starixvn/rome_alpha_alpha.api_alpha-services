@@ -75,12 +75,16 @@ public class Startup
                     new OpenApiServer { Url = Configuration.GetValue<string>("Urls:ApiServer") }
                 };
             });
-
-        }).UseSwaggerUI(options =>
-        {
-            string swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
-            options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Alpha API Gateways v1");
         });
+
+        if (env.IsDevelopment())
+        {
+            app.UseSwaggerUI(options =>
+            {
+                string swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
+                options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Alpha API Gateways v1");
+            });
+        }
 
         app.UseRouting();
         app.UseCors("CorsPolicy");
