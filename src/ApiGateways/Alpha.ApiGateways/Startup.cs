@@ -1,0 +1,103 @@
+using FanexLibs.Logging;
+using Alpha.ApiGateways.Extensions;
+using Alpha.ApiGateways.Infrastructure.Middlewares;
+using System.Net;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Diagnostics;
+using Alpha.ApiGateways.Models;
+using Microsoft.OpenApi.Models;
+
+namespace Alpha.ApiGateways;
+
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddFanexLogging(Configuration)
+            .AddOneBookUm(Configuration)
+            .AddCustomMVC(Configuration)
+            .AddCustomRateLimiter(Configuration)
+            .AddCustomAuthentication()
+            .AddCustomAuthorization()
+            .AddApplicationServices()
+            .AddDistributedMemoryCache()
+            .AddHealthChecks();
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseHsts();
+            app.ConfigureExceptionHandler();
+        }
+
+        app.UseExceptionHandler(appError =>
+        {
+            appError.Run(async context =>
+            {
+                var ex = context.Features.Get<IExceptionHandlerFeature>();
+                if (ex == null)
+                {
+                    return;
+                }
+
+                if (ex.Error is ReportsException)
+                {
+                    var info = ex.Error as ReportsException;
+
+                    context.Response.StatusCode = info.Code;
+                    context.Response.ContentType = Text.Plain;
+                    await context.Response.WriteAsync(info.Detail);
+                    return;
+                }
+
+                throw ex.Error;
+            });
+        });
+
+        app.UseSwagger(c =>
+        {
+            c.PreSerializeFilters.Add((swagger, httpReq) =>
+            {
+                swagger.Servers = new List<OpenApiServer> {
+                    new OpenApiServer { Url = Configuration.GetValue<string>("Urls:ApiServer") }
+                };
+            });
+        });
+
+        if (env.IsDevelopment())
+        {
+            app.UseSwaggerUI(options =>
+            {
+                string swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
+                options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Alpha API Gateways v1");
+            });
+        }
+
+        app.UseRouting();
+        app.UseCors("CorsPolicy");
+        app.UseRateLimiter();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<CheckAccountStatusMiddleware>();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapDefaultControllerRoute();
+            endpoints.MapControllers().RequireRateLimiting("CustomRateLimit").RequireAuthorization();
+            endpoints.MapHealthChecks("/health").AllowAnonymous().DisableRateLimiting();
+        });
+    }
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcApiKey";
+
+package ApiKey;
+
+service ApiKey {
+    rpc VerifyApiKey(VerifyApiKeyRequest) returns (VerifyApiKeyResponse) {}
+    rpc GetApiKey(GetApiKeyRequest) returns (GetApiKeyResponse) {}
+}
+
+message VerifyApiKeyRequest {
+    string key = 1;
+    string passphrase = 2;
+    string signature = 3;
+    string timestamp = 4;
+}
+
+message VerifyApiKeyResponse {
+    bool isAuthenticated = 1;
+    int32 custId = 2;
+    int32 roleId = 3;
+    repeated string scopes = 4;
+}
+
+message GetApiKeyRequest {
+    string key = 1;
+}
+
+message GetApiKeyResponse {
+    int32 custId = 1;
+    int32 roleId = 2;
+}

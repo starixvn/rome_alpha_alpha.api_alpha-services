@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcCustomer";
+
+package Customer;
+
+service Customer {
+    rpc GetCustomerProducts(GetCustomerProductsRequest) returns (GetCustomerProductsResponse) {}
+    rpc GetDownlineInfo(GetDownlineInfoRequest) returns (GetDownlineInfoResponse) {}
+}
+
+message GetCustomerProductsRequest {
+    int32 custId = 1;
+}
+
+message GetCustomerProductsResponse {
+    repeated ProductsResponse products = 1;
+}
+
+message ProductsResponse {
+    int32 id = 1;
+    bool isSynced = 2;
+    bool isHidden = 3;
+}
+
+message GetDownlineInfoRequest {
+    int32 viewerId = 1;
+    string downlineUsername = 2;
+}
+
+message GetDownlineInfoResponse {
+    bool isBelonging = 1;
+}

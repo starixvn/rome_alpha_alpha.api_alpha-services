@@ -1,0 +1,195 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcReports";
+
+package Reports;
+
+service Reports {
+  rpc GetSuperOutstanding(GetOutstandingReportRequest) returns (GetSuperOutstandingResponse);
+  rpc GetSuperOnMasterOutstanding(GetOutstandingReportRequest) returns (GetSuperOnMasterOutstandingResponse);
+  rpc GetSuperOnAgentOutstanding(GetOutstandingReportRequest) returns (GetSuperOnAgentOutstandingResponse);
+  
+  rpc GetMasterOutstanding(GetOutstandingReportRequest) returns (GetMasterOutstandingResponse);
+  rpc GetMasterOnAgentOutstanding(GetOutstandingReportRequest) returns (GetMasterOnAgentOutstandingResponse);
+
+  rpc GetAgentOutstanding(GetOutstandingReportRequest) returns (GetAgentOutstandingResponse);
+
+  rpc GetSuperWinLossDetail(GetWinLossDetailReportRequest) returns (GetSuperWinLossDetailResponse);
+  rpc GetMasterWinLossDetail(GetWinLossDetailReportRequest) returns (GetMasterWinLossDetailResponse);
+  rpc GetAgentWinLossDetail(GetWinLossDetailReportRequest) returns (GetAgentWinLossDetailResponse);
+}
+
+message GetOutstandingReportRequest {
+  string language = 1;
+  int32 custId = 2;
+  string custName = 3;
+  string site = 4;
+  int32 currencyId = 5;
+  sint32 custLevelId = 6;
+  int32 viewerId = 7;
+  sint32 viewerLevelId = 8;
+  bool autoFollowBetIsDummyAgent = 9;
+
+  string sortPropertyName = 10;
+  bool isDescendingSort = 11;
+} 
+
+message GetSuperOutstandingResponse {
+  repeated SuperOutstandingModel report = 1;
+  SuperOutstandingModel total = 2;
+}
+
+message GetSuperOnMasterOutstandingResponse {
+  repeated SuperOnMasterOutstandingModel report = 1;
+  SuperOnMasterOutstandingModel total = 2;
+}
+
+message GetSuperOnAgentOutstandingResponse {
+  repeated SuperOnAgentOutstandingModel report = 1;
+  SuperOnAgentOutstandingModel total = 2;
+}
+
+message GetMasterOutstandingResponse {
+  repeated MasterOutstandingModel report = 1;
+  MasterOutstandingModel total = 2;
+}
+
+message GetMasterOnAgentOutstandingResponse {
+  repeated MasterOnAgentOutstandingModel report = 1;
+  MasterOnAgentOutstandingModel total = 2;
+}
+
+message GetAgentOutstandingResponse {
+  repeated AgentOutstandingModel report = 1;
+  AgentOutstandingModel total = 2;
+}
+
+message SuperOutstandingModel {
+  string custName = 1;
+  string memberOutstanding = 2;
+  string superOutstanding = 3;
+}
+
+message SuperOnMasterOutstandingModel {
+  string custName = 1;
+  string memberOutstanding = 2;
+  string masterOutstanding = 3;
+  string superOutstanding = 4;
+}
+
+message SuperOnAgentOutstandingModel {
+  string custName = 1;
+  string memberOutstanding = 2;
+  string agentOutstanding = 3;
+  string masterOutstanding = 4;
+  string superOutstanding = 5;
+}
+
+message MasterOutstandingModel {
+  string custName = 1;
+  string memberOutstanding = 2;
+  string masterOutstanding = 3;
+}
+
+message MasterOnAgentOutstandingModel {
+  string custName = 1;
+  string memberOutstanding = 2;
+  string agentOutstanding = 3;
+  string masterOutstanding = 4;
+}
+
+message AgentOutstandingModel {
+  string custName = 1;
+  string memberOutstanding = 2;
+  string agentOutstanding = 3;
+}
+
+message GetWinLossDetailReportRequest {
+  string language = 1;
+  int32 custId = 2;
+  string custName = 3;
+  string site = 4;
+  int32 currencyId = 5;
+  sint32 custLevelId = 6;
+  int32 viewerId = 7;
+  sint32 viewerLevelId = 8;
+ 
+  string sortPropertyName = 9;
+  bool isDescendingSort = 10;
+} 
+
+message GetSuperWinLossDetailResponse {
+  repeated SuperWinLossDetailModel report = 1;
+  SuperWinLossDetailModel total = 2;
+}
+
+message GetMasterWinLossDetailResponse {
+  repeated MasterWinLossDetailModel report = 1;
+  MasterWinLossDetailModel total = 2;
+}
+
+message GetAgentWinLossDetailResponse {
+  repeated AgentWinLossDetailModel report = 1;
+  AgentWinLossDetailModel total = 2;
+}
+
+message SuperWinLossDetailModel {
+  string custName = 1;
+  int32 betCount = 2;
+  string turnover = 3;
+
+  string memberWinLoss = 4;
+  string memberComm = 5;
+  string memberTotal = 6;
+
+  string agentWinLoss = 7;
+  string agentComm = 8;
+  string agentTotal = 9;
+
+  string masterWinLoss = 10;
+  string masterComm = 11;
+  string masterTotal = 12;
+
+  string superWinLoss = 13;
+  string superComm = 14;
+  string superTotal = 15;
+  
+  string company = 16;
+}
+
+message MasterWinLossDetailModel {
+  string custName = 1;
+  int32 betCount = 2;
+  string turnover = 3;
+
+  string memberWinLoss = 4;
+  string memberComm = 5;
+  string memberTotal = 6;
+
+  string agentWinLoss = 7;
+  string agentComm = 8;
+  string agentTotal = 9;
+
+  string masterWinLoss = 10;
+  string masterComm = 11;
+  string masterTotal = 12;
+
+  string company = 13;
+}
+
+
+message AgentWinLossDetailModel {
+  string custName = 1;
+  int32 betCount = 2;
+  string turnover = 3;
+
+  string memberWinLoss = 4;
+  string memberComm = 5;
+  string memberTotal = 6;
+
+  string agentWinLoss = 7;
+  string agentComm = 8;
+  string agentTotal = 9;
+
+  string company = 10;
+}

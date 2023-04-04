@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Functions SiteId="105" SiteName="Alpha">
+  <Function Name="Customer Information">
+    <Setting Key="Age_GetCustomerInfo" SpName="Age_GetCustomerInfo" DbName="DBAGE.bodb02.BODBDownlineNet" />
+    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.BODBDownlineNet" />
+    <Setting Key="Age_Chatbot_CustomerStatusSel" SpName="Age_Chatbot_CustomerStatusSel" DbName="DBCust.CustDB.BODBDownlineNet" />
+   
+    <Setting Key="Age_ManageAPI_CustProductSel" SpName="Age_ManageAPI_CustProductSel_xpre" DbName="DBCust.CustDB.BODBDownlineNet" />
+  </Function>
+</Functions>
