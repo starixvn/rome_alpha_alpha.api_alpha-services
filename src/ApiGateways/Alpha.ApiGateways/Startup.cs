@@ -6,6 +6,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Diagnostics;
 using Alpha.ApiGateways.Models;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace Alpha.ApiGateways;
 
@@ -85,6 +86,8 @@ public class Startup
                 options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Alpha API Gateways v1");
             });
         }
+
+        app.UseSerilogRequestLogging();
 
         app.UseRouting();
         app.UseCors("CorsPolicy");

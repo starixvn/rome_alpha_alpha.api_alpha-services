@@ -17,7 +17,7 @@ public class CustomerGrpcService : Customer.CustomerBase
 
     public override async Task<GetCustomerStatusResponse> GetCustomerStatus(GetCustomerStatusRequest request, ServerCallContext context)
     {
-        logger.LogInformation("Begin grpc call from method {Method} for CustId {CustId} SubAccId {SubAccId}", context.Method, request.CustId, request.SubAccId);
+        logger.LogDebug("Begin grpc call from method {Method} for CustId {CustId} SubAccId {SubAccId}", context.Method, request.CustId, request.SubAccId);
 
         var status = await customerService.GetCustomerStatus(new CustomerStatusParam(request.CustId, request.SubAccId));
         if (status != null)

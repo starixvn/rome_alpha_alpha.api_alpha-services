@@ -5,6 +5,7 @@ using FanexLibs.Logging;
 using GrpcApiKey;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace Alpha.ApiKey.API;
 
@@ -58,6 +59,8 @@ public class Startup
 
         app.UseSwagger();
         app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiKey.API v1"));
+
+        app.UseSerilogRequestLogging();
 
         app.UseRouting();
         app.UseEndpoints(endpoints =>

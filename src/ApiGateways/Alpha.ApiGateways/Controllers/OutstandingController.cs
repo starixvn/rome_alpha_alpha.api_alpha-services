@@ -18,13 +18,13 @@ public class OutstandingController : Controller
     private readonly Reports.ReportsClient apiClient;
     private readonly IApiKeyService apiKeyService;
     private readonly ICustomerService customerService;
-    private readonly Fanex.Logging.ILogger logger;
+    private readonly ILogger<OutstandingController> logger;
 
     public OutstandingController(
         Reports.ReportsClient apiClient,
         IApiKeyService apiKeyService,
         ICustomerService customerService,
-        Fanex.Logging.ILogger logger)
+        ILogger<OutstandingController> logger)
     {
         this.apiClient = apiClient;
         this.apiKeyService = apiKeyService;
@@ -49,7 +49,7 @@ public class OutstandingController : Controller
             Timestamp = timestamp
         };
 
-        logger.Info($"Get OutStanding report with key {apiKeyRequest.Key} {request}");
+        logger.LogInformation("OutStanding - {key}: {request}", key, request);
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
