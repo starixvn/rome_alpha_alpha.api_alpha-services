@@ -34,8 +34,9 @@ public class Startup
 
         services.AddHttpLogging(logging =>
         {
-            logging.LoggingFields = HttpLoggingFields.All;
+            logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders;
             logging.RequestHeaders.Add("Key");
+            logging.RequestHeaders.Add("x-forwarded-for");
             logging.MediaTypeOptions.AddText("application/javascript");
             logging.RequestBodyLogLimit = 4096;
             logging.ResponseBodyLogLimit = 4096;
@@ -98,7 +99,6 @@ public class Startup
         }
 
         app.UseHttpLogging();
-        app.UseSerilogRequestLogging();
 
         app.UseRouting();
         app.UseCors("CorsPolicy");
