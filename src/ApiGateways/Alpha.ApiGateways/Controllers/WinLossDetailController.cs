@@ -18,13 +18,13 @@ public class WinLossDetailController : Controller
     private readonly Reports.ReportsClient apiClient;
     private readonly IApiKeyService apiKeyService;
     private readonly ICustomerService customerService;
-    private readonly Fanex.Logging.ILogger logger;
+    private readonly ILogger<WinLossDetailController> logger;
 
     public WinLossDetailController(
         Reports.ReportsClient apiClient,
         IApiKeyService apiKeyService,
         ICustomerService customerService,
-        Fanex.Logging.ILogger logger)
+        ILogger<WinLossDetailController> logger)
     {
         this.apiClient = apiClient;
         this.apiKeyService = apiKeyService;
@@ -49,7 +49,7 @@ public class WinLossDetailController : Controller
             Timestamp = timestamp
         };
 
-        logger.Info($"Get Win Loss Detail report with key {apiKeyRequest.Key} {request}");
+        logger.LogInformation("WinLossDetail - {key}: {request}", key, request);
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);

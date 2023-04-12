@@ -6,6 +6,8 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Diagnostics;
 using Alpha.ApiGateways.Models;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Microsoft.AspNetCore.HttpLogging;
 
 namespace Alpha.ApiGateways;
 
@@ -29,6 +31,16 @@ public class Startup
             .AddApplicationServices()
             .AddDistributedMemoryCache()
             .AddHealthChecks();
+
+        services.AddHttpLogging(logging =>
+        {
+            logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders;
+            logging.RequestHeaders.Add("Key");
+            logging.RequestHeaders.Add("x-forwarded-for");
+            logging.MediaTypeOptions.AddText("application/javascript");
+            logging.RequestBodyLogLimit = 4096;
+            logging.ResponseBodyLogLimit = 4096;
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -85,6 +97,8 @@ public class Startup
                 options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Alpha API Gateways v1");
             });
         }
+
+        app.UseHttpLogging();
 
         app.UseRouting();
         app.UseCors("CorsPolicy");
