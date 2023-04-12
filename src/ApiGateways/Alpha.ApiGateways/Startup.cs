@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Alpha.ApiGateways.Models;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Microsoft.AspNetCore.HttpLogging;
 
 namespace Alpha.ApiGateways;
 
@@ -30,6 +31,15 @@ public class Startup
             .AddApplicationServices()
             .AddDistributedMemoryCache()
             .AddHealthChecks();
+
+        services.AddHttpLogging(logging =>
+        {
+            logging.LoggingFields = HttpLoggingFields.All;
+            logging.RequestHeaders.Add("Key");
+            logging.MediaTypeOptions.AddText("application/javascript");
+            logging.RequestBodyLogLimit = 4096;
+            logging.ResponseBodyLogLimit = 4096;
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -87,6 +97,7 @@ public class Startup
             });
         }
 
+        app.UseHttpLogging();
         app.UseSerilogRequestLogging();
 
         app.UseRouting();
