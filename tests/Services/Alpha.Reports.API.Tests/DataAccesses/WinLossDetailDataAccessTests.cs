@@ -28,7 +28,7 @@ public class WinLossDetailDataAccessTests
     public void GetSuperWinLossDetail_NullDataReturnFromDb_ReturnsDefaultData()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var expectedValue = new ReportDataModel<SuperWinLossDetailModel>(new List<SuperWinLossDetailModel>(), new SuperWinLossDetailModel());
         IDataReader dataReader = null;
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>())
@@ -45,7 +45,7 @@ public class WinLossDetailDataAccessTests
     public void GetSuperWinLossDetail_WhenReportHasData_ReturnsDataFromObjectDb()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.MasterWinLoss.CreateDataReader();
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
 
@@ -111,7 +111,7 @@ public class WinLossDetailDataAccessTests
     public void GetSuperWinLossDetail_WhenReportHasDataWithNoTotalTable_ReturnsDataFromObjectDb()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.MasterWinLossWinNoTotalTable.CreateDataReader();
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
 
@@ -163,7 +163,7 @@ public class WinLossDetailDataAccessTests
     public void GetMasterWinLossDetail_NullDataReturnFromDb_ReturnsDefaultData()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var expectedValue = new ReportDataModel<MasterWinLossDetailModel>(new List<MasterWinLossDetailModel>(), new MasterWinLossDetailModel());
         IDataReader dataReader = null;
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>())
@@ -180,7 +180,7 @@ public class WinLossDetailDataAccessTests
     public void GetMasterWinLossDetail_WhenReportHasData_ReturnsDataFromObjectDb()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.AgentWinLoss.CreateDataReader();
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
 
@@ -240,7 +240,7 @@ public class WinLossDetailDataAccessTests
     public void GetMasterWinLossDetail_WhenReportHasDataWithNoTotalTable_ReturnsDataFromObjectDb()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.MasterWinLossWinNoTotalTable.CreateDataReader();
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
 
@@ -288,7 +288,7 @@ public class WinLossDetailDataAccessTests
     public void GetAgentWinLossDetail_NullDataReturnFromDb_ReturnsDefaultData()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var expectedValue = new ReportDataModel<AgentWinLossDetailModel>(new List<AgentWinLossDetailModel>(), new AgentWinLossDetailModel());
         IDataReader dataReader = null;
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>())
@@ -305,7 +305,7 @@ public class WinLossDetailDataAccessTests
     public void GetAgentWinLossDetail_WhenReportHasData_ReturnsDataFromObjectDb()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.MemberWinLoss.CreateDataReader();
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
 
@@ -359,7 +359,7 @@ public class WinLossDetailDataAccessTests
     public void GetAgentWinLossDetail_WhenReportHasDataWithNoTotalTable_ReturnsDataFromObjectDb()
     {
         // Arrange
-        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty);
+        var criteria = new GetWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.MasterWinLossWinNoTotalTable.CreateDataReader();
         objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
 

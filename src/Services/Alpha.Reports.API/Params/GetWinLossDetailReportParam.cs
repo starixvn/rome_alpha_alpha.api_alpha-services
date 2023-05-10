@@ -19,6 +19,9 @@ public class GetWinLossDetailReportParam
         IsEnableSabaPromotion = CheckEnableSabaPromotion();
 
         MinDate = DateTime.Now.Date.AddMonths(-1);
+        DateTime dt;
+        FromDate = DateTime.TryParse(request.FromDate, out dt) ? dt : DateTime.MinValue;
+        ToDate = DateTime.TryParse(request.ToDate, out dt) ? dt : DateTime.MinValue;
     }
 
     public int ViewerId { get; }
@@ -28,6 +31,9 @@ public class GetWinLossDetailReportParam
     public string Site { get; }
     public int CurrencyId { get; }
     public string Language { get; }
+
+    public DateTime FromDate { get; set; }
+    public DateTime ToDate { get; set; }
 
     public ReportsAppSettingsModel Settings { get; }
 
