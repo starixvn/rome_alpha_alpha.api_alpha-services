@@ -15,6 +15,7 @@ namespace Alpha.ApiGateways.Controllers;
 [ApiController]
 public class WinLossDetailController : Controller
 {
+    private const int MaxDateRangeInDays = 31;
     private readonly Reports.ReportsClient apiClient;
     private readonly IApiKeyService apiKeyService;
     private readonly ICustomerService customerService;
@@ -104,5 +105,28 @@ public class WinLossDetailController : Controller
         var result = await apiClient.GetAgentWinLossDetailAsync(request);
 
         return Json(result);
+    }
+
+    private static bool ValidateDateRange(WinLossDetailRequest request)
+    {
+        if (!DateTime.TryParse(request.ToDate, out DateTime dt))
+        {
+            return false;
+        }
+
+        var toDate = dt.Date;
+
+        if (!DateTime.TryParse(request.FromDate, out dt))
+        {
+            return false;
+        }
+
+        var fromDate = dt.Date;
+
+        var currentDate = DateTime.Now.Date;
+        var minDate = currentDate.AddDays(-MaxDateRangeInDays);
+        var minFromDate = toDate.AddDays(-MaxDateRangeInDays);
+
+        return fromDate >= minFromDate && fromDate >= minDate && toDate >= fromDate;
     }
 }
