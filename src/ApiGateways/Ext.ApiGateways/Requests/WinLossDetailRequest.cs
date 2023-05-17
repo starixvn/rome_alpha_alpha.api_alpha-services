@@ -7,48 +7,25 @@ public class WinLossDetailRequest
     private const int MaxDateRangeInDays = 31;
 
     [FromBody]
-    public string FromDate { get; set; }
+    public string CustName { get; set; }
 
     [FromBody]
-    public string ToDate { get; set; }
+    public DateTime FromDate { get; set; } = DateTime.Now.AddDays(-MaxDateRangeInDays).Date;
 
-    public DateTime ActualToDate
-    {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(ToDate) || !DateTime.TryParse(ToDate, out DateTime dt))
-            {
-                return DateTime.Now.Date;
-            }
-
-            return dt;
-        }
-    }
-
-    public DateTime ActualFromDate
-    {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(FromDate) || !DateTime.TryParse(FromDate, out DateTime dt))
-            {
-                return ActualToDate.AddDays(-MaxDateRangeInDays);
-            }
-
-            return dt;
-        }
-    }
+    [FromBody]
+    public DateTime ToDate { get; set; } = DateTime.Now.Date;
 
     public bool ValidateDateRange()
     {
-        var fromDate = ActualFromDate;
-        var toDate = ActualToDate;
+        var fromDate = FromDate;
+        var toDate = ToDate;
 
         var currentDate = DateTime.Now.Date;
         var minDate = currentDate.AddDays(-MaxDateRangeInDays);
         var minFromDate = toDate.AddDays(-MaxDateRangeInDays);
 
-        return fromDate >= minFromDate
+        return toDate >= fromDate
             && fromDate >= minDate
-            && toDate >= fromDate;
+            && fromDate >= minFromDate;
     }
 }

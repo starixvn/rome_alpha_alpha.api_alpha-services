@@ -63,8 +63,8 @@ public class WinLossDetailController : Controller
             CurrencyId = viewerInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            FromDate = request.ActualFromDate.ToShortDateString(),
-            ToDate = request.ActualToDate.ToShortDateString()
+            FromDate = request.FromDate.ToShortDateString(),
+            ToDate = request.ToDate.ToShortDateString()
         };
 
         return viewerInfo.RoleId switch

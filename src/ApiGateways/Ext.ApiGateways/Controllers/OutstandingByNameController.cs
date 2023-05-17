@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/{custName}")]
 [ApiController]
 public class OutstandingByNameController : Controller
 {
@@ -34,9 +34,9 @@ public class OutstandingByNameController : Controller
         [FromHeader] string key,
         [FromHeader] string username,
         [FromHeader] string password,
-        [FromBody] OutstandingByNameRequest request)
+        [FromRoute] string custName)
     {
-        logger.LogInformation("OutStandingByName - {key}: {request}", key, request);
+        logger.LogInformation("OutStandingByName - {key}: {custName}", key, custName);
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {
@@ -44,7 +44,7 @@ public class OutstandingByNameController : Controller
         }
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
-        var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
+        var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
@@ -59,7 +59,7 @@ public class OutstandingByNameController : Controller
             CurrencyId = downlineInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            CustName = request.CustName
+            CustName = custName
         };
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)

@@ -18,7 +18,7 @@ public class WinLossDetailRequest
 
     public bool ValidateDateRange()
     {
-        var fromDate = ActualFromDate;
+        var fromDate = FromDate;
         var toDate = ToDate;
 
         var currentDate = DateTime.Now.Date;

@@ -9,11 +9,10 @@ using System.Security.Claims;
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/{custName}")]
 [ApiController]
 public class WinLossDetailByNameController : Controller
 {
-    private const int MaxDateRangeInDays = 31;
     private readonly Reports.ReportsClient apiClient;
     private readonly ICustomerService customerService;
     private readonly ILogger<WinLossDetailByNameController> logger;
@@ -34,7 +33,8 @@ public class WinLossDetailByNameController : Controller
         [FromHeader] string key,
         [FromHeader] string username,
         [FromHeader] string password,
-        [FromBody] WinLossDetailByNameRequest request)
+        [FromRoute] string custName,
+        [FromBody] WinLossDetailRequest request)
     {
         if (!request.ValidateDateRange())
         {
@@ -49,7 +49,7 @@ public class WinLossDetailByNameController : Controller
         }
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
-        var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
+        var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
@@ -58,15 +58,15 @@ public class WinLossDetailByNameController : Controller
 
         var reportRequest = new GetWinLossDetailReportRequest
         {
-            CustName = request.CustName,
+            CustName = custName,
             CustId = downlineInfo.CustId,
             CustLevelId = downlineInfo.RoleId,
             Site = viewerInfo.Site,
             CurrencyId = downlineInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            FromDate = request.ActualFromDate.ToShortDateString(),
-            ToDate = request.ActualToDate.ToShortDateString()
+            FromDate = request.FromDate.ToShortDateString(),
+            ToDate = request.ToDate.ToShortDateString()
         };
 
         return downlineInfo.RoleId switch
