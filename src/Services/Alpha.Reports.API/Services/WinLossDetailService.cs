@@ -69,7 +69,7 @@ public class WinLossDetailService : IWinLossDetailService
             param.FromDate,
             param.ToDate);
 
-        partialUMService.ThrowIfUM(criteria.GetSettingKey());
+        partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         var winLossDetailData = await winLossDetailDataAccess.GetSuperWinLossDetail(criteria);
 
@@ -108,7 +108,7 @@ public class WinLossDetailService : IWinLossDetailService
             param.FromDate,
             param.ToDate);
 
-        partialUMService.ThrowIfUM(criteria.GetSettingKey());
+        partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         var winLossDetailData = await winLossDetailDataAccess.GetMasterWinLossDetail(criteria);
 
@@ -148,7 +148,7 @@ public class WinLossDetailService : IWinLossDetailService
             param.FromDate,
             param.ToDate);
 
-        partialUMService.ThrowIfUM(criteria.GetSettingKey());
+        partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         var winLossDetailData = await winLossDetailDataAccess.GetAgentWinLossDetail(criteria);
 

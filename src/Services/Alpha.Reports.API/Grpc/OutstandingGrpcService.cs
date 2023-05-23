@@ -175,7 +175,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             (byte)request.CustLevelId,
             request.CustId,
             validUserSelectedProductIds.JoinWithComma(),
-            request.AutoFollowBetIsDummyAgent);
+            request.AutoFollowBetIsDummyAgent,
+            request.Site);
 
         var outstandings = (await outstandingService.GetReport(param))
             .OrderBy(request.SortPropertyName, request.IsDescendingSort);

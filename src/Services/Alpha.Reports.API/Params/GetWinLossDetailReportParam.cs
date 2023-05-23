@@ -22,6 +22,7 @@ public class GetWinLossDetailReportParam
         DateTime dt;
         FromDate = DateTime.TryParse(request.FromDate, out dt) ? dt : DateTime.MinValue;
         ToDate = DateTime.TryParse(request.ToDate, out dt) ? dt : DateTime.MinValue;
+        SiteName = request.Site;
     }
 
     public int ViewerId { get; }
@@ -31,6 +32,7 @@ public class GetWinLossDetailReportParam
     public string Site { get; }
     public int CurrencyId { get; }
     public string Language { get; }
+    public string SiteName { get; }
 
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }

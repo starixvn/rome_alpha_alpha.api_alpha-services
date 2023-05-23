@@ -6,12 +6,12 @@ public class GetUMInfoListCriteria : CriteriaBase
 {
     public GetUMInfoListCriteria(string market)
     {
-        MartketName = market;
+        SiteName = market;
     }
 
-    public string MartketName { get; }
+    public string SiteName { get; }
 
     public override string GetSettingKey() => "Acc_CheckUM_ByReport";
 
-    public override bool IsValid() => !string.IsNullOrEmpty(MartketName);
+    public override bool IsValid() => !string.IsNullOrEmpty(SiteName);
 }

@@ -9,7 +9,7 @@ namespace Alpha.PartialUM.Services;
 
 public interface IPartialUMService
 {
-    void ThrowIfUM(string settingKey);
+    void ThrowIfUM(string settingKey, string siteName);
 }
 
 public class PartialUMService : IPartialUMService
@@ -25,7 +25,7 @@ public class PartialUMService : IPartialUMService
         this.partialUMDataAccess = partialUMDataAccess;
     }
 
-    public void ThrowIfUM(string settingKey)
+    public void ThrowIfUM(string settingKey, string siteName)
     {
         var functionNames = PartialUMSettingsHelper.GetFunctionNames(settingKey, partialUMSettings);
         if (!functionNames.Any())
@@ -33,7 +33,7 @@ public class PartialUMService : IPartialUMService
             return;
         }
 
-        var umInfoDictionary = GetUMInfoDictionary();
+        var umInfoDictionary = GetUMInfoDictionary(siteName);
         if (umInfoDictionary.Count == 0)
         {
             return;
@@ -50,11 +50,11 @@ public class PartialUMService : IPartialUMService
         }
     }
 
-    private IDictionary<string, UMInfoModel> GetUMInfoDictionary()
+    private IDictionary<string, UMInfoModel> GetUMInfoDictionary(string siteName)
         => ConfiguredCacheService
             .GetOrSet(
-                $"Alpha.PartialUM.Services.MinimizedUM.{partialUMSettings.SiteGroup}",
-                () => GetUMInfoDictionaryFromDB(partialUMSettings.SiteGroup),
+                $"Alpha.PartialUM.Services.MinimizedUM.{siteName}",
+                () => GetUMInfoDictionaryFromDB(siteName),
                 new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(partialUMSettings.BetListsCacheInSeconds)));
 
     private IDictionary<string, UMInfoModel> GetUMInfoDictionaryFromDB(string siteGroup)

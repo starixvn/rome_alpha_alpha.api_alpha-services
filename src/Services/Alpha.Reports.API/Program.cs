@@ -29,15 +29,15 @@ static IHostBuilder CreateHostBuilder(string[] args)
 {
     var config = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", optional: true)
-        .AddJsonFile("./App_Data/PartialUM.json", optional: true)
+        .AddJsonFile("appsettings.json", optional: false)
+        .AddJsonFile("./App_Data/PartialUMSettings.json", optional: false)
         .AddCommandLine(args)
         .Build();
 
     var builder = Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
-            webBuilder.UseStartup<Startup>();
+            webBuilder.UseStartup<Startup>().UseConfiguration(config);
             webBuilder.UseKestrel(options =>
             {
                 options.ListenAnyIP(int.Parse(config["ReportsAppSettings:Http1AndHttp2Port"]), listenOptions =>
