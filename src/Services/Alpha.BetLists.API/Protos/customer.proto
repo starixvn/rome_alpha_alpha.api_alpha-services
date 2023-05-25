@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcCustomer";
+
+package Customer;
+
+service Customer {
+    rpc GetDownlineInfo(GetDownlineInfoRequest) returns (GetDownlineInfoResponse) {}
+}
+
+message GetDownlineInfoRequest {
+    int32 viewerId = 1;
+    string downlineUsername = 2;
+}
+
+message GetDownlineInfoResponse {
+    bool isBelonging = 1;
+}

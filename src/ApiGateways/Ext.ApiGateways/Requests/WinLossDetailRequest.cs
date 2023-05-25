@@ -11,6 +11,7 @@ public class WinLossDetailRequest
 
     [FromBody]
     public DateTime? FromDate { get; set; }
+
     [FromBody]
     public DateTime? ToDate { get; set; }
 

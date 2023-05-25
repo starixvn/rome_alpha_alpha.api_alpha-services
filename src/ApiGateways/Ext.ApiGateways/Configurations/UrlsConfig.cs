@@ -6,4 +6,5 @@ public class UrlsConfig
     public string GrpcApiKey { get; set; }
     public string GrpcCustomer { get; set; }
     public string GrpcReports { get; set; }
+    public string GrpcBetLists { get; set; }
 }

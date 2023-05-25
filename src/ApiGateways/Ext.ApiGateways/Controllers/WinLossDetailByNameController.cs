@@ -38,14 +38,14 @@ public class WinLossDetailByNameController : Controller
     {
         if (!request.ValidateDateRange())
         {
-            throw new ReportsException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
         logger.LogInformation("WinLossDetail - {key}: {request}", key, request);
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {
-            throw new ReportsException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
         }
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
@@ -53,7 +53,7 @@ public class WinLossDetailByNameController : Controller
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new ReportsException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
         }
 
         var reportRequest = new GetWinLossDetailReportRequest

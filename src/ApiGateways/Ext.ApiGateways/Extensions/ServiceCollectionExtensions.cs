@@ -17,6 +17,9 @@ using System.Reflection;
 using System.Threading.RateLimiting;
 using System.Globalization;
 using Ext.ApiGateways.Infrastructure.RateLimits;
+using GrpcBetLists;
+using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Ext.ApiGateways.Extensions;
 
@@ -120,6 +123,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IApiKeyService, ApiKeyService>();
 
         services.AddTransient<ICustomerService, CustomerService>();
+
         services.AddGrpcClient<Customer.CustomerClient>((services, options) =>
         {
             var customerApi = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcCustomer;
@@ -131,6 +135,24 @@ public static class ServiceCollectionExtensions
             var api = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcReports;
             options.Address = new Uri(api);
         }).AddInterceptor<ReportsGrpcExceptionInterceptor>();
+
+        services.AddGrpcClient<BetLists.BetListsClient>((services, options) =>
+        {
+            var api = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcBetLists;
+            options.Address = new Uri(api);
+
+        })
+        .ConfigureChannel(c =>
+        {
+            c.MaxReceiveMessageSize = null;
+            c.MaxSendMessageSize = null;
+        })
+        .AddInterceptor<ReportsGrpcExceptionInterceptor>();
+
+        services.AddControllersWithViews()
+            .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver());
 
         return services;
     }

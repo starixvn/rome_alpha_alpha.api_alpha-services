@@ -1,0 +1,104 @@
+using System.Text;
+using TplNetCore.Element;
+
+namespace Alpha.BetLists.API.Templates;
+
+public class PTComm_Template : Template
+{
+    protected static string s0 = "<div class=\"position-taking bl_underdog\">";
+    public PTComm_PT_Block PT = new PTComm_PT_Block();
+    public PTComm_PTValue_Block PTValue = new PTComm_PTValue_Block();
+    protected static string s1 = "</div>";
+    public PTComm_Comm_Block Comm = new PTComm_Comm_Block();
+    public PTComm_CommValue_Block CommValue = new PTComm_CommValue_Block();
+    public override void ToString(ref StringBuilder bd)
+    {
+        if (!Visible) return;
+
+        if (RenderChild)
+        {
+            bd.Append(s0);
+            if (null != PT) PT.ToString(ref bd);
+            if (null != PTValue) PTValue.ToString(ref bd);
+            bd.Append(s1);
+            if (null != Comm) Comm.ToString(ref bd);
+            if (null != CommValue) CommValue.ToString(ref bd);
+        }
+        if (IsAssigned) { bd.Append(Value); }
+    }
+    public string ToString()
+    {
+        StringBuilder bd = new StringBuilder();
+        ToString(ref bd);
+        return bd.ToString();
+    }
+
+}
+
+public class PTComm_PT_Block : Block
+{
+    protected static string s2 = "<font class=\"pt-value\">";
+    public string PT_Percent = "{PT_Percent}";
+    protected static string s3 = "</font><br />";
+    public override void ToString(ref StringBuilder bd)
+    {
+        if (!Visible) return;
+        if (RenderChild)
+        {
+            bd.Append(s2);
+            bd.Append(PT_Percent);
+            bd.Append(s3);
+        }
+        if (IsAssigned) { bd.Append(Value); }
+    }
+}
+
+public class PTComm_PTValue_Block : Block
+{
+    protected static string s4 = "<span class=\"pt-winloss\">";
+    public string PT_Value = "{PT_Value}";
+    protected static string s5 = "</span><br />";
+    public override void ToString(ref StringBuilder bd)
+    {
+        if (!Visible) return;
+        if (RenderChild)
+        {
+            bd.Append(s4);
+            bd.Append(PT_Value);
+            bd.Append(s5);
+        }
+        if (IsAssigned) { bd.Append(Value); }
+    }
+}
+
+public class PTComm_Comm_Block : Block
+{
+    public string Comm_Percent = "{Comm_Percent}";
+    protected static string s6 = "<br />";
+    public override void ToString(ref StringBuilder bd)
+    {
+        if (!Visible) return;
+        if (RenderChild)
+        {
+            bd.Append(Comm_Percent);
+            bd.Append(s6);
+        }
+        if (IsAssigned) { bd.Append(Value); }
+    }
+}
+
+public class PTComm_CommValue_Block : Block
+{
+    public string Comm_value = "{Comm_value}";
+    protected static string s7 = "<br />";
+    public override void ToString(ref StringBuilder bd)
+    {
+        if (!Visible) return;
+        if (RenderChild)
+        {
+            bd.Append(Comm_value);
+            bd.Append(s7);
+        }
+        if (IsAssigned) { bd.Append(Value); }
+    }
+}

@@ -5,6 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        },
+        {
             "name": "APIGateway",
             "type": "coreclr",
             "request": "launch",
@@ -105,9 +110,24 @@
             }
         },
         {
-            "name": ".NET Core Attach",
+            "name": "BetLists",
             "type": "coreclr",
-            "request": "attach"
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Services/Alpha.BetLists.API/bin/Debug/net7.0/Alpha.BetLists.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Services/Alpha.BetLists.API",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
         },
     ],
     "compounds": [
@@ -118,7 +138,8 @@
                 "ExtAPIGateways",
                 "ApiKey",
                 "Customer",
-                "Reports"
+                "Reports",
+                "BetLists"
             ]
         }
     ]

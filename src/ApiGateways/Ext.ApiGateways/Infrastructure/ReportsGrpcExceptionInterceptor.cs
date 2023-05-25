@@ -36,10 +36,10 @@ public class ReportsGrpcExceptionInterceptor : Interceptor
         {
             await _logger.ErrorAsync($"Error calling via grpc: {e.Status} - {e.Message}", e);
 
-            throw new ReportsException
+            throw new GrpcException
             {
                 Code = (int)MapStatusCode(e.Status.StatusCode),
-                Detail = e.Status.Detail
+                Detail = string.Empty
             };
         }
     }
