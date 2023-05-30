@@ -65,9 +65,11 @@ public class WinLossDetailService : IWinLossDetailService
             moveBetsDay,
             products,
             param.CustLevel,
-            productDetailsXML);
+            productDetailsXML,
+            param.FromDate,
+            param.ToDate);
 
-        partialUMService.ThrowIfUM(criteria.GetSettingKey());
+        partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         var winLossDetailData = await winLossDetailDataAccess.GetSuperWinLossDetail(criteria);
 
@@ -102,9 +104,11 @@ public class WinLossDetailService : IWinLossDetailService
             moveBetsDay,
             products,
             param.CustLevel,
-            productDetailsXML);
+            productDetailsXML,
+            param.FromDate,
+            param.ToDate);
 
-        partialUMService.ThrowIfUM(criteria.GetSettingKey());
+        partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         var winLossDetailData = await winLossDetailDataAccess.GetMasterWinLossDetail(criteria);
 
@@ -140,9 +144,11 @@ public class WinLossDetailService : IWinLossDetailService
             moveBetsDay,
             products,
             param.CustLevel,
-            productDetailsXML);
+            productDetailsXML,
+            param.FromDate,
+            param.ToDate);
 
-        partialUMService.ThrowIfUM(criteria.GetSettingKey());
+        partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         var winLossDetailData = await winLossDetailDataAccess.GetAgentWinLossDetail(criteria);
 

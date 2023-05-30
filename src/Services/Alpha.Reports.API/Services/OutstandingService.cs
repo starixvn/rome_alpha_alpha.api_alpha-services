@@ -36,7 +36,7 @@ public class OutstandingService : IOutstandingService
         }
 
         var criteria = new GetOutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds);
-        partialUMService.ThrowIfUM(criteria.GetSettingKey());
+        partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         return param.AutoFollowBetIsDummyAgent
             ? await GetReport(param.ProductIds, await autoFollowBetService.GetFollowBetAccounts(param.CustId))

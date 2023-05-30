@@ -116,6 +116,8 @@ message GetWinLossDetailReportRequest {
  
   string sortPropertyName = 9;
   bool isDescendingSort = 10;
+  string fromDate = 11; 
+  string toDate = 12; 
 } 
 
 message GetSuperWinLossDetailResponse {

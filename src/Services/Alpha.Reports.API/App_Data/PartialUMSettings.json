@@ -1,6 +1,5 @@
 {
   "PartialUMSettings": {
-    "SiteGroup": "IBCBET",
     "BetListsCacheInSeconds": 15,
     "Functions": [
       {

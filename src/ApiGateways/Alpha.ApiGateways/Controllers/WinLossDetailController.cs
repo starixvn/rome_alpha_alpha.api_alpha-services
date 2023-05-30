@@ -41,6 +41,11 @@ public class WinLossDetailController : Controller
         [FromHeader] string timestamp,
         [FromBody] WinLossDetailRequest request)
     {
+        if (!request.ValidateDateRange())
+        {
+            throw new ReportsException { Code = (int)HttpStatusCode.UnavailableForLegalReasons, Detail = string.Empty };
+        }
+
         var apiKeyRequest = new ApiKeyRequest
         {
             Key = key,
@@ -67,7 +72,9 @@ public class WinLossDetailController : Controller
             Site = viewerInfo.Site,
             CurrencyId = downlineInfo.Currency,
             ViewerId = viewerInfo.CustId,
-            ViewerLevelId = viewerInfo.RoleId
+            ViewerLevelId = viewerInfo.RoleId,
+            FromDate = request.FromDate.ToShortDateString(),
+            ToDate = request.ToDate.ToShortDateString()
         };
 
         return downlineInfo.RoleId switch
