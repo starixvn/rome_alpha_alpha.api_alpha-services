@@ -37,7 +37,7 @@ public class WinLossDetailController : Controller
     {
         if (!request.ValidateDateRange())
         {
-            throw new ReportsException { Code = (int)HttpStatusCode.UnavailableForLegalReasons, Detail = string.Empty };
+            throw new ReportsException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
         logger.LogInformation("WinLossDetailByName - {key}: {request}", key, request);
@@ -63,8 +63,8 @@ public class WinLossDetailController : Controller
             CurrencyId = viewerInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            FromDate = request.FromDate.ToShortDateString(),
-            ToDate = request.ToDate.ToShortDateString()
+            FromDate = request.FromDate.Value.ToShortDateString(),
+            ToDate = request.ToDate.Value.ToShortDateString()
         };
 
         return viewerInfo.RoleId switch

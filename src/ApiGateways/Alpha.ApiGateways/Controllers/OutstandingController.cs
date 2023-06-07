@@ -7,6 +7,7 @@ using Alpha.ApiGateways.Requests;
 using Alpha.Utilities.Models;
 using Alpha.ApiGateways.Models;
 using System.Net;
+using System.Security.Claims;
 
 namespace Alpha.ApiGateways.Controllers;
 
@@ -68,7 +69,9 @@ public class OutstandingController : Controller
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
             CustName = request.CustName
-        }; if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)
+        };
+
+        if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)
         {
             return await SuperOutstanding(reportRequest);
         }
@@ -98,6 +101,12 @@ public class OutstandingController : Controller
 
     private async Task<IActionResult> SuperOutstanding(GetOutstandingReportRequest request)
     {
+        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            return Json(new GetSuperOutstandingResponse());
+        }
+
         var result = await apiClient.GetSuperOutstandingAsync(request);
 
         return Json(result);
@@ -105,6 +114,12 @@ public class OutstandingController : Controller
 
     private async Task<IActionResult> SuperOnMasterOutstanding(GetOutstandingReportRequest request)
     {
+        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            return Json(new GetSuperOnMasterOutstandingResponse());
+        }
+
         var result = await apiClient.GetSuperOnMasterOutstandingAsync(request);
 
         return Json(result);
@@ -112,6 +127,12 @@ public class OutstandingController : Controller
 
     private async Task<IActionResult> SuperOnAgentOutstanding(GetOutstandingReportRequest request)
     {
+        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            return Json(new GetSuperOnAgentOutstandingResponse());
+        }
+
         var result = await apiClient.GetSuperOnAgentOutstandingAsync(request);
 
         return Json(result);
@@ -119,6 +140,12 @@ public class OutstandingController : Controller
 
     private async Task<IActionResult> MasterOutstanding(GetOutstandingReportRequest request)
     {
+        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            return Json(new GetMasterOutstandingResponse());
+        }
+
         var result = await apiClient.GetMasterOutstandingAsync(request);
 
         return Json(result);
@@ -126,6 +153,12 @@ public class OutstandingController : Controller
 
     private async Task<IActionResult> MasterOnAgentOutstanding(GetOutstandingReportRequest request)
     {
+        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            return Json(new GetMasterOnAgentOutstandingResponse());
+        }
+
         var result = await apiClient.GetMasterOnAgentOutstandingAsync(request);
 
         return Json(result);
@@ -133,6 +166,12 @@ public class OutstandingController : Controller
 
     private async Task<IActionResult> AgentOutstanding(GetOutstandingReportRequest request)
     {
+        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            return Json(new GetAgentOutstandingResponse());
+        }
+
         var result = await apiClient.GetAgentOutstandingAsync(request);
 
         return Json(result);

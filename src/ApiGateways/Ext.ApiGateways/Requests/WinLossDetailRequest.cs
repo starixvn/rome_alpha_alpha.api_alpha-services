@@ -10,15 +10,20 @@ public class WinLossDetailRequest
     public string CustName { get; set; }
 
     [FromBody]
-    public DateTime FromDate { get; set; } = DateTime.Now.AddDays(-MaxDateRangeInDays).Date;
+    public DateTime? FromDate { get; set; }
 
     [FromBody]
-    public DateTime ToDate { get; set; } = DateTime.Now.Date;
+    public DateTime? ToDate { get; set; }
 
     public bool ValidateDateRange()
     {
-        var fromDate = FromDate;
-        var toDate = ToDate;
+        if (!FromDate.HasValue || !ToDate.HasValue)
+        {
+            return false;
+        }
+
+        var fromDate = FromDate.Value;
+        var toDate = ToDate.Value;
 
         var currentDate = DateTime.Now.Date;
         var minDate = currentDate.AddDays(-MaxDateRangeInDays);
