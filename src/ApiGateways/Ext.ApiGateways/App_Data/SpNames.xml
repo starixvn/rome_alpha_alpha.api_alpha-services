@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-    <Setting Key="EAS_API_CheckSecretKeyUser" SpName="EAS_API_CheckSecretKeyUser" DbName="DBCust.CustDB.bodbExtAccNet"/>
+    <Setting Key="EAS_API_CheckSecretKeyUser" SpName="EAS_API_CheckSecretKeyUser_xpre" DbName="DBCust.CustDB.bodbExtAccNet"/>
 </Functions>
