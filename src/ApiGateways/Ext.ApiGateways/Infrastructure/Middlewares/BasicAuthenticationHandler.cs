@@ -10,15 +10,25 @@ namespace Ext.ApiGateways.Infrastructure.Middlewares;
 public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     private readonly IApiKeyService apiKeyService;
+    private readonly Fanex.Logging.ILogger flogger;
 
-    public BasicAuthenticationHandler(IApiKeyService apiKeyService, IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
+    public BasicAuthenticationHandler(
+        IApiKeyService apiKeyService,
+        IOptionsMonitor<AuthenticationSchemeOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder,
+        ISystemClock clock,
+        Fanex.Logging.ILogger flogger)
         : base(options, logger, encoder, clock)
     {
         this.apiKeyService = apiKeyService;
+        this.flogger = flogger;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
+        flogger.Info("HandleAuthenticate Start");
+
         var key = Request.Headers["Key"].ToString();
         var username = Request.Headers["Username"].ToString();
         var password = Request.Headers["Password"].ToString();
@@ -29,10 +39,14 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         {
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
+            flogger.Info("HandleAuthenticate End");
             return AuthenticateResult.Fail("Bad Request");
         }
 
+        flogger.Info("VerifyApiKey End");
         var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, username, password);
+        flogger.Info("VerifyApiKey End");
+
         if (verifyApiKeyResult != null && verifyApiKeyResult.IsAuthenticated)
         {
             var claims = new List<Claim>
