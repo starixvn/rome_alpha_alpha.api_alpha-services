@@ -27,8 +27,6 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        flogger.Info("HandleAuthenticate Start");
-
         var key = Request.Headers["Key"].ToString();
         var username = Request.Headers["Username"].ToString();
         var password = Request.Headers["Password"].ToString();
@@ -43,9 +41,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             return AuthenticateResult.Fail("Bad Request");
         }
 
-        flogger.Info("VerifyApiKey End");
         var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, username, password);
-        flogger.Info("VerifyApiKey End");
 
         if (verifyApiKeyResult != null && verifyApiKeyResult.IsAuthenticated)
         {

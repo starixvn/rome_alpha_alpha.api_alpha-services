@@ -86,10 +86,8 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
     public override async Task<AgentViewRunningBetListResponse> AgentViewRunningBetList(GetRunningBetListRequest request, ServerCallContext context)
     {
-        logger.Info("AgentViewRunningBetList: GetAllProductIds");
         var productIds = productService.GetAllProductIds(request.ProductGroup);
 
-        logger.Info("AgentViewRunningBetList: GetBetList");
         var param = new GetRunningBetListParam(
             request.CustId,
             request.Language,
@@ -100,8 +98,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var betlistData = await runningBetListService.GetBetList(param);
 
         var response = new AgentViewRunningBetListResponse();
-
-        logger.Info("AgentViewRunningBetList: GetCountries");
 
         var i = 1;
         var ticketData = betlistData.TicketData;
@@ -120,7 +116,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
         }));
 
-        logger.Info("AgentViewRunningBetList: BuildTrans");
         return response;
     }
 }
