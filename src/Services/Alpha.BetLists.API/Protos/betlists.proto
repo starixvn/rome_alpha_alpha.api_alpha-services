@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcBetLists";
+
+package BetLists;
+
+service BetLists {
+  rpc SuperViewRunningBetList(GetRunningBetListRequest) returns (SuperViewRunningBetListResponse);
+  rpc MasterViewRunningBetList(GetRunningBetListRequest) returns (MasterViewRunningBetListResponse);
+  rpc AgentViewRunningBetList(GetRunningBetListRequest) returns (AgentViewRunningBetListResponse);
+
+  rpc SuperViewWinLossBetList(GetWinLossBetListRequest) returns (SuperViewWinLossBetListResponse);
+  rpc MasterViewWinLossBetList(GetWinLossBetListRequest) returns (MasterViewWinLossBetListResponse);
+  rpc AgentViewWinLossBetList(GetWinLossBetListRequest) returns (AgentViewWinLossBetListResponse);
+}
+
+message GetRunningBetListRequest {
+  string productGroup = 1;
+  int32 custId = 2;
+  string custName = 3;
+  string language = 4;
+  string site = 5;
+  int32 viewerId = 6;
+} 
+
+message SuperViewRunningBetListResponse {
+  repeated SuperViewRunningBetTicketModel betLists = 1;
+}
+
+message MasterViewRunningBetListResponse {
+  repeated MasterViewRunningBetTicketModel betLists = 1;
+}
+
+message AgentViewRunningBetListResponse {
+  repeated AgentViewRunningBetTicketModel betLists = 1;
+}
+
+message SuperViewRunningBetTicketModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string status = 6;
+  string superPT_Comm = 7;
+  string masterPT_Comm = 8;
+  string agentPT_Comm = 9;
+}
+
+message MasterViewRunningBetTicketModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string status = 6;
+  string masterPT_Comm = 7;
+  string agentPT_Comm = 8;
+}
+
+message AgentViewRunningBetTicketModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string status = 6;
+  string agentPT_Comm = 7;
+}
+
+
+message GetWinLossBetListRequest {
+  string productGroup = 1;
+  int32 custId = 2;
+  string custName = 3;
+  string fromDate = 4;
+  string toDate = 5;
+  string language = 6;
+  string site = 7;
+  int32 viewerId = 8;
+} 
+
+message SuperViewWinLossBetListResponse {
+  repeated SuperViewWinLossBetTicketModel betLists = 1;
+  WinLossTotalModelResponse total = 2;
+}
+
+message MasterViewWinLossBetListResponse {
+  repeated MasterViewWinLossBetTicketModel betLists = 1;
+  WinLossTotalModelResponse total = 2;
+}
+
+message AgentViewWinLossBetListResponse {
+  repeated AgentViewWinLossBetTicketModel betLists = 1;
+  WinLossTotalModelResponse total = 2;
+}
+
+message SuperViewWinLossBetTicketModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string winLoss = 6;
+  string status = 7;
+  string superPT_Comm = 8;
+  string masterPT_Comm = 9;
+  string agentPT_Comm = 10;
+}
+
+message MasterViewWinLossBetTicketModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string winLoss = 6;
+  string status = 7;
+  string masterPT_Comm = 8;
+  string agentPT_Comm = 9;
+}
+
+message AgentViewWinLossBetTicketModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string winLoss = 6;
+  string status = 7;
+  string agentPT_Comm = 8;
+}
+
+message WinLossTotalModelResponse {
+  string comm = 1;
+  string winLoss = 2;
+  string total = 3;
+}

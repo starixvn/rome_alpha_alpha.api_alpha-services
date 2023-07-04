@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcCustomer";
+
+package Customer;
+
+service Customer {
+    rpc GetCustomerStatus(GetCustomerStatusRequest) returns (GetCustomerStatusResponse) {}
+    rpc GetCustomerInfo(GetCustomerInfoRequest) returns (GetCustomerInfoResponse) {}
+}
+
+message GetCustomerStatusRequest {
+    int32 custId = 1;
+    int32 subAccId = 2;
+}
+
+message GetCustomerStatusResponse {
+    int32 custId = 1;
+    int32 subAccId = 2;
+    bool isActive = 3;
+    bool isProtectedMode = 4;
+    bool isLocked = 5;
+    bool IsSubAcc = 6;
+    bool HasReportPermission = 7;
+    bool HasMemberInformationPermission = 8;
+}
+
+message GetCustomerInfoRequest {
+    int32 custId = 1;
+    string username = 2;
+}
+
+message GetCustomerInfoResponse {
+    int32 custId = 1;
+    int32 roleId = 2;
+    string site = 3;
+    int32 currency = 4;
+}

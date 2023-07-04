@@ -15,6 +15,7 @@ public class WinLossDetailRequest
     [FromBody]
     public DateTime ToDate { get; set; } = DateTime.Now.Date;
 
+
     public bool ValidateDateRange()
     {
         var fromDate = FromDate;

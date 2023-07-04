@@ -22,11 +22,6 @@ public class CheckAccountStatusMiddleware
             && int.TryParse(context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out var custId))
         {
             var accountStatus = await customerService.GetCustomerStatus(custId);
-            if (accountStatus == null || accountStatus.IsProtectedMode)
-            {
-                await HandleForbiddenResponse(context, "Your account is Protected Mode");
-                return;
-            }
 
             if (accountStatus.IsLocked)
             {

@@ -1,0 +1,21 @@
+{
+  "PartialUMSettings": {
+    "BetListsCacheInSeconds": 15,
+    "Functions": [
+      {
+        "Name": "Group Bet List Drilldown",
+        "Settings": [
+          {
+            "SettingKey": "Age_BetList_SelWinLossByDate_Mem"
+          },
+          {
+            "SettingKey": "Age_BetList_SelWinLossByDate_Mem_Old"
+          },
+          {
+            "SettingKey": "Age_BetList_SelRunning_Mem"
+          }
+        ]
+      }
+    ]
+  }
+}
