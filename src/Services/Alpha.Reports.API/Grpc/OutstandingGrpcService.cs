@@ -170,6 +170,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Enumerable.Empty<int>(),
             DateTime.Now);
 
+        validUserSelectedProductIds = productService.FilterProductIdsByGroup(validUserSelectedProductIds, request.ProductGroup);
+
         var param = new GetOutstandingReportParam(
             (byte)request.ViewerLevelId,
             (byte)request.CustLevelId,

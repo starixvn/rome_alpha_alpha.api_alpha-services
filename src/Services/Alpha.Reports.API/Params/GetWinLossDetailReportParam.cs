@@ -23,6 +23,7 @@ public class GetWinLossDetailReportParam
         FromDate = DateTime.TryParse(request.FromDate, out dt) ? dt : DateTime.MinValue;
         ToDate = DateTime.TryParse(request.ToDate, out dt) ? dt : DateTime.MinValue;
         SiteName = request.Site;
+        ProductGroup = request.ProductGroup;
     }
 
     public int ViewerId { get; }
@@ -41,6 +42,7 @@ public class GetWinLossDetailReportParam
 
     public IEnumerable<int> ProductIds { get; set; }
     public bool IsEnableSabaPromotion { get; set; }
+    public string ProductGroup { get; set; }
 
     public DateTime MinDate { get; }
 

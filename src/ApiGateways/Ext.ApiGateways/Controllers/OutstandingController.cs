@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using GrpcReports;
 using Ext.ApiGateways.Services;
-using Ext.ApiGateways.Requests;
+using Ext.ApiGateways.Extensions;
 using Alpha.Utilities.Models;
 using Ext.ApiGateways.Models;
 using System.Net;
 using System.Security.Claims;
+using Ext.ApiGateways.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/{product=All}")]
 [ApiController]
 public class OutstandingController : Controller
 {
@@ -33,9 +34,22 @@ public class OutstandingController : Controller
     public async Task<IActionResult> Index(
         [FromHeader] string key,
         [FromHeader] string username,
-        [FromHeader] string password)
+        [FromHeader] string password,
+        [FromRoute] string product)
     {
-        logger.LogInformation("OutStanding - {key}", key);
+        if (!ProductGroupConstants.IsValid(product))
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+        }
+
+        logger.LogCallFunction("Outstanding",
+            new Dictionary<string, string>
+            {
+                ["Key"] = key,
+                ["Username"] = username,
+                ["Password"] = password,
+                ["Product"] = product,
+            });
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {
@@ -57,7 +71,8 @@ public class OutstandingController : Controller
             CurrencyId = viewerInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            CustName = string.Empty
+            CustName = string.Empty,
+            ProductGroup = product
         };
 
         if (viewerInfo.RoleId == UserLevelModel.Super)

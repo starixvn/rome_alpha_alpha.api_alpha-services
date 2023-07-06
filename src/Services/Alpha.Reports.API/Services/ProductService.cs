@@ -1,4 +1,5 @@
 using Alpha.ApiKey.API.Models;
+using Alpha.Reports.API.Constants;
 using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.Models;
 using Alpha.Utilities.Constans;
@@ -35,6 +36,8 @@ public interface IProductService
     Task<IEnumerable<ProductStatusModel>> GetProductStatus(int viewerId);
 
     bool CanViewProduct(int productId, string site, IEnumerable<ProductStatusModel> products, ReportsAppSettingsModel settings);
+
+    IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group);
 }
 
 public class ProductService : IProductService
@@ -174,4 +177,20 @@ public class ProductService : IProductService
 
     public string GetProductName(int productId, string language)
         => cacheRefService.GetProductName(productId, language);
+
+
+    public IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group)
+    {
+        if (string.Equals(group, ProductGroupConstants.All, System.StringComparison.OrdinalIgnoreCase))
+        {
+            return products;
+        }
+
+        if (string.Equals(group, ProductGroupConstants.Sportsbook, System.StringComparison.OrdinalIgnoreCase))
+        {
+            return products.Where(p => p == ProductIdConstants.Sportsbook);
+        }
+
+        return products.Where(p => p != ProductIdConstants.Sportsbook);
+    }
 }

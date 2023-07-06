@@ -6,10 +6,12 @@ using Alpha.Utilities.Models;
 using GrpcReports;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Ext.ApiGateways.Extensions;
+using Ext.ApiGateways.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/{product=All}")]
 [ApiController]
 public class WinLossDetailController : Controller
 {
@@ -33,14 +35,27 @@ public class WinLossDetailController : Controller
         [FromHeader] string key,
         [FromHeader] string username,
         [FromHeader] string password,
+        [FromRoute] string product,
         [FromBody] WinLossDetailRequest request)
     {
-        if (!request.ValidateDateRange())
+        if (!ProductGroupConstants.IsValid(product))
         {
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
-        logger.LogInformation("WinLossDetailByName - {key}: {request}", key, request);
+        logger.LogCallFunction("WinLossDetail",
+            new Dictionary<string, string>
+            {
+                ["Key"] = key,
+                ["Username"] = username,
+                ["Product"] = product,
+                ["Password"] = password
+            });
+
+        if (!request.ValidateDateRange())
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+        }
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {
@@ -64,7 +79,8 @@ public class WinLossDetailController : Controller
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
             FromDate = request.FromDate.Value.ToShortDateString(),
-            ToDate = request.ToDate.Value.ToShortDateString()
+            ToDate = request.ToDate.Value.ToShortDateString(),
+            ProductGroup = product
         };
 
         return viewerInfo.RoleId switch

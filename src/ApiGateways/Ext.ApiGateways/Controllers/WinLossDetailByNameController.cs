@@ -6,10 +6,12 @@ using Alpha.Utilities.Models;
 using GrpcReports;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Ext.ApiGateways.Extensions;
+using Ext.ApiGateways.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]/{custName}")]
+[Route("api/[controller]/{custName}/{product=All}")]
 [ApiController]
 public class WinLossDetailByNameController : Controller
 {
@@ -34,14 +36,28 @@ public class WinLossDetailByNameController : Controller
         [FromHeader] string username,
         [FromHeader] string password,
         [FromRoute] string custName,
+        [FromRoute] string product,
         [FromBody] WinLossDetailRequest request)
     {
-        if (!request.ValidateDateRange())
+        if (!ProductGroupConstants.IsValid(product))
         {
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
-        logger.LogInformation("WinLossDetail - {key}: {request}", key, request);
+        logger.LogCallFunction("WinLossDetailByName",
+            new Dictionary<string, string>
+            {
+                ["Key"] = key,
+                ["Username"] = username,
+                ["Password"] = password,
+                ["Product"] = product,
+                ["CustName"] = custName
+            });
+
+        if (!request.ValidateDateRange())
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+        }
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {
@@ -66,7 +82,8 @@ public class WinLossDetailByNameController : Controller
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
             FromDate = request.FromDate.Value.ToShortDateString(),
-            ToDate = request.ToDate.Value.ToShortDateString()
+            ToDate = request.ToDate.Value.ToShortDateString(),
+            ProductGroup = product
         };
 
         return downlineInfo.RoleId switch

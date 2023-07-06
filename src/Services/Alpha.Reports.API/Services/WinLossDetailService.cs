@@ -54,6 +54,7 @@ public class WinLossDetailService : IWinLossDetailService
             param.ProductIds,
             param.MinDate,
             isEnableSabaPromotion: param.IsEnableSabaPromotion);
+        products = productService.FilterProductIdsByGroup(products, param.ProductGroup);
 
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
         var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
@@ -93,6 +94,7 @@ public class WinLossDetailService : IWinLossDetailService
             param.ProductIds,
             param.MinDate,
             isEnableSabaPromotion: param.IsEnableSabaPromotion);
+        products = productService.FilterProductIdsByGroup(products, param.ProductGroup);
 
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
         var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
@@ -133,6 +135,7 @@ public class WinLossDetailService : IWinLossDetailService
             param.ProductIds,
             param.MinDate,
             isEnableSabaPromotion: param.IsEnableSabaPromotion);
+        products = productService.FilterProductIdsByGroup(products, param.ProductGroup);
 
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
         var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);

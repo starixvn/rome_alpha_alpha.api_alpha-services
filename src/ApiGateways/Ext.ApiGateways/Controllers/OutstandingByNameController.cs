@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using GrpcReports;
 using Ext.ApiGateways.Services;
-using Ext.ApiGateways.Requests;
+using Ext.ApiGateways.Extensions;
 using Alpha.Utilities.Models;
 using Ext.ApiGateways.Models;
 using System.Net;
 using System.Security.Claims;
+using Ext.ApiGateways.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]/{custName}")]
+[Route("api/[controller]/{custName}/{product=All}")]
 [ApiController]
 public class OutstandingByNameController : Controller
 {
@@ -34,9 +35,23 @@ public class OutstandingByNameController : Controller
         [FromHeader] string key,
         [FromHeader] string username,
         [FromHeader] string password,
-        [FromRoute] string custName)
+        [FromRoute] string custName,
+        [FromRoute] string product)
     {
-        logger.LogInformation("OutStandingByName - {key}: {custName}", key, custName);
+        if (!ProductGroupConstants.IsValid(product))
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+        }
+
+        logger.LogCallFunction("OutstandingByName",
+            new Dictionary<string, string>
+            {
+                ["Key"] = key,
+                ["Username"] = username,
+                ["Password"] = password,
+                ["Product"] = product,
+                ["CustName"] = custName
+            });
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {
@@ -59,7 +74,8 @@ public class OutstandingByNameController : Controller
             CurrencyId = downlineInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            CustName = custName
+            CustName = custName,
+            ProductGroup = product
         };
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)

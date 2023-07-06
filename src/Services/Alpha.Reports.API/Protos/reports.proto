@@ -32,6 +32,7 @@ message GetOutstandingReportRequest {
 
   string sortPropertyName = 10;
   bool isDescendingSort = 11;
+  string productGroup = 12;
 } 
 
 message GetSuperOutstandingResponse {
@@ -118,6 +119,7 @@ message GetWinLossDetailReportRequest {
   bool isDescendingSort = 10;
   string fromDate = 11; 
   string toDate = 12; 
+  string productGroup = 13;
 } 
 
 message GetSuperWinLossDetailResponse {
@@ -139,44 +141,48 @@ message SuperWinLossDetailModel {
   string custName = 1;
   int32 betCount = 2;
   string turnover = 3;
+  string netTurnover = 4;
+  string grossComm = 5;
 
-  string memberWinLoss = 4;
-  string memberComm = 5;
-  string memberTotal = 6;
+  string memberWinLoss = 6;
+  string memberComm = 7;
+  string memberTotal = 8;
 
-  string agentWinLoss = 7;
-  string agentComm = 8;
-  string agentTotal = 9;
+  string agentWinLoss = 9;
+  string agentComm = 10;
+  string agentTotal = 11;
 
-  string masterWinLoss = 10;
-  string masterComm = 11;
-  string masterTotal = 12;
+  string masterWinLoss = 12;
+  string masterComm = 13;
+  string masterTotal = 14;
 
-  string superWinLoss = 13;
-  string superComm = 14;
-  string superTotal = 15;
+  string superWinLoss = 15;
+  string superComm = 16;
+  string superTotal = 17;
   
-  string company = 16;
+  string company = 18;
 }
 
 message MasterWinLossDetailModel {
   string custName = 1;
   int32 betCount = 2;
   string turnover = 3;
+  string netTurnover = 4;
+  string grossComm = 5;
 
-  string memberWinLoss = 4;
-  string memberComm = 5;
-  string memberTotal = 6;
+  string memberWinLoss = 6;
+  string memberComm = 7;
+  string memberTotal = 8;
 
-  string agentWinLoss = 7;
-  string agentComm = 8;
-  string agentTotal = 9;
+  string agentWinLoss = 9;
+  string agentComm = 10;
+  string agentTotal = 11;
 
-  string masterWinLoss = 10;
-  string masterComm = 11;
-  string masterTotal = 12;
+  string masterWinLoss = 12;
+  string masterComm = 13;
+  string masterTotal = 14;
 
-  string company = 13;
+  string company = 15;
 }
 
 
@@ -184,14 +190,16 @@ message AgentWinLossDetailModel {
   string custName = 1;
   int32 betCount = 2;
   string turnover = 3;
+  string netTurnover = 4;
+  string grossComm = 5;
 
-  string memberWinLoss = 4;
-  string memberComm = 5;
-  string memberTotal = 6;
+  string memberWinLoss = 6;
+  string memberComm = 7;
+  string memberTotal = 8;
 
-  string agentWinLoss = 7;
-  string agentComm = 8;
-  string agentTotal = 9;
+  string agentWinLoss = 9;
+  string agentComm = 10;
+  string agentTotal = 11;
 
-  string company = 10;
+  string company = 12;
 }

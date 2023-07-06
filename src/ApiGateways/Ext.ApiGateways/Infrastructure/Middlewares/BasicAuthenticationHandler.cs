@@ -4,6 +4,7 @@ using System.Text.Encodings.Web;
 using Ext.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using Ext.ApiGateways.Extensions;
 
 namespace Ext.ApiGateways.Infrastructure.Middlewares;
 
@@ -37,7 +38,8 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         {
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-            flogger.Info("HandleAuthenticate End");
+
+            flogger.LogHeaders(Request.Headers);
             return AuthenticateResult.Fail("Bad Request");
         }
 
@@ -59,6 +61,8 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
+        flogger.LogHeaders(Request.Headers);
+
         return AuthenticateResult.Fail("Unauthorized");
     }
 }

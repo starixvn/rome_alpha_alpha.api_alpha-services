@@ -7,6 +7,7 @@ using Alpha.Utilities.Models;
 using GrpcReports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Alpha.ApiGateways.Extensions;
 
 namespace Alpha.ApiGateways.Controllers;
 
@@ -15,7 +16,6 @@ namespace Alpha.ApiGateways.Controllers;
 [ApiController]
 public class WinLossDetailController : Controller
 {
-    private const int MaxDateRangeInDays = 31;
     private readonly Reports.ReportsClient apiClient;
     private readonly IApiKeyService apiKeyService;
     private readonly ICustomerService customerService;
@@ -55,7 +55,16 @@ public class WinLossDetailController : Controller
             Timestamp = timestamp
         };
 
-        logger.LogInformation("WinLossDetail - {key}: {request}", key, request);
+        logger.LogCallFunction("WinLossDetail",
+            new Dictionary<string, object>
+            {
+                ["Key"] = key,
+                ["PassPhrase"] = passPhrase,
+                ["Signature"] = signature,
+                ["Timestamp"] = timestamp,
+                ["Request"] = request,
+            });
+
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
@@ -75,7 +84,8 @@ public class WinLossDetailController : Controller
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
             FromDate = request.FromDate.ToShortDateString(),
-            ToDate = request.ToDate.ToShortDateString()
+            ToDate = request.ToDate.ToShortDateString(),
+            ProductGroup = ProductGroupConstants.All
         };
 
         return downlineInfo.RoleId switch
