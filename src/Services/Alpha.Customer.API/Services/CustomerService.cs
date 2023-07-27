@@ -20,7 +20,7 @@ public interface ICustomerService
 
     Task<CustomerInfoModel> GetCustomerInfo(int custId, string username);
 
-    Task<IEnumerable<ProductModel>> GetCustomerProducts(int custId);
+    Task<IEnumerable<ProductModel>> GetCustomerProducts(int custId, int roleId);
 }
 
 public class CustomerService : ICustomerService
@@ -82,9 +82,9 @@ public class CustomerService : ICustomerService
         return await customerDataAccess.GetCustomerInfo(criteria);
     }
 
-    public async Task<IEnumerable<ProductModel>> GetCustomerProducts(int custId)
+    public async Task<IEnumerable<ProductModel>> GetCustomerProducts(int custId, int roleId)
     {
-        var criteria = new GetCustomerProductsCriteria(custId, appSettings.SettingStatus);
+        var criteria = new GetCustomerProductsCriteria(custId, roleId, appSettings.SettingStatus);
 
         return await customerDataAccess.GetCustomerProducts(criteria);
     }

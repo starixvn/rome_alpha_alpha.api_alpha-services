@@ -66,7 +66,7 @@ public class CustomerGrpcService : Customer.CustomerBase
 
     public override async Task<GetCustomerProductsResponse> GetCustomerProducts(GetCustomerProductsRequest request, ServerCallContext context)
     {
-        var products = await customerService.GetCustomerProducts(request.CustId);
+        var products = await customerService.GetCustomerProducts(request.CustId, request.RoleId);
         var response = new GetCustomerProductsResponse();
         response.Products.AddRange(products.Select(p => new ProductsResponse
         {

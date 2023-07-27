@@ -102,10 +102,14 @@ public class Startup
 
         app.UseRouting();
         app.UseCors("CorsPolicy");
-        app.UseRateLimiter();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseMiddleware<CheckAccountStatusMiddleware>();
+
+        app.UseWhen(context => !context.Request.Path.Value.ToLower().Trim().Contains("/health"), applicationBuilder =>
+        {
+            applicationBuilder.UseRateLimiter();
+            applicationBuilder.UseAuthentication();
+            applicationBuilder.UseAuthorization();
+            applicationBuilder.UseMiddleware<CheckAccountStatusMiddleware>();
+        });
 
         app.UseEndpoints(endpoints =>
         {

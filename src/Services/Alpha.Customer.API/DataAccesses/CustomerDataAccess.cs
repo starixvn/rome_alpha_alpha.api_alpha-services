@@ -51,7 +51,6 @@ public class CustomerDataAccess : ICustomerDataAccess
         using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
         {
             using var reader = await db.ExecuteReaderAsync(criteria);
-            reader.Read();
             if (reader.NextResult())
             {
                 var result = new List<ProductModel>();

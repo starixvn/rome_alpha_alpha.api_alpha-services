@@ -164,6 +164,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var validUserSelectedProductIds = await productService.FilterProductIdsByCustomer(
             request.ViewerId,
+            request.ViewerLevelId,
             request.Site,
             request.CurrencyId,
             request.Language,

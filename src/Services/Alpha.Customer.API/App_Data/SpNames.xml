@@ -5,6 +5,7 @@
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.BODBDownlineNet" />
     <Setting Key="Age_Chatbot_CustomerStatusSel" SpName="Age_Chatbot_CustomerStatusSel" DbName="DBCust.CustDB.BODBDownlineNet" />
    
-    <Setting Key="Age_ManageAPI_CustProductSel" SpName="Age_ManageAPI_CustProductSel" DbName="DBCust.CustDB.BODBDownlineNet" />
+    <Setting Key="Age_ManageAPI_CustProductSel" SpName="Age_ManageAPI_CustProductSel_xpre" DbName="DBCust.CustDB.BODBDownlineNet" />
+    <Setting Key="Acc_CustSetting_StatusSelect" SpName="Acc_CustSetting_StatusSelect_xpre" DbName="DBCust.CustDB.BODBDownlineNet" />
   </Function>
 </Functions>

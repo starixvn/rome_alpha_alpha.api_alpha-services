@@ -48,6 +48,7 @@ public class WinLossDetailService : IWinLossDetailService
         var moveBetsDay = reportDateService.GetMoveBetsDay();
         var products = await productService.FilterProductIdsByCustomer(
             param.ViewerId,
+            param.ViewerLevel,
             param.Site,
             param.CurrencyId,
             param.Language,
@@ -57,7 +58,7 @@ public class WinLossDetailService : IWinLossDetailService
         products = productService.FilterProductIdsByGroup(products, param.ProductGroup);
 
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
-        var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
+        var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.ViewerLevel, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
         var productDetailsXML = productDetailService.BuildProductDetailsXML(products, productDetails, productOfferProductDetail);
 
         var criteria = new GetWinLossDetailCriteria(
@@ -88,6 +89,7 @@ public class WinLossDetailService : IWinLossDetailService
         var moveBetsDay = reportDateService.GetMoveBetsDay();
         var products = await productService.FilterProductIdsByCustomer(
             param.ViewerId,
+            param.ViewerLevel,
             param.Site,
             param.CurrencyId,
             param.Language,
@@ -97,7 +99,7 @@ public class WinLossDetailService : IWinLossDetailService
         products = productService.FilterProductIdsByGroup(products, param.ProductGroup);
 
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
-        var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
+        var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.ViewerLevel, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
         var productDetailsXML = productDetailService.BuildProductDetailsXML(products, productDetails, productOfferProductDetail);
 
         var criteria = new GetWinLossDetailCriteria(
@@ -129,6 +131,7 @@ public class WinLossDetailService : IWinLossDetailService
 
         var products = await productService.FilterProductIdsByCustomer(
             param.ViewerId,
+            param.ViewerLevel,
             param.Site,
             param.CurrencyId,
             param.Language,
@@ -138,7 +141,7 @@ public class WinLossDetailService : IWinLossDetailService
         products = productService.FilterProductIdsByGroup(products, param.ProductGroup);
 
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
-        var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
+        var productDetails = (await productDetailService.GetProductDetails(param.ViewerId, param.ViewerLevel, param.Site, param.CurrencyId, param.Language, param.Settings)).Select(r => r.ResourceId);
         var productDetailsXML = productDetailService.BuildProductDetailsXML(products, productDetails, productOfferProductDetail);
 
         var criteria = new GetWinLossDetailCriteria(

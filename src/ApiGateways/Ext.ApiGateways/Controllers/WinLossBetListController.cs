@@ -77,7 +77,8 @@ public class WinLossBetListController : Controller
             ProductGroup = product,
             FromDate = request.Date.Value.ToShortDateString(),
             ToDate = request.Date.Value.ToShortDateString(),
-            ViewerId = viewerInfo.CustId
+            ViewerId = viewerInfo.CustId,
+            RoleId = viewerInfo.RoleId
         };
 
         return viewerInfo.RoleId switch

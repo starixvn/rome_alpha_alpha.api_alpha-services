@@ -33,8 +33,8 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         var password = Request.Headers["Password"].ToString();
 
         if (string.IsNullOrEmpty(key)
-            || string.IsNullOrEmpty(username)
-            || string.IsNullOrEmpty(password))
+         || string.IsNullOrEmpty(username)
+         || string.IsNullOrEmpty(password))
         {
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");

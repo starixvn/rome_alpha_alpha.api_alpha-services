@@ -18,8 +18,8 @@ public class CheckAccountStatusMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         if (context.User.Identity is not null
-            && context.User.Identity.IsAuthenticated
-            && int.TryParse(context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out var custId))
+                 && context.User.Identity.IsAuthenticated
+                 && int.TryParse(context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out var custId))
         {
             var accountStatus = await customerService.GetCustomerStatus(custId);
 

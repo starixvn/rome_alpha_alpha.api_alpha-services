@@ -9,9 +9,9 @@ public static class LoggerExtensions
     {
         var t = new StringBuilder();
 
-        foreach (string key in headers.Keys)
+        foreach (var pair in headers)
         {
-            t.Append(key).Append('=').Append(headers[key]).Append(", ");
+            t.Append(pair.Key).Append('=').Append(pair.Value).Append(", ");
         }
 
         logger.Info($"AuthenticateFailed: headers={t}");
