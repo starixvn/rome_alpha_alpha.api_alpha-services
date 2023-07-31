@@ -55,6 +55,7 @@ public class WinLossDetailService : IWinLossDetailService
             param.ProductIds,
             param.MinDate,
             isEnableSabaPromotion: param.IsEnableSabaPromotion);
+
         products = productService.FilterProductIdsByGroup(products, param.ProductGroup);
 
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));

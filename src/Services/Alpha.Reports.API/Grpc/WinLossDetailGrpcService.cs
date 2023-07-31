@@ -54,8 +54,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             SuperComm = o.SuperComm.FormatNumber(),
             SuperTotal = o.SuperTotal.FormatNumber(),
             Company = o.Company.FormatNumber(),
-            NetTurnover = reportData.TotalData.NetTurnover.FormatNumber(),
-            GrossComm = reportData.TotalData.GrossComm.FormatNumber(),
+            NetTurnover = o.NetTurnover.FormatNumber(),
+            GrossComm = o.GrossComm.FormatNumber(),
         }));
 
         return response;
@@ -102,8 +102,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             MasterComm = o.MasterComm.FormatNumber(),
             MasterTotal = o.MasterTotal.FormatNumber(),
             Company = o.Company.FormatNumber(),
-            NetTurnover = reportData.TotalData.NetTurnover.FormatNumber(),
-            GrossComm = reportData.TotalData.GrossComm.FormatNumber(),
+            NetTurnover = o.NetTurnover.FormatNumber(),
+            GrossComm = o.GrossComm.FormatNumber(),
         }));
 
         return response;
@@ -144,8 +144,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             AgentComm = o.AgentComm.FormatNumber(),
             AgentTotal = o.AgentTotal.FormatNumber(),
             Company = o.Company.FormatNumber(),
-            NetTurnover = reportData.TotalData.NetTurnover.FormatNumber(),
-            GrossComm = reportData.TotalData.GrossComm.FormatNumber(),
+            NetTurnover = o.NetTurnover.FormatNumber(),
+            GrossComm = o.GrossComm.FormatNumber(),
         }));
 
         return response;
