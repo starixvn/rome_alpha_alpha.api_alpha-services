@@ -7,7 +7,7 @@ using Alpha.ApiGateways.Requests;
 using Alpha.Utilities.Models;
 using Alpha.ApiGateways.Models;
 using System.Net;
-using System.Security.Claims;
+using Alpha.ApiGateways.Extensions;
 
 namespace Alpha.ApiGateways.Controllers;
 
@@ -50,7 +50,16 @@ public class OutstandingController : Controller
             Timestamp = timestamp
         };
 
-        logger.LogInformation("OutStanding - {key}: {request}", key, request);
+        logger.LogCallFunction("Outstanding",
+            new Dictionary<string, object>
+            {
+                ["Key"] = key,
+                ["PassPhrase"] = passPhrase,
+                ["Signature"] = signature,
+                ["Timestamp"] = timestamp,
+                ["Request"] = request,
+            });
+
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
@@ -68,7 +77,8 @@ public class OutstandingController : Controller
             CurrencyId = downlineInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            CustName = request.CustName
+            CustName = request.CustName,
+            ProductGroup = ProductGroupConstants.All
         };
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)

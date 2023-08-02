@@ -11,6 +11,7 @@ service Customer {
 
 message GetCustomerProductsRequest {
     int32 custId = 1;
+    int32 roleId = 2;
 }
 
 message GetCustomerProductsResponse {

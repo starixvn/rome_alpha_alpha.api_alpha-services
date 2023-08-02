@@ -78,6 +78,7 @@ message GetWinLossBetListRequest {
   string language = 6;
   string site = 7;
   int32 viewerId = 8;
+  int32 roleId = 9;
 } 
 
 message SuperViewWinLossBetListResponse {

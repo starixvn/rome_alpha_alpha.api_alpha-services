@@ -7,7 +7,8 @@ using Ext.ApiGateways.Models;
 using System.Net;
 using System.Security.Claims;
 using GrpcBetLists;
-using Ext.ApiGateways.Criteria;
+using Ext.ApiGateways.Constants;
+using Ext.ApiGateways.Extensions;
 
 
 namespace Ext.ApiGateways.Controllers;
@@ -45,7 +46,15 @@ public class WinLossBetListController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
-        logger.LogInformation("WinLossBetList: {key} - {custName} - {date}", key, custName, request.Date);
+        logger.LogCallFunction("WinLossBetList",
+            new Dictionary<string, string>
+            {
+                ["Key"] = key,
+                ["Username"] = username,
+                ["Password"] = password,
+                ["Product"] = product,
+                ["CustName"] = custName
+            });
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {
@@ -68,7 +77,8 @@ public class WinLossBetListController : Controller
             ProductGroup = product,
             FromDate = request.Date.Value.ToShortDateString(),
             ToDate = request.Date.Value.ToShortDateString(),
-            ViewerId = viewerInfo.CustId
+            ViewerId = viewerInfo.CustId,
+            RoleId = viewerInfo.RoleId
         };
 
         return viewerInfo.RoleId switch

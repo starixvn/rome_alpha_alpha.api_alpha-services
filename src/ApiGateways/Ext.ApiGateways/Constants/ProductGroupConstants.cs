@@ -1,4 +1,4 @@
-namespace Ext.ApiGateways.Criteria;
+namespace Ext.ApiGateways.Constants;
 
 public static class ProductGroupConstants
 {

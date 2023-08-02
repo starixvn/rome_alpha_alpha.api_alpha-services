@@ -7,6 +7,7 @@ public class GetWinLossBetListParam
 {
     public GetWinLossBetListParam(
         int custId,
+        int roleId,
         string fromDate,
         string toDate,
         string language,
@@ -17,6 +18,7 @@ public class GetWinLossBetListParam
         BetListsAppSettingsModel settings)
     {
         CustId = custId;
+        RoleId = roleId;
 
         DateTime dt;
         FromDate = DateTime.TryParse(fromDate, out dt) ? dt : DateTime.MinValue;
@@ -32,6 +34,8 @@ public class GetWinLossBetListParam
     }
 
     public int ViewerId { get; }
+
+    public int RoleId { get; }
 
     public int CustId { get; }
 

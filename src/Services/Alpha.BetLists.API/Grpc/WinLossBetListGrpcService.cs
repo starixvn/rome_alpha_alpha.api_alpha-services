@@ -16,6 +16,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
         var param = new GetWinLossBetListParam(
             request.CustId,
+            request.RoleId,
             request.FromDate,
             request.ToDate,
             request.Language,
@@ -68,6 +69,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
         var param = new GetWinLossBetListParam(
             request.CustId,
+            request.RoleId,
             request.FromDate,
             request.ToDate,
             request.Language,
@@ -117,6 +119,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
         var param = new GetWinLossBetListParam(
             request.CustId,
+            request.RoleId,
             request.FromDate,
             request.ToDate,
             request.Language,

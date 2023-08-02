@@ -164,11 +164,14 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var validUserSelectedProductIds = await productService.FilterProductIdsByCustomer(
             request.ViewerId,
+            request.ViewerLevelId,
             request.Site,
             request.CurrencyId,
             request.Language,
             Enumerable.Empty<int>(),
             DateTime.Now);
+
+        validUserSelectedProductIds = productService.FilterProductIdsByGroup(validUserSelectedProductIds, request.ProductGroup);
 
         var param = new GetOutstandingReportParam(
             (byte)request.ViewerLevelId,

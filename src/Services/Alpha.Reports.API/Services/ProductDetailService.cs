@@ -10,7 +10,7 @@ namespace Alpha.Reports.API.Services;
 
 public interface IProductDetailService
 {
-    Task<IEnumerable<ProductDetailModel>> GetProductDetails(int viewerId, string site, int currencyId, string language, ReportsAppSettingsModel settings);
+    Task<IEnumerable<ProductDetailModel>> GetProductDetails(int viewerId, int roleId, string site, int currencyId, string language, ReportsAppSettingsModel settings);
     string BuildProductDetailsXML(IEnumerable<int> validProductIds, IEnumerable<int> validResourceIds, IEnumerable<int> productOfferProductDetail);
 }
 
@@ -36,6 +36,7 @@ public class ProductDetailService : IProductDetailService
 
     public async Task<IEnumerable<ProductDetailModel>> GetProductDetails(
         int viewerId,
+        int roleId,
         string site,
         int currencyId,
         string language,
@@ -46,7 +47,7 @@ public class ProductDetailService : IProductDetailService
             return Enumerable.Empty<ProductDetailModel>();
         }
 
-        var canViewProductDetails = await CanViewProductDetails(viewerId, site, currencyId, settings);
+        var canViewProductDetails = await CanViewProductDetails(viewerId, roleId, site, currencyId, settings);
 
         return ConfiguredCacheService.GetOrSet(
               $"{ProductDetailsCacheKey}-{viewerId}",
@@ -61,13 +62,13 @@ public class ProductDetailService : IProductDetailService
               new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CustProductDetailsCacheInMinutes)));
     }
 
-    private async Task<IDictionary<int, bool>> CanViewProductDetails(int viewerId, string site, int currencyId, ReportsAppSettingsModel settings)
+    private async Task<IDictionary<int, bool>> CanViewProductDetails(int viewerId, int roleId, string site, int currencyId, ReportsAppSettingsModel settings)
     {
         var canViewProductDetails = new Dictionary<int, bool>();
 
         var ps = settings.ProductOfferProductDetail.Split(new[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
 
-        var productStatus = await productService.GetProductStatus(viewerId);
+        var productStatus = await productService.GetProductStatus(viewerId, roleId);
 
         foreach (var product in ps)
         {

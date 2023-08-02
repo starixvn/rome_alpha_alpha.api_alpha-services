@@ -18,6 +18,10 @@ public class AgentWinLossDetailModel
 
     public decimal AgentComm { get; set; }
 
+    public decimal NetTurnover { get; set; }
+
+    public decimal GrossComm { get; set; }
+
     public decimal MemberTotal => MemberWinLoss + MemberComm;
 
     public decimal AgentTotal => AgentWinLoss + AgentComm;

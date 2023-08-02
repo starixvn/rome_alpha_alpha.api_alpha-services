@@ -10,7 +10,7 @@ namespace Alpha.BetLists.API.Services;
 
 public interface IProductDetailService
 {
-    Task<IEnumerable<ProductDetailModel>> GetProductDetails(int viewerId, string language, BetListsAppSettingsModel settings);
+    Task<IEnumerable<ProductDetailModel>> GetProductDetails(int viewerId, int roleId, string language, BetListsAppSettingsModel settings);
     string BuildProductDetailsXML(IEnumerable<int> validProductIds, IEnumerable<int> validResourceIds, IEnumerable<int> productOfferProductDetail);
 }
 
@@ -36,6 +36,7 @@ public class ProductDetailService : IProductDetailService
 
     public async Task<IEnumerable<ProductDetailModel>> GetProductDetails(
         int viewerId,
+        int roleId,
         string language,
         BetListsAppSettingsModel settings)
     {

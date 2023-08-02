@@ -1,4 +1,5 @@
 using Alpha.ApiKey.API.Models;
+using Alpha.Reports.API.Constants;
 using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.Models;
 using Alpha.Utilities.Constans;
@@ -15,6 +16,7 @@ public interface IProductService
 {
     Task<IEnumerable<int>> FilterProductIdsByCustomer(
         int viewerId,
+        int roleId,
         string site,
         int currencyId,
         string language,
@@ -24,6 +26,7 @@ public interface IProductService
 
     Task<IEnumerable<ProductModel>> GetProductsForCustomer(
         int viewerId,
+        int roleId,
         string site,
         int currencyId,
         string language,
@@ -32,9 +35,11 @@ public interface IProductService
 
     bool CanViewBySite(int viewerId, string site, int currencyId, int productId);
 
-    Task<IEnumerable<ProductStatusModel>> GetProductStatus(int viewerId);
+    Task<IEnumerable<ProductStatusModel>> GetProductStatus(int viewerId, int roleId);
 
     bool CanViewProduct(int productId, string site, IEnumerable<ProductStatusModel> products, ReportsAppSettingsModel settings);
+
+    IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group);
 }
 
 public class ProductService : IProductService
@@ -63,6 +68,7 @@ public class ProductService : IProductService
 
     public async Task<IEnumerable<int>> FilterProductIdsByCustomer(
         int viewerId,
+        int roleId,
         string site,
         int currencyId,
         string language,
@@ -71,7 +77,7 @@ public class ProductService : IProductService
         bool isEnableSabaPromotion = false)
     {
         var customerProductIds =
-            (await GetProductsForCustomer(viewerId, site, currencyId, language, minReportDate, isEnableSabaPromotion))
+            (await GetProductsForCustomer(viewerId, roleId, site, currencyId, language, minReportDate, isEnableSabaPromotion))
             .Select(product => product.Id);
 
         var productIdList = productIds == null || !productIds.Any()
@@ -83,6 +89,7 @@ public class ProductService : IProductService
 
     public async Task<IEnumerable<ProductModel>> GetProductsForCustomer(
         int viewerId,
+        int roleId,
         string site,
         int currencyId,
         string language,
@@ -94,7 +101,7 @@ public class ProductService : IProductService
             return Enumerable.Empty<ProductModel>();
         }
 
-        var productStatus = await GetProductStatus(viewerId);
+        var productStatus = await GetProductStatus(viewerId, roleId);
 
         var custProducts = cacheService
             .GetOrSet(
@@ -159,9 +166,9 @@ public class ProductService : IProductService
         return result;
     }
 
-    public async Task<IEnumerable<ProductStatusModel>> GetProductStatus(int viewerId)
+    public async Task<IEnumerable<ProductStatusModel>> GetProductStatus(int viewerId, int roleId)
     {
-        var productStatus = (await customerClient.GetCustomerProductsAsync(new GetCustomerProductsRequest { CustId = viewerId }))
+        var productStatus = (await customerClient.GetCustomerProductsAsync(new GetCustomerProductsRequest { CustId = viewerId, RoleId = roleId }))
             .Products.Select(p => new ProductStatusModel
             {
                 Id = p.Id,
@@ -174,4 +181,20 @@ public class ProductService : IProductService
 
     public string GetProductName(int productId, string language)
         => cacheRefService.GetProductName(productId, language);
+
+
+    public IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group)
+    {
+        if (string.Equals(group, ProductGroupConstants.All, System.StringComparison.OrdinalIgnoreCase))
+        {
+            return products;
+        }
+
+        if (string.Equals(group, ProductGroupConstants.Sportsbook, System.StringComparison.OrdinalIgnoreCase))
+        {
+            return products.Where(p => p == ProductIdConstants.Sportsbook);
+        }
+
+        return products.Where(p => p != ProductIdConstants.Sportsbook);
+    }
 }

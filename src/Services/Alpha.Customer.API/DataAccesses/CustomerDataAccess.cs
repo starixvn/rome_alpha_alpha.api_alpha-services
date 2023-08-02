@@ -48,40 +48,35 @@ public class CustomerDataAccess : ICustomerDataAccess
             return Enumerable.Empty<ProductModel>();
         }
 
+        var result = new List<ProductModel>();
+
         using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
         {
             using var reader = await db.ExecuteReaderAsync(criteria);
-            reader.Read();
-            if (reader.NextResult())
+
+            while (reader.Read())
             {
-                var result = new List<ProductModel>();
-
-                while (reader.Read())
+                var isSync = reader["IsSync"];
+                var product = new ProductModel
                 {
-                    var isSync = reader["IsSync"];
-                    var product = new ProductModel
-                    {
-                        Id = (byte)reader["RealProductID"],
-                        IsSynced = !Convert.IsDBNull(isSync) && (bool)isSync,
-                        IsHidden = (bool)reader["isHidden"]
-                    };
+                    Id = (byte)reader["RealProductID"],
+                    IsSynced = !Convert.IsDBNull(isSync) && (bool)isSync,
+                    IsHidden = (bool)reader["isHidden"]
+                };
 
-                    var existProduct = result.FirstOrDefault(p => p.Id == product.Id);
+                var existProduct = result.FirstOrDefault(p => p.Id == product.Id);
 
-                    if (existProduct == null)
-                    {
-                        result.Add(product);
-                        continue;
-                    }
-
-                    existProduct.IsHidden = existProduct.IsHidden && product.IsHidden;
-                    existProduct.IsSynced = existProduct.IsSynced && product.IsSynced;
+                if (existProduct == null)
+                {
+                    result.Add(product);
+                    continue;
                 }
 
-                return result;
+                existProduct.IsHidden = existProduct.IsHidden && product.IsHidden;
+                existProduct.IsSynced = existProduct.IsSynced && product.IsSynced;
             }
         }
 
-        return Enumerable.Empty<ProductModel>();
+        return result;
     }
 }
