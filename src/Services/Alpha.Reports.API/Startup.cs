@@ -105,7 +105,6 @@ public class Startup
 
         services.AddSingleton<IRemotingRefService, RemotingRefService>();
         services.AddTransient<ICacheRefService, CacheRefService>();
-        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IAutoFollowBetService, AutoFollowBetService>();
         services.AddTransient<IReportDateService, ReportDateService>();
 

@@ -107,7 +107,7 @@ public static class ServiceCollectionExtensions
             options.GlobalLimiter = PartitionedRateLimiter.CreateChained(
                 PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
                 {
-                    var remoteIp = httpContext.Connection.RemoteIpAddress.ToString();
+                    var remoteIp = Helpers.IPHelper.GetClientIP(httpContext);
                     return RateLimitPartition.GetSlidingWindowLimiter(remoteIp, partition => new SlidingWindowRateLimiterOptions
                     {
                         AutoReplenishment = ipRateLimitConfig.AutoReplenishment,

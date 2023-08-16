@@ -19,8 +19,6 @@ public interface ICustomerService
     Task<DownlineInfo> GetDownlineInfo(int custId, string downlineUsername);
 
     Task<CustomerInfoModel> GetCustomerInfo(int custId, string username);
-
-    Task<IEnumerable<ProductModel>> GetCustomerProducts(int custId, int roleId);
 }
 
 public class CustomerService : ICustomerService
@@ -80,12 +78,5 @@ public class CustomerService : ICustomerService
         var criteria = new GetCustomerInfoCriteria(custId, username);
 
         return await customerDataAccess.GetCustomerInfo(criteria);
-    }
-
-    public async Task<IEnumerable<ProductModel>> GetCustomerProducts(int custId, int roleId)
-    {
-        var criteria = new GetCustomerProductsCriteria(custId, roleId, appSettings.SettingStatus);
-
-        return await customerDataAccess.GetCustomerProducts(criteria);
     }
 }

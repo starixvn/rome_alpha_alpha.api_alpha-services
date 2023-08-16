@@ -23,7 +23,6 @@ public class AutoFollowBetService : IAutoFollowBetService
         var criteria = new GetFollowBetAccountsCriteria(agentId);
         var followBetAccounts = await dynamicRepository.FetchAsync<FollowBetAccountModel>(criteria);
 
-        return followBetAccounts
-            .GroupBy(f => f.AgentId, (key, accounts) => Tuple.Create(key, accounts));
+        return followBetAccounts.GroupBy(f => f.AgentId, (key, accounts) => Tuple.Create(key, accounts));
     }
 }

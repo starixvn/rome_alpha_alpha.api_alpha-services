@@ -35,7 +35,7 @@ namespace Ext.ApiGateways.Services
             {
                 IsAuthenticated = criteria.IsAuthenticated,
                 CustId = criteria.CustId,
-                RoleId = criteria.RoleId
+                SubAccId = criteria.SubAccId
             };
         }
     }

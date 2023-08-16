@@ -50,7 +50,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, verifyApiKeyResult.CustId.ToString()),
-                new Claim(ClaimTypes.Role, verifyApiKeyResult.RoleId.ToString())
+                new Claim("SubAccId", verifyApiKeyResult.SubAccId.ToString()),
             };
 
             var identity = new ClaimsIdentity(claims, "Basic");

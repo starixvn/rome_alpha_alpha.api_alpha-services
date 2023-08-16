@@ -1,5 +1,5 @@
 
-using Alpha.Reports.API.Extensions;
+using Alpha.Utilities.Extensions;
 
 namespace Alpha.Reports.API.Criteria;
 

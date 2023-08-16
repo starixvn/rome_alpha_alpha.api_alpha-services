@@ -1,8 +1,7 @@
-using Alpha.Reports.API.Extensions;
+using Alpha.Utilities.Extensions;
 using Alpha.Reports.API.Params;
 using Grpc.Core;
 using Alpha.Reports.API.Models;
-using Alpha.Utilities.Extensions;
 
 namespace GrpcReports;
 
@@ -162,14 +161,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
     private async Task<IEnumerable<OutstandingModel>> GetOutstanding(GetOutstandingReportRequest request)
     {
-        var validUserSelectedProductIds = await productService.FilterProductIdsByCustomer(
-            request.ViewerId,
-            request.ViewerLevelId,
-            request.Site,
-            request.CurrencyId,
-            request.Language,
-            Enumerable.Empty<int>(),
-            DateTime.Now);
+        var validUserSelectedProductIds = productService.FilterProductIdsByCustomer(request.Language, Enumerable.Empty<int>(), DateTime.Now);
 
         validUserSelectedProductIds = productService.FilterProductIdsByGroup(validUserSelectedProductIds, request.ProductGroup);
 

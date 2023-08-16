@@ -25,7 +25,7 @@ namespace Ext.ApiGateways.Criteria
 
         public int CustId { get; set; }
 
-        public int RoleId { get; set; }
+        public int SubAccId { get; set; }
 
         public override string GetSettingKey()
         {

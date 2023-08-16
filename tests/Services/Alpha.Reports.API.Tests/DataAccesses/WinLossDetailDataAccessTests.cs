@@ -65,6 +65,7 @@ public class WinLossDetailDataAccessTests
                 MasterComm = 8,
                 SuperWinLoss = 9,
                 SuperComm = 10,
+                GrossComm = 2,
             },
             new SuperWinLossDetailModel {
                 CustId = 11,
@@ -78,7 +79,8 @@ public class WinLossDetailDataAccessTests
                 MasterWinLoss = 17,
                 MasterComm = 18,
                 SuperWinLoss = 19,
-                SuperComm = 110
+                SuperComm = 110,
+                GrossComm = 12,
             }
         };
 
@@ -96,6 +98,7 @@ public class WinLossDetailDataAccessTests
             MasterComm = 28,
             SuperWinLoss = 29,
             SuperComm = 210,
+            GrossComm = 22,
         };
 
         var expectedValue = new ReportDataModel<SuperWinLossDetailModel>(winLossDetails, total);
@@ -131,6 +134,7 @@ public class WinLossDetailDataAccessTests
                 MasterComm = 8,
                 SuperWinLoss = 9,
                 SuperComm = 10,
+                GrossComm = 2,
             },
             new SuperWinLossDetailModel {
                 CustId = 11,
@@ -144,7 +148,8 @@ public class WinLossDetailDataAccessTests
                 MasterWinLoss = 17,
                 MasterComm = 18,
                 SuperWinLoss = 19,
-                SuperComm = 110
+                SuperComm = 110,
+                GrossComm = 12,
             }
         };
 
@@ -198,6 +203,7 @@ public class WinLossDetailDataAccessTests
                 AgentComm = 6,
                 MasterWinLoss = 7,
                 MasterComm = 8,
+                GrossComm = 2,
             },
             new MasterWinLossDetailModel {
                 CustId = 11,
@@ -210,6 +216,7 @@ public class WinLossDetailDataAccessTests
                 AgentComm = 16,
                 MasterWinLoss = 17,
                 MasterComm = 18,
+                GrossComm = 12,
             }
         };
 
@@ -225,6 +232,7 @@ public class WinLossDetailDataAccessTests
             AgentComm = 26,
             MasterWinLoss = 27,
             MasterComm = 28,
+            GrossComm = 22,
         };
 
         var expectedValue = new ReportDataModel<MasterWinLossDetailModel>(winLossDetails, total);
@@ -258,6 +266,7 @@ public class WinLossDetailDataAccessTests
                 AgentComm = 6,
                 MasterWinLoss = 7,
                 MasterComm = 8,
+                GrossComm = 2,
             },
             new MasterWinLossDetailModel {
                 CustId = 11,
@@ -270,6 +279,7 @@ public class WinLossDetailDataAccessTests
                 AgentComm = 16,
                 MasterWinLoss = 17,
                 MasterComm = 18,
+                GrossComm = 12,
             }
         };
 
@@ -321,6 +331,7 @@ public class WinLossDetailDataAccessTests
                 MemberComm = 4,
                 AgentWinLoss = 5,
                 AgentComm = 6,
+                GrossComm = 2,
             },
             new AgentWinLossDetailModel {
                 CustId = 11,
@@ -331,6 +342,7 @@ public class WinLossDetailDataAccessTests
                 MemberComm = 14,
                 AgentWinLoss = 15,
                 AgentComm = 16,
+                GrossComm = 12,
             }
         };
 
@@ -344,6 +356,7 @@ public class WinLossDetailDataAccessTests
             MemberComm = 24,
             AgentWinLoss = 25,
             AgentComm = 26,
+            GrossComm = 22,
         };
 
         var expectedValue = new ReportDataModel<AgentWinLossDetailModel>(winLossDetails, total);
@@ -375,6 +388,7 @@ public class WinLossDetailDataAccessTests
                 MemberComm = 4,
                 AgentWinLoss = 5,
                 AgentComm = 6,
+                GrossComm = 2,
             },
             new AgentWinLossDetailModel {
                 CustId = 11,
@@ -385,6 +399,7 @@ public class WinLossDetailDataAccessTests
                 MemberComm = 14,
                 AgentWinLoss = 15,
                 AgentComm = 16,
+                GrossComm = 12,
             }
         };
 

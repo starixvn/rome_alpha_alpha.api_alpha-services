@@ -25,8 +25,11 @@ public class CustomRateLimiterPolicy : IRateLimiterPolicy<string>
 
     public RateLimitPartition<string> GetPartition(HttpContext httpContext)
     {
+        var custId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+        var subAccId = httpContext.User.FindFirst("SubAccId")?.Value ?? string.Empty;
+
         return RateLimitPartition.GetSlidingWindowLimiter(
-            partitionKey: httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+            partitionKey: $"{custId}_{subAccId}",
             partition => new SlidingWindowRateLimiterOptions
             {
                 AutoReplenishment = customerRateLimitConfig.AutoReplenishment,

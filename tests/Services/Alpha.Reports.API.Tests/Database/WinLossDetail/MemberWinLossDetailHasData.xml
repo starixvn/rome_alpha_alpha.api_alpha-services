@@ -12,6 +12,7 @@
     <AgComm>6</AgComm>
     <NumberOfTickets>11</NumberOfTickets>
     <RowNum>12</RowNum>
+    <TurnoverNoDraw>0</TurnoverNoDraw>
   </TableWinLoss>
   <TableWinLoss>
     <CustId>11</CustId>
@@ -25,6 +26,7 @@
     <AgComm>16</AgComm>
     <NumberOfTickets>111</NumberOfTickets>
     <RowNum>112</RowNum>
+    <TurnoverNoDraw>0</TurnoverNoDraw>
   </TableWinLoss>
   <TableTotal>
     <CustId></CustId>
@@ -38,5 +40,6 @@
     <AgComm>26</AgComm>
     <NumberOfTickets>211</NumberOfTickets>
     <RowNum>212</RowNum>
+    <TurnoverNoDraw>0</TurnoverNoDraw>
   </TableTotal>
 </WinLossDetail>

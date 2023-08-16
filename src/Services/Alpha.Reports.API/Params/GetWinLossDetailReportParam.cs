@@ -16,7 +16,6 @@ public class GetWinLossDetailReportParam
         CurrencyId = request.CurrencyId;
         Language = request.Language;
         Settings = settings;
-        IsEnableSabaPromotion = CheckEnableSabaPromotion();
 
         MinDate = DateTime.Now.Date.AddMonths(-1);
         DateTime dt;
@@ -41,7 +40,6 @@ public class GetWinLossDetailReportParam
     public ReportsAppSettingsModel Settings { get; }
 
     public IEnumerable<int> ProductIds { get; set; }
-    public bool IsEnableSabaPromotion { get; set; }
     public string ProductGroup { get; set; }
 
     public DateTime MinDate { get; }
@@ -50,10 +48,4 @@ public class GetWinLossDetailReportParam
         CustLevel > UserLevelModel.Member &&
         CustId > 0 &&
         !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
-
-    private bool CheckEnableSabaPromotion()
-    {
-        var sites = Settings.OfferSabaPromotionSites.Split(new[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries);
-        return sites.Any(s => s == "*" || s.Equals(Site, StringComparison.OrdinalIgnoreCase));
-    }
 }
