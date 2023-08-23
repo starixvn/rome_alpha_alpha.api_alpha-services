@@ -15,7 +15,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="TplCore" Version="1.0.4854.17253" />
     <PackageReference Include="Fanex.Common" Version="1.1.1-beta1" />
@@ -31,7 +31,7 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 
-    <PackageReference Include="Fanex.BetList.Core" Version="3.0.0.4" />
+    <PackageReference Include="Fanex.BetList.Core" Version="3.0.0.5" />
     <PackageReference Include="Fanex.BetList.Core.RemotingRef" Version="2.0.0" />
 
     <PackageReference Include="Fanex.BetList.AdvantPlay" Version="2.0.0" />
@@ -55,7 +55,7 @@
     <PackageReference Include="Fanex.BetList.Joker" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.Keno" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.KenoLottery" Version="2.0.0" />
-    <PackageReference Include="Fanex.BetList.LeapGaming" Version="2.0.0" />
+    <PackageReference Include="Fanex.BetList.LeapGaming" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.MaxGame" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.MetricGaming" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.MGRNGCasino" Version="2.0.0" />
@@ -75,7 +75,7 @@
     <PackageReference Include="Fanex.BetList.TableGames" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.VGaming" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.VirtualGames" Version="2.0.0" />
-    <PackageReference Include="Fanex.BetList.VirtualSports" Version="2.0.0" />
+    <PackageReference Include="Fanex.BetList.VirtualSports" Version="2.0.0.2-beta-03" />
     <PackageReference Include="Fanex.BetList.VoidBridge" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.WM" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.YeeBet" Version="1.0.0" />
@@ -87,7 +87,7 @@
     <Protobuf Include="Protos\customer.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\betlists.proto" GrpcServices="Server" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Data\FanexLibs.Data.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Logging\FanexLibs.Logging.csproj" />
