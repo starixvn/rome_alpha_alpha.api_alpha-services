@@ -4,7 +4,7 @@ using Fanex.Data.Repository;
 using Alpha.BetLists.API.Params;
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Criteria;
-using Alpha.BetLists.API.Extensions;
+using Alpha.Utilities.Extensions;
 using Fanex.BetList.Core.Entities;
 
 namespace Alpha.BetLists.API.Services;

@@ -16,6 +16,7 @@
     <SAgComm>10</SAgComm>
     <NumberOfTickets>11</NumberOfTickets>
     <RowNum>12</RowNum>
+    <TurnoverNoDraw>0</TurnoverNoDraw>
   </TableWinLoss>
   <TableWinLoss>
     <CustId>11</CustId>
@@ -33,5 +34,6 @@
     <SAgComm>110</SAgComm>
     <NumberOfTickets>111</NumberOfTickets>
     <RowNum>112</RowNum>
+    <TurnoverNoDraw>0</TurnoverNoDraw>
   </TableWinLoss>
 </WinLossDetail>

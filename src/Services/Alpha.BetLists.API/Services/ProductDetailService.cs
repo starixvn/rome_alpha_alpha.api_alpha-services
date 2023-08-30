@@ -5,12 +5,13 @@ using Alpha.BetLists.API.Criteria;
 using Alpha.BetLists.API.Models;
 using Fanex.Caching;
 using Fanex.Data.Repository;
+using Alpha.Utilities.Extensions;
 
 namespace Alpha.BetLists.API.Services;
 
 public interface IProductDetailService
 {
-    Task<IEnumerable<ProductDetailModel>> GetProductDetails(int viewerId, int roleId, string language, BetListsAppSettingsModel settings);
+    IEnumerable<ProductDetailModel> GetProductDetails(int viewerId, int roleId, string language, BetListsAppSettingsModel settings);
     string BuildProductDetailsXML(IEnumerable<int> validProductIds, IEnumerable<int> validResourceIds, IEnumerable<int> productOfferProductDetail);
 }
 
@@ -34,7 +35,7 @@ public class ProductDetailService : IProductDetailService
         this.dynamicRepository = dynamicRepository;
     }
 
-    public async Task<IEnumerable<ProductDetailModel>> GetProductDetails(
+    public IEnumerable<ProductDetailModel> GetProductDetails(
         int viewerId,
         int roleId,
         string language,
@@ -65,6 +66,8 @@ public class ProductDetailService : IProductDetailService
         IEnumerable<int> validResourceIds,
         IEnumerable<int> productOfferProductDetail)
     {
+        var existProducts = validProductIds.ToExistingDictionary();
+        var existResources = validResourceIds.ToExistingDictionary();
         var validProductDetails = new List<ProductDetailModel>();
         var productids = new List<int>
         {
@@ -76,7 +79,7 @@ public class ProductDetailService : IProductDetailService
         };
 
         GetProductDetails()
-           .Where(p => validProductIds.Contains(p.ProductId))
+           .Where(p => existProducts.ContainsKey(p.ProductId))
            .GroupBy(p => p.ProductId)
            .ToList()
            .ForEach(group =>
@@ -88,7 +91,7 @@ public class ProductDetailService : IProductDetailService
 
                if (IsSupportProductDetail(group.Key, productOfferProductDetail))
                {
-                   validProductDetails.AddRange(group.Where(p => validResourceIds.Contains(p.ResourceId)));
+                   validProductDetails.AddRange(group.Where(p => existResources.ContainsKey(p.ResourceId)));
                }
            });
 

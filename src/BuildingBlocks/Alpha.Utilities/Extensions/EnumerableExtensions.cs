@@ -1,12 +1,11 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Alpha.Reports.API.Extensions;
+namespace Alpha.Utilities.Extensions;
 
 public static class EnumerableExtensions
 {
-    public static string JoinWithComma<T>(this IEnumerable<T> source)
-        => string.Join(",", source);
+    public static string JoinWithComma<T>(this IEnumerable<T> source) => string.Join(",", source);
 
     public static IQueryable<T> OrderBy<T>(
                this IEnumerable<T> source,
@@ -57,4 +56,15 @@ public static class EnumerableExtensions
         return (IOrderedQueryable<T>)result;
     }
 
+    public static Dictionary<int, bool> ToExistingDictionary(this IEnumerable<int> source)
+    {
+        var result = new Dictionary<int, bool>();
+
+        foreach (var e in source)
+        {
+            result[e] = true;
+        }
+
+        return result;
+    }
 }

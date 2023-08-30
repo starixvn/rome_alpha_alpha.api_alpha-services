@@ -1,4 +1,4 @@
-namespace Alpha.Utilities.Constans;
+namespace Alpha.Utilities.Constants;
 
 public static class ProductIdConstants
 {

@@ -1,5 +1,5 @@
 using Alpha.Reports.API.Models.WinLossDetail;
-using Alpha.Reports.API.Extensions;
+using Alpha.Utilities.Extensions;
 using Alpha.Reports.API.Tests.TestCases;
 
 namespace Alpha.Reports.API.Tests.Extensions;

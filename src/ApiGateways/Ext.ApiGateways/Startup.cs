@@ -111,7 +111,6 @@ public class Startup
             applicationBuilder.UseRateLimiter();
             applicationBuilder.UseAuthentication();
             applicationBuilder.UseAuthorization();
-            applicationBuilder.UseMiddleware<CheckAccountStatusMiddleware>();
         });
 
         app.UseEndpoints(endpoints =>
