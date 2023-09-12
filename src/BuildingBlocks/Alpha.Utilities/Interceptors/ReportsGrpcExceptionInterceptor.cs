@@ -1,9 +1,9 @@
 using System.Net;
-using Ext.ApiGateways.Models;
+using Alpha.Utilities.Models;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
-namespace Ext.ApiGateways.Infrastructure;
+namespace Alpha.Utilities.Infrastructure;
 
 public class ReportsGrpcExceptionInterceptor : Interceptor
 {

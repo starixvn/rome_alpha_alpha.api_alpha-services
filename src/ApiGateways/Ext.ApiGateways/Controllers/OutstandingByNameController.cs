@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GrpcReports;
 using Ext.ApiGateways.Services;
-using Ext.ApiGateways.Extensions;
+using Common.Logging.Extensions;
 using Alpha.Utilities.Models;
 using Ext.ApiGateways.Models;
 using System.Net;
@@ -43,15 +43,7 @@ public class OutstandingByNameController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
-        logger.LogCallFunction("OutstandingByName",
-            new Dictionary<string, string>
-            {
-                ["Key"] = key,
-                ["Username"] = username,
-                ["Password"] = password,
-                ["Product"] = product,
-                ["CustName"] = custName
-            });
+        logger.LogRequest("OutstandingByName", Request.Headers, new[] { "Key", "Username" });
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {

@@ -7,4 +7,9 @@
     <NoWarn>$(NoWarn);8618</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Grpc.Core.Api" Version="2.56.0" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1"/>
+  </ItemGroup>
+
 </Project>

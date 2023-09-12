@@ -16,6 +16,7 @@ public class CustomRateLimiterPolicy : IRateLimiterPolicy<string>
         _onRejected = (ctx, token) =>
         {
             ctx.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+
             return ValueTask.CompletedTask;
         };
         customerRateLimitConfig = options.Value;

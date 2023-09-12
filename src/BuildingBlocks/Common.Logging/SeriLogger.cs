@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Enrichers.HttpContextData;
 
 namespace Common.Logging;
 
@@ -18,7 +17,6 @@ public static class SeriLogger
                 .ReadFrom.Configuration(context.Configuration)
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
-                .Enrich.WithHttpContextData()
                 .WriteTo.Console()
                 .WriteTo.Http(requestUri: logStackUri, queueLimitBytes: null)
                 .Enrich.WithProperty("Application", context.HostingEnvironment.ApplicationName)
