@@ -1,4 +1,4 @@
-using Ext.ApiGateways.Extensions;
+using Alpha.Utilities.Extensions;
 
 namespace Ext.ApiGateways.Configurations;
 

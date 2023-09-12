@@ -1,12 +1,11 @@
 using FanexLibs.Logging;
 using Ext.ApiGateways.Extensions;
-using Ext.ApiGateways.Infrastructure.Middlewares;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Diagnostics;
-using Ext.ApiGateways.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.HttpLogging;
 using FanexLibs.Data;
+using Alpha.Utilities.Models;
 
 namespace Ext.ApiGateways;
 
@@ -35,7 +34,6 @@ public class Startup
         services.AddHttpLogging(logging =>
         {
             logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders;
-            logging.RequestHeaders.Add("Key");
             logging.RequestHeaders.Add("x-forwarded-for");
             logging.MediaTypeOptions.AddText("application/javascript");
             logging.RequestBodyLogLimit = 4096;

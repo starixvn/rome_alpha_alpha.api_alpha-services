@@ -1,13 +1,11 @@
 using FanexLibs.Logging;
 using Alpha.ApiGateways.Extensions;
 using Alpha.ApiGateways.Infrastructure.Middlewares;
-using System.Net;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Diagnostics;
-using Alpha.ApiGateways.Models;
 using Microsoft.OpenApi.Models;
-using Serilog;
 using Microsoft.AspNetCore.HttpLogging;
+using Alpha.Utilities.Models;
 
 namespace Alpha.ApiGateways;
 
@@ -35,7 +33,6 @@ public class Startup
         services.AddHttpLogging(logging =>
         {
             logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders;
-            logging.RequestHeaders.Add("Key");
             logging.RequestHeaders.Add("x-forwarded-for");
             logging.MediaTypeOptions.AddText("application/javascript");
             logging.RequestBodyLogLimit = 4096;
@@ -65,9 +62,9 @@ public class Startup
                     return;
                 }
 
-                if (ex.Error is ReportsException)
+                if (ex.Error is GrpcException)
                 {
-                    var info = ex.Error as ReportsException;
+                    var info = ex.Error as GrpcException;
 
                     context.Response.StatusCode = info.Code;
                     context.Response.ContentType = Text.Plain;

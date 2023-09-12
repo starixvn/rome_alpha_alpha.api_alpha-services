@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Threading.RateLimiting;
 using System.Globalization;
 using Alpha.ApiGateways.Infrastructure.RateLimits;
+using Alpha.Utilities.Infrastructure;
 
 namespace Alpha.ApiGateways.Extensions;
 

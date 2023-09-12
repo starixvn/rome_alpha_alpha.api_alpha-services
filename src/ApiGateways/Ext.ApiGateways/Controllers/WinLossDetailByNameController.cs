@@ -1,12 +1,11 @@
 using System.Net;
-using Ext.ApiGateways.Models;
 using Ext.ApiGateways.Requests;
 using Ext.ApiGateways.Services;
 using Alpha.Utilities.Models;
 using GrpcReports;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Ext.ApiGateways.Extensions;
+using Common.Logging.Extensions;
 using Ext.ApiGateways.Constants;
 
 namespace Ext.ApiGateways.Controllers;
@@ -44,15 +43,7 @@ public class WinLossDetailByNameController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
-        logger.LogCallFunction("WinLossDetailByName",
-            new Dictionary<string, string>
-            {
-                ["Key"] = key,
-                ["Username"] = username,
-                ["Password"] = password,
-                ["Product"] = product,
-                ["CustName"] = custName
-            });
+        logger.LogRequest("WinLossDetailByName", Request.Headers, new[] { "Key", "Username" });
 
         if (!request.ValidateDateRange())
         {

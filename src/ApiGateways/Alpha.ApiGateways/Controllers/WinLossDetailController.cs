@@ -7,7 +7,7 @@ using Alpha.Utilities.Models;
 using GrpcReports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Alpha.ApiGateways.Extensions;
+using Common.Logging.Extensions;
 
 namespace Alpha.ApiGateways.Controllers;
 
@@ -44,7 +44,7 @@ public class WinLossDetailController : Controller
     {
         if (!request.ValidateDateRange())
         {
-            throw new ReportsException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
         var apiKeyRequest = new ApiKeyRequest
@@ -55,15 +55,7 @@ public class WinLossDetailController : Controller
             Timestamp = timestamp
         };
 
-        logger.LogCallFunction("WinLossDetail",
-            new Dictionary<string, object>
-            {
-                ["Key"] = key,
-                ["PassPhrase"] = passPhrase,
-                ["Signature"] = signature,
-                ["Timestamp"] = timestamp,
-                ["Request"] = request,
-            });
+        logger.LogRequest("WinLossDetail", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
 
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
@@ -71,7 +63,7 @@ public class WinLossDetailController : Controller
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new ReportsException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
         }
 
         var reportRequest = new GetWinLossDetailReportRequest

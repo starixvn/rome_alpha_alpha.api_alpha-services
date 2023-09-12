@@ -1,4 +1,4 @@
-namespace Ext.ApiGateways.Models;
+namespace Alpha.Utilities.Models;
 
 public class GrpcException : Exception
 {

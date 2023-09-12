@@ -7,7 +7,7 @@ using System.Net;
 using System.Security.Claims;
 using GrpcBetLists;
 using Ext.ApiGateways.Constants;
-using Ext.ApiGateways.Extensions;
+using Common.Logging.Extensions;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -43,15 +43,7 @@ public class OutstandingBetListController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
         }
 
-        logger.LogCallFunction("OutstandingBetList",
-            new Dictionary<string, string>
-            {
-                ["Key"] = key,
-                ["Username"] = username,
-                ["Password"] = password,
-                ["Product"] = product,
-                ["CustName"] = custName
-            });
+        logger.LogRequest("OutstandingBetList", Request.Headers, new[] { "Key", "Username" });
 
         if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
         {

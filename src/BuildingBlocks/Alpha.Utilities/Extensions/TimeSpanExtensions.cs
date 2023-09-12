@@ -1,4 +1,4 @@
-namespace Alpha.ApiGateways.Extensions;
+namespace Alpha.Utilities.Extensions;
 
 public static class TimeSpanExtensions
 {

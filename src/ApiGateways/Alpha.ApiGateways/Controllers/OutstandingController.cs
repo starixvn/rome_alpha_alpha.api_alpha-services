@@ -7,7 +7,7 @@ using Alpha.ApiGateways.Requests;
 using Alpha.Utilities.Models;
 using Alpha.ApiGateways.Models;
 using System.Net;
-using Alpha.ApiGateways.Extensions;
+using Common.Logging.Extensions;
 
 namespace Alpha.ApiGateways.Controllers;
 
@@ -50,15 +50,7 @@ public class OutstandingController : Controller
             Timestamp = timestamp
         };
 
-        logger.LogCallFunction("Outstanding",
-            new Dictionary<string, object>
-            {
-                ["Key"] = key,
-                ["PassPhrase"] = passPhrase,
-                ["Signature"] = signature,
-                ["Timestamp"] = timestamp,
-                ["Request"] = request,
-            });
+        logger.LogRequest("Outstanding", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
 
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
@@ -66,7 +58,7 @@ public class OutstandingController : Controller
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new ReportsException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
         }
 
         var reportRequest = new GetOutstandingReportRequest
