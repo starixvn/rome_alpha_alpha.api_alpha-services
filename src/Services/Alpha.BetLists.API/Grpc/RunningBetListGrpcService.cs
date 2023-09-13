@@ -4,6 +4,7 @@ using Alpha.BetLists.API.Params;
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Builders;
 using Alpha.BetLists.API.Builders.StatusBuilders;
+using Alpha.BetLists.API.Helpers;
 
 namespace GrpcBetLists;
 
@@ -30,20 +31,25 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var ipList = betlistData.Tickets.Where(t => !string.IsNullOrWhiteSpace(t.IP)).Select(t => t.IP.Trim()).Distinct();
         var countries = await ipInfoService.GetCountries(ipList);
 
-        var htmlData = betlistData.Tickets.Select(t => new SuperViewRunningBetTicketModel
+        response.BetLists.AddRange(betlistData.Tickets.Select((t) =>
         {
-            No = i++.ToString(),
-            TransTime = builder.BuildTrans(t),
-            Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
-            Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
-            Stake = builder.BuildStake(t, ticketHelper),
-            Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
-            SuperPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Super),
-            MasterPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Master),
-            AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
-        });
+            var choice = builder.BuildChoice(t, ticketHelper, ticketData, false);
+            var model = new SuperViewRunningBetTicketModel
+            {
+                No = i++.ToString(),
+                TransTime = builder.BuildTrans(t),
+                Choice = choice,
+                Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
+                Stake = builder.BuildStake(t, ticketHelper),
+                Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
+                SuperPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Super),
+                MasterPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Master),
+                AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+            };
 
-        response.BetLists.AddRange(htmlData);
+            model.GetExtraInfo(choice, t, ticketDetailsMapper);
+            return model;
+        }));
 
         return response;
     }
@@ -69,16 +75,25 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var countries = await ipInfoService.GetCountries(ipList);
 
 
-        response.BetLists.AddRange(betlistData.Tickets.Select(t => new MasterViewRunningBetTicketModel
+        response.BetLists.AddRange(betlistData.Tickets.Select(t =>
         {
-            No = i++.ToString(),
-            TransTime = builder.BuildTrans(t),
-            Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
-            Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
-            Stake = builder.BuildStake(t, ticketHelper),
-            Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
-            MasterPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Master),
-            AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+            var choice = builder.BuildChoice(t, ticketHelper, ticketData, false);
+
+            var model = new MasterViewRunningBetTicketModel
+            {
+                No = i++.ToString(),
+                TransTime = builder.BuildTrans(t),
+                Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
+                Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
+                Stake = builder.BuildStake(t, ticketHelper),
+                Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
+                MasterPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Master),
+                AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+            };
+
+            model.GetExtraInfo(choice, t, ticketDetailsMapper);
+
+            return model;
         }));
 
         return response;
@@ -104,16 +119,22 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var ipList = betlistData.Tickets.Where(t => !string.IsNullOrWhiteSpace(t.IP)).Select(t => t.IP.Trim()).Distinct();
         var countries = await ipInfoService.GetCountries(ipList);
 
-
-        response.BetLists.AddRange(betlistData.Tickets.Select(t => new AgentViewRunningBetTicketModel
+        response.BetLists.AddRange(betlistData.Tickets.Select(t =>
         {
-            No = i++.ToString(),
-            TransTime = builder.BuildTrans(t),
-            Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
-            Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
-            Stake = builder.BuildStake(t, ticketHelper),
-            Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
-            AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+            var choice = builder.BuildChoice(t, ticketHelper, ticketData, false);
+            var model = new AgentViewRunningBetTicketModel
+            {
+                No = i++.ToString(),
+                TransTime = builder.BuildTrans(t),
+                Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
+                Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
+                Stake = builder.BuildStake(t, ticketHelper),
+                Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
+                AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+            };
+            model.GetExtraInfo(choice, t, ticketDetailsMapper);
+
+            return model;
         }));
 
         return response;

@@ -12,6 +12,10 @@ service BetLists {
   rpc SuperViewWinLossBetList(GetWinLossBetListRequest) returns (SuperViewWinLossBetListResponse);
   rpc MasterViewWinLossBetList(GetWinLossBetListRequest) returns (MasterViewWinLossBetListResponse);
   rpc AgentViewWinLossBetList(GetWinLossBetListRequest) returns (AgentViewWinLossBetListResponse);
+
+  rpc SuperViewTicketDetails(GetTicketDetailsRequest) returns (SuperViewTicketDetailsResponse);
+  rpc MasterViewTicketDetails(GetTicketDetailsRequest) returns (MasterViewTicketDetailsResponse);
+  rpc AgentViewTicketDetails(GetTicketDetailsRequest) returns (AgentViewTicketDetailsResponse);
 }
 
 message GetRunningBetListRequest {
@@ -45,6 +49,7 @@ message SuperViewRunningBetTicketModel {
   string superPT_Comm = 7;
   string masterPT_Comm = 8;
   string agentPT_Comm = 9;
+  ExtraInfoModel extraInfo = 10;
 }
 
 message MasterViewRunningBetTicketModel {
@@ -56,6 +61,7 @@ message MasterViewRunningBetTicketModel {
   string status = 6;
   string masterPT_Comm = 7;
   string agentPT_Comm = 8;
+  ExtraInfoModel extraInfo = 9;
 }
 
 message AgentViewRunningBetTicketModel {
@@ -66,6 +72,7 @@ message AgentViewRunningBetTicketModel {
   string stake = 5;
   string status = 6;
   string agentPT_Comm = 7;
+  ExtraInfoModel extraInfo = 8;
 }
 
 
@@ -107,6 +114,7 @@ message SuperViewWinLossBetTicketModel {
   string superPT_Comm = 8;
   string masterPT_Comm = 9;
   string agentPT_Comm = 10;
+  ExtraInfoModel extraInfo = 11;
 }
 
 message MasterViewWinLossBetTicketModel {
@@ -119,6 +127,7 @@ message MasterViewWinLossBetTicketModel {
   string status = 7;
   string masterPT_Comm = 8;
   string agentPT_Comm = 9;
+  ExtraInfoModel extraInfo = 10;
 }
 
 message AgentViewWinLossBetTicketModel {
@@ -130,10 +139,72 @@ message AgentViewWinLossBetTicketModel {
   string winLoss = 6;
   string status = 7;
   string agentPT_Comm = 8;
+  ExtraInfoModel extraInfo = 9;
 }
 
 message WinLossTotalModelResponse {
   string comm = 1;
   string winLoss = 2;
   string total = 3;
+}
+
+message GetTicketDetailsRequest {
+  int64 refNo = 1;
+  int32 custId = 2;
+  int32 transType = 3;
+  int32 productId = 4;
+}
+
+message ExtraInfoModel {
+  int64 refNo = 1;
+  int32 transType = 2;
+  int32 productId = 3;
+}
+
+message SuperViewTicketDetailsResponse {
+  repeated SuperViewTicketDetailsModel ticketDetails = 1;
+}
+
+message MasterViewTicketDetailsResponse {
+  repeated MasterViewTicketDetailsModel ticketDetails = 1;
+}
+
+message AgentViewTicketDetailsResponse {
+  repeated AgentViewTicketDetailsModel ticketDetails = 1;
+}
+
+message SuperViewTicketDetailsModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string status = 6;
+  string winLoss = 7;
+  string superPT_Comm = 8;
+  string masterPT_Comm = 9;
+  string agentPT_Comm = 10;
+}
+
+message MasterViewTicketDetailsModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string status = 6;
+  string winLoss = 7;
+  string masterPT_Comm = 8;
+  string agentPT_Comm = 9;
+}
+
+message AgentViewTicketDetailsModel {
+  string no = 1;
+  string transTime = 2;
+  string choice = 3;
+  string odds = 4;
+  string stake = 5;
+  string status = 6;
+  string winLoss = 7;
+  string agentPT_Comm = 8;
 }

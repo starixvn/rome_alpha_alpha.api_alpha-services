@@ -10,31 +10,37 @@ namespace GrpcBetLists;
 public partial class BetListsGrpcService : BetLists.BetListsBase
 {
     private readonly BetListsAppSettingsModel settings;
+    private readonly TicketDetailsMapperModel ticketDetailsMapper;
     private readonly IProductService productService;
     private readonly IBetListHTMLBuilder builder;
     private readonly ITicketHelper ticketHelper;
     private readonly IRunningBetListService runningBetListService;
     private readonly IWinLossBetListService winLossBetListService;
     private readonly IIPInfoService ipInfoService;
+    private readonly ICasinoDetailsService casinoDetailsService;
     private readonly Fanex.Logging.ILogger logger;
 
     public BetListsGrpcService(
         IOptions<BetListsAppSettingsModel> settings,
+        IOptions<TicketDetailsMapperModel> ticketDetailsMapper,
         IProductService productService,
         IBetListHTMLBuilder builder,
         ITicketHelper ticketHelper,
         IRunningBetListService runningBetListService,
         IWinLossBetListService winLossBetListService,
         IIPInfoService ipInfoService,
+        ICasinoDetailsService casinoDetailsService,
         Fanex.Logging.ILogger logger)
     {
         this.settings = settings.Value;
+        this.ticketDetailsMapper = ticketDetailsMapper.Value;
         this.productService = productService;
         this.builder = builder;
         this.ticketHelper = ticketHelper;
         this.runningBetListService = runningBetListService;
         this.winLossBetListService = winLossBetListService;
         this.ipInfoService = ipInfoService;
+        this.casinoDetailsService = casinoDetailsService;
         this.logger = logger;
     }
 
