@@ -4,7 +4,6 @@ using GrpcReports;
 using Ext.ApiGateways.Services;
 using Common.Logging.Extensions;
 using Alpha.Utilities.Models;
-using Ext.ApiGateways.Models;
 using System.Net;
 using System.Security.Claims;
 using Ext.ApiGateways.Constants;
@@ -32,9 +31,6 @@ public class OutstandingController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] string key,
-        [FromHeader] string username,
-        [FromHeader] string password,
         [FromRoute] string product)
     {
         if (!ProductGroupConstants.IsValid(product))

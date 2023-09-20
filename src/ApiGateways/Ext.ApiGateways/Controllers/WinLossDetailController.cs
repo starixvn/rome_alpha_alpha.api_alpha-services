@@ -1,5 +1,4 @@
 using System.Net;
-using Ext.ApiGateways.Models;
 using Ext.ApiGateways.Requests;
 using Ext.ApiGateways.Services;
 using Alpha.Utilities.Models;
@@ -32,9 +31,6 @@ public class WinLossDetailController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] string key,
-        [FromHeader] string username,
-        [FromHeader] string password,
         [FromRoute] string product,
         [FromBody] WinLossDetailRequest request)
     {

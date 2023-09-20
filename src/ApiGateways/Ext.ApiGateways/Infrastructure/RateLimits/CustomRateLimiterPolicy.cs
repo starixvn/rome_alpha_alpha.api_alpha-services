@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using System.Threading.RateLimiting;
-using Ext.ApiGateways.Configurations;
+using Alpha.Utilities.Configurations;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 

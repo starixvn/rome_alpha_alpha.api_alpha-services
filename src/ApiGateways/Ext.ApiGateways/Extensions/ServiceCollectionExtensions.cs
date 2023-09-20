@@ -9,9 +9,7 @@ using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using GrpcCustomer;
 using GrpcReports;
-using Ext.ApiGateways.Configurations;
 using Microsoft.Extensions.Options;
-using Ext.ApiGateways.Infrastructure;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Threading.RateLimiting;
@@ -19,8 +17,9 @@ using System.Globalization;
 using Ext.ApiGateways.Infrastructure.RateLimits;
 using GrpcBetLists;
 using Newtonsoft.Json.Serialization;
-using Microsoft.Extensions.DependencyInjection;
 using Alpha.Utilities.Infrastructure;
+using Alpha.Utilities.Configurations;
+using Alpha.Utilities.Interceptors;
 
 namespace Ext.ApiGateways.Extensions;
 

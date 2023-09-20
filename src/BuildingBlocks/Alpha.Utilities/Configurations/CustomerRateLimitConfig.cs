@@ -1,6 +1,6 @@
 using Alpha.Utilities.Extensions;
 
-namespace Ext.ApiGateways.Configurations;
+namespace Alpha.Utilities.Configurations;
 
 public class CustomerRateLimitConfig
 {

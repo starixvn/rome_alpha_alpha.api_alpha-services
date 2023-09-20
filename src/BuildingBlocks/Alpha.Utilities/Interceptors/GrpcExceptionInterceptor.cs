@@ -1,7 +1,7 @@
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
-namespace Alpha.Reports.API.Interceptors;
+namespace Alpha.Utilities.Interceptors;
 
 public class GrpcExceptionInterceptor : Interceptor
 {
@@ -27,6 +27,7 @@ public class GrpcExceptionInterceptor : Interceptor
         try
         {
             var response = await task;
+
             return response;
         }
         catch (RpcException e)

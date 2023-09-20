@@ -14,9 +14,6 @@ public interface IReportDateService
 
 public class ReportDateService : IReportDateService
 {
-    public const string BetTrans14SPSuffix = "_14";
-    public const string WarehouseSPSuffix = "_WH";
-
     private const string BalanceUpDayAndMoveBetsDayCacheKey = "Alpha.Reports.BalanceUpDayAndMoveBetsDay";
 
     private readonly IDynamicRepository dynamicRepository;

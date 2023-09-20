@@ -1,4 +1,3 @@
-using System.Net;
 using Alpha.ApiKey.API;
 using Common.Logging;
 using Microsoft.AspNetCore.Server.Kestrel.Core;

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Ext.ApiGateways.Services;
 using Alpha.Utilities.Models;
-using Ext.ApiGateways.Models;
 using System.Net;
 using System.Security.Claims;
 using GrpcBetLists;
@@ -32,9 +31,6 @@ public class OutstandingBetListController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] string key,
-        [FromHeader] string username,
-        [FromHeader] string password,
         [FromRoute] string product,
         [FromRoute] string custName)
     {

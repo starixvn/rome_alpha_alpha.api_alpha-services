@@ -31,9 +31,6 @@ public class WinLossDetailByNameController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] string key,
-        [FromHeader] string username,
-        [FromHeader] string password,
         [FromRoute] string custName,
         [FromRoute] string product,
         [FromBody] WinLossDetailRequest request)

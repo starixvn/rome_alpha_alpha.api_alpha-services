@@ -1,10 +1,10 @@
 using Alpha.Utilities.Extensions;
 
-namespace Alpha.ApiGateways.Configurations;
+namespace Alpha.Utilities.Configurations;
 
-public class CustomerRateLimitConfig
+public class IPRateLimitConfig
 {
-    public const string CustomerRateLimit = "RateLimitConfigs:CustomerRateLimit";
+    public const string IpRateLimit = "RateLimitConfigs:IpRateLimit";
     public bool AutoReplenishment { get; set; }
     public int PermitLimit { get; set; }
     public int Window { get; set; }

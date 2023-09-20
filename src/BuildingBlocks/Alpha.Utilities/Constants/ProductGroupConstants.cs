@@ -1,4 +1,4 @@
-namespace Alpha.ApiGateways.Constants;
+namespace Alpha.Utilities.Constants;
 
 public static class ProductGroupConstants
 {

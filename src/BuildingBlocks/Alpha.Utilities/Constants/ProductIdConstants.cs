@@ -2,12 +2,11 @@ namespace Alpha.Utilities.Constants;
 
 public static class ProductIdConstants
 {
-    public const int SabaPromotion = 37;
-
     public const int Sportsbook = 1;
-    public const int NumberGame = 3;
-    public const int Keno = 8;
-    public const int Sportsbook2 = 16;
-    public const int VirtualSports = 5;
-    public const int RNGLottery = 44;
+    public const int Allbet = 21;
+    public const int SexyGaming = 45;
+    public const int Pragmatic = 32;
+    public const int SpadeGaming = 36;
+    public const int MgRng = 73;
+
 }

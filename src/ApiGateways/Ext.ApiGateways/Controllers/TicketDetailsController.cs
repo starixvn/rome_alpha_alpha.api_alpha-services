@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Ext.ApiGateways.Services;
 using Alpha.Utilities.Models;
-using Ext.ApiGateways.Models;
 using System.Net;
 using System.Security.Claims;
 using GrpcBetLists;
-using Ext.ApiGateways.Constants;
 using Common.Logging.Extensions;
 using Ext.ApiGateways.Requests;
 
@@ -33,9 +31,6 @@ public class TicketDetailsController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] string key,
-        [FromHeader] string username,
-        [FromHeader] string password,
         [FromRoute] string custName,
         [FromRoute] long refNo,
         [FromBody] TicketDetailsRequest extraInfo)

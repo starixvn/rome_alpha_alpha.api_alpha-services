@@ -5,9 +5,9 @@ using GrpcReports;
 using Alpha.ApiGateways.Services;
 using Alpha.ApiGateways.Requests;
 using Alpha.Utilities.Models;
-using Alpha.ApiGateways.Models;
 using System.Net;
 using Common.Logging.Extensions;
+using Alpha.Utilities.Constants;
 
 namespace Alpha.ApiGateways.Controllers;
 

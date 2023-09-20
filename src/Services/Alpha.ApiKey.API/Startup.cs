@@ -3,7 +3,6 @@ using Alpha.ApiKey.API.Services;
 using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcApiKey;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
