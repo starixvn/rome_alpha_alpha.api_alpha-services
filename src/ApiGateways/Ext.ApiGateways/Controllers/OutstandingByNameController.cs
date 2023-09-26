@@ -6,7 +6,7 @@ using Common.Logging.Extensions;
 using Alpha.Utilities.Models;
 using System.Net;
 using System.Security.Claims;
-using Ext.ApiGateways.Constants;
+using Alpha.Utilities.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 

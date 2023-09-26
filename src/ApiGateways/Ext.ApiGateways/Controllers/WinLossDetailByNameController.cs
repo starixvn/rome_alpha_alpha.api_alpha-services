@@ -6,7 +6,7 @@ using GrpcReports;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Common.Logging.Extensions;
-using Ext.ApiGateways.Constants;
+using Alpha.Utilities.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
