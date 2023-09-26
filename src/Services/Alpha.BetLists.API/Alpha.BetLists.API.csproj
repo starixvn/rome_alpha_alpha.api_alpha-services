@@ -31,7 +31,7 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 
-    <PackageReference Include="Fanex.BetList.Core" Version="3.0.0.6-BasketBall-02" />
+    <PackageReference Include="Fanex.BetList.Core" Version="3.0.0.6" />
     <PackageReference Include="Fanex.BetList.Core.RemotingRef" Version="2.0.0" />
 
     <PackageReference Include="Fanex.BetList.AdvantPlay" Version="2.0.0" />
