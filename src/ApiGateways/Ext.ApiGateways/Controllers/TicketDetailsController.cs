@@ -33,7 +33,7 @@ public class TicketDetailsController : Controller
     public async Task<IActionResult> Index(
         [FromRoute] string custName,
         [FromRoute] long refNo,
-        [FromBody] TicketDetailsRequest extraInfo)
+        [FromBody] TicketDetailsRequest request)
     {
 
         logger.LogRequest("TicketDetails", Request.Headers, new[] { "Key", "Username" });
@@ -53,19 +53,19 @@ public class TicketDetailsController : Controller
         }
 
 
-        var request = new GetTicketDetailsRequest
+        var getTicketDetailsRequest = new GetTicketDetailsRequest
         {
             RefNo = refNo,
             CustId = downlineInfo.CustId,
-            TransType = extraInfo.TransType,
-            ProductId = extraInfo.ProductId
+            TransType = request.ExtraInfo.TransType,
+            ProductId = request.ExtraInfo.ProductId
         };
 
         return viewerInfo.RoleId switch
         {
-            UserLevelModel.Super => await SuperViewTicketDetails(request),
-            UserLevelModel.Master => await MasterViewTicketDetails(request),
-            _ => await AgentViewTicketDetails(request),
+            UserLevelModel.Super => await SuperViewTicketDetails(getTicketDetailsRequest),
+            UserLevelModel.Master => await MasterViewTicketDetails(getTicketDetailsRequest),
+            _ => await AgentViewTicketDetails(getTicketDetailsRequest),
         };
     }
 
