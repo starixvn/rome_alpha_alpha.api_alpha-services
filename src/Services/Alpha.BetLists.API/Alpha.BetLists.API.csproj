@@ -50,7 +50,7 @@
     <PackageReference Include="Fanex.BetList.GTCasino" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.Habanero" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.IONCasino" Version="2.0.0" />
-    <PackageReference Include="Fanex.BetList.Jili" Version="1.0.0" />
+    <PackageReference Include="Fanex.BetList.Jili" Version="1.0.0.1" />
     <PackageReference Include="Fanex.BetList.Joker" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.Keno" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.KenoLottery" Version="2.0.0" />
