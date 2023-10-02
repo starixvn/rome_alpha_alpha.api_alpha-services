@@ -179,8 +179,8 @@ message SuperViewTicketDetailsModel {
   string choice = 3;
   string odds = 4;
   string stake = 5;
-  string status = 6;
-  string winLoss = 7;
+  string winLoss = 6;
+  string status = 7;
   string superPT_Comm = 8;
   string masterPT_Comm = 9;
   string agentPT_Comm = 10;
@@ -192,8 +192,8 @@ message MasterViewTicketDetailsModel {
   string choice = 3;
   string odds = 4;
   string stake = 5;
-  string status = 6;
-  string winLoss = 7;
+  string winLoss = 6;
+  string status = 7;
   string masterPT_Comm = 8;
   string agentPT_Comm = 9;
 }
@@ -204,7 +204,7 @@ message AgentViewTicketDetailsModel {
   string choice = 3;
   string odds = 4;
   string stake = 5;
-  string status = 6;
-  string winLoss = 7;
+  string winLoss = 6;
+  string status = 7;
   string agentPT_Comm = 8;
 }
