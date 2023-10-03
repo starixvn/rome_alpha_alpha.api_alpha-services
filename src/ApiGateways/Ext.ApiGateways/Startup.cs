@@ -116,7 +116,7 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();
-            endpoints.MapControllers().RequireRateLimiting("CustomRateLimit").RequireAuthorization();
+            endpoints.MapControllers().RequireAuthorization();
             endpoints.MapHealthChecks("/health").AllowAnonymous().DisableRateLimiting();
         });
     }
