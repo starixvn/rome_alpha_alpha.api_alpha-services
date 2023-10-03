@@ -18,6 +18,7 @@ using System.Globalization;
 using Alpha.Utilities.Infrastructure;
 using Alpha.Utilities.Configurations;
 using Alpha.Utilities.Interceptors;
+using Alpha.ApiGateways.Infrastructure.RateLimits;
 
 namespace Alpha.ApiGateways.Extensions;
 
@@ -85,6 +86,10 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddCustomRateLimiter(this IServiceCollection services, IConfiguration configuration)
     {
+        var ipRateLimitConfig = new IPRateLimitConfig();
+        configuration.GetSection(IPRateLimitConfig.IpRateLimit).Bind(ipRateLimitConfig);
+        services.Configure<CustomerRateLimitConfig>(configuration.GetSection(CustomerRateLimitConfig.CustomerRateLimit));
+
         services.AddRateLimiter(options =>
         {
             options.OnRejected = (context, cancellationToken) =>
@@ -101,9 +106,19 @@ public static class ServiceCollectionExtensions
             };
 
             options.GlobalLimiter = PartitionedRateLimiter.CreateChained(
-                configuration.CreatePartitionedRateLimiter(RateLimitConfig.ConfigBySecond),
-                configuration.CreatePartitionedRateLimiter(RateLimitConfig.ConfigByMinute),
-                configuration.CreatePartitionedRateLimiter(RateLimitConfig.ConfigByHour));
+                PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                {
+                    var remoteIp = Helpers.IPHelper.GetClientIP(httpContext);
+                    return RateLimitPartition.GetSlidingWindowLimiter(remoteIp, partition => new SlidingWindowRateLimiterOptions
+                    {
+                        AutoReplenishment = ipRateLimitConfig.AutoReplenishment,
+                        PermitLimit = ipRateLimitConfig.PermitLimit,
+                        Window = ipRateLimitConfig.WindowByUnit,
+                        SegmentsPerWindow = ipRateLimitConfig.SegmentsPerWindow
+                    });
+                })
+            );
+            options.AddPolicy<string, CustomRateLimiterPolicy>("CustomRateLimit");
         });
 
         return services;
