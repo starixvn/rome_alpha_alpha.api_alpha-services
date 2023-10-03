@@ -26,7 +26,6 @@ RUN adduser --disabled-password \
 USER dotnetuser
 
 FROM base AS final
-ENV COMPlus_EnableDiagnostics=0 
 WORKDIR /app
 COPY --from=builder /app .
 ENV TZ="America/La_Paz"
