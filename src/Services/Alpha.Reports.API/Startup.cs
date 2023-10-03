@@ -12,6 +12,7 @@ using Alpha.Reports.API.Interceptors;
 using Fanex.RemotingRef;
 using Alpha.Reports.API.DataAccesses;
 using Microsoft.AspNetCore.Diagnostics;
+using Alpha.Utilities.Interceptors;
 
 namespace Alpha.Reports.API;
 
@@ -121,7 +122,7 @@ public class Startup
         }).AddInterceptor<GrpcExceptionInterceptor>();
 
         RefDataTypeContainer
-            .ConnectTo(new Uri(Configuration["ReportsAppSettings:RemoteRefURL"]))
+            .ConnectTo(new Uri(Configuration.GetSection("ReportsAppSettings").Get<ReportsAppSettingsModel>().RemoteRefURL))
             .FromApplication("Alpha.Reports.Site");
 
         services.AddGrpc(c => c.Interceptors.Add<CheckBelongingInterceptor>());

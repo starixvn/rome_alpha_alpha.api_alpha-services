@@ -24,7 +24,7 @@ namespace Ext.ApiGateways.Services
 
                 return decrypted;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return string.Empty;
             }

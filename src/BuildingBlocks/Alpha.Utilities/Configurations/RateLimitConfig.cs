@@ -1,10 +1,13 @@
 using Alpha.Utilities.Extensions;
 
-namespace Ext.ApiGateways.Configurations;
+namespace Alpha.Utilities.Configurations;
 
-public class CustomerRateLimitConfig
+public class RateLimitConfig
 {
-    public const string CustomerRateLimit = "RateLimitConfigs:CustomerRateLimit";
+    public const string ConfigBySecond = "RateLimitConfigs:RateLimitBySecond";
+    public const string ConfigByMinute = "RateLimitConfigs:RateLimitByMinute";
+    public const string ConfigByHour = "RateLimitConfigs:RateLimitByHour";
+
     public bool AutoReplenishment { get; set; }
     public int PermitLimit { get; set; }
     public int Window { get; set; }

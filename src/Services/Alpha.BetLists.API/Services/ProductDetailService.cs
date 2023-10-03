@@ -1,11 +1,11 @@
 
 using System.Text;
-using Alpha.BetLists.API.Constants;
 using Alpha.BetLists.API.Criteria;
 using Alpha.BetLists.API.Models;
 using Fanex.Caching;
 using Fanex.Data.Repository;
 using Alpha.Utilities.Extensions;
+using Alpha.Utilities.Constants;
 
 namespace Alpha.BetLists.API.Services;
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.HttpLogging;
 using Alpha.Utilities.Models;
+using Alpha.Utilities.Configurations;
 
 namespace Alpha.ApiGateways;
 
@@ -81,7 +82,7 @@ public class Startup
             c.PreSerializeFilters.Add((swagger, httpReq) =>
             {
                 swagger.Servers = new List<OpenApiServer> {
-                    new OpenApiServer { Url = Configuration.GetValue<string>("Urls:ApiServer") }
+                    new OpenApiServer { Url = Configuration.GetSection(UrlsConfig.Urls).Get<UrlsConfig>().ApiServer }
                 };
             });
         });
@@ -111,7 +112,7 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();
-            endpoints.MapControllers().RequireRateLimiting("CustomRateLimit").RequireAuthorization();
+            endpoints.MapControllers().RequireAuthorization();
             endpoints.MapHealthChecks("/health").AllowAnonymous().DisableRateLimiting();
         });
     }

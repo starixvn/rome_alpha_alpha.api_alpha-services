@@ -4,26 +4,6 @@ namespace Alpha.Reports.API.Models;
 
 public class OutstandingModel
 {
-    public OutstandingModel()
-    {
-    }
-
-    public OutstandingModel(
-        int custId,
-        string custName,
-        decimal memberOutstanding,
-        decimal agentOutstanding,
-        decimal masterOutstanding,
-        decimal superOutstanding)
-    {
-        CustId = custId;
-        CustName = custName;
-        MemberOutstanding = memberOutstanding;
-        AgentOutstanding = agentOutstanding;
-        MasterOutstanding = masterOutstanding;
-        SuperOutstanding = superOutstanding;
-    }
-
     public int CustId { get; set; }
 
     public string CustName { get; set; }
@@ -50,14 +30,4 @@ public class OutstandingModel
 
         return accumulatedData;
     }
-
-    public decimal GetValueByLevel(byte level)
-        => level switch
-        {
-            UserLevelModel.Super => SuperOutstanding,
-            UserLevelModel.Master => MasterOutstanding,
-            UserLevelModel.Agent => AgentOutstanding,
-            UserLevelModel.Member => MemberOutstanding,
-            _ => MemberOutstanding,
-        };
 }

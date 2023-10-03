@@ -21,6 +21,7 @@ using Alpha.IPInfo.Services;
 using Alpha.BetLists.API.Repositories;
 using Alpha.IPInfo.DataAccess;
 using Alpha.IPInfo.Models;
+using Alpha.Utilities.Interceptors;
 
 namespace Alpha.BetLists.API;
 
@@ -109,7 +110,8 @@ public class Startup
 
     private void AddDIs(IServiceCollection services)
     {
-        services.Configure<BetListsAppSettingsModel>(Configuration.GetSection("BetListsAppSettings"));
+        services.Configure<BetListsAppSettingsModel>(Configuration.GetSection(BetListsAppSettingsModel.ConfigName));
+        services.Configure<TicketDetailsMapperModel>(Configuration.GetSection("TicketDetailsMapper"));
 
         services.AddSingleton<IPInformationConfig>((_) =>
         {
@@ -128,6 +130,8 @@ public class Startup
         services.AddTransient<IIPInfoDataAccess, IPInfoDataAccess>();
         services.AddTransient<IIPInfoService, IPInfoService>();
 
+        services.AddTransient<ICasinoDetailsService, CasinoDetailsService>();
+
         services.AddTransient<GrpcExceptionInterceptor>();
         services.AddGrpcClient<Customer.CustomerClient>((services, options) =>
         {
@@ -140,9 +144,8 @@ public class Startup
         services.AddTransient<ITicketHelper, TicketHelper>();
         services.AddTransient<IBetListFactory<BetListHTMLBuilder>, BetListHTMLFactory>();
         services.AddTransient<IBetListHTMLBuilder>((s) => s.GetService<IBetListFactory<BetListHTMLBuilder>>().CreateBuilder());
-
         RefDataTypeContainer
-            .ConnectTo(new Uri(Configuration["BetListsAppSettings:RemoteRefURL"]))
+            .ConnectTo(new Uri(Configuration.GetSection("BetListsAppSettings").Get<BetListsAppSettingsModel>().RemoteRefURL))
             .FromApplication("Alpha.Reports.Site");
 
         services.AddTransient<IReportDateService, ReportDateService>();

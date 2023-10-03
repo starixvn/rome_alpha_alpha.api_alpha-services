@@ -1,6 +1,5 @@
 using System.Net;
 using Alpha.ApiGateways.Constants;
-using Alpha.ApiGateways.Models;
 using Alpha.ApiGateways.Requests;
 using Alpha.ApiGateways.Services;
 using Alpha.Utilities.Models;
@@ -8,6 +7,7 @@ using GrpcReports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Common.Logging.Extensions;
+using Alpha.Utilities.Constants;
 
 namespace Alpha.ApiGateways.Controllers;
 

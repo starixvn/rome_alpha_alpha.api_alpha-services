@@ -6,7 +6,7 @@ using GrpcReports;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Common.Logging.Extensions;
-using Ext.ApiGateways.Constants;
+using Alpha.Utilities.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -31,9 +31,6 @@ public class WinLossDetailByNameController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] string key,
-        [FromHeader] string username,
-        [FromHeader] string password,
         [FromRoute] string custName,
         [FromRoute] string product,
         [FromBody] WinLossDetailRequest request)

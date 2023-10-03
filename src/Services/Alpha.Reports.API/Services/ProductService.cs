@@ -1,4 +1,3 @@
-using Alpha.Reports.API.Constants;
 using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.Models;
 using Alpha.Utilities.Constants;

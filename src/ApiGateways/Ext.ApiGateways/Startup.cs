@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.HttpLogging;
 using FanexLibs.Data;
 using Alpha.Utilities.Models;
+using Alpha.Utilities.Configurations;
 
 namespace Ext.ApiGateways;
 
@@ -23,6 +24,7 @@ public class Startup
         services
             .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
+            .AddFanexCachingMemory()
             .AddOneBookUm(Configuration)
             .AddCustomMVC(Configuration)
             .AddCustomRateLimiter(Configuration)
@@ -85,7 +87,7 @@ public class Startup
             c.PreSerializeFilters.Add((swagger, httpReq) =>
             {
                 swagger.Servers = new List<OpenApiServer> {
-                    new OpenApiServer { Url = Configuration.GetValue<string>("Urls:ApiServer") }
+                    new OpenApiServer { Url = Configuration.GetSection(UrlsConfig.Urls).Get<UrlsConfig>().ApiServer }
                 };
             });
         });
@@ -114,7 +116,7 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();
-            endpoints.MapControllers().RequireRateLimiting("CustomRateLimit").RequireAuthorization();
+            endpoints.MapControllers().RequireAuthorization();
             endpoints.MapHealthChecks("/health").AllowAnonymous().DisableRateLimiting();
         });
     }

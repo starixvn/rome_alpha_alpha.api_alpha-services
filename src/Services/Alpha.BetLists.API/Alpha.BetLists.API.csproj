@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="TplCore" Version="1.0.4854.17253" />
     <PackageReference Include="Fanex.Common" Version="1.1.1-beta1" />
     <PackageReference Include="Fanex.RemotingRef" Version="1.5.0.1" />
     <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
@@ -51,7 +50,7 @@
     <PackageReference Include="Fanex.BetList.GTCasino" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.Habanero" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.IONCasino" Version="2.0.0" />
-    <PackageReference Include="Fanex.BetList.Jili" Version="1.0.0" />
+    <PackageReference Include="Fanex.BetList.Jili" Version="1.0.0.1" />
     <PackageReference Include="Fanex.BetList.Joker" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.Keno" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.KenoLottery" Version="2.0.0" />

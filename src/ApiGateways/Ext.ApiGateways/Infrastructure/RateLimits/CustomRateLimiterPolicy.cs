@@ -1,42 +1,40 @@
 using System.Security.Claims;
 using System.Threading.RateLimiting;
-using Ext.ApiGateways.Configurations;
+using Alpha.Utilities.Configurations;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 
-namespace Ext.ApiGateways.Infrastructure.RateLimits;
-
-public class CustomRateLimiterPolicy : IRateLimiterPolicy<string>
+namespace Ext.ApiGateways.Infrastructure.RateLimits
 {
-    private readonly Func<OnRejectedContext, CancellationToken, ValueTask> _onRejected;
-    private readonly CustomerRateLimitConfig customerRateLimitConfig;
-
-    public CustomRateLimiterPolicy(IOptions<CustomerRateLimitConfig> options)
+    public class CustomRateLimiterPolicy : IRateLimiterPolicy<string>
     {
-        _onRejected = (ctx, token) =>
+        private readonly Func<OnRejectedContext, CancellationToken, ValueTask> _onRejected;
+        private readonly CustomerRateLimitConfig customerRateLimitConfig;
+
+        public CustomRateLimiterPolicy(IOptions<CustomerRateLimitConfig> options)
         {
-            ctx.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-
-            return ValueTask.CompletedTask;
-        };
-        customerRateLimitConfig = options.Value;
-    }
-
-    public Func<OnRejectedContext, CancellationToken, ValueTask> OnRejected => _onRejected;
-
-    public RateLimitPartition<string> GetPartition(HttpContext httpContext)
-    {
-        var custId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
-        var subAccId = httpContext.User.FindFirst("SubAccId")?.Value ?? string.Empty;
-
-        return RateLimitPartition.GetSlidingWindowLimiter(
-            partitionKey: $"{custId}_{subAccId}",
-            partition => new SlidingWindowRateLimiterOptions
+            _onRejected = (ctx, token) =>
             {
-                AutoReplenishment = customerRateLimitConfig.AutoReplenishment,
-                PermitLimit = customerRateLimitConfig.PermitLimit,
-                Window = customerRateLimitConfig.WindowByUnit,
-                SegmentsPerWindow = customerRateLimitConfig.SegmentsPerWindow
-            });
+                ctx.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+
+                return ValueTask.CompletedTask;
+            };
+            customerRateLimitConfig = options.Value;
+        }
+
+        public Func<OnRejectedContext, CancellationToken, ValueTask> OnRejected => _onRejected;
+
+        public RateLimitPartition<string> GetPartition(HttpContext httpContext)
+        {
+            return RateLimitPartition.GetSlidingWindowLimiter(
+                partitionKey: httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+                partition => new SlidingWindowRateLimiterOptions
+                {
+                    AutoReplenishment = customerRateLimitConfig.AutoReplenishment,
+                    PermitLimit = customerRateLimitConfig.PermitLimit,
+                    Window = customerRateLimitConfig.WindowByUnit,
+                    SegmentsPerWindow = customerRateLimitConfig.SegmentsPerWindow
+                });
+        }
     }
 }

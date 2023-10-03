@@ -1,5 +1,4 @@
 using System.Net;
-using Ext.ApiGateways.Models;
 using Ext.ApiGateways.Requests;
 using Ext.ApiGateways.Services;
 using Alpha.Utilities.Models;
@@ -7,7 +6,7 @@ using GrpcReports;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Common.Logging.Extensions;
-using Ext.ApiGateways.Constants;
+using Alpha.Utilities.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -32,9 +31,6 @@ public class WinLossDetailController : Controller
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(
-        [FromHeader] string key,
-        [FromHeader] string username,
-        [FromHeader] string password,
         [FromRoute] string product,
         [FromBody] WinLossDetailRequest request)
     {
