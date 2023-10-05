@@ -156,7 +156,7 @@ message GetTicketDetailsRequest {
 }
 
 message ExtraInfoModel {
-  int64 refNo = 1;
+  string refNo = 1;
   int32 transType = 2;
   int32 productId = 3;
 }

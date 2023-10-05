@@ -41,7 +41,7 @@ namespace Alpha.BetLists.API.Helpers
                     case SuperViewRunningBetTicketModel ticket:
                         ticket.ExtraInfo = new ExtraInfoModel
                         {
-                            RefNo = t.TransId,
+                            RefNo = t.TransId.ToString(),
                             TransType = int.Parse(t.GetTransactionType()),
                             ProductId = productId
                         };
@@ -49,7 +49,7 @@ namespace Alpha.BetLists.API.Helpers
                     case MasterViewRunningBetTicketModel ticket:
                         ticket.ExtraInfo = new ExtraInfoModel
                         {
-                            RefNo = t.TransId,
+                            RefNo = t.TransId.ToString(),
                             TransType = int.Parse(t.GetTransactionType()),
                             ProductId = productId
                         };
@@ -57,7 +57,7 @@ namespace Alpha.BetLists.API.Helpers
                     case AgentViewRunningBetTicketModel ticket:
                         ticket.ExtraInfo = new ExtraInfoModel
                         {
-                            RefNo = t.TransId,
+                            RefNo = t.TransId.ToString(),
                             TransType = int.Parse(t.GetTransactionType()),
                             ProductId = productId
                         };
@@ -65,7 +65,7 @@ namespace Alpha.BetLists.API.Helpers
                     case SuperViewWinLossBetTicketModel ticket:
                         ticket.ExtraInfo = new ExtraInfoModel
                         {
-                            RefNo = t.TransId,
+                            RefNo = t.TransId.ToString(),
                             TransType = int.Parse(t.GetTransactionType()),
                             ProductId = productId
                         };
@@ -73,7 +73,7 @@ namespace Alpha.BetLists.API.Helpers
                     case MasterViewWinLossBetTicketModel ticket:
                         ticket.ExtraInfo = new ExtraInfoModel
                         {
-                            RefNo = t.TransId,
+                            RefNo = t.TransId.ToString(),
                             TransType = int.Parse(t.GetTransactionType()),
                             ProductId = productId
                         };
@@ -81,7 +81,7 @@ namespace Alpha.BetLists.API.Helpers
                     case AgentViewWinLossBetTicketModel ticket:
                         ticket.ExtraInfo = new ExtraInfoModel
                         {
-                            RefNo = t.TransId,
+                            RefNo = t.TransId.ToString(),
                             TransType = int.Parse(t.GetTransactionType()),
                             ProductId = productId
                         };
