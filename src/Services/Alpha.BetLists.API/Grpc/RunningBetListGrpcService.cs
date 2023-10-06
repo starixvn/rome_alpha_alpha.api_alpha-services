@@ -16,7 +16,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
         var param = new GetRunningBetListParam(
             request.CustId,
-            request.Language,
             request.CustName,
             request.Site,
             productIds);
@@ -60,7 +59,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
         var param = new GetRunningBetListParam(
             request.CustId,
-            request.Language,
             request.CustName,
             request.Site,
             productIds);
@@ -105,7 +103,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
         var param = new GetRunningBetListParam(
             request.CustId,
-            request.Language,
             request.CustName,
             request.Site,
             productIds);

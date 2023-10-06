@@ -46,13 +46,13 @@ public class ApiKeyService : IApiKeyService
             (now - requestTimeSpan) > settings.Value.ExpireSignatureTime ||
             (requestTimeSpan - now) > settings.Value.AllowSignatureTimeTimeRange)
         {
-            return new VerifyApiKeyResult(false);
+            return new VerifyApiKeyResult(false, "Time Expired!");
         }
 
         var apiKey = await Get(key);
         if (apiKey == null)
         {
-            return new VerifyApiKeyResult(false);
+            return new VerifyApiKeyResult(false, "Key Not Found!");
         }
 
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKey.Secret));
@@ -63,7 +63,7 @@ public class ApiKeyService : IApiKeyService
 
         if (apiKey.IsExpired || !verifyApiKey || !verifyPassPhrase || !verifyApiSignature)
         {
-            return new VerifyApiKeyResult(false);
+            return new VerifyApiKeyResult(false, "Verify Failed!");
         }
 
         return new VerifyApiKeyResult(true) { CustId = apiKey.CustId, RoleId = apiKey.RoleId, Scopes = apiKey.ScopeIdList };

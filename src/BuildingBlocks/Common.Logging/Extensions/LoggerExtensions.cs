@@ -6,9 +6,7 @@ namespace Common.Logging.Extensions;
 public static class LoggerExtensions
 {
     public static void LogFailedAuthentication(
-        this Fanex.Logging.ILogger logger,
-        IHeaderDictionary headers,
-        string[] keys)
+        this ILogger logger, string message, IHeaderDictionary headers, string[] keys)
     {
         try
         {
@@ -19,11 +17,11 @@ public static class LoggerExtensions
                 Serilog.Context.LogContext.PushProperty(key, headers[key]);
             }
 
-            logger.Info($"AuthenticateFailed!");
+            logger.LogInformation(message);
         }
         catch (Exception e)
         {
-            logger.Error(e.Message);
+            logger.LogError(e.Message);
         }
     }
 
@@ -44,5 +42,10 @@ public static class LoggerExtensions
         {
             logger.LogError(e.Message);
         }
+    }
+
+    public static void LogAccountIsProtectedMode(this ILogger logger)
+    {
+        logger.LogError("Account status is protected mode");
     }
 }

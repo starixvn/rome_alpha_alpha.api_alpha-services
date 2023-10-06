@@ -19,7 +19,6 @@
   <ItemGroup>
     <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
     <PackageReference Include="Fanex.Common" Version="1.1.1-beta1" />
-    <PackageReference Include="Fanex.RemotingRef" Version="1.5.0.1" />
     <PackageReference Include="Google.Protobuf" Version="3.21.9" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />

@@ -66,6 +66,13 @@ public class WinLossDetailController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
         }
 
+        var accountStatus = await customerService.GetCustomerStatus(downlineInfo.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            logger.LogAccountIsProtectedMode();
+            throw new GrpcException { Code = (int)HttpStatusCode.Forbidden, Detail = string.Empty };
+        }
+
         var reportRequest = new GetWinLossDetailReportRequest
         {
             CustName = request.CustName,
@@ -89,41 +96,13 @@ public class WinLossDetailController : Controller
     }
 
     private async Task<IActionResult> SuperWinLossDetail(GetWinLossDetailReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetSuperWinLossDetailResponse());
-        }
+        => Json(await apiClient.GetSuperWinLossDetailAsync(request));
 
-        var result = await apiClient.GetSuperWinLossDetailAsync(request);
-
-        return Json(result);
-    }
 
     private async Task<IActionResult> MasterWinLossDetail(GetWinLossDetailReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetMasterWinLossDetailResponse());
-        }
+        => Json(await apiClient.GetMasterWinLossDetailAsync(request));
 
-        var result = await apiClient.GetMasterWinLossDetailAsync(request);
-
-        return Json(result);
-    }
 
     private async Task<IActionResult> AgentWinLossDetail(GetWinLossDetailReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetAgentWinLossDetailResponse());
-        }
-
-        var result = await apiClient.GetAgentWinLossDetailAsync(request);
-
-        return Json(result);
-    }
+        => Json(await apiClient.GetAgentWinLossDetailAsync(request));
 }

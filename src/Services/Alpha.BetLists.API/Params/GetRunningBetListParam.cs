@@ -6,21 +6,17 @@ public class GetRunningBetListParam
 {
     public GetRunningBetListParam(
         int custId,
-        string language,
         string userName,
         string siteName,
         IEnumerable<int> productIds)
     {
         CustId = custId;
-        Language = language;
         UserName = userName;
         ProductIds = productIds;
         SiteName = siteName;
     }
 
     public int CustId { get; }
-
-    public string Language { get; }
 
     public string UserName { get; }
 

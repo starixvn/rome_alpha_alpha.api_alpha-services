@@ -91,6 +91,7 @@ public static class ServiceCollectionExtensions
             };
 
             options.GlobalLimiter = PartitionedRateLimiter.CreateChained(
+                configuration.CreateGlobalPartitionedRateLimiter(),
                 configuration.CreatePartitionedRateLimiter(RateLimitConfig.ConfigBySecond),
                 configuration.CreatePartitionedRateLimiter(RateLimitConfig.ConfigByMinute),
                 configuration.CreatePartitionedRateLimiter(RateLimitConfig.ConfigByHour));

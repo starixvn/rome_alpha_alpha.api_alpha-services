@@ -20,19 +20,18 @@ service Reports {
 }
 
 message GetOutstandingReportRequest {
-  string language = 1;
-  int32 custId = 2;
-  string custName = 3;
-  string site = 4;
-  int32 currencyId = 5;
-  sint32 custLevelId = 6;
-  int32 viewerId = 7;
-  sint32 viewerLevelId = 8;
-  bool autoFollowBetIsDummyAgent = 9;
+  int32 custId = 1;
+  string custName = 2;
+  string site = 3;
+  int32 currencyId = 4;
+  sint32 custLevelId = 5;
+  int32 viewerId = 6;
+  sint32 viewerLevelId = 7;
+  bool autoFollowBetIsDummyAgent = 8;
 
-  string sortPropertyName = 10;
-  bool isDescendingSort = 11;
-  string productGroup = 12;
+  string sortPropertyName = 9;
+  bool isDescendingSort = 10;
+  string productGroup = 11;
 } 
 
 message GetSuperOutstandingResponse {
@@ -106,20 +105,19 @@ message AgentOutstandingModel {
 }
 
 message GetWinLossDetailReportRequest {
-  string language = 1;
-  int32 custId = 2;
-  string custName = 3;
-  string site = 4;
-  int32 currencyId = 5;
-  sint32 custLevelId = 6;
-  int32 viewerId = 7;
-  sint32 viewerLevelId = 8;
+  int32 custId = 1;
+  string custName = 2;
+  string site = 3;
+  int32 currencyId = 4;
+  sint32 custLevelId = 5;
+  int32 viewerId = 6;
+  sint32 viewerLevelId = 7;
  
-  string sortPropertyName = 9;
-  bool isDescendingSort = 10;
-  string fromDate = 11; 
-  string toDate = 12; 
-  string productGroup = 13;
+  string sortPropertyName = 8;
+  bool isDescendingSort = 9;
+  string fromDate = 10; 
+  string toDate = 11; 
+  string productGroup = 12;
 } 
 
 message GetSuperWinLossDetailResponse {

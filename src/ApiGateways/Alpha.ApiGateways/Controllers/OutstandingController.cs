@@ -73,6 +73,13 @@ public class OutstandingController : Controller
             ProductGroup = ProductGroupConstants.All
         };
 
+        var accountStatus = await customerService.GetCustomerStatus(downlineInfo.CustId);
+        if (accountStatus == null || accountStatus.IsProtectedMode)
+        {
+            logger.LogAccountIsProtectedMode();
+            throw new GrpcException { Code = (int)HttpStatusCode.Forbidden, Detail = string.Empty };
+        }
+
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)
         {
             return await SuperOutstanding(reportRequest);
@@ -102,80 +109,26 @@ public class OutstandingController : Controller
     }
 
     private async Task<IActionResult> SuperOutstanding(GetOutstandingReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetSuperOutstandingResponse());
-        }
+        => Json(await apiClient.GetSuperOutstandingAsync(request));
 
-        var result = await apiClient.GetSuperOutstandingAsync(request);
-
-        return Json(result);
-    }
 
     private async Task<IActionResult> SuperOnMasterOutstanding(GetOutstandingReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetSuperOnMasterOutstandingResponse());
-        }
+        => Json(await apiClient.GetSuperOnMasterOutstandingAsync(request));
 
-        var result = await apiClient.GetSuperOnMasterOutstandingAsync(request);
-
-        return Json(result);
-    }
 
     private async Task<IActionResult> SuperOnAgentOutstanding(GetOutstandingReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetSuperOnAgentOutstandingResponse());
-        }
+        => Json(await apiClient.GetSuperOnAgentOutstandingAsync(request));
 
-        var result = await apiClient.GetSuperOnAgentOutstandingAsync(request);
-
-        return Json(result);
-    }
 
     private async Task<IActionResult> MasterOutstanding(GetOutstandingReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetMasterOutstandingResponse());
-        }
+        => Json(await apiClient.GetMasterOutstandingAsync(request));
 
-        var result = await apiClient.GetMasterOutstandingAsync(request);
-
-        return Json(result);
-    }
 
     private async Task<IActionResult> MasterOnAgentOutstanding(GetOutstandingReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetMasterOnAgentOutstandingResponse());
-        }
+        => Json(await apiClient.GetMasterOnAgentOutstandingAsync(request));
 
-        var result = await apiClient.GetMasterOnAgentOutstandingAsync(request);
-
-        return Json(result);
-    }
 
     private async Task<IActionResult> AgentOutstanding(GetOutstandingReportRequest request)
-    {
-        var accountStatus = await customerService.GetCustomerStatus(request.CustId);
-        if (accountStatus == null || accountStatus.IsProtectedMode)
-        {
-            return Json(new GetAgentOutstandingResponse());
-        }
+        => Json(await apiClient.GetAgentOutstandingAsync(request));
 
-        var result = await apiClient.GetAgentOutstandingAsync(request);
-
-        return Json(result);
-    }
 }

@@ -20,25 +20,25 @@ public class CustomerGrpcService : Customer.CustomerBase
         logger.LogDebug("Begin grpc call from method {Method} for CustId {CustId} SubAccId {SubAccId}", context.Method, request.CustId, request.SubAccId);
 
         var status = await customerService.GetCustomerStatus(new CustomerStatusParam(request.CustId, request.SubAccId));
-        if (status != null)
+        if (status == null)
         {
-            context.Status = new Status(StatusCode.OK, $"Customer status with CustId {request.CustId} SubAccId {request.SubAccId} do exist");
-            return new GetCustomerStatusResponse
-            {
-                CustId = status.CustId,
-                SubAccId = status.SubAccId,
-                IsActive = status.IsActive,
-                IsProtectedMode = status.IsProtectedMode,
-                IsLocked = status.IsLocked,
-                IsSubAcc = status.IsSubAcc,
-                HasReportPermission = status.HasReportPermission,
-                HasMemberInformationPermission = status.HasMemberInformationPermission,
-            };
+            context.Status = new Status(StatusCode.NotFound, $"Customer status with CustId {request.CustId} SubAccId {request.SubAccId} do not exist");
+
+            return new GetCustomerStatusResponse();
         }
 
-        context.Status = new Status(StatusCode.NotFound, $"Customer status with CustId {request.CustId} SubAccId {request.SubAccId} do not exist");
-
-        return new GetCustomerStatusResponse();
+        context.Status = new Status(StatusCode.OK, $"Customer status with CustId {request.CustId} SubAccId {request.SubAccId} do exist");
+        return new GetCustomerStatusResponse
+        {
+            CustId = status.CustId,
+            SubAccId = status.SubAccId,
+            IsActive = status.IsActive,
+            IsProtectedMode = status.IsProtectedMode,
+            IsLocked = status.IsLocked,
+            IsSubAcc = status.IsSubAcc,
+            HasReportPermission = status.HasReportPermission,
+            HasMemberInformationPermission = status.HasMemberInformationPermission,
+        };
     }
 
     public override async Task<GetDownlineInfoResponse> GetDownlineInfo(GetDownlineInfoRequest request, ServerCallContext context)

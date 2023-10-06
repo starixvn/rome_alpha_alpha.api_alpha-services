@@ -16,6 +16,7 @@ namespace Ext.ApiGateways.Services
         private readonly IDynamicRepository dynamicRepository;
         private readonly IAesService aesService;
         private readonly ICacheService cacheService;
+        private readonly TimeSpan cacheTime = TimeSpan.FromMinutes(5);
 
         public ApiKeyService(
             IDynamicRepository dynamicRepository,
@@ -45,13 +46,14 @@ namespace Ext.ApiGateways.Services
                 {
                     IsAuthenticated = criteria.IsAuthenticated,
                     CustId = criteria.CustId,
-                    SubAccId = criteria.SubAccId
+                    SubAccId = criteria.SubAccId,
+                    ErrMsg = criteria.ErrMsg
                 };
             }
 
             if (result.IsAuthenticated)
             {
-                var cachedTime = new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
+                var cachedTime = new CacheItemOptions().SetAbsoluteExpiration(cacheTime);
                 await cacheService.SetAsync(cachedKey, result, cachedTime);
             }
 

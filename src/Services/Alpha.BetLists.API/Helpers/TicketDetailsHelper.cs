@@ -9,13 +9,16 @@ namespace Alpha.BetLists.API.Helpers
     {
         private static int GetProductIdByChoice(string choice, TicketDetailsMapperModel mapper)
         {
+            var lowerChoice = choice.ToLower();
+
             foreach (var entry in mapper.Values)
             {
-                if (choice.ToLower().Contains(entry.Key.ToLower()))
+                if (lowerChoice.Contains(entry.Key.ToLower()))
                 {
                     return entry.Value;
                 }
             }
+
             return -1;
         }
 
@@ -28,66 +31,63 @@ namespace Alpha.BetLists.API.Helpers
                     return true;
                 }
             }
+
             return false;
         }
 
         public static void GetExtraInfo(this object model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
         {
             var productId = GetProductIdByChoice(choice, mapper);
-            if (productId != -1)
+            if (productId == -1)
             {
-                switch (model)
-                {
-                    case SuperViewRunningBetTicketModel ticket:
-                        ticket.ExtraInfo = new ExtraInfoModel
-                        {
-                            RefNo = t.TransId.ToString(),
-                            TransType = int.Parse(t.GetTransactionType()),
-                            ProductId = productId
-                        };
-                        break;
-                    case MasterViewRunningBetTicketModel ticket:
-                        ticket.ExtraInfo = new ExtraInfoModel
-                        {
-                            RefNo = t.TransId.ToString(),
-                            TransType = int.Parse(t.GetTransactionType()),
-                            ProductId = productId
-                        };
-                        break;
-                    case AgentViewRunningBetTicketModel ticket:
-                        ticket.ExtraInfo = new ExtraInfoModel
-                        {
-                            RefNo = t.TransId.ToString(),
-                            TransType = int.Parse(t.GetTransactionType()),
-                            ProductId = productId
-                        };
-                        break;
-                    case SuperViewWinLossBetTicketModel ticket:
-                        ticket.ExtraInfo = new ExtraInfoModel
-                        {
-                            RefNo = t.TransId.ToString(),
-                            TransType = int.Parse(t.GetTransactionType()),
-                            ProductId = productId
-                        };
-                        break;
-                    case MasterViewWinLossBetTicketModel ticket:
-                        ticket.ExtraInfo = new ExtraInfoModel
-                        {
-                            RefNo = t.TransId.ToString(),
-                            TransType = int.Parse(t.GetTransactionType()),
-                            ProductId = productId
-                        };
-                        break;
-                    case AgentViewWinLossBetTicketModel ticket:
-                        ticket.ExtraInfo = new ExtraInfoModel
-                        {
-                            RefNo = t.TransId.ToString(),
-                            TransType = int.Parse(t.GetTransactionType()),
-                            ProductId = productId
-                        };
-                        break;
-                    default: break;
-                }
+                return;
+            }
+
+            switch (model)
+            {
+                case SuperViewRunningBetTicketModel ticket:
+                    ticket.ExtraInfo = new ExtraInfoModel
+                    {
+                        RefNo = t.TransId.ToString(),
+                        TransType = int.Parse(t.GetTransactionType()),
+                        ProductId = productId
+                    };
+                    break;
+                case MasterViewRunningBetTicketModel ticket:
+                    ticket.ExtraInfo = new ExtraInfoModel
+                    {
+                        RefNo = t.TransId.ToString(),
+                        TransType = int.Parse(t.GetTransactionType()),
+                        ProductId = productId
+                    };
+                    break;
+                case AgentViewRunningBetTicketModel ticket:
+                    ticket.ExtraInfo = new ExtraInfoModel
+                    {
+                        RefNo = t.TransId.ToString(),
+                        TransType = int.Parse(t.GetTransactionType()),
+                        ProductId = productId
+                    };
+                    break;
+                case SuperViewWinLossBetTicketModel ticket:
+                    ticket.ExtraInfo = new ExtraInfoModel
+                    {
+                        RefNo = t.TransId.ToString(),
+                        TransType = int.Parse(t.GetTransactionType()),
+                        ProductId = productId
+                    };
+                    break;
+                case MasterViewWinLossBetTicketModel ticket:
+                    ticket.ExtraInfo = new ExtraInfoModel
+                    {
+                        RefNo = t.TransId.ToString(),
+                        TransType = int.Parse(t.GetTransactionType()),
+                        ProductId = productId
+                    };
+                    break;
+                case AgentViewWinLossBetTicketModel ticket:
+                    break;
+                default: break;
             }
         }
 

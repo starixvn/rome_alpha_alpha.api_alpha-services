@@ -1,4 +1,3 @@
-using System.Text;
 using Alpha.Customer.API.Configurations;
 using Alpha.Customer.API.Criteria;
 using Alpha.Customer.API.DataAccesses;
@@ -14,8 +13,6 @@ public interface ICustomerService
 {
     Task<CustomerStatus> GetCustomerStatus(CustomerStatusParam customer);
 
-    Task<IEnumerable<CustomerStatus>> GetCustomerStatus(IEnumerable<CustomerStatusParam> customers);
-
     Task<DownlineInfo> GetDownlineInfo(int custId, string downlineUsername);
 
     Task<CustomerInfoModel> GetCustomerInfo(int custId, string username);
@@ -24,6 +21,8 @@ public interface ICustomerService
 public class CustomerService : ICustomerService
 {
     private const string CustomerStatusCacheKey = "Alpha.Customer.API.CustomerStatus";
+    private const string DownlineInfoCacheKey = "Alpha.Customer.API.DownlineInfo";
+    private const string CustomerInfoCacheKey = "Alpha.Customer.API.CustomerInfo";
 
     private readonly ICacheService cacheService;
     private readonly CustomerAppSettings appSettings;
@@ -45,38 +44,31 @@ public class CustomerService : ICustomerService
     public Task<CustomerStatus> GetCustomerStatus(CustomerStatusParam customer)
         => cacheService.GetOrSetAsync(
             $"{CustomerStatusCacheKey}.{customer.CustId}.{customer.SubAccId}",
-            async () => (await GetCustomerStatus(new[] { customer })).FirstOrDefault(),
+            async () =>
+            {
+                var criteria = new GetCustomerStatusCriteria(new[] { customer });
+                var status = await dynamicRepository.FetchAsync<CustomerStatus>(criteria);
+
+                return status.FirstOrDefault();
+            },
             new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(appSettings.CustomerStatusCacheInSeconds)));
 
-    public Task<IEnumerable<CustomerStatus>> GetCustomerStatus(IEnumerable<CustomerStatusParam> customers)
-        => dynamicRepository.FetchAsync<CustomerStatus>(new GetCustomerStatusCriteria(BuildCustListParam(customers)));
-
-    private static string BuildCustListParam(IEnumerable<CustomerStatusParam> customers)
-    {
-        var spParams = new StringBuilder();
-        spParams.Append("<Root>");
-
-        foreach (var item in customers)
-        {
-            spParams.Append(item.ToXml());
-        }
-
-        spParams.Append("</Root>");
-        return spParams.ToString();
-    }
 
     public async Task<DownlineInfo> GetDownlineInfo(int custId, string downlineUsername)
-    {
-        var command = new GetDownlineInfoCommand(custId, 0, downlineUsername);
-        await dynamicRepository.ExecuteAsync(command);
+        => await cacheService.GetOrSetAsync(
+            $"{DownlineInfoCacheKey}.{custId}.{downlineUsername}",
+            async () =>
+            {
+                var command = new GetDownlineInfoCommand(custId, 0, downlineUsername);
+                await dynamicRepository.ExecuteAsync(command);
 
-        return new DownlineInfo(command.CustId, (byte)command.RoleId, command.IsSubAcc);
-    }
+                return new DownlineInfo(command.CustId, (byte)command.RoleId, command.IsSubAcc);
+            },
+            new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(appSettings.CustomerStatusCacheInSeconds)));
 
-    public async Task<CustomerInfoModel> GetCustomerInfo(int custId, string username)
-    {
-        var criteria = new GetCustomerInfoCriteria(custId, username);
-
-        return await customerDataAccess.GetCustomerInfo(criteria);
-    }
+    public Task<CustomerInfoModel> GetCustomerInfo(int custId, string username)
+        => cacheService.GetOrSetAsync(
+            $"{CustomerInfoCacheKey}.{custId}.{username}",
+            async () => await customerDataAccess.GetCustomerInfo(new GetCustomerInfoCriteria(custId, username)),
+            new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(appSettings.CustomerStatusCacheInSeconds)));
 }

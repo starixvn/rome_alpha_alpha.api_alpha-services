@@ -8,12 +8,7 @@ namespace Alpha.Reports.API.Services;
 
 public interface IProductService
 {
-    IEnumerable<int> FilterProductIdsByCustomer(
-        string language,
-        IEnumerable<int> productIds,
-        DateTime? minReportDate = null);
-
-    IEnumerable<ProductModel> GetProductsForCustomer(string language, DateTime? minReportDate = null);
+    IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTime? minReportDate = null);
 
     IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group);
 }
@@ -23,21 +18,16 @@ public class ProductService : IProductService
     private const string ProductsCacheKey = "Alpha.Reports.Services.Impl.ProductServiceImpl.Products";
     private readonly IDynamicRepository dynamicRepository;
     private readonly ICacheService cacheService;
-    private readonly ICacheRefService cacheRefService;
 
-    public ProductService(IDynamicRepository dynamicRepository, ICacheService cacheService, ICacheRefService cacheRefService)
+    public ProductService(IDynamicRepository dynamicRepository, ICacheService cacheService)
     {
         this.dynamicRepository = dynamicRepository;
         this.cacheService = cacheService;
-        this.cacheRefService = cacheRefService;
     }
 
-    public IEnumerable<int> FilterProductIdsByCustomer(
-        string language,
-        IEnumerable<int> productIds,
-        DateTime? minReportDate = null)
+    public IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTime? minReportDate = null)
     {
-        var customerProductIds = GetProductsForCustomer(language, minReportDate).Select(product => product.Id);
+        var customerProductIds = GetProductsForCustomer(minReportDate).Select(product => product.Id);
 
         var productIdList = productIds == null || !productIds.Any()
             ? customerProductIds
@@ -46,9 +36,9 @@ public class ProductService : IProductService
         return productIdList;
     }
 
-    public IEnumerable<ProductModel> GetProductsForCustomer(string language, DateTime? minReportDate = null)
+    private IEnumerable<ProductModel> GetProductsForCustomer(DateTime? minReportDate = null)
     {
-        var custProducts = GetProductsForReport(language);
+        var custProducts = GetProductsForReport();
 
         if (custProducts == null)
         {
@@ -63,25 +53,17 @@ public class ProductService : IProductService
         || !product.EndOfSupportDate.HasValue
         || minReportDate.Value <= product.EndOfSupportDate.Value;
 
-    private IEnumerable<ProductModel> GetProductsForReport(string language)
+    private IEnumerable<ProductModel> GetProductsForReport()
     {
         var products = cacheService
             .GetOrSet(
             ProductsCacheKey,
             () => dynamicRepository.Fetch<ProductModel>(new GetProductsCriteria())
-                .Select(product =>
-                {
-                    var p = new ProductModel(product.Id, product.Name, product.EndOfSupportDate, product.Type, product.OrderNo);
-                    p.UpdateProductName(GetProductName(product.Id, language));
-                    return p;
-                }),
+                .Select(product => new ProductModel(product.Id, product.Name, product.EndOfSupportDate, product.Type, product.OrderNo)),
             new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
 
         return products;
     }
-
-    public string GetProductName(int productId, string language)
-        => cacheRefService.GetProductName(productId, language);
 
     public IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group)
     {

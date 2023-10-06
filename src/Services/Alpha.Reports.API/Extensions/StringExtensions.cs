@@ -9,11 +9,9 @@ public static class StringExtensions
             return Enumerable.Empty<int>().ToList();
         }
 
-        var result = 0;
-
         var ids = delimitedString
             .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-            .Where(str => int.TryParse(str, out result))
+            .Where(str => int.TryParse(str, out _))
             .Select(str => Convert.ToInt32(str)).ToList();
 
         return ids;

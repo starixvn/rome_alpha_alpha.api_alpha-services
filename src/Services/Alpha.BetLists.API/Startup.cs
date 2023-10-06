@@ -122,8 +122,6 @@ public class Startup
 
         services.AddSingleton<IRemotingRefService, RemotingRefService>();
         services.AddTransient<ICacheRef, CacheRef>();
-
-        services.AddTransient<ICacheRefService, CacheRefService>();
         services.AddTransient<IProductService, ProductService>();
         services.AddTransient<IProductDetailService, ProductDetailService>();
 

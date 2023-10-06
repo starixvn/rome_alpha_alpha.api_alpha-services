@@ -11,19 +11,19 @@ namespace Alpha.ApiGateways.Infrastructure.Middlewares;
 public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     private readonly IApiKeyService apiKeyService;
-    private readonly Fanex.Logging.ILogger flogger;
+    private readonly ILogger<BasicAuthenticationHandler> logger;
 
     public BasicAuthenticationHandler(
         IApiKeyService apiKeyService,
         IOptionsMonitor<AuthenticationSchemeOptions> options,
-        ILoggerFactory logger,
+        ILoggerFactory loggerFactory,
         UrlEncoder encoder,
         ISystemClock clock,
-        Fanex.Logging.ILogger flogger)
-        : base(options, logger, encoder, clock)
+        ILogger<BasicAuthenticationHandler> logger)
+        : base(options, loggerFactory, encoder, clock)
     {
         this.apiKeyService = apiKeyService;
-        this.flogger = flogger;
+        this.logger = logger;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -37,7 +37,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         {
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-            flogger.LogFailedAuthentication(Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
+            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
             return AuthenticateResult.Fail("Bad Request");
         }
 
@@ -62,7 +62,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-        flogger.LogFailedAuthentication(Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
+        logger.LogFailedAuthentication($"AuthenticateFailed: {verifyApiKeyResult?.ErrorMessage}", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
         return AuthenticateResult.Fail("Unauthorized");
     }
 }

@@ -11,7 +11,7 @@ namespace Alpha.Reports.API.Services;
 
 public interface IProductDetailService
 {
-    IEnumerable<ProductDetailModel> GetProductDetails(string language, ReportsAppSettingsModel settings);
+    IEnumerable<ProductDetailModel> GetProductDetails(ReportsAppSettingsModel settings);
     string BuildProductDetailsXML(IEnumerable<int> validProductIds, IEnumerable<int> validResourceIds, IEnumerable<int> productOfferProductDetail);
 }
 
@@ -20,16 +20,14 @@ public class ProductDetailService : IProductDetailService
     private const string ProductDetailsCacheKey = "Alpha.Reports.API.Services.ProductDetailService.ProductDetails";
     private const int ProductDetailsCacheInDay = 1;
 
-    private readonly ICacheRefService cacheRefService;
     private readonly IDynamicRepository dynamicRepository;
 
-    public ProductDetailService(ICacheRefService cacheRefService, IDynamicRepository dynamicRepository)
+    public ProductDetailService(IDynamicRepository dynamicRepository)
     {
-        this.cacheRefService = cacheRefService;
         this.dynamicRepository = dynamicRepository;
     }
 
-    public IEnumerable<ProductDetailModel> GetProductDetails(string language, ReportsAppSettingsModel settings)
+    public IEnumerable<ProductDetailModel> GetProductDetails(ReportsAppSettingsModel settings)
     {
         var canViewProductDetails = CanViewProductDetails(settings);
 
@@ -79,25 +77,10 @@ public class ProductDetailService : IProductDetailService
     private static bool IsSupportProductDetail(int productId, IEnumerable<int> productOfferProductDetail)
         => productOfferProductDetail.Any(i => i == productId);
 
-    private IEnumerable<ProductDetailModel> GetProductDetails(string language = null)
+    private IEnumerable<ProductDetailModel> GetProductDetails()
         => ConfiguredCacheService.GetOrSet(
             ProductDetailsCacheKey,
-            () =>
-            {
-                var ps = dynamicRepository.Fetch<ProductDetailModel>(new GetProductsDetailCriteria());
-
-                if (string.IsNullOrEmpty(language))
-                {
-                    return ps;
-                }
-
-                return ps.Select(product =>
-                 {
-                     product.DisplayName = cacheRefService.GetResourceDataByRefIdAndResourceId(product.RefId, product.ResourceId, language);
-
-                     return product;
-                 });
-            },
+            () => dynamicRepository.Fetch<ProductDetailModel>(new GetProductsDetailCriteria()),
             new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(ProductDetailsCacheInDay)));
 
 

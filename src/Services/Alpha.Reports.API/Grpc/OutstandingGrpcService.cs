@@ -161,7 +161,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
     private async Task<IEnumerable<OutstandingModel>> GetOutstanding(GetOutstandingReportRequest request)
     {
-        var validUserSelectedProductIds = productService.FilterProductIdsByCustomer(request.Language, Enumerable.Empty<int>(), DateTime.Now);
+        var validUserSelectedProductIds = productService.FilterProductIdsByCustomer(Enumerable.Empty<int>(), DateTime.Now);
 
         validUserSelectedProductIds = productService.FilterProductIdsByGroup(validUserSelectedProductIds, request.ProductGroup);
 

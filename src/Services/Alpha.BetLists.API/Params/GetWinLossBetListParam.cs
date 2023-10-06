@@ -10,7 +10,6 @@ public class GetWinLossBetListParam
         int roleId,
         string fromDate,
         string toDate,
-        string language,
         string userName,
         string siteName,
         IEnumerable<int> productIds,
@@ -24,7 +23,6 @@ public class GetWinLossBetListParam
         FromDate = DateTime.TryParse(fromDate, out dt) ? dt : DateTime.MinValue;
         ToDate = DateTime.TryParse(toDate, out dt) ? dt : DateTime.MinValue;
 
-        Language = language;
         UserName = userName;
         ProductIds = productIds;
         SiteName = siteName;
@@ -42,8 +40,6 @@ public class GetWinLossBetListParam
     public DateTime FromDate { get; }
 
     public DateTime ToDate { get; }
-
-    public string Language { get; }
 
     public string UserName { get; }
 

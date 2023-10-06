@@ -4,6 +4,7 @@ namespace Alpha.Utilities.Configurations;
 
 public class RateLimitConfig
 {
+    public const string ConfigByGlobal = "RateLimitConfigs:RateLimitByGlobal";
     public const string ConfigBySecond = "RateLimitConfigs:RateLimitBySecond";
     public const string ConfigByMinute = "RateLimitConfigs:RateLimitByMinute";
     public const string ConfigByHour = "RateLimitConfigs:RateLimitByHour";
