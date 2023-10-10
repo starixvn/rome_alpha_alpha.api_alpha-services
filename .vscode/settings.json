@@ -1,6 +1,6 @@
 {
   "omnisharp.enableRoslynAnalyzers": true,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
   "coverage-gutters.showGutterCoverage": true,
   "coverage-gutters.showLineCoverage": true,
