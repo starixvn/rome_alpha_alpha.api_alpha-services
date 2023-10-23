@@ -8,7 +8,7 @@ namespace Alpha.BetLists.API.Services
 {
     public interface ICasinoDetailsService
     {
-        PagedData<ITicket> GetCasinoDetails(CasinoDetailsParam param);
+        PagedData<TicketDto> GetCasinoDetails(CasinoDetailsParam param);
     }
 
     public class CasinoDetailsService : ICasinoDetailsService
@@ -22,7 +22,7 @@ namespace Alpha.BetLists.API.Services
             this.reportDateService = reportDateService;
         }
 
-        public PagedData<ITicket> GetCasinoDetails(CasinoDetailsParam param)
+        public PagedData<TicketDto> GetCasinoDetails(CasinoDetailsParam param)
         {
             var criteria = new GetCasinoDetailsCriteria(
                 param.RefNo,
@@ -36,7 +36,7 @@ namespace Alpha.BetLists.API.Services
 
             var tickets = dynamicRepository.Fetch<TicketDto>(criteria);
 
-            return new PagedData<ITicket>(tickets, criteria.PageIndex, criteria.PageSize, criteria.TotalRows);
+            return new PagedData<TicketDto>(tickets, criteria.PageIndex, criteria.PageSize, criteria.TotalRows);
         }
     }
 }

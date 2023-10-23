@@ -44,6 +44,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
                 SuperPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Super),
                 MasterPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Master),
                 AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+                Platform = t.Platform
             };
 
             model.GetExtraInfo(choice, t, ticketDetailsMapper);
@@ -87,6 +88,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
                 Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
                 MasterPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Master),
                 AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+                Platform = t.Platform
             };
 
             model.GetExtraInfo(choice, t, ticketDetailsMapper);
@@ -128,6 +130,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
                 Stake = builder.BuildStake(t, ticketHelper),
                 Status = builder.BuildStatus(t, ticketHelper, ticketData, GetCountry(t.IP, countries)),
                 AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
+                Platform = t.Platform
             };
             model.GetExtraInfo(choice, t, ticketDetailsMapper);
 

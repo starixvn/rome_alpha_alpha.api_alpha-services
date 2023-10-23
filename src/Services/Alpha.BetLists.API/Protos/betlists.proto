@@ -50,6 +50,7 @@ message SuperViewRunningBetTicketModel {
   string masterPT_Comm = 8;
   string agentPT_Comm = 9;
   ExtraInfoModel extraInfo = 10;
+  string platform = 11;
 }
 
 message MasterViewRunningBetTicketModel {
@@ -62,6 +63,7 @@ message MasterViewRunningBetTicketModel {
   string masterPT_Comm = 7;
   string agentPT_Comm = 8;
   ExtraInfoModel extraInfo = 9;
+  string platform = 10;
 }
 
 message AgentViewRunningBetTicketModel {
@@ -73,6 +75,7 @@ message AgentViewRunningBetTicketModel {
   string status = 6;
   string agentPT_Comm = 7;
   ExtraInfoModel extraInfo = 8;
+  string platform = 9;
 }
 
 
@@ -114,6 +117,7 @@ message SuperViewWinLossBetTicketModel {
   string masterPT_Comm = 9;
   string agentPT_Comm = 10;
   ExtraInfoModel extraInfo = 11;
+  string platform = 12;
 }
 
 message MasterViewWinLossBetTicketModel {
@@ -127,6 +131,7 @@ message MasterViewWinLossBetTicketModel {
   string masterPT_Comm = 8;
   string agentPT_Comm = 9;
   ExtraInfoModel extraInfo = 10;
+  string platform = 11;
 }
 
 message AgentViewWinLossBetTicketModel {
@@ -139,6 +144,7 @@ message AgentViewWinLossBetTicketModel {
   string status = 7;
   string agentPT_Comm = 8;
   ExtraInfoModel extraInfo = 9;
+  string platform = 10;
 }
 
 message WinLossTotalModelResponse {
@@ -183,6 +189,7 @@ message SuperViewTicketDetailsModel {
   string superPT_Comm = 8;
   string masterPT_Comm = 9;
   string agentPT_Comm = 10;
+  string platform = 11;
 }
 
 message MasterViewTicketDetailsModel {
@@ -195,6 +202,7 @@ message MasterViewTicketDetailsModel {
   string status = 7;
   string masterPT_Comm = 8;
   string agentPT_Comm = 9;
+  string platform = 10;
 }
 
 message AgentViewTicketDetailsModel {
@@ -206,4 +214,5 @@ message AgentViewTicketDetailsModel {
   string winLoss = 6;
   string status = 7;
   string agentPT_Comm = 8;
+  string platform = 9;
 }
