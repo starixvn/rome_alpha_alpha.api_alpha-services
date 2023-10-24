@@ -14,7 +14,6 @@ public class GetWinLossDetailReportParam
         CustLevel = (byte)request.CustLevelId;
         Site = request.Site;
         CurrencyId = request.CurrencyId;
-        Language = request.Language;
         Settings = settings;
 
         MinDate = DateTime.Now.Date.AddMonths(-1);
@@ -31,7 +30,6 @@ public class GetWinLossDetailReportParam
     public byte CustLevel { get; }
     public string Site { get; }
     public int CurrencyId { get; }
-    public string Language { get; }
     public string SiteName { get; }
 
     public DateTime FromDate { get; set; }

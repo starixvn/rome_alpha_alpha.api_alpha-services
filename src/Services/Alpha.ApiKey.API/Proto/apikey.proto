@@ -20,7 +20,8 @@ message VerifyApiKeyResponse {
     bool isAuthenticated = 1;
     int32 custId = 2;
     int32 roleId = 3;
-    repeated string scopes = 4;
+    string errorMessage = 4;
+    repeated string scopes = 5;
 }
 
 message GetApiKeyRequest {

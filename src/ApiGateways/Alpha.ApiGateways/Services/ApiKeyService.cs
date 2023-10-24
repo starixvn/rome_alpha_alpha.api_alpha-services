@@ -31,6 +31,7 @@ public class ApiKeyService : IApiKeyService
             IsAuthenticated = response.IsAuthenticated,
             CustId = response.CustId,
             RoleId = response.RoleId,
+            ErrorMessage = response.ErrorMessage,
             Scopes = response.Scopes.ToArray()
         };
     }

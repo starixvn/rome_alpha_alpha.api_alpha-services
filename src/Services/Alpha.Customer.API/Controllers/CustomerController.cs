@@ -18,10 +18,6 @@ public class CustomerController : ControllerBase
     public Task<CustomerStatus> GetCustomerStatus(int custId, int subAccId)
         => customerService.GetCustomerStatus(new CustomerStatusParam(custId, subAccId));
 
-    [HttpPost("status/multiple")]
-    public Task<IEnumerable<CustomerStatus>> GetMultipleCustomerStatus([FromBody] IEnumerable<CustomerStatusParam> query)
-        => customerService.GetCustomerStatus(query);
-
     [HttpGet("{custId}/downline/{downlineUsername}")]
     public Task<DownlineInfo> GetDownlineInfo(int custId, string downlineUsername)
         => customerService.GetDownlineInfo(custId, downlineUsername);

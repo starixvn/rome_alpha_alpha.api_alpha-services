@@ -11,7 +11,7 @@ namespace Alpha.BetLists.API.Services;
 
 public interface IProductDetailService
 {
-    IEnumerable<ProductDetailModel> GetProductDetails(int viewerId, int roleId, string language, BetListsAppSettingsModel settings);
+    IEnumerable<ProductDetailModel> GetProductDetails(int viewerId, BetListsAppSettingsModel settings);
     string BuildProductDetailsXML(IEnumerable<int> validProductIds, IEnumerable<int> validResourceIds, IEnumerable<int> productOfferProductDetail);
 }
 
@@ -21,25 +21,14 @@ public class ProductDetailService : IProductDetailService
     private const int CustProductDetailsCacheInMinutes = 5;
     private const int ProductDetailsCacheInDay = 1;
 
-    private readonly IProductService productService;
-    private readonly ICacheRefService cacheRefService;
     private readonly IDynamicRepository dynamicRepository;
 
-    public ProductDetailService(
-        IProductService productService,
-        ICacheRefService cacheRefService,
-        IDynamicRepository dynamicRepository)
+    public ProductDetailService(IDynamicRepository dynamicRepository)
     {
-        this.productService = productService;
-        this.cacheRefService = cacheRefService;
         this.dynamicRepository = dynamicRepository;
     }
 
-    public IEnumerable<ProductDetailModel> GetProductDetails(
-        int viewerId,
-        int roleId,
-        string language,
-        BetListsAppSettingsModel settings)
+    public IEnumerable<ProductDetailModel> GetProductDetails(int viewerId, BetListsAppSettingsModel settings)
     {
         if (viewerId <= 0)
         {
@@ -51,13 +40,7 @@ public class ProductDetailService : IProductDetailService
         return ConfiguredCacheService.GetOrSet(
               $"{ProductDetailsCacheKey}-{viewerId}",
               () => GetProductDetails()
-                  .Where(p => productDetails.Contains(p.ProductId))
-                  .Select(product =>
-                  {
-                      product.DisplayName = cacheRefService.GetResourceDataByRefIdAndResourceId(product.RefId, product.ResourceId, language);
-
-                      return product;
-                  }),
+                  .Where(p => productDetails.Contains(p.ProductId)),
               new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CustProductDetailsCacheInMinutes)));
     }
 

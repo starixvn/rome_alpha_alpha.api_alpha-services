@@ -44,7 +44,7 @@ public class WinLossBetListService : IWinLossBetListService
 
     private async Task<Tuple<IEnumerable<TicketDto>, IEnumerable<TicketData>, BetlistOutputParams>> GetBetList(GetWinLossBetListParam param, DateTime fromDate)
     {
-        var productDetails = productDetailService.GetProductDetails(param.ViewerId, param.RoleId, param.Language, param.Settings).Select(r => r.ResourceId);
+        var productDetails = productDetailService.GetProductDetails(param.ViewerId, param.Settings).Select(r => r.ResourceId);
         var productOfferProductDetail = param.Settings.ProductOfferProductDetail.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
         var productDetailsXML = productDetailService.BuildProductDetailsXML(param.ProductIds, productDetails, productOfferProductDetail);
 

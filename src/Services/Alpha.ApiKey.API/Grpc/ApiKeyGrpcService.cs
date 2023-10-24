@@ -20,24 +20,26 @@ public class ApiKeyGrpcService : ApiKey.ApiKeyBase
 
         var result = await apiKeyService.VerifyApiKey(request.Key, request.Passphrase, request.Signature, request.Timestamp);
 
-        if (result != null)
+        if (result == null)
         {
-            context.Status = new Status(StatusCode.OK, $"Verify api key {request.Key} success");
+            context.Status = new Status(StatusCode.Unauthenticated, $"Verify api key {request.Key} failed");
 
-            var response = new VerifyApiKeyResponse
-            {
-                IsAuthenticated = result.IsAuthenticated,
-                CustId = result.CustId,
-                RoleId = result.RoleId
-            };
-            result.Scopes?.Split(",")?.ToList().ForEach(scope => response.Scopes.Add(scope));
-
-            return response;
+            return new VerifyApiKeyResponse();
         }
 
-        context.Status = new Status(StatusCode.Unauthenticated, $"Verify api key {request.Key} failed");
+        context.Status = new Status(StatusCode.OK, $"Verify api key {request.Key} success");
 
-        return new VerifyApiKeyResponse();
+        var response = new VerifyApiKeyResponse
+        {
+            IsAuthenticated = result.IsAuthenticated,
+            CustId = result.CustId,
+            RoleId = result.RoleId,
+            ErrorMessage = result.ErrorMessage
+        };
+
+        result.Scopes?.Split(",")?.ToList().ForEach(scope => response.Scopes.Add(scope));
+
+        return response;
     }
 
     public override async Task<GetApiKeyResponse> GetApiKey(GetApiKeyRequest request, ServerCallContext context)

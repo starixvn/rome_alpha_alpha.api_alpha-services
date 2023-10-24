@@ -9,7 +9,6 @@ using Alpha.PartialUM;
 using GrpcCustomer;
 using Microsoft.Extensions.Options;
 using Alpha.Reports.API.Interceptors;
-using Fanex.RemotingRef;
 using Alpha.Reports.API.DataAccesses;
 using Microsoft.AspNetCore.Diagnostics;
 using Alpha.Utilities.Interceptors;
@@ -104,9 +103,6 @@ public class Startup
         services.Configure<ReportsAppSettingsModel>(Configuration.GetSection("ReportsAppSettings"));
         services.AddTransient<IWinLossDetailDataAccess, WinLossDetailDataAccess>();
 
-        services.AddSingleton<IRemotingRefService, RemotingRefService>();
-        services.AddTransient<ICacheRefService, CacheRefService>();
-        services.AddTransient<IAutoFollowBetService, AutoFollowBetService>();
         services.AddTransient<IReportDateService, ReportDateService>();
 
         services.AddTransient<IProductService, ProductService>();
@@ -120,10 +116,6 @@ public class Startup
             var customerApi = services.GetRequiredService<IOptions<ReportsAppSettingsModel>>().Value.GrpcCustomer;
             options.Address = new Uri(customerApi);
         }).AddInterceptor<GrpcExceptionInterceptor>();
-
-        RefDataTypeContainer
-            .ConnectTo(new Uri(Configuration.GetSection("ReportsAppSettings").Get<ReportsAppSettingsModel>().RemoteRefURL))
-            .FromApplication("Alpha.Reports.Site");
 
         services.AddGrpc(c => c.Interceptors.Add<CheckBelongingInterceptor>());
     }

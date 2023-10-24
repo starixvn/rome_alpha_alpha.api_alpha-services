@@ -18,7 +18,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     private readonly IWinLossBetListService winLossBetListService;
     private readonly IIPInfoService ipInfoService;
     private readonly ICasinoDetailsService casinoDetailsService;
-    private readonly Fanex.Logging.ILogger logger;
 
     public BetListsGrpcService(
         IOptions<BetListsAppSettingsModel> settings,
@@ -29,8 +28,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         IRunningBetListService runningBetListService,
         IWinLossBetListService winLossBetListService,
         IIPInfoService ipInfoService,
-        ICasinoDetailsService casinoDetailsService,
-        Fanex.Logging.ILogger logger)
+        ICasinoDetailsService casinoDetailsService)
     {
         this.settings = settings.Value;
         this.ticketDetailsMapper = ticketDetailsMapper.Value;
@@ -41,7 +39,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         this.winLossBetListService = winLossBetListService;
         this.ipInfoService = ipInfoService;
         this.casinoDetailsService = casinoDetailsService;
-        this.logger = logger;
     }
 
     private static string GetCountry(string ip, IDictionary<string, string> countries)

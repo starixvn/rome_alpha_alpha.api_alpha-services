@@ -17,9 +17,7 @@ public class ProductService : IProductService
     private readonly IDynamicRepository dynamicRepository;
     private readonly ICacheService cacheService;
 
-    public ProductService(
-        IDynamicRepository dynamicRepository,
-        ICacheService cacheService)
+    public ProductService(IDynamicRepository dynamicRepository, ICacheService cacheService)
     {
         this.dynamicRepository = dynamicRepository;
         this.cacheService = cacheService;

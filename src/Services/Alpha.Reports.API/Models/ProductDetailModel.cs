@@ -14,8 +14,6 @@ public class ProductDetailModel
 
     public int Order { get; }
 
-    public string DisplayName { get; set; }
-
     public string LeagueGroupId { get; }
 
     public string[] LeagueGroupIds => LeagueGroupId != null ? LeagueGroupId.Split(',') : Array.Empty<string>();

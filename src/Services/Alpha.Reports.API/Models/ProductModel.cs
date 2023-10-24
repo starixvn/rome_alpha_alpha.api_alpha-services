@@ -20,17 +20,9 @@ public class ProductModel
 
     public DateTime? EndOfSupportDate { get; protected set; }
 
-    public string DisplayName { get; }
-
     public int Type { get; protected set; }
 
     public string TypeName { get; protected set; }
 
     public int OrderNo { get; protected set; }
-
-    public void UpdateProductName(string name)
-    {
-        Name = name;
-        TypeName = name;
-    }
 }
