@@ -46,24 +46,28 @@ public class ApiKeyService : IApiKeyService
             (now - requestTimeSpan) > settings.Value.ExpireSignatureTime ||
             (requestTimeSpan - now) > settings.Value.AllowSignatureTimeTimeRange)
         {
-            return new VerifyApiKeyResult(false, "Time Expired!");
+            return new VerifyApiKeyResult(false, "Time expired!");
         }
 
         var apiKey = await Get(key);
         if (apiKey == null)
         {
-            return new VerifyApiKeyResult(false, "Key Not Found!");
+            return new VerifyApiKeyResult(false, "Key not found!");
         }
 
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiKey.Secret));
         var signatureValue = hmac.ComputeHash(Encoding.UTF8.GetBytes(timestamp));
-        var verifyApiKey = key.Equals(apiKey.Key);
-        var verifyPassPhrase = passPhrase.Equals(apiKey.PassPhrase);
-        var verifyApiSignature = signature.Equals(Convert.ToBase64String(signatureValue));
+        var passPhraseInvalid = !passPhrase.Equals(apiKey.PassPhrase);
+        var signatureInvalid = !signature.Equals(Convert.ToBase64String(signatureValue));
 
-        if (apiKey.IsExpired || !verifyApiKey || !verifyPassPhrase || !verifyApiSignature)
+        if (apiKey.IsExpired || passPhraseInvalid || signatureInvalid)
         {
-            return new VerifyApiKeyResult(false, "Verify Failed!");
+            var message = "Key expired";
+            if (passPhraseInvalid ||signatureInvalid)
+            {
+                message = "Pass phrase or signature is invalid";
+            }
+            return new VerifyApiKeyResult(false, message);
         }
 
         return new VerifyApiKeyResult(true) { CustId = apiKey.CustId, RoleId = apiKey.RoleId, Scopes = apiKey.ScopeIdList };

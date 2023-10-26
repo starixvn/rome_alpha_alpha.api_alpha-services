@@ -44,7 +44,7 @@ public class WinLossDetailController : Controller
     {
         if (!request.ValidateDateRange())
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail =  LoggingConstants.DateIsInvalid };
         }
 
         var apiKeyRequest = new ApiKeyRequest
@@ -63,14 +63,13 @@ public class WinLossDetailController : Controller
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var accountStatus = await customerService.GetCustomerStatus(downlineInfo.CustId);
         if (accountStatus == null || accountStatus.IsProtectedMode)
         {
-            logger.LogAccountIsProtectedMode();
-            throw new GrpcException { Code = (int)HttpStatusCode.Forbidden, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Forbidden, Detail = LoggingConstants.SearchAccountMustNotBeProtectedMode };
         }
 
         var reportRequest = new GetWinLossDetailReportRequest

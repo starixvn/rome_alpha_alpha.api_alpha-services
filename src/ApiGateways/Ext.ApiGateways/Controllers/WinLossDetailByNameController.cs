@@ -37,27 +37,24 @@ public class WinLossDetailByNameController : Controller
     {
         if (!ProductGroupConstants.IsValid(product))
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
         logger.LogRequest("WinLossDetailByName", Request.Headers, new[] { "Key", "Username" });
 
         if (!request.ValidateDateRange())
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DateIsInvalid };
         }
 
-        if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
-        {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
-        }
+        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var reportRequest = new GetWinLossDetailReportRequest

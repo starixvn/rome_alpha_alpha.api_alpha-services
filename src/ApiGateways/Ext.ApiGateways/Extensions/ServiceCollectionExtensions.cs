@@ -79,6 +79,8 @@ public static class ServiceCollectionExtensions
         {
             options.OnRejected = (context, cancellationToken) =>
             {
+                var headers = context.HttpContext.Request.Headers;
+                var rateLimiterMessage = headers.ContainsKey("RateLimiterMessage") ? headers["RateLimiterMessage"].ToString() : string.Empty;
                 if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
                 {
                     context.HttpContext.Response.Headers.RetryAfter =
@@ -86,7 +88,7 @@ public static class ServiceCollectionExtensions
                 }
 
                 context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-
+                context.HttpContext.Response.WriteAsJsonAsync(rateLimiterMessage);
                 return new ValueTask();
             };
 

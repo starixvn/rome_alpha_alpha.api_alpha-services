@@ -43,9 +43,4 @@ public static class LoggerExtensions
             logger.LogError(e.Message);
         }
     }
-
-    public static void LogAccountIsProtectedMode(this ILogger logger)
-    {
-        logger.LogError("Account status is protected mode");
-    }
 }

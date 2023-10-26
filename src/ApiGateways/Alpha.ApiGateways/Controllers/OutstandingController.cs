@@ -58,7 +58,7 @@ public class OutstandingController : Controller
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var reportRequest = new GetOutstandingReportRequest
@@ -76,8 +76,7 @@ public class OutstandingController : Controller
         var accountStatus = await customerService.GetCustomerStatus(downlineInfo.CustId);
         if (accountStatus == null || accountStatus.IsProtectedMode)
         {
-            logger.LogAccountIsProtectedMode();
-            throw new GrpcException { Code = (int)HttpStatusCode.Forbidden, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Forbidden, Detail = LoggingConstants.SearchAccountMustNotBeProtectedMode };
         }
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)

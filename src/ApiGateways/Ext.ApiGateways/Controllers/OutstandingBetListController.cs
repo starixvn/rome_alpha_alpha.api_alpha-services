@@ -36,22 +36,19 @@ public class OutstandingBetListController : Controller
     {
         if (!ProductGroupConstants.IsValid(product))
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
         logger.LogRequest("OutstandingBetList", Request.Headers, new[] { "Key", "Username" });
 
-        if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
-        {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
-        }
+        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
         var betListsRequest = new GetRunningBetListRequest

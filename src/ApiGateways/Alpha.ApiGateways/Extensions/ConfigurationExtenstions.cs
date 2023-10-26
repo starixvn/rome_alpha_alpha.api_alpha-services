@@ -30,6 +30,9 @@ namespace Alpha.ApiGateways.Extensions
                 var partitionKey = headers.ContainsKey("Key") ? headers["Key"].ToString() : string.Empty;
 
                 var rateLimitConfig = configuration.GetSection(rateLimiterName).Get<RateLimitConfig>();
+                var message = rateLimitConfig.GetMessage(rateLimiterName, rateLimitConfig.PermitLimit);
+
+                UpdateLastHitRateLimiterMessageToHeaders(message, httpContext);
 
                 return RateLimitPartition.GetSlidingWindowLimiter(partitionKey, partition => new SlidingWindowRateLimiterOptions
                 {
@@ -41,5 +44,12 @@ namespace Alpha.ApiGateways.Extensions
             });
         }
 
+        private static void UpdateLastHitRateLimiterMessageToHeaders(string rateLimiterName, HttpContext httpContext)
+        {
+            if (httpContext.Request.Headers.ContainsKey("RateLimiterMessage"))
+                httpContext.Request.Headers.Remove("RateLimiterMessage");
+
+            httpContext.Request.Headers.Add("RateLimiterMessage", rateLimiterName);
+        }
     }
 }

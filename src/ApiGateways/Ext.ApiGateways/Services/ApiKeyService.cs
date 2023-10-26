@@ -3,6 +3,7 @@ using Ext.ApiGateways.Models;
 using Fanex.Data.Repository;
 using Ext.ApiGateways.Extensions;
 using Fanex.Caching;
+using Alpha.Utilities.Constants;
 
 namespace Ext.ApiGateways.Services
 {
@@ -40,6 +41,12 @@ namespace Ext.ApiGateways.Services
                 var hashPassword = PasswordHashExtensions.Hash(rawPassword);
 
                 var criteria = new VerifyApiKeyCriteria(rawKey, rawUsername, hashPassword);
+
+                if (!criteria.IsValid())
+                {
+                    criteria.ErrMsg = LoggingConstants.KeyUsernamePasswordIsInvalid;
+                }
+
                 await dynamicRepository.ExecuteAsync(criteria);
 
                 result = new VerifyApiKeyResult

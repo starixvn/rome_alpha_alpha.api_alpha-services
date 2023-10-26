@@ -36,26 +36,23 @@ public class WinLossDetailController : Controller
     {
         if (!ProductGroupConstants.IsValid(product))
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
         logger.LogRequest("WinLossDetail", Request.Headers, new[] { "Key", "Username" });
 
         if (!request.ValidateDateRange())
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DateIsInvalid };
         }
 
-        if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
-        {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
-        }
+        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var reportRequest = new GetWinLossDetailReportRequest
