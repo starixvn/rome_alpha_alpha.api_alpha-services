@@ -50,7 +50,7 @@ public class OutstandingController : Controller
             Timestamp = timestamp
         };
 
-        logger.LogRequest("Outstanding", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
+        logger.LogRequest("Outstanding", Request.Headers, RequestLoggingConstants.RequestKeys);
 
         var apiKey = await apiKeyService.GetApiKey(apiKeyRequest.Key);
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);

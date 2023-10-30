@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Common.Logging.Extensions;
 using Alpha.Utilities.Constants;
 using System.Text;
+using Ext.ApiGateways.Constants;
 
 namespace Ext.ApiGateways.Infrastructure.Middlewares;
 
@@ -42,7 +43,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
 
-            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, new[] { "Key", "Username" });
+            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, RequestLoggingConstants.RequestKeys);
 
             failReason = LoggingConstants.KeyUsernamePasswordIsNotProvided;
             return AuthenticateResult.Fail(failReason);
@@ -66,7 +67,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-        logger.LogFailedAuthentication($"AuthenticateFailed: {verifyApiKeyResult?.ErrMsg}", Request.Headers, new[] { "Key", "Username" });
+        logger.LogFailedAuthentication($"AuthenticateFailed: {verifyApiKeyResult?.ErrMsg}", Request.Headers, RequestLoggingConstants.RequestKeys);
 
         failReason = verifyApiKeyResult?.ErrMsg != null ? verifyApiKeyResult.ErrMsg : LoggingConstants.KeyUsernamePasswordIsInvalid;;
         return AuthenticateResult.Fail(failReason);

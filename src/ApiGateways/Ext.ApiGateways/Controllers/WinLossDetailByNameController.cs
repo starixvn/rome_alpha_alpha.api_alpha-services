@@ -40,7 +40,7 @@ public class WinLossDetailByNameController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
-        logger.LogRequest("WinLossDetailByName", Request.Headers, new[] { "Key", "Username" });
+        logger.LogRequest("WinLossDetailByName", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
         if (!request.ValidateDateRange())
         {

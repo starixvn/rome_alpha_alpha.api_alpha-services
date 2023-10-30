@@ -12,7 +12,7 @@ namespace Ext.ApiGateways.Extensions
                 var partitionKey = "RateLimitByGlobalKey";
                 var rateLimitConfig = configuration.GetSection(RateLimitConfig.ConfigByGlobal).Get<RateLimitConfig>();
 
-                UpdateLastHitRateLimiterMessageToHeaders(RateLimitConfig.ConfigByGlobal, httpContext);
+                httpContext.Request.Headers["RateLimiterMessage"] = rateLimitConfig.GetMessage(RateLimitConfig.ConfigByGlobal);
 
                 return RateLimitPartition.GetSlidingWindowLimiter(partitionKey, partition => new SlidingWindowRateLimiterOptions
                 {
@@ -32,9 +32,8 @@ namespace Ext.ApiGateways.Extensions
                 var partitionKey = headers.ContainsKey("Key") ? headers["Key"].ToString() : string.Empty;
 
                 var rateLimitConfig = configuration.GetSection(rateLimiterName).Get<RateLimitConfig>();
-                var message = rateLimitConfig.GetMessage(rateLimiterName, rateLimitConfig.PermitLimit);
 
-                UpdateLastHitRateLimiterMessageToHeaders(message, httpContext);
+                httpContext.Request.Headers["RateLimiterMessage"] = rateLimitConfig.GetMessage(rateLimiterName);
 
                 return RateLimitPartition.GetSlidingWindowLimiter(partitionKey, partition => new SlidingWindowRateLimiterOptions
                 {
@@ -44,14 +43,6 @@ namespace Ext.ApiGateways.Extensions
                     SegmentsPerWindow = rateLimitConfig.SegmentsPerWindow
                 });
             });
-        }
-
-        private static void UpdateLastHitRateLimiterMessageToHeaders(string rateLimiterName, HttpContext httpContext)
-        {
-            if (httpContext.Request.Headers.ContainsKey("RateLimiterMessage"))
-                httpContext.Request.Headers.Remove("RateLimiterMessage");
-
-            httpContext.Request.Headers.Add("RateLimiterMessage", rateLimiterName);
         }
     }
 }

@@ -47,7 +47,7 @@ public class WinLossBetListController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
-        logger.LogRequest("WinLossBetList", Request.Headers, new[] { "Key", "Username" });
+        logger.LogRequest("WinLossBetList", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
         var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 

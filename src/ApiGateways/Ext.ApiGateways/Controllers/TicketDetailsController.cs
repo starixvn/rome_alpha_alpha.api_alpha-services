@@ -37,7 +37,7 @@ public class TicketDetailsController : Controller
         [FromBody] TicketDetailsRequest request)
     {
 
-        logger.LogRequest("TicketDetails", Request.Headers, new[] { "Key", "Username" });
+        logger.LogRequest("TicketDetails", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
         var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 

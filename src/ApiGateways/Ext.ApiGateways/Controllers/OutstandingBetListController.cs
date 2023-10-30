@@ -39,7 +39,7 @@ public class OutstandingBetListController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
-        logger.LogRequest("OutstandingBetList", Request.Headers, new[] { "Key", "Username" });
+        logger.LogRequest("OutstandingBetList", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
         var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 

@@ -43,4 +43,23 @@ public static class LoggerExtensions
             logger.LogError(e.Message);
         }
     }
+
+    public static void LogRateLimit(this ILogger logger, string message, IHeaderDictionary headers, string[] keys)
+    {
+        try
+        {
+            Serilog.Context.LogContext.PushProperty("StatusCode", "429");
+
+            foreach (string key in keys)
+            {
+                Serilog.Context.LogContext.PushProperty(key, headers[key]);
+            }
+
+            logger.LogInformation(message);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e.Message);
+        }
+    }
 }

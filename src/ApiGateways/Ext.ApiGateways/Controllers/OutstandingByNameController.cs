@@ -39,7 +39,7 @@ public class OutstandingByNameController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
-        logger.LogRequest("OutstandingByName", Request.Headers, new[] { "Key", "Username" });
+        logger.LogRequest("OutstandingByName", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
         var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 

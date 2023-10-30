@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Common.Logging.Extensions;
 using Alpha.Utilities.Constants;
 using System.Text;
+using Alpha.ApiGateways.Constants;
 
 namespace Alpha.ApiGateways.Infrastructure.Middlewares;
 
@@ -40,7 +41,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         {
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
+            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, RequestLoggingConstants.RequestKeys);
 
             failReason = LoggingConstants.KeyPassPhraseSignatureTimestampIsNotProvided;
             return AuthenticateResult.Fail(failReason);
@@ -68,7 +69,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         failReason = verifyApiKeyResult.ErrorMessage;
         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-        logger.LogFailedAuthentication($"AuthenticateFailed: {failReason}", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
+        logger.LogFailedAuthentication($"AuthenticateFailed: {failReason}", Request.Headers, RequestLoggingConstants.RequestKeys);
 
         return AuthenticateResult.Fail(failReason);
     }

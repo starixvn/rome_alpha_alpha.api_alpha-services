@@ -44,5 +44,5 @@ static IHostBuilder CreateHostBuilder(string[] args)
              var port = int.Parse(config["GatewaysSettings:Port"]);
              webBuilder.UseUrls($"http://0.0.0.0:{port}");
          })
-         .UseSerilog(SeriLogger.Configure);
+         .UseSerilog(SeriLogger.Configure, true);
 }

@@ -38,7 +38,7 @@ public class OutstandingController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
 
-        logger.LogRequest("Outstanding", Request.Headers, new[] { "Key", "Username" });
+        logger.LogRequest("Outstanding", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
         var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
