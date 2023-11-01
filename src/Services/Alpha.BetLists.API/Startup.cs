@@ -22,6 +22,10 @@ using Alpha.BetLists.API.Repositories;
 using Alpha.IPInfo.DataAccess;
 using Alpha.IPInfo.Models;
 using Alpha.Utilities.Interceptors;
+using Fanex.BetDetails.BetBuilder.Services;
+using Alpha.BetLists.API.DataAccesses;
+using Fanex.BetDetails.BetBuilder.DataAccesses;
+using Alpha.BetLists.API.Models.TicketDetail;
 
 namespace Alpha.BetLists.API;
 
@@ -149,5 +153,8 @@ public class Startup
         services.AddTransient<IReportDateService, ReportDateService>();
         services.AddTransient<IRunningBetListService, RunningBetListService>();
         services.AddTransient<IWinLossBetListService, WinLossBetListService>();
+        services.AddTransient<IBetBuilderService, BetBuilderService>();
+        services.AddTransient<IBetBuilderDataAccess, BetBuilderDataAccess>();
+        services.AddTransient<IParlayService, ParlayService>();
     }
 }

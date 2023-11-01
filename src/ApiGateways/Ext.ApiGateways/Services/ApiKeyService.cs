@@ -4,6 +4,7 @@ using Fanex.Data.Repository;
 using Ext.ApiGateways.Extensions;
 using Fanex.Caching;
 using Alpha.Utilities.Constants;
+using Alpha.Utilities.Helpers;
 
 namespace Ext.ApiGateways.Services
 {
@@ -15,17 +16,14 @@ namespace Ext.ApiGateways.Services
     public class ApiKeyService : IApiKeyService
     {
         private readonly IDynamicRepository dynamicRepository;
-        private readonly IAesService aesService;
         private readonly ICacheService cacheService;
         private readonly TimeSpan cacheTime = TimeSpan.FromMinutes(5);
 
         public ApiKeyService(
             IDynamicRepository dynamicRepository,
-            IAesService aesService,
             ICacheService cacheService)
         {
             this.dynamicRepository = dynamicRepository;
-            this.aesService = aesService;
             this.cacheService = cacheService;
         }
 
@@ -35,9 +33,9 @@ namespace Ext.ApiGateways.Services
             var result = await cacheService.GetAsync<VerifyApiKeyResult>(cachedKey);
             if (result == null)
             {
-                var rawKey = aesService.Decrypt(key);
-                var rawUsername = aesService.Decrypt(username);
-                var rawPassword = aesService.Decrypt(password);
+                var rawKey = AesService.Decrypt(key);
+                var rawUsername = AesService.Decrypt(username);
+                var rawPassword = AesService.Decrypt(password);
                 var hashPassword = PasswordHashExtensions.Hash(rawPassword);
 
                 var criteria = new VerifyApiKeyCriteria(rawKey, rawUsername, hashPassword);

@@ -55,7 +55,8 @@ public class TicketDetailsController : Controller
             RefNo = refNo,
             CustId = downlineInfo.CustId,
             TransType = request.ExtraInfo.TransType,
-            ProductId = request.ExtraInfo.ProductId
+            ProductId = request.ExtraInfo.ProductId,
+            DetailKey = request.DetailKey ?? string.Empty
         };
 
         return viewerInfo.RoleId switch

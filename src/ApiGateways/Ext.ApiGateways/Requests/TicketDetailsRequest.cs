@@ -6,4 +6,7 @@ public class TicketDetailsRequest
 {
     [FromBody]
     public ExtraInfo ExtraInfo { get; set; } = new ExtraInfo();
+
+    [FromBody]
+    public string DetailKey { get; set; }
 }

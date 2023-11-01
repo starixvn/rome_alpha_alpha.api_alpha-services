@@ -56,6 +56,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             };
 
             model.GetExtraInfo(choice, t, ticketDetailsMapper);
+            model.DetailKey = TicketDetailsHelper.GetDetailKey(choice, t, ticketDetailsMapper);
             return model;
         });
 
@@ -114,6 +115,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
                 Platform = t.Platform
             };
             model.GetExtraInfo(choice, t, ticketDetailsMapper);
+            model.DetailKey = TicketDetailsHelper.GetDetailKey(choice, t, ticketDetailsMapper);
             return model;
         }));
 
@@ -171,6 +173,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             };
 
             model.GetExtraInfo(choice, t, ticketDetailsMapper);
+            model.DetailKey = TicketDetailsHelper.GetDetailKey(choice, t, ticketDetailsMapper);
             return model;
         }));
 

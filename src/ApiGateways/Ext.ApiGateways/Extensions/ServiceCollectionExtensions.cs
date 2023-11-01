@@ -111,7 +111,6 @@ public static class ServiceCollectionExtensions
         services.AddTransient<GrpcExceptionInterceptor>();
         services.AddTransient<ReportsGrpcExceptionInterceptor>();
 
-        services.AddScoped<IAesService, AesService>();
         services.AddScoped<IApiKeyService, ApiKeyService>();
 
         services.AddTransient<ICustomerService, CustomerService>();
