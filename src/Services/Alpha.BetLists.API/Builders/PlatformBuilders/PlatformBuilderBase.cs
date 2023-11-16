@@ -1,8 +1,8 @@
+namespace Alpha.BetLists.API.Builders.PlatformBuilders;
 public static class PlatformBuilderBase
 {
     private static readonly Dictionary<int, string> PlatformInfo = new()
     {
-      [0] = "N/A",
       [1] = "Desktop",
       [2] = "Mobile",
       [3] = "APP",
@@ -10,11 +10,13 @@ public static class PlatformBuilderBase
       [5] = "Uncategorized"
     };
 
+    private const string NotAvailable = "N/A";
+
     public static string BuildPlatform(int? deviceType)
     {
-      var platform = deviceType ?? 0;
+      if(deviceType == null) return NotAvailable;
 
-      return PlatformInfo.ContainsKey(platform) ? PlatformInfo[platform] : PlatformInfo[5];
+      return PlatformInfo.ContainsKey((int)deviceType) ? PlatformInfo[(int)deviceType] : PlatformInfo[5];
     }
 
 }
