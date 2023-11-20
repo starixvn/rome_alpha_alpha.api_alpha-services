@@ -7,16 +7,16 @@ public static class PlatformBuilderBase
       [2] = "Mobile",
       [3] = "APP",
       [4] = "Uncategorized",
-      [5] = "Uncategorized"
     };
 
     private const string NotAvailable = "N/A";
+    private const string Uncategorized = "Uncategorized";
 
     public static string BuildPlatform(int? deviceType)
     {
       if(deviceType == null) return NotAvailable;
 
-      return PlatformInfo.ContainsKey((int)deviceType) ? PlatformInfo[(int)deviceType] : PlatformInfo[5];
+      return PlatformInfo.ContainsKey((int)deviceType) ? PlatformInfo[(int)deviceType] : Uncategorized;
     }
 
 }
