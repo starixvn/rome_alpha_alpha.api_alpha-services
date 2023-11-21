@@ -3,10 +3,11 @@ public static class PlatformBuilderBase
 {
     private static readonly Dictionary<int, string> PlatformInfo = new()
     {
+      [0] = NotAvailable,
       [1] = "Desktop",
       [2] = "Mobile",
       [3] = "APP",
-      [4] = "Uncategorized",
+      [99] = Uncategorized
     };
 
     private const string NotAvailable = "N/A";
