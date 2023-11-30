@@ -120,6 +120,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             request.RefNo,
             request.CustId,
             (byte)request.TransType,
-            request.ProductId, 1, 500);
+            request.ProductId, 1, 1000000);
 
 }
