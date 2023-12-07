@@ -5,6 +5,7 @@ namespace Alpha.Utilities.Constants
         public const string DateIsInvalid = "Input date(s) is invalid";
         public const string ProductIsInvalid = "Product is invalid";
         public const string DetailKeyIsInvalid = "Detail Key is invalid";
+        public const string NotSupportGetParlayDetails = "Not Support Get Parlay Details";
 
         public const string KeyUsernamePasswordIsNotProvided = "Key, username or password is not provided";
         public const string KeyPassPhraseSignatureTimestampIsNotProvided = "Key, pass phrase, signature or timestamp is not provided";

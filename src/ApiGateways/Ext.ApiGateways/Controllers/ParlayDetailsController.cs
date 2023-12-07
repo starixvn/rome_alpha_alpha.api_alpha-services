@@ -8,6 +8,8 @@ using GrpcBetLists;
 using Common.Logging.Extensions;
 using Ext.ApiGateways.Requests;
 using Alpha.Utilities.Constants;
+using Alpha.Utilities.Helpers;
+using Newtonsoft.Json;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -57,6 +59,13 @@ public class ParlayDetailsController : Controller
             throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.TicketMustBelongToMember };
         }
 
+
+        var key = AesService.Decrypt(request.DetailKey);
+        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<object>>(key);
+        if(!detailKeyModel.SupportDetails) {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.NotSupportGetParlayDetails }; 
+        }
+
         var getParlayDetailsRequest = new GetParlayDetailRequest
         {
             DetailKey = request.DetailKey,
@@ -68,6 +77,7 @@ public class ParlayDetailsController : Controller
         {
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DetailKeyIsInvalid };
         }
+        
         return Json(result);
     }
 

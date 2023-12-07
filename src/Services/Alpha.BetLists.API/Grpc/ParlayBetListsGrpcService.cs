@@ -1,6 +1,8 @@
 using Alpha.BetLists.API.Helpers;
+using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.Parlay;
 using Alpha.Utilities.Helpers;
+using Alpha.Utilities.Models;
 using Grpc.Core;
 using Newtonsoft.Json;
 
@@ -18,7 +20,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             return Task.FromResult(response);
         }
 
-        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel>(key);
+        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<TicketDto>>(key);
         if (request.RefNo != detailKeyModel.RefNo)
         {
             return Task.FromResult(response);
@@ -41,7 +43,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     }
 
     public override async Task<ParlayDetailResponse> ParlayDetail(GetParlayDetailRequest request, ServerCallContext context)
-    {
+    { 
         var response = new ParlayDetailResponse();
         var key = AesService.Decrypt(request.DetailKey);
         if (string.IsNullOrEmpty(key))
@@ -49,7 +51,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             return response;
         }
 
-        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel>(key);
+        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<TicketDto>>(key);
         if (request.RefNo != detailKeyModel.RefNo)
         {
             return response;

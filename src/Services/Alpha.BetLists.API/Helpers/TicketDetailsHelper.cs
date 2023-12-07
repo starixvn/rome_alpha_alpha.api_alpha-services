@@ -11,6 +11,7 @@ using Fanex.BetDetails.BetBuilder.Services;
 using Newtonsoft.Json;
 using Alpha.Utilities.Helpers;
 using Alpha.BetLists.API.Models.TicketDetail;
+using Alpha.Utilities.Models;
 
 namespace Alpha.BetLists.API.Helpers
 {
@@ -61,7 +62,8 @@ namespace Alpha.BetLists.API.Helpers
             {
                 return Get3rdProductDetailKey(choice, t, mapper);
             }
-            return GetParlayDetailKey(t, parlayProductId);
+
+            return GetParlayDetailKey(t, parlayProductId, choice);
         }
 
         private static string Get3rdProductDetailKey(string choice, TicketDto t, TicketDetailsMapperModel mapper)
@@ -144,6 +146,7 @@ namespace Alpha.BetLists.API.Helpers
                     return entry.Value;
                 }
             }
+
             return 0;
         }
 
@@ -164,14 +167,16 @@ namespace Alpha.BetLists.API.Helpers
             }));
         }
 
-        private static string GetParlayDetailKey(TicketDto t, byte parlayProductId)
+        private static string GetParlayDetailKey(TicketDto t, byte parlayProductId, string choice)
         {
-            var key = JsonConvert.SerializeObject(new DetailKeyModel()
+            var key = JsonConvert.SerializeObject(new DetailKeyModel<TicketDto>()
             {
                 ticket = t,
                 ParlayProductId = parlayProductId,
-                RefNo = t.TransId
+                RefNo = t.TransId,
+                SupportDetails = choice.Contains("detail-link")
             });
+            
             return AesService.Encrypt(key);
         }
 
