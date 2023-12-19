@@ -12,6 +12,8 @@ namespace Ext.ApiGateways.Extensions
                 var partitionKey = "RateLimitByGlobalKey";
                 var rateLimitConfig = configuration.GetSection(RateLimitConfig.ConfigByGlobal).Get<RateLimitConfig>();
 
+                httpContext.Request.Headers["RateLimiterMessage"] = rateLimitConfig.GetMessage(RateLimitConfig.ConfigByGlobal);
+
                 return RateLimitPartition.GetSlidingWindowLimiter(partitionKey, partition => new SlidingWindowRateLimiterOptions
                 {
                     AutoReplenishment = rateLimitConfig.AutoReplenishment,
@@ -30,6 +32,8 @@ namespace Ext.ApiGateways.Extensions
                 var partitionKey = headers.ContainsKey("Key") ? headers["Key"].ToString() : string.Empty;
 
                 var rateLimitConfig = configuration.GetSection(rateLimiterName).Get<RateLimitConfig>();
+
+                httpContext.Request.Headers["RateLimiterMessage"] = rateLimitConfig.GetMessage(rateLimiterName);
 
                 return RateLimitPartition.GetSlidingWindowLimiter(partitionKey, partition => new SlidingWindowRateLimiterOptions
                 {

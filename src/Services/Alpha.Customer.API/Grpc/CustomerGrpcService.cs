@@ -63,4 +63,13 @@ public class CustomerGrpcService : Customer.CustomerBase
             Currency = customerInfo.Currency
         };
     }
+
+    public override async Task<GetBeLongingInfoResponse> GetBelongingInfo(GetBeLongingInfoRequest request, ServerCallContext context)
+    {
+        var isBelonging = await customerService.IsBelonging(request.DownlineId, request.ViewerId, request.SubAccountId, request.TransId);
+        return new GetBeLongingInfoResponse
+        {
+            IsBelonging = isBelonging
+        };
+    }
 }

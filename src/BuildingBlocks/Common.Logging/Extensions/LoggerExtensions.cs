@@ -44,8 +44,22 @@ public static class LoggerExtensions
         }
     }
 
-    public static void LogAccountIsProtectedMode(this ILogger logger)
+    public static void LogRateLimit(this ILogger logger, string message, IHeaderDictionary headers, string[] keys)
     {
-        logger.LogError("Account status is protected mode");
+        try
+        {
+            Serilog.Context.LogContext.PushProperty("StatusCode", "429");
+
+            foreach (string key in keys)
+            {
+                Serilog.Context.LogContext.PushProperty(key, headers[key]);
+            }
+
+            logger.LogInformation(message);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e.Message);
+        }
     }
 }

@@ -15,4 +15,17 @@ public class RateLimitConfig
     public string Unit { get; set; }
     public int SegmentsPerWindow { get; set; }
     public TimeSpan WindowByUnit => TimeSpanExtensions.ConvertWindowToTimeSpan(Window, Unit);
+
+    public string GetMessage(string rateLimitConfig)
+    {
+        var message = $"Your Key reached limit {PermitLimit * 2} requests ";
+        switch (rateLimitConfig)
+        {
+            case ConfigByGlobal: return $"System received too many requests";
+            case ConfigBySecond: return $"{message}per second";
+            case ConfigByMinute: return $"{message}per minute";
+            case ConfigByHour: return $"{message}per hour";
+            default: return "Unknown error";
+        }
+    }
 }

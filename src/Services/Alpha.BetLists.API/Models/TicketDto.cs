@@ -1,6 +1,6 @@
 
-using Fanex.BetList.Core.Entities;
 using Alpha.BetLists.API.Builders.PlatformBuilders;
+using Fanex.BetList.Core.Entities;
 
 namespace Alpha.BetLists.API.Models;
 

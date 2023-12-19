@@ -7,6 +7,7 @@ using System.Security.Claims;
 using GrpcBetLists;
 using Common.Logging.Extensions;
 using Ext.ApiGateways.Requests;
+using Alpha.Utilities.Constants;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -36,20 +37,16 @@ public class TicketDetailsController : Controller
         [FromBody] TicketDetailsRequest request)
     {
 
-        logger.LogRequest("TicketDetails", Request.Headers, new[] { "Key", "Username" });
+        logger.LogRequest("TicketDetails", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
-
-        if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
-        {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
-        }
+        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
 
@@ -58,7 +55,8 @@ public class TicketDetailsController : Controller
             RefNo = refNo,
             CustId = downlineInfo.CustId,
             TransType = request.ExtraInfo.TransType,
-            ProductId = request.ExtraInfo.ProductId
+            ProductId = request.ExtraInfo.ProductId,
+            DetailKey = request.DetailKey ?? string.Empty
         };
 
         return viewerInfo.RoleId switch

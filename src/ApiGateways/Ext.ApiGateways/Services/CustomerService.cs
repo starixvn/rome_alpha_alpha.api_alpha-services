@@ -6,6 +6,7 @@ namespace Ext.ApiGateways.Services;
 public interface ICustomerService
 {
     Task<CustomerInfoModel> GetCustomerInfo(int custId, string downlineUsername);
+    Task<bool> GetBelongingInfo(int custId, int downlineId, int subAccountId, long transId);
 }
 
 public class CustomerService : ICustomerService
@@ -25,5 +26,19 @@ public class CustomerService : ICustomerService
             new GetCustomerInfoRequest { CustId = custId, Username = username });
 
         return new CustomerInfoModel(response.CustId, (byte)response.RoleId, response.Site, response.Currency);
+    }
+
+    public async Task<bool> GetBelongingInfo(int custId, int downlineId, int subAccountId, long transId)
+    {
+        var response = await customerClient.GetBelongingInfoAsync(
+            new GetBeLongingInfoRequest
+            {
+                ViewerId = custId,
+                DownlineId = downlineId,
+                SubAccountId = subAccountId,
+                TransId = transId
+            });
+
+        return response.IsBelonging;
     }
 }

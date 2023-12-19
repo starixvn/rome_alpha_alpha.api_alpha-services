@@ -5,6 +5,9 @@ using Ext.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Common.Logging.Extensions;
+using Alpha.Utilities.Constants;
+using System.Text;
+using Ext.ApiGateways.Constants;
 
 namespace Ext.ApiGateways.Infrastructure.Middlewares;
 
@@ -12,6 +15,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 {
     private readonly IApiKeyService apiKeyService;
     private readonly ILogger<BasicAuthenticationHandler> logger;
+    private string failReason;
 
     public BasicAuthenticationHandler(
         IApiKeyService apiKeyService,
@@ -39,8 +43,10 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
 
-            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, new[] { "Key", "Username" });
-            return AuthenticateResult.Fail("Bad Request");
+            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, RequestLoggingConstants.RequestKeys);
+
+            failReason = LoggingConstants.KeyUsernamePasswordIsNotProvided;
+            return AuthenticateResult.Fail(failReason);
         }
 
         var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, username, password);
@@ -61,8 +67,18 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-        logger.LogFailedAuthentication($"AuthenticateFailed: {verifyApiKeyResult?.ErrMsg}", Request.Headers, new[] { "Key", "Username" });
+        logger.LogFailedAuthentication($"AuthenticateFailed: {verifyApiKeyResult?.ErrMsg}", Request.Headers, RequestLoggingConstants.RequestKeys);
 
-        return AuthenticateResult.Fail("Unauthorized");
+        failReason = verifyApiKeyResult?.ErrMsg != null ? verifyApiKeyResult.ErrMsg : LoggingConstants.KeyUsernamePasswordIsInvalid;;
+        return AuthenticateResult.Fail(failReason);
+    }
+
+    protected override Task HandleChallengeAsync(AuthenticationProperties properties)
+    {
+        if (failReason != null)
+        {
+            Response.Body.WriteAsync(Encoding.ASCII.GetBytes(failReason));
+        }
+        return Task.CompletedTask;
     }
 }

@@ -2,11 +2,31 @@ using Alpha.BetLists.API.Models;
 using GrpcBetLists;
 using Fanex.BetList.Core.Utils.TicketExt;
 using Fanex.BetList.Core.Entities;
+using System.Text;
+using Fanex.BetList.Core.Builder;
+using Alpha.BetLists.API.Services;
+using Alpha.BetLists.API.Models.Parlay;
+using Fanex.BetDetails.BetBuilder.Criteria;
+using Fanex.BetDetails.BetBuilder.Services;
+using Newtonsoft.Json;
+using Alpha.Utilities.Helpers;
+using Alpha.BetLists.API.Models.TicketDetail;
+using Alpha.Utilities.Models;
 
 namespace Alpha.BetLists.API.Helpers
 {
     public static class TicketDetailsHelper
     {
+        public const byte SingleParlay = 1;
+        public const byte MixParlay = 2;
+        public const byte MixParlayDetail = 3;
+        private static readonly byte[] ParlayProducts =
+        {
+            SingleParlay,
+            MixParlay,
+            MixParlayDetail,
+        };
+
         private static int GetProductIdByChoice(string choice, TicketDetailsMapperModel mapper)
         {
             var lowerChoice = choice.ToLower();
@@ -33,6 +53,31 @@ namespace Alpha.BetLists.API.Helpers
             }
 
             return false;
+        }
+
+        public static string GetDetailKey(string choice, TicketDto t, TicketDetailsMapperModel mapper)
+        {
+            var parlayProductId = GetParlayProductId(choice, mapper);
+            if (parlayProductId == 0)
+            {
+                return Get3rdProductDetailKey(choice, t, mapper);
+            }
+
+            return GetParlayDetailKey(t, parlayProductId, choice);
+        }
+
+        private static string Get3rdProductDetailKey(string choice, TicketDto t, TicketDetailsMapperModel mapper)
+        {
+            var productId = GetProductIdByChoice(choice, mapper);
+            if (productId == -1)
+            {
+                return string.Empty;
+            }
+
+            var key = JsonConvert.SerializeObject(new Get3rdProductTicketDetailModel(
+                int.Parse(t.GetTransactionType()),
+                productId));
+            return AesService.Encrypt(key);
         }
 
         public static void GetExtraInfo(this object model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
@@ -91,6 +136,20 @@ namespace Alpha.BetLists.API.Helpers
             }
         }
 
+        public static byte GetParlayProductId(string choice, TicketDetailsMapperModel mapper)
+        {
+            var lowerChoice = choice.ToLower();
+            foreach (var entry in mapper.ParlayProducts)
+            {
+                if (lowerChoice.Contains(entry.Key.ToLower()))
+                {
+                    return entry.Value;
+                }
+            }
+
+            return 0;
+        }
+
         public static void GetTicketData(this List<ITicketData> list, IEnumerable<ITicket> tickets)
         {
             list.AddRange(tickets.Select((detail) => new TicketData
@@ -107,5 +166,120 @@ namespace Alpha.BetLists.API.Helpers
                 AgentPT = detail.AgentPositionTaking
             }));
         }
+
+        private static string GetParlayDetailKey(TicketDto t, byte parlayProductId, string choice)
+        {
+            var key = JsonConvert.SerializeObject(new DetailKeyModel<TicketDto>()
+            {
+                ticket = t,
+                ParlayProductId = parlayProductId,
+                RefNo = t.TransId,
+                SupportDetails = choice.Contains("detail-link")
+            });
+            
+            return AesService.Encrypt(key);
+        }
+
+        public static StringBuilder GetSingleParlaySelections(TicketDto t, IBetBuilderService betBuilderService)
+        {
+            var parameter = new GetBetBuilderDetailParameter
+            {
+                CustomerId = t.CustId,
+                TransactionId = t.TransId,
+                Status = t.Status
+            };
+            var parlayDetail = betBuilderService.GetBetListDetail(parameter);
+            StringBuilder sb = new();
+            if (parlayDetail.Details.Any())
+            {
+                sb.Append("<div class='betbuilder'>");
+                foreach (var detail in parlayDetail.Details)
+                {
+                    sb.Append($"<div>{detail.SelectionName}");
+                    if (parlayDetail.IsSettled && !string.IsNullOrEmpty(detail.Result))
+                    {
+                        sb.Append($"<span> - {detail.Result}</span>");
+                    }
+                    sb.Append("</div>");
+                }
+                sb.Append("</div>");
+            }
+            return sb;
+        }
+
+        public static StringBuilder GetMixParlaySelections(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
+        {
+            var tickets = parlayService.GetParlayBetList(t.TransId, t.CustId).Result;
+            var message = new ParlayMeta()
+            {
+                BetCheck = t.BetCheck,
+                BetTeam = t.BetTeam,
+                Handicap1 = t.Handicap1,
+                Handicap2 = t.Handicap2
+            };
+            var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
+
+            StringBuilder sb = new StringBuilder();
+            if (parlayDetail.HasValidData)
+            {
+                foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
+                {
+                    sb.Append("<div class='offer-name-list'>");
+                    sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
+                    sb.Append("</div>");
+                }
+                sb.Append("<div class='line'></div>");
+                foreach (var ticket in parlayDetail.BetListData.Tickets)
+                {
+                    sb.Append("<div class='ticket-list'>");
+                    sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
+                    sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
+                    sb.Append("</div>");
+                    if (!ticket.Equals(parlayDetail.BetListData.Tickets.Last()))
+                    {
+                        sb.Append("<div class='line'></div>");
+                    }
+                }
+            }
+            return sb;
+        }
+
+        public static StringBuilder GetMixParlayDetail(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
+        {
+            var tickets = parlayService.GetParlayBetList(t.TransId, t.CustId).Result;
+            var message = new ParlayMeta()
+            {
+                BetCheck = t.BetCheck,
+                BetTeam = t.BetTeam,
+                Handicap1 = t.Handicap1,
+                Handicap2 = t.Handicap2
+            };
+            var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
+
+            StringBuilder sb = new StringBuilder();
+            if (parlayDetail.HasValidData)
+            {
+                foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
+                {
+                    sb.Append("<div class='offer-name-list'>");
+                    sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
+                    sb.Append("</div>");
+                    sb.Append("<div class='line'></div>");
+                    foreach (var ticket in parlayDetail.BetListData.Tickets)
+                    {
+                        sb.Append("<div class='ticket-list'>");
+                        sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
+                        sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
+                        sb.Append("</div>");
+                        if (!ticket.Equals(parlayDetail.BetListData.Tickets.Last()))
+                        {
+                            sb.Append("<div class='line'></div>");
+                        }
+                    }
+                }
+            }
+            return sb;
+        }
+
     }
 }

@@ -35,4 +35,4 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             webBuilder.UseStartup<Startup>();
             webBuilder.UseUrls("http://0.0.0.0:5000");
         })
-        .UseSerilog(SeriLogger.Configure);
+        .UseSerilog(SeriLogger.Configure, true);

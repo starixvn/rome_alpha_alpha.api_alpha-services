@@ -18,6 +18,7 @@ using System.Globalization;
 using Alpha.Utilities.Infrastructure;
 using Alpha.Utilities.Configurations;
 using Alpha.Utilities.Interceptors;
+using Common.Logging.Extensions;
 
 namespace Alpha.ApiGateways.Extensions;
 
@@ -87,15 +88,20 @@ public static class ServiceCollectionExtensions
     {
         services.AddRateLimiter(options =>
         {
+            var logger = services.BuildServiceProvider().GetRequiredService<ILogger<RateLimitConfig>>();
             options.OnRejected = (context, cancellationToken) =>
             {
+                var headers = context.HttpContext.Request.Headers;
+                var rateLimiterMessage = headers.ContainsKey("RateLimiterMessage") ? headers["RateLimiterMessage"].ToString() : string.Empty;
                 if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
                 {
                     context.HttpContext.Response.Headers.RetryAfter =
                         ((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
                 }
+                logger.LogRateLimit(rateLimiterMessage, headers, RequestLoggingConstants.RequestKeys);
 
                 context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                context.HttpContext.Response.WriteAsJsonAsync(rateLimiterMessage);
 
                 return new ValueTask();
             };

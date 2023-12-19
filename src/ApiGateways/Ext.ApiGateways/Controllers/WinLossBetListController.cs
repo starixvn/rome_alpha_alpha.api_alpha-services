@@ -37,24 +37,26 @@ public class WinLossBetListController : Controller
         [FromRoute] string custName,
         [FromBody] WinLossBetListRequest request)
     {
-        if (!request.Validate() || !ProductGroupConstants.IsValid(product))
+        if (!request.Validate())
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DateIsInvalid };
         }
 
-        logger.LogRequest("WinLossBetList", Request.Headers, new[] { "Key", "Username" });
-
-        if (!int.TryParse(this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int custId))
+        if (!ProductGroupConstants.IsValid(product))
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.ProductIsInvalid };
         }
+
+        logger.LogRequest("WinLossBetList", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
+
+        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = string.Empty };
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
         var betListsRequest = new GetWinLossBetListRequest

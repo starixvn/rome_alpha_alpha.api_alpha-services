@@ -16,6 +16,9 @@ service BetLists {
   rpc SuperViewTicketDetails(GetTicketDetailsRequest) returns (SuperViewTicketDetailsResponse);
   rpc MasterViewTicketDetails(GetTicketDetailsRequest) returns (MasterViewTicketDetailsResponse);
   rpc AgentViewTicketDetails(GetTicketDetailsRequest) returns (AgentViewTicketDetailsResponse);
+  
+  rpc ParlaySelections(GetParlaySelectionsRequest) returns (ParlaySelectionsResponse);
+  rpc ParlayDetail(GetParlayDetailRequest) returns (ParlayDetailResponse);
 }
 
 message GetRunningBetListRequest {
@@ -50,6 +53,7 @@ message SuperViewRunningBetTicketModel {
   string agentPT_Comm = 9;
   ExtraInfoModel extraInfo = 10;
   string platform = 11;
+  string detailKey = 12;
 }
 
 message MasterViewRunningBetTicketModel {
@@ -63,6 +67,7 @@ message MasterViewRunningBetTicketModel {
   string agentPT_Comm = 8;
   ExtraInfoModel extraInfo = 9;
   string platform = 10;
+  string detailKey = 11;
 }
 
 message AgentViewRunningBetTicketModel {
@@ -75,6 +80,7 @@ message AgentViewRunningBetTicketModel {
   string agentPT_Comm = 7;
   ExtraInfoModel extraInfo = 8;
   string platform = 9;
+  string detailKey = 10;
 }
 
 
@@ -117,6 +123,7 @@ message SuperViewWinLossBetTicketModel {
   string agentPT_Comm = 10;
   ExtraInfoModel extraInfo = 11;
   string platform = 12;
+  string detailKey = 13;
 }
 
 message MasterViewWinLossBetTicketModel {
@@ -131,6 +138,7 @@ message MasterViewWinLossBetTicketModel {
   string agentPT_Comm = 9;
   ExtraInfoModel extraInfo = 10;
   string platform = 11;
+  string detailKey = 12;
 }
 
 message AgentViewWinLossBetTicketModel {
@@ -144,6 +152,7 @@ message AgentViewWinLossBetTicketModel {
   string agentPT_Comm = 8;
   ExtraInfoModel extraInfo = 9;
   string platform = 10;
+  string detailKey = 11;
 }
 
 message WinLossTotalModelResponse {
@@ -155,8 +164,9 @@ message WinLossTotalModelResponse {
 message GetTicketDetailsRequest {
   int64 refNo = 1;
   int32 custId = 2;
-  int32 transType = 3;
-  int32 productId = 4;
+  optional int32 transType = 3;
+  optional int32 productId = 4;
+  optional string detailKey = 5;
 }
 
 message ExtraInfoModel {
@@ -175,6 +185,40 @@ message MasterViewTicketDetailsResponse {
 
 message AgentViewTicketDetailsResponse {
   repeated AgentViewTicketDetailsModel ticketDetails = 1;
+}
+
+message GetParlaySelectionsRequest {
+  string detailKey = 1;
+  int64 refNo = 2;
+}
+
+message GetParlayDetailRequest {
+  string detailKey = 1;
+  int64 refNo = 2;
+}
+
+message ParlaySelectionsResponse {
+  string selections = 1;
+}
+
+message ParlayDetailResponse {
+  repeated ParlayDetailItem ParlayDetailItems = 1;
+  string outstanding = 2;
+  string total = 3;
+}
+
+message ParlayDetailItem{
+  string date = 1;
+  repeated ParlayEventModel events = 2;
+  string subTotal = 3;
+}
+
+message ParlayEventModel {
+  string event = 1;
+  string odds = 2;
+  string stake = 3;
+  string winloss = 4;
+  string status = 5;
 }
 
 message SuperViewTicketDetailsModel {

@@ -5,6 +5,9 @@ using Alpha.ApiGateways.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Common.Logging.Extensions;
+using Alpha.Utilities.Constants;
+using System.Text;
+using Alpha.ApiGateways.Constants;
 
 namespace Alpha.ApiGateways.Infrastructure.Middlewares;
 
@@ -12,6 +15,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 {
     private readonly IApiKeyService apiKeyService;
     private readonly ILogger<BasicAuthenticationHandler> logger;
+    private string failReason;
 
     public BasicAuthenticationHandler(
         IApiKeyService apiKeyService,
@@ -37,8 +41,10 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         {
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
-            return AuthenticateResult.Fail("Bad Request");
+            logger.LogFailedAuthentication("AuthenticateFailed: Invalid Params", Request.Headers, RequestLoggingConstants.RequestKeys);
+
+            failReason = LoggingConstants.KeyPassPhraseSignatureTimestampIsNotProvided;
+            return AuthenticateResult.Fail(failReason);
         }
 
         var verifyApiKeyResult = await apiKeyService.VerifyApiKey(key, passPhrase, signature, timestamp);
@@ -60,9 +66,20 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             return await Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name)));
         }
 
+        failReason = verifyApiKeyResult.ErrorMessage;
         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
-        logger.LogFailedAuthentication($"AuthenticateFailed: {verifyApiKeyResult?.ErrorMessage}", Request.Headers, new[] { "Key", "PassPhrase", "Signature", "Timestamp" });
-        return AuthenticateResult.Fail("Unauthorized");
+        logger.LogFailedAuthentication($"AuthenticateFailed: {failReason}", Request.Headers, RequestLoggingConstants.RequestKeys);
+
+        return AuthenticateResult.Fail(failReason);
+    }
+
+    protected override Task HandleChallengeAsync(AuthenticationProperties properties)
+    {
+        if (failReason != null)
+        {
+            Response.Body.WriteAsync(Encoding.ASCII.GetBytes(failReason));
+        }
+        return Task.CompletedTask;
     }
 }

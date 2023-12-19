@@ -16,6 +16,8 @@ public interface ICustomerService
     Task<DownlineInfo> GetDownlineInfo(int custId, string downlineUsername);
 
     Task<CustomerInfoModel> GetCustomerInfo(int custId, string username);
+
+    Task<bool> IsBelonging(int custId, int sessionCustId,int subAccountId, long transId);
 }
 
 public class CustomerService : ICustomerService
@@ -71,4 +73,11 @@ public class CustomerService : ICustomerService
             $"{CustomerInfoCacheKey}.{custId}.{username}",
             async () => await customerDataAccess.GetCustomerInfo(new GetCustomerInfoCriteria(custId, username)),
             new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(appSettings.CustomerStatusCacheInSeconds)));
+
+    public async Task<bool> IsBelonging(int custId, int sessionCustId, int subAccountId, long transId)
+    {
+        var command = new GetBelongingInfoCommand(custId, sessionCustId, subAccountId, transId);
+        await dynamicRepository.ExecuteAsync(command);
+        return command.RoleId > 0 && command.IsActive;
+    }
 }

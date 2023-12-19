@@ -4,8 +4,10 @@ using Alpha.BetLists.API.Builders.WinLossBuilders;
 using Alpha.BetLists.API.Helpers;
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Params;
+using Alpha.Utilities.Helpers;
 using Fanex.BetList.Core.Entities;
 using Grpc.Core;
+using Newtonsoft.Json;
 
 namespace GrpcBetLists;
 
@@ -14,20 +16,16 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     public override async Task<SuperViewTicketDetailsResponse> SuperViewTicketDetails(GetTicketDetailsRequest request, ServerCallContext context)
     {
         var response = new SuperViewTicketDetailsResponse();
-        if (!ticketDetailsMapper.CheckProductIdIsAllowed(request.ProductId) || request.TransType < 0)
+        var param = CreateCasinoDetailsParam(request);
+        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) || param.TransType < 0)
         {
             return response;
         }
-        var param = CreateCasinoDetailsParam(request);
-        var ticketDetails = casinoDetailsService.GetCasinoDetails(param);
 
-        var ipList = ticketDetails.Tickets.Where(t => !string.IsNullOrWhiteSpace(t.IP)).Select(t => t.IP.Trim()).Distinct();
-        var countries = await ipInfoService.GetCountries(ipList);
-
-        List<ITicketData> ticketData = new();
-        ticketData.GetTicketData(ticketDetails.Tickets);
+        var (ticketDetails, ticketData, countries) = await GetTicketDetails(param);
 
         var i = 1;
+
         response.TicketDetails.AddRange(ticketDetails.Tickets.Select((t) => new SuperViewTicketDetailsModel
         {
             No = i++.ToString(),
@@ -42,7 +40,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
             Platform = t.Platform
         }
-        ));
+       ));
         return response;
     }
 
@@ -50,19 +48,13 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     {
         var response = new MasterViewTicketDetailsResponse();
 
-        if (!ticketDetailsMapper.CheckProductIdIsAllowed(request.ProductId) || request.TransType < 0)
+        var param = CreateCasinoDetailsParam(request);
+        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) || param.TransType < 0)
         {
             return response;
         }
-        var param = CreateCasinoDetailsParam(request);
 
-        var ticketDetails = casinoDetailsService.GetCasinoDetails(param);
-
-        var ipList = ticketDetails.Tickets.Where(t => !string.IsNullOrWhiteSpace(t.IP)).Select(t => t.IP.Trim()).Distinct();
-        var countries = await ipInfoService.GetCountries(ipList);
-
-        List<ITicketData> ticketData = new();
-        ticketData.GetTicketData(ticketDetails.Tickets);
+        var (ticketDetails, ticketData, countries) = await GetTicketDetails(param);
 
         var i = 1;
         response.TicketDetails.AddRange(ticketDetails.Tickets.Select((t) => new MasterViewTicketDetailsModel
@@ -85,20 +77,13 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     {
         var response = new AgentViewTicketDetailsResponse();
 
-        if (!ticketDetailsMapper.CheckProductIdIsAllowed(request.ProductId) || request.TransType < 0)
+        var param = CreateCasinoDetailsParam(request);
+        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) || param.TransType < 0)
         {
             return response;
         }
-        var param = CreateCasinoDetailsParam(request);
 
-        var ticketDetails = casinoDetailsService.GetCasinoDetails(param);
-
-        var ipList = ticketDetails.Tickets.Where(t => !string.IsNullOrWhiteSpace(t.IP)).Select(t => t.IP.Trim()).Distinct();
-        var countries = await ipInfoService.GetCountries(ipList);
-
-        List<ITicketData> ticketData = new();
-        ticketData.GetTicketData(ticketDetails.Tickets);
-
+        var (ticketDetails, ticketData, countries) = await GetTicketDetails(param);
         var i = 1;
         response.TicketDetails.AddRange(ticketDetails.Tickets.Select((t) => new AgentViewTicketDetailsModel
         {
@@ -112,14 +97,38 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             AgentPTComm = BetListHtmlBuilderExtensions.BuildPtComm(t, ticketData, UserLevel.Agent),
             Platform = t.Platform
         }));
+
         return response;
     }
 
-    private CasinoDetailsParam CreateCasinoDetailsParam(GetTicketDetailsRequest request)
-        => new CasinoDetailsParam(
-            request.RefNo,
-            request.CustId,
-            (byte)request.TransType,
-            request.ProductId, 1, 1000000);
+    private async Task<(PagedData<TicketDto>, List<ITicketData>, IDictionary<string, string>)> GetTicketDetails(CasinoDetailsParam param)
+    {
+        var ticketDetails = casinoDetailsService.GetCasinoDetails(param);
 
+        var ipList = ticketDetails.Tickets.Where(t => !string.IsNullOrWhiteSpace(t.IP)).Select(t => t.IP.Trim()).Distinct();
+        var countries = await ipInfoService.GetCountries(ipList);
+
+        List<ITicketData> ticketData = new();
+        ticketData.GetTicketData(ticketDetails.Tickets);
+
+        return (ticketDetails, ticketData, countries);
+    }
+
+    private CasinoDetailsParam CreateCasinoDetailsParam(GetTicketDetailsRequest request)
+    {
+        var productId = request.ProductId;
+        var transType = request.TransType;
+        if (!string.IsNullOrEmpty(request.DetailKey))
+        {
+            var key = AesService.Decrypt(request.DetailKey);
+            dynamic get3rdProductTicketFromKey = JsonConvert.DeserializeObject(key);
+            if (get3rdProductTicketFromKey != null)
+            {
+                productId = get3rdProductTicketFromKey.ProductId;
+                transType = get3rdProductTicketFromKey.TransType;
+            }
+        }
+        return new CasinoDetailsParam(
+            request.RefNo, request.CustId, (byte)transType, productId, 1, 1000000);
+    }
 }

@@ -626,4 +626,22 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
   </Function>
+  <Function Name="Mix Parlay">
+    <Setting Key="Age_BetList_SelParlayDetail" SpName="Age_BetList_SelParlayDetail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" Class="TicketDto"></Mapping>
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" Class="TicketDto"></Mapping>
+      <Mapping DataField="Hdp1" ObjectProperty="Handicap1" Class="TicketDto"></Mapping>
+      <Mapping DataField="Hdp2" ObjectProperty="Handicap2" Class="TicketDto"></Mapping>
+      <Mapping DataField="LiveIndicator" ObjectProperty="IsLive" Class="TicketDto"></Mapping>
+      <Mapping DataField="BetStatus" ObjectProperty="EventStatus" Class="TicketDto"></Mapping>
+    </Setting>
+  </Function>
+  <Function Name="Bet Builder Detail">
+    <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0"/>
+  </Function>
+  <Function Name="Parlay">
+    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+      <Mapping DataField="modds" ObjectProperty="MasterOdds" />
+    </Setting>
+  </Function>
 </Functions>
