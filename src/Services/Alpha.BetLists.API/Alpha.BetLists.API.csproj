@@ -66,7 +66,7 @@
     <PackageReference Include="Fanex.BetList.PP" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.PragmaticLiveCasino" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.RnGCasino" Version="2.0.0.1" />
-    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.0" />
+    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.0.1" />
     <PackageReference Include="Fanex.BetList.RNGWar" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.SabaClub" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.SAGaming" Version="2.0.0" />
@@ -81,6 +81,7 @@
     <PackageReference Include="Fanex.BetList.VoidBridge" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.WM" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.YeeBet" Version="1.0.0" />
+    <PackageReference Include="Fanex.BetList.Live22" Version="1.0.0" />
 
     <PackageReference Include="Alpha.IPInfo" Version="1.0.0" />
   </ItemGroup>
