@@ -32,7 +32,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 
     <PackageReference Include="Fanex.BetDetails.BetBuilder" Version="1.0.0.1" />
-    <PackageReference Include="Fanex.BetList.Core" Version="3.0.1.7" />
+    <PackageReference Include="Fanex.BetList.Core" Version="3.0.1.9" />
     <PackageReference Include="Fanex.BetList.Core.RemotingRef" Version="2.0.0" />
 
     <PackageReference Include="Fanex.BetList.AdvantPlay" Version="2.0.0" />
@@ -57,7 +57,7 @@
     <PackageReference Include="Fanex.BetList.Keno" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.KenoLottery" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.LeapGaming" Version="2.0.0.1" />
-    <PackageReference Include="Fanex.BetList.MaxGame" Version="2.0.0.1" />
+    <PackageReference Include="Fanex.BetList.MaxGame" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.MetricGaming" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.MGRNGCasino" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.NG2" Version="2.0.0" />
@@ -66,7 +66,7 @@
     <PackageReference Include="Fanex.BetList.PP" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.PragmaticLiveCasino" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.RnGCasino" Version="2.0.0.1" />
-    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.0.1" />
+    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.0.2" />
     <PackageReference Include="Fanex.BetList.RNGWar" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SabaClub" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.SAGaming" Version="2.0.0" />
