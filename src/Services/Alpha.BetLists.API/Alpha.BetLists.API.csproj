@@ -77,7 +77,7 @@
     <PackageReference Include="Fanex.BetList.TableGames" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.VGaming" Version="2.0.0.3" />
     <PackageReference Include="Fanex.BetList.VirtualGames" Version="2.0.0" />
-    <PackageReference Include="Fanex.BetList.VirtualSports" Version="2.0.0.5" />
+    <PackageReference Include="Fanex.BetList.VirtualSports" Version="2.0.0.6" />
     <PackageReference Include="Fanex.BetList.VoidBridge" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.WM" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.YeeBet" Version="1.0.0" />
