@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="105" SiteName="Bet Lists API">
   <Function Name="Base Functions">
-    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
-    <Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
-    <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCust.IPDB.BODBDownlineNet" Plain="0" />
-    <Setting Key="Age_IPRangesByCountrySelByIPList" SpName="Age_IPRangesByCountrySelByIPList" DbName="DBCust.IPDB.BODBDownlineNet" Plain="0" />
-    <Setting Key="Age_IPRangesByCountrySelByIPV6List" SpName="Age_IPRangesByCountrySelByIPV6List" DbName="DBCust.IPDB.BODBDownlineNet" Plain="0" />
+    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
+    <Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCust.IPDB.wsv_alp" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySelByIPList" SpName="Age_IPRangesByCountrySelByIPList" DbName="DBCust.IPDB.wsv_alp" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySelByIPV6List" SpName="Age_IPRangesByCountrySelByIPV6List" DbName="DBCust.IPDB.wsv_alp" Plain="0" />
  </Function>
   <Function Name="Partial UM">
-    <Setting Key="Acc_CheckUM_ByReport" SpName="Acc_CheckUM_ByReport" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+    <Setting Key="Acc_CheckUM_ByReport" SpName="Acc_CheckUM_ByReport" DbName="DBCust.CustDB.wsv_alp" Plain="0" />
   </Function>
   <Function Name="Products">
-    <Setting Key="Age_Rpt_GetProductList" SpName="Age_Rpt_GetProductList" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Age_Rpt_GetProductList" SpName="Age_Rpt_GetProductList" DbName="DBAGE.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="ProductID" ObjectProperty="id" />
       <Mapping DataField="ProductName" ObjectProperty="name" />
     </Setting>
   </Function>
-    
+
   <Function Name="Running BetList">
-    <Setting Key="Age_BetList_SelRunning_Mem" SpName="Age_BetList_SelRunning_Mem" DbName="DBBOF.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Age_BetList_SelRunning_Mem" SpName="Age_BetList_SelRunning_Mem" DbName="DBBOF.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="Bettype" ObjectProperty="BetTypeId" Class="TicketDto"></Mapping>
       <Mapping DataField="Sporttype" ObjectProperty="SportTypeId" Class="TicketDto"></Mapping>
       <Mapping DataField="hdp1" ObjectProperty="Handicap1" Class="TicketDto"></Mapping>
@@ -44,9 +44,9 @@
       <Mapping DataField="mpositiontaking" ObjectProperty="MasterPT" Class="TicketData"></Mapping>
       <Mapping DataField="spositiontaking" ObjectProperty="SuperPT" Class="TicketData"></Mapping>
     </Setting>
-  </Function> 
+  </Function>
   <Function Name="Win Loss BetList">
-    <Setting Key="Age_BetList_SelWinLossByDate_Mem" SpName="Age_BetList_SelWinLossByDate_Mem" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Age_BetList_SelWinLossByDate_Mem" SpName="Age_BetList_SelWinLossByDate_Mem" DbName="DBAGE.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="Bettype" ObjectProperty="BetTypeId" Class="TicketDto"></Mapping>
       <Mapping DataField="Sporttype" ObjectProperty="SportTypeId" Class="TicketDto"></Mapping>
       <Mapping DataField="hdp1" ObjectProperty="Handicap1" Class="TicketDto"></Mapping>
@@ -74,7 +74,7 @@
     </Setting>
   </Function>
   <Function Name="Casino Details">
-    <Setting Key="Acc_BetList_Detail_6" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_6" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -102,36 +102,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_21" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
-      <Mapping DataField="transid" ObjectProperty="TransId" />
-      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-      <Mapping DataField="transdate" ObjectProperty="TransDate" />
-      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
-      <Mapping DataField="status" ObjectProperty="Status" />
-      <Mapping DataField="statusid" ObjectProperty="StatusId" />
-      <Mapping DataField="odds" ObjectProperty="Odds" />
-      <Mapping DataField="stake" ObjectProperty="Stake" />
-      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
-      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
-      <Mapping DataField="ip" ObjectProperty="IP" />
-      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
-      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
-      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
-      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
-      <Mapping DataField="comm" ObjectProperty="Comm" />
-      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
-      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
-      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
-      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
-      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
-      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
-      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
-      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
-      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
-      <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
-    </Setting>
-    <Setting Key="Acc_BetList_Detail_39" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_21" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -160,7 +131,7 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
       <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_45" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_39" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -189,7 +160,7 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
       <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_46" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_45" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -218,7 +189,36 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
       <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_47" SpName="Acc_BetList_G_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_46" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
+      <Mapping DataField="transid" ObjectProperty="TransId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="transdate" ObjectProperty="TransDate" />
+      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
+      <Mapping DataField="status" ObjectProperty="Status" />
+      <Mapping DataField="statusid" ObjectProperty="StatusId" />
+      <Mapping DataField="odds" ObjectProperty="Odds" />
+      <Mapping DataField="stake" ObjectProperty="Stake" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
+      <Mapping DataField="ip" ObjectProperty="IP" />
+      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="comm" ObjectProperty="Comm" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+      <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
+    </Setting>
+    <Setting Key="Acc_BetList_Detail_47" SpName="Acc_BetList_G_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -248,7 +248,7 @@
       <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
     </Setting>
 
-    <Setting Key="Acc_BetList_Detail_50" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_50" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -276,36 +276,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_52" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
-      <Mapping DataField="transid" ObjectProperty="TransId" />
-      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-      <Mapping DataField="transdate" ObjectProperty="TransDate" />
-      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
-      <Mapping DataField="status" ObjectProperty="Status" />
-      <Mapping DataField="statusid" ObjectProperty="StatusId" />
-      <Mapping DataField="odds" ObjectProperty="Odds" />
-      <Mapping DataField="stake" ObjectProperty="Stake" />
-      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
-      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
-      <Mapping DataField="ip" ObjectProperty="IP" />
-      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
-      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
-      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
-      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
-      <Mapping DataField="comm" ObjectProperty="Comm" />
-      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
-      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
-      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
-      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
-      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
-      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
-      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
-      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
-      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
-      <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
-    </Setting>
-    <Setting Key="Acc_BetList_Detail_55" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_52" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -334,35 +305,7 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
       <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_56" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
-      <Mapping DataField="transid" ObjectProperty="TransId" />
-      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-      <Mapping DataField="transdate" ObjectProperty="TransDate" />
-      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
-      <Mapping DataField="status" ObjectProperty="Status" />
-      <Mapping DataField="statusid" ObjectProperty="StatusId" />
-      <Mapping DataField="odds" ObjectProperty="Odds" />
-      <Mapping DataField="stake" ObjectProperty="Stake" />
-      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
-      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
-      <Mapping DataField="ip" ObjectProperty="IP" />
-      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
-      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
-      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
-      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
-      <Mapping DataField="comm" ObjectProperty="Comm" />
-      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
-      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
-      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
-      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
-      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
-      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
-      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
-      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
-      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
-    </Setting>
-    <Setting Key="Acc_BetList_Detail_51" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_55" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -391,13 +334,24 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
       <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_59" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_56" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
+      <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="transdate" ObjectProperty="TransDate" />
+      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
+      <Mapping DataField="status" ObjectProperty="Status" />
+      <Mapping DataField="statusid" ObjectProperty="StatusId" />
+      <Mapping DataField="odds" ObjectProperty="Odds" />
+      <Mapping DataField="stake" ObjectProperty="Stake" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
+      <Mapping DataField="ip" ObjectProperty="IP" />
+      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
       <Mapping DataField="commission" ObjectProperty="PlayerComm" />
       <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
       <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="comm" ObjectProperty="Comm" />
       <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
       <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
       <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
@@ -408,41 +362,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_57" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
-      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
-      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
-      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
-      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
-      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
-      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
-      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
-      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
-      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
-      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
-      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
-      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
-      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
-    </Setting>
-    <Setting Key="Acc_BetList_Detail_60" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
-      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
-      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
-      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
-      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
-      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
-      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
-      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
-      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
-      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
-      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
-      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
-      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
-      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
-    </Setting>
-    <Setting Key="Acc_BetList_Detail_65" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_51" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -471,7 +391,7 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
       <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
     </Setting>
-   <Setting Key="Acc_BetList_Detail_61" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_59" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -488,7 +408,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_62" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_57" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -505,7 +425,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_67" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_60" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -522,7 +442,36 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_68" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_65" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
+      <Mapping DataField="transid" ObjectProperty="TransId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="transdate" ObjectProperty="TransDate" />
+      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
+      <Mapping DataField="status" ObjectProperty="Status" />
+      <Mapping DataField="statusid" ObjectProperty="StatusId" />
+      <Mapping DataField="odds" ObjectProperty="Odds" />
+      <Mapping DataField="stake" ObjectProperty="Stake" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
+      <Mapping DataField="ip" ObjectProperty="IP" />
+      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="comm" ObjectProperty="Comm" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+      <Mapping DataField="BetTeam" ObjectProperty="BetTeam" />
+    </Setting>
+   <Setting Key="Acc_BetList_Detail_61" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -539,7 +488,58 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_70" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_62" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
+    <Setting Key="Acc_BetList_Detail_67" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
+    <Setting Key="Acc_BetList_Detail_68" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
+    <Setting Key="Acc_BetList_Detail_70" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -557,7 +557,7 @@
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
       <Mapping DataField="eventdate" ObjectProperty="EventDate" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_72" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_72" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -574,7 +574,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_73" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_73" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -591,7 +591,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_75" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_75" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -608,7 +608,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_76" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_76" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -625,7 +625,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_79" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_79" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -642,7 +642,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_Detail_80" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetList_Detail_80" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
@@ -661,7 +661,7 @@
     </Setting>
   </Function>
   <Function Name="Mix Parlay">
-    <Setting Key="Age_BetList_SelParlayDetail" SpName="Age_BetList_SelParlayDetail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Age_BetList_SelParlayDetail" SpName="Age_BetList_SelParlayDetail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" Class="TicketDto"></Mapping>
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" Class="TicketDto"></Mapping>
       <Mapping DataField="Hdp1" ObjectProperty="Handicap1" Class="TicketDto"></Mapping>
@@ -671,10 +671,10 @@
     </Setting>
   </Function>
   <Function Name="Bet Builder Detail">
-    <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0"/>
+    <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0"/>
   </Function>
   <Function Name="Parlay">
-    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBACC.bodb02.BODBDownlineNet" Plain="0">
+    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBACC.bodb02.wsv_alp" Plain="0">
       <Mapping DataField="modds" ObjectProperty="MasterOdds" />
     </Setting>
   </Function>
