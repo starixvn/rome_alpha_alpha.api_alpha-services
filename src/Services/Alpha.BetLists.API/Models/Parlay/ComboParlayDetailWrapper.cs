@@ -11,7 +11,7 @@ namespace Alpha.BetLists.API.Models.Parlay
             { BetStatus.Running, "Running" },
             { BetStatus.Reject, "Reject" },
             { BetStatus.Won, "Won" },
-            { BetStatus.Lose, "Lose" },
+            { BetStatus.Lose, "Lost" },
             { BetStatus.Draw, "Draw" },
             { BetStatus.Waiting, "Waiting" },
             { BetStatus.Void, "Void" },

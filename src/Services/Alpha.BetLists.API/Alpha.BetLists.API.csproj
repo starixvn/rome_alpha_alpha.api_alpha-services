@@ -30,8 +30,8 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    <PackageReference Include="Fanex.BetDetails.BetBuilder" Version="1.0.0.1" />
-    <PackageReference Include="Fanex.BetList.Core" Version="3.0.2.3" />
+    <PackageReference Include="Fanex.BetDetails.BetBuilder" Version="1.0.0.2" />
+    <PackageReference Include="Fanex.BetList.Core" Version="3.0.2.6" />
     <PackageReference Include="Fanex.BetList.Core.RemotingRef" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.AdvantPlay" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.AdvantPlayMini" Version="2.0.0" />
@@ -76,7 +76,7 @@
     <PackageReference Include="Fanex.BetList.TableGames" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.VGaming" Version="2.0.0.3" />
     <PackageReference Include="Fanex.BetList.VirtualGames" Version="2.0.0" />
-    <PackageReference Include="Fanex.BetList.VirtualSports" Version="2.0.0.6" />
+    <PackageReference Include="Fanex.BetList.VirtualSports" Version="2.0.0.7" />
     <PackageReference Include="Fanex.BetList.VoidBridge" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.WE" Version="1.0.0.1" />
     <PackageReference Include="Fanex.BetList.WM" Version="2.0.0.1" />
