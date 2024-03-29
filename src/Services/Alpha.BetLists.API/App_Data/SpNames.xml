@@ -659,6 +659,23 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
+    <Setting Key="Acc_BetList_Detail_78" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
   </Function>
   <Function Name="Mix Parlay">
     <Setting Key="Age_BetList_SelParlayDetail" SpName="Age_BetList_SelParlayDetail" DbName="DBACC.bodb02.wsv_alp" Plain="0">
