@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.BetList.SABAxD" Version="1.0.0-beta-04" />
+    <PackageReference Include="Fanex.BetList.SABAxD" Version="1.0.0" />
     <PackageReference Include="Fanex.Common" Version="1.1.1-beta1" />
     <PackageReference Include="Fanex.RemotingRef" Version="1.5.4" />
     <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
@@ -66,7 +66,7 @@
     <PackageReference Include="Fanex.BetList.PP" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.PragmaticLiveCasino" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.RnGCasino" Version="2.0.0.2" />
-    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.0.4-sabaxd-01" />
+    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.0.4" />
     <PackageReference Include="Fanex.BetList.RNGWar" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SabaClub" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.SAGaming" Version="2.0.0" />
