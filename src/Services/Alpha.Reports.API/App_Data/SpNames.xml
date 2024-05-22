@@ -23,9 +23,9 @@
   </Function>
   <Function Name="Win Loss Detail">
     <!--Group 4-->
-    <Setting Key="Age_Rpt_API_WinLossDetail_Master" SpName="Age_Rpt_API_WinLossDetail_Master" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
-    <Setting Key="Age_Rpt_API_WinLossDetail_Agent" SpName="Age_Rpt_API_WinLossDetail_Agent" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
-    <Setting Key="Age_Rpt_API_WinLossDetail_Member" SpName="Age_Rpt_API_WinLossDetail_Member" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
+    <Setting Key="Age_Rpt_API_WinLossDetail_Master" SpName="Age_Rpt_API_WinLossDetail_Master_CompactSel" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
+    <Setting Key="Age_Rpt_API_WinLossDetail_Agent" SpName="Age_Rpt_API_WinLossDetail_Agent_CompactSel" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
+    <Setting Key="Age_Rpt_API_WinLossDetail_Member" SpName="Age_Rpt_API_WinLossDetail_Member_CompactSel" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
     <!--Group 4-->
   </Function>
 </Functions>
