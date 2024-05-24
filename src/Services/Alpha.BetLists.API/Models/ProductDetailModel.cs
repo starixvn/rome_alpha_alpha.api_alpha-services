@@ -13,11 +13,18 @@ public class ProductDetailModel
     public int BetType { get; }
 
     public int Order { get; }
-    public string LeagueGroupId { get; }
+    
+    public int LeagueGroupId { get; }    
 
-    public string[] LeagueGroupIds => LeagueGroupId != null ? LeagueGroupId.Split(',') : Array.Empty<string>();
+    public int TicketType { get; }
 
-    public string TicketType { get; }
+    public override string ToString()
+            => string.Format(
+                    "<ProductDetail ProductId=\"{0}\" Sporttype=\"{1}\" Bettype=\"{2}\" LeagueGroupId=\"{3}\" TicketType=\"{4}\"/>",
+                    ProductId,
+                    SportType,
+                    BetType,
+                    LeagueGroupId,
+                    TicketType);
 
-    public string[] TicketTypeIds => TicketType != null ? TicketType.Split(',') : Array.Empty<string>();
 }

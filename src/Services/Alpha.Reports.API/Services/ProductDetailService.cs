@@ -1,23 +1,27 @@
-
 using System.Text;
 using Alpha.ApiKey.API.Models;
 using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.Models;
+using Alpha.Utilities.Extensions;
 using Fanex.Caching;
 using Fanex.Data.Repository;
-using Alpha.Utilities.Extensions;
 
 namespace Alpha.Reports.API.Services;
 
 public interface IProductDetailService
 {
     IEnumerable<ProductDetailModel> GetProductDetails(ReportsAppSettingsModel settings);
-    string BuildProductDetailsXML(IEnumerable<int> validProductIds, IEnumerable<int> validResourceIds, IEnumerable<int> productOfferProductDetail);
+    string BuildProductDetailsXML(
+        IEnumerable<int> validProductIds,
+        IEnumerable<int> validResourceIds,
+        IEnumerable<int> productOfferProductDetail
+    );
 }
 
 public class ProductDetailService : IProductDetailService
 {
-    private const string ProductDetailsCacheKey = "Alpha.Reports.API.Services.ProductDetailService.ProductDetails";
+    private const string ProductDetailsCacheKey =
+        "Alpha.Reports.API.Services.ProductDetailService.ProductDetails";
     private const int ProductDetailsCacheInDay = 1;
 
     private readonly IDynamicRepository dynamicRepository;
@@ -38,7 +42,12 @@ public class ProductDetailService : IProductDetailService
     {
         var canViewProductDetails = new Dictionary<int, bool>();
 
-        var ps = settings.ProductOfferProductDetail.Split(new[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i));
+        var ps = settings
+            .ProductOfferProductDetail.Split(
+                new[] { ",", ";" },
+                StringSplitOptions.RemoveEmptyEntries
+            )
+            .Select(i => int.Parse(i));
 
         foreach (var product in ps)
         {
@@ -51,7 +60,8 @@ public class ProductDetailService : IProductDetailService
     public string BuildProductDetailsXML(
         IEnumerable<int> validProductIds,
         IEnumerable<int> validResourceIds,
-        IEnumerable<int> productOfferProductDetail)
+        IEnumerable<int> productOfferProductDetail
+    )
     {
         var existProducts = validProductIds.ToExistingDictionary();
         var existResources = validResourceIds.ToExistingDictionary();
@@ -65,7 +75,9 @@ public class ProductDetailService : IProductDetailService
             {
                 if (IsSupportProductDetail(group.Key, productOfferProductDetail))
                 {
-                    validProductDetails.AddRange(group.Where(p => existResources.ContainsKey(p.ResourceId)));
+                    validProductDetails.AddRange(
+                        group.Where(p => existResources.ContainsKey(p.ResourceId))
+                    );
                 }
             });
 
@@ -74,34 +86,26 @@ public class ProductDetailService : IProductDetailService
             : string.Empty;
     }
 
-    private static bool IsSupportProductDetail(int productId, IEnumerable<int> productOfferProductDetail)
-        => productOfferProductDetail.Any(i => i == productId);
+    private static bool IsSupportProductDetail(
+        int productId,
+        IEnumerable<int> productOfferProductDetail
+    ) => productOfferProductDetail.Any(i => i == productId);
 
-    private IEnumerable<ProductDetailModel> GetProductDetails()
-        => ConfiguredCacheService.GetOrSet(
+    private IEnumerable<ProductDetailModel> GetProductDetails() =>
+        ConfiguredCacheService.GetOrSet(
             ProductDetailsCacheKey,
             () => dynamicRepository.Fetch<ProductDetailModel>(new GetProductsDetailCriteria()),
-            new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(ProductDetailsCacheInDay)));
-
+            new CacheItemOptions().SetAbsoluteExpiration(
+                TimeSpan.FromDays(ProductDetailsCacheInDay)
+            )
+        );
 
     private static string BuildProductDetailsXML(IEnumerable<ProductDetailModel> productDetails)
     {
         var xml = new StringBuilder("<ROOT>");
         foreach (var product in productDetails)
         {
-            foreach (var leagueId in product.LeagueGroupIds)
-            {
-                foreach (var typeId in product.TicketTypeIds)
-                {
-                    xml.AppendFormat(
-                        "<ProductDetail ProductId=\"{0}\" Sporttype=\"{1}\" Bettype=\"{2}\" LeagueGroupId=\"{3}\" TicketType=\"{4}\"/>",
-                        product.ProductId,
-                        product.SportType,
-                        product.BetType,
-                        leagueId,
-                        typeId);
-                }
-            }
+            xml.Append(product.ToString());
         }
 
         xml.Append("</ROOT>");
