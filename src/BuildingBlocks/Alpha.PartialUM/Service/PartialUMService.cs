@@ -55,7 +55,7 @@ public class PartialUMService : IPartialUMService
             .GetOrSet(
                 $"Alpha.PartialUM.Services.MinimizedUM.{siteName}",
                 () => GetUMInfoDictionaryFromDB(siteName),
-                new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(partialUMSettings.BetListsCacheInSeconds)));
+                new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(partialUMSettings.PartialUMCacheInSeconds)));
 
     private IDictionary<string, UMInfoModel> GetUMInfoDictionaryFromDB(string siteGroup)
     {

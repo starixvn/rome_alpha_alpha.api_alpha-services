@@ -1,6 +1,6 @@
 {
   "PartialUMSettings": {
-    "BetListsCacheInSeconds": 15,
+    "PartialUMCacheInSeconds": 600,
     "Functions": [
       {
         "Name": "Group Bet List Drilldown",

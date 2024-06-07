@@ -17,7 +17,7 @@ namespace Ext.ApiGateways.Services
     {
         private readonly IDynamicRepository dynamicRepository;
         private readonly ICacheService cacheService;
-        private readonly TimeSpan cacheTime = TimeSpan.FromMinutes(5);
+        private readonly TimeSpan cacheTime = TimeSpan.FromHours(1);
 
         public ApiKeyService(
             IDynamicRepository dynamicRepository,
