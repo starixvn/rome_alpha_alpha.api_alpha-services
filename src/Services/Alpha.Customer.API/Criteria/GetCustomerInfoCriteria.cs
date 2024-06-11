@@ -14,7 +14,7 @@ public class GetCustomerInfoCriteria : CriteriaBase
 
     public string Username { get; }
 
-    public override string GetSettingKey() => "Age_ManageAPI_CustProductSel";
+    public override string GetSettingKey() => "Age_ManageAPI_CustInfo";
 
     public override bool IsValid()
         => CustId > 0 || !string.IsNullOrWhiteSpace(Username);

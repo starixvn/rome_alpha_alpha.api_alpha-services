@@ -31,7 +31,7 @@ public class CustomerDataAccess : ICustomerDataAccess
                     var custId = (int)reader["custid"];
                     var roleId = (byte)reader["roleid"];
                     var site = reader["site"].ToString();
-                    var currency = (int)reader["currency"];
+                    var currency = int.Parse((reader["currency"] ?? string.Empty).ToString());
                     return new CustomerInfoModel(custId, roleId, site, currency);
                 }
             }
