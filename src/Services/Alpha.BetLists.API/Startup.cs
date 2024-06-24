@@ -26,6 +26,8 @@ using Fanex.BetDetails.BetBuilder.Services;
 using Alpha.BetLists.API.DataAccesses;
 using Fanex.BetDetails.BetBuilder.DataAccesses;
 using Alpha.BetLists.API.Models.TicketDetail;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace Alpha.BetLists.API;
 
@@ -101,6 +103,7 @@ public class Startup
         app.UseSwagger();
         app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "BetLists.API v1"));
 
+        SetDefaultCulture( app);
         app.UseRouting();
 
         app.UseEndpoints(endpoints =>
@@ -156,5 +159,14 @@ public class Startup
         services.AddTransient<IBetBuilderService, BetBuilderService>();
         services.AddTransient<IBetBuilderDataAccess, BetBuilderDataAccess>();
         services.AddTransient<IParlayService, ParlayService>();
+    }
+
+    private void SetDefaultCulture(IApplicationBuilder app) {
+        var ci = CultureInfo.CreateSpecificCulture("en-US");
+        var rc = new RequestCulture(ci);
+        app.UseRequestLocalization(new RequestLocalizationOptions
+        {
+            DefaultRequestCulture = rc
+        });
     }
 }

@@ -1,6 +1,7 @@
 using Alpha.Utilities.Models;
 using GrpcReports;
 using Alpha.ApiKey.API.Models;
+using Alpha.Utilities.Extensions;
 
 namespace Alpha.Reports.API.Params;
 
@@ -22,6 +23,7 @@ public class GetWinLossDetailReportParam
         ToDate = DateTime.TryParse(request.ToDate, out dt) ? dt : DateTime.MinValue;
         SiteName = request.Site;
         ProductGroup = request.ProductGroup;
+        ProductIds = request.ProductIds.ToListInt();
     }
 
     public int ViewerId { get; }

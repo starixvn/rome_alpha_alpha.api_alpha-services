@@ -9,6 +9,8 @@ service Customer {
     rpc GetCustomerInfo(GetCustomerInfoRequest) returns (GetCustomerInfoResponse) {}
     rpc GetDownlineInfo(GetDownlineInfoRequest) returns (GetDownlineInfoResponse) {}
     rpc GetBelongingInfo(GetBeLongingInfoRequest) returns (GetBeLongingInfoResponse) {}
+    rpc GetAllProducts(GetAllProductsRequest) returns (GetAllProductsResponse) {}
+    rpc ClearProductsCache(ClearProductsCacheRequest) returns (ClearProductsCacheResponse) {}
 }
 
 message GetCustomerStatusRequest {
@@ -57,4 +59,30 @@ message GetBeLongingInfoRequest {
 
 message GetBeLongingInfoResponse {
     bool isBelonging = 1;
+}
+
+message GetAllProductsRequest {
+  int32 custId = 1;
+  string siteName = 2;
+  int32 currency = 3;
+}
+
+message GetAllProductsResponse {
+  repeated ProductModel products = 1;
+}
+
+message ProductModel {
+    int32 id = 1;
+    string code = 2;
+    string name = 3;
+}
+
+message ClearProductsCacheRequest {
+    int32 custId = 1;
+    string siteName = 2;
+    int32 currency = 3;
+}
+
+message ClearProductsCacheResponse {
+    bool result = 1;
 }

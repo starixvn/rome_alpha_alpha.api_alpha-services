@@ -7,12 +7,12 @@ using Alpha.Utilities.Models;
 using System.Net;
 using System.Security.Claims;
 using Alpha.Utilities.Constants;
+using GrpcCustomer;
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]/{product=All}")]
 [ApiController]
-public class OutstandingController : Controller
+public class OutstandingController : BaseAPIController
 {
     private readonly Reports.ReportsClient apiClient;
     private readonly ICustomerService customerService;
@@ -21,7 +21,8 @@ public class OutstandingController : Controller
     public OutstandingController(
         Reports.ReportsClient apiClient,
         ICustomerService customerService,
-        ILogger<OutstandingController> logger)
+        ILogger<OutstandingController> logger,
+        Customer.CustomerClient customerClient) : base(customerClient)
     {
         this.apiClient = apiClient;
         this.customerService = customerService;
@@ -30,6 +31,7 @@ public class OutstandingController : Controller
 
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    [Route("api/[controller]/{product=All}")]
     public async Task<IActionResult> Index(
         [FromRoute] string product)
     {
@@ -94,4 +96,49 @@ public class OutstandingController : Controller
 
         return Json(result);
     }
+
+    [HttpPost]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    [Route("api/[controller]/index")]
+    public async Task<IActionResult> GetByProductCodes(
+        [FromQuery] string products)
+    {
+        logger.LogRequest("Outstanding", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
+
+        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+
+        var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
+
+        if (viewerInfo.RoleId == UserLevelModel.Member)
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
+        }
+
+        var productIds = await GetSelectedProductIds(products);
+        var reportRequest = new GetOutstandingReportRequest
+        {
+            CustId = viewerInfo.CustId,
+            CustLevelId = viewerInfo.RoleId,
+            Site = viewerInfo.Site,
+            CurrencyId = viewerInfo.Currency,
+            ViewerId = viewerInfo.CustId,
+            ViewerLevelId = viewerInfo.RoleId,
+            CustName = string.Empty,
+            ProductGroup = ProductGroupConstants.All,
+            ProductIds = productIds
+        };
+
+        if (viewerInfo.RoleId == UserLevelModel.Super)
+        {
+            return await SuperOutstanding(reportRequest);
+        }
+
+        if (viewerInfo.RoleId == UserLevelModel.Master)
+        {
+            return await MasterOutstanding(reportRequest);
+        }
+
+        return await AgentOutstanding(reportRequest);
+    }
+
 }

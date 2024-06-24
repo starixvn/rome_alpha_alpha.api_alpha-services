@@ -8,6 +8,7 @@ using Alpha.Utilities.Helpers;
 using Fanex.BetList.Core.Entities;
 using Grpc.Core;
 using Newtonsoft.Json;
+using Alpha.Utilities.Extensions;
 
 namespace GrpcBetLists;
 
@@ -29,7 +30,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         response.TicketDetails.AddRange(ticketDetails.Tickets.Select((t) => new SuperViewTicketDetailsModel
         {
             No = i++.ToString(),
-            TransTime = builder.BuildTrans(t),
+            TransTime = builder.BuildTrans(t).CorrectDateTimeSpace(),
             Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
             Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
             Stake = builder.BuildStake(t, ticketHelper),
@@ -60,7 +61,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         response.TicketDetails.AddRange(ticketDetails.Tickets.Select((t) => new MasterViewTicketDetailsModel
         {
             No = i++.ToString(),
-            TransTime = builder.BuildTrans(t),
+            TransTime = builder.BuildTrans(t).CorrectDateTimeSpace(),
             Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
             Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
             Stake = builder.BuildStake(t, ticketHelper),
@@ -88,7 +89,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         response.TicketDetails.AddRange(ticketDetails.Tickets.Select((t) => new AgentViewTicketDetailsModel
         {
             No = i++.ToString(),
-            TransTime = builder.BuildTrans(t),
+            TransTime = builder.BuildTrans(t).CorrectDateTimeSpace(),
             Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
             Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
             Stake = builder.BuildStake(t, ticketHelper),

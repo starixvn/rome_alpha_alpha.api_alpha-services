@@ -57,6 +57,8 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             {
                 new Claim(ClaimTypes.NameIdentifier, verifyApiKeyResult.CustId.ToString()),
                 new Claim("SubAccId", verifyApiKeyResult.SubAccId.ToString()),
+                new Claim("SiteName", verifyApiKeyResult.SiteName),
+                new Claim("Currency", verifyApiKeyResult.Currency.ToString()),
             };
 
             var identity = new ClaimsIdentity(claims, "Basic");
