@@ -13,7 +13,7 @@ public static class StatusBuilderBase
         string country)
     {
         var result = builder.BuildStatus(ticket, ticketHelper, ticketData, true);
-        result += $"<span>{country}</span>";
+        result += $"<div class=\"country\">{country}</div>";
         return result;
     }
 }

@@ -34,7 +34,7 @@ namespace Alpha.Utilities.Helpers
             }
 
             string plaintext;
-            using (var rijAlg = new AesManaged())
+            using (var rijAlg = Aes.Create())
             {
                 rijAlg.Mode = CipherMode.CBC;
                 rijAlg.Padding = PaddingMode.PKCS7;
@@ -95,7 +95,7 @@ namespace Alpha.Utilities.Helpers
             }
 
             byte[] encrypted;
-            using (var rijAlg = new AesManaged())
+            using (var rijAlg = Aes.Create())
             {
                 rijAlg.Mode = CipherMode.CBC;
                 rijAlg.Padding = PaddingMode.PKCS7;

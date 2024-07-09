@@ -6,4 +6,6 @@ public class VerifyApiKeyResult
     public int CustId { get; set; }
     public int SubAccId { get; set; }
     public string ErrMsg { get; set; }
+    public string SiteName { get; set; }
+    public int Currency { get; set; }
 }

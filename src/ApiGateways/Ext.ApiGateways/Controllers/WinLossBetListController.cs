@@ -8,13 +8,13 @@ using System.Security.Claims;
 using GrpcBetLists;
 using Common.Logging.Extensions;
 using Alpha.Utilities.Constants;
+using GrpcCustomer;
 
 
 namespace Ext.ApiGateways.Controllers;
 
-[Route("api/[controller]/{custName}/{product=All}")]
 [ApiController]
-public class WinLossBetListController : Controller
+public class WinLossBetListController : BaseAPIController
 {
     private readonly BetLists.BetListsClient apiClient;
     private readonly ICustomerService customerService;
@@ -23,7 +23,8 @@ public class WinLossBetListController : Controller
     public WinLossBetListController(
         BetLists.BetListsClient apiClient,
         ICustomerService customerService,
-        ILogger<WinLossBetListController> logger)
+        ILogger<WinLossBetListController> logger,
+        Customer.CustomerClient customerClient) : base(customerClient)
     {
         this.apiClient = apiClient;
         this.customerService = customerService;
@@ -32,6 +33,7 @@ public class WinLossBetListController : Controller
 
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    [Route("api/[controller]/{custName}/{product=All}")]
     public async Task<IActionResult> Index(
         [FromRoute] string product,
         [FromRoute] string custName,
@@ -98,5 +100,53 @@ public class WinLossBetListController : Controller
         var result = await apiClient.AgentViewWinLossBetListAsync(request);
 
         return Json(result);
+    }
+
+
+    [HttpPost]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    [Route("api/[controller]/{custName}")]
+    public async Task<IActionResult> GetByProductCodes(
+        [FromQuery] string products,
+        [FromRoute] string custName,
+        [FromBody] WinLossBetListRequest request)
+    {
+        if (!request.Validate())
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DateIsInvalid };
+        }
+
+        logger.LogRequest("WinLossBetList", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
+
+        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+
+        var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
+        var downlineInfo = await customerService.GetCustomerInfo(0, custName);
+
+        if (downlineInfo.RoleId != UserLevelModel.Member)
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
+        }
+
+        var productIds = await GetSelectedProductIds(products);
+        var betListsRequest = new GetWinLossBetListRequest
+        {
+            CustId = downlineInfo.CustId,
+            Site = viewerInfo.Site,
+            CustName = custName,
+            FromDate = request.Date.Value.ToShortDateString(),
+            ToDate = request.Date.Value.ToShortDateString(),
+            ViewerId = viewerInfo.CustId,
+            RoleId = viewerInfo.RoleId,
+            ProductGroup = ProductGroupConstants.All,
+            ProductIds = productIds
+        };
+
+        return viewerInfo.RoleId switch
+        {
+            UserLevelModel.Super => await SuperViewRunningBetList(betListsRequest),
+            UserLevelModel.Master => await MasterViewRunningBetList(betListsRequest),
+            _ => await AgentViewRunningBetList(betListsRequest),
+        };
     }
 }

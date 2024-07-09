@@ -52,6 +52,8 @@ namespace Ext.ApiGateways.Services
                     IsAuthenticated = criteria.IsAuthenticated,
                     CustId = criteria.CustId,
                     SubAccId = criteria.SubAccId,
+                    SiteName = criteria.Site,
+                    Currency = criteria.Currency,
                     ErrMsg = criteria.ErrMsg
                 };
             }

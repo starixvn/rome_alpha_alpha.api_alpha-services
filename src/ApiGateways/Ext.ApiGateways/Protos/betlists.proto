@@ -27,6 +27,7 @@ message GetRunningBetListRequest {
   string custName = 3;
   string site = 4;
   int32 viewerId = 5;
+  string productIds = 6;
 } 
 
 message SuperViewRunningBetListResponse {
@@ -93,6 +94,7 @@ message GetWinLossBetListRequest {
   string site = 6;
   int32 viewerId = 7;
   int32 roleId = 8;
+  string productIds = 9;
 } 
 
 message SuperViewWinLossBetListResponse {

@@ -27,6 +27,10 @@ namespace Ext.ApiGateways.Criteria
 
         public int SubAccId { get; set; }
 
+        public string Site { get; set; }
+
+        public int Currency { get; set; }
+
         public override string GetSettingKey()
         {
             return "EAS_API_CheckSecretKeyUser";

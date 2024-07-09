@@ -18,6 +18,9 @@ public interface ICustomerService
     Task<CustomerInfoModel> GetCustomerInfo(int custId, string username);
 
     Task<bool> IsBelonging(int custId, int sessionCustId,int subAccountId, long transId);
+
+    Task<IEnumerable<ProductModel>> GetAllProducts(string siteName, int currency);
+    Task ClearProductsCache(string siteName, int currency);
 }
 
 public class CustomerService : ICustomerService
@@ -25,6 +28,7 @@ public class CustomerService : ICustomerService
     private const string CustomerStatusCacheKey = "Alpha.Customer.API.CustomerStatus";
     private const string DownlineInfoCacheKey = "Alpha.Customer.API.DownlineInfo";
     private const string CustomerInfoCacheKey = "Alpha.Customer.API.CustomerInfo";
+    private const string ProductsCacheKey = "Alpha.Customer.API.Products";
 
     private readonly ICacheService cacheService;
     private readonly CustomerAppSettings appSettings;
@@ -80,4 +84,18 @@ public class CustomerService : ICustomerService
         await dynamicRepository.ExecuteAsync(command);
         return command.RoleId > 0 && command.IsActive;
     }
+
+    public Task<IEnumerable<ProductModel>> GetAllProducts(string siteName, int currency)
+        => cacheService.GetOrSetAsync(
+            $"{ProductsCacheKey}_{siteName}_{currency}",
+            async () =>
+            {
+                var criteria = new GetAllProductCriteria(siteName, currency);
+                var products = await dynamicRepository.FetchAsync<ProductModel>(criteria);
+                return products;
+            },
+            new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(appSettings.ProductCacheInSeconds)));
+
+    public Task ClearProductsCache(string siteName, int currency) 
+        => cacheService.RemoveAsync($"{ProductsCacheKey}_{siteName}_{currency}");
 }

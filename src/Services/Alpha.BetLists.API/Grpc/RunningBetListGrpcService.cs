@@ -5,6 +5,7 @@ using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Builders;
 using Alpha.BetLists.API.Builders.StatusBuilders;
 using Alpha.BetLists.API.Helpers;
+using Alpha.Utilities.Extensions;
 
 namespace GrpcBetLists;
 
@@ -12,7 +13,9 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 {
     public override async Task<SuperViewRunningBetListResponse> SuperViewRunningBetList(GetRunningBetListRequest request, ServerCallContext context)
     {
-        var productIds = productService.GetAllProductIds(request.ProductGroup);
+        var productIds = string.IsNullOrWhiteSpace(request.ProductIds)
+            ? productService.GetAllProductIds(request.ProductGroup)
+            : request.ProductIds.ToListInt();
 
         var param = new GetRunningBetListParam(
             request.CustId,
@@ -36,7 +39,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             var model = new SuperViewRunningBetTicketModel
             {
                 No = i++.ToString(),
-                TransTime = builder.BuildTrans(t),
+                TransTime = builder.BuildTrans(t).CorrectDateTimeSpace(),
                 Choice = choice,
                 Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
                 Stake = builder.BuildStake(t, ticketHelper),
@@ -58,7 +61,9 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
     public override async Task<MasterViewRunningBetListResponse> MasterViewRunningBetList(GetRunningBetListRequest request, ServerCallContext context)
     {
-        var productIds = productService.GetAllProductIds(request.ProductGroup);
+        var productIds = string.IsNullOrWhiteSpace(request.ProductIds)
+            ? productService.GetAllProductIds(request.ProductGroup)
+            : request.ProductIds.ToListInt();
 
         var param = new GetRunningBetListParam(
             request.CustId,
@@ -83,7 +88,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             var model = new MasterViewRunningBetTicketModel
             {
                 No = i++.ToString(),
-                TransTime = builder.BuildTrans(t),
+                TransTime = builder.BuildTrans(t).CorrectDateTimeSpace(),
                 Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
                 Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
                 Stake = builder.BuildStake(t, ticketHelper),
@@ -104,7 +109,9 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
     public override async Task<AgentViewRunningBetListResponse> AgentViewRunningBetList(GetRunningBetListRequest request, ServerCallContext context)
     {
-        var productIds = productService.GetAllProductIds(request.ProductGroup);
+        var productIds = string.IsNullOrWhiteSpace(request.ProductIds)
+            ? productService.GetAllProductIds(request.ProductGroup)
+            : request.ProductIds.ToListInt();
 
         var param = new GetRunningBetListParam(
             request.CustId,
@@ -127,7 +134,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             var model = new AgentViewRunningBetTicketModel
             {
                 No = i++.ToString(),
-                TransTime = builder.BuildTrans(t),
+                TransTime = builder.BuildTrans(t).CorrectDateTimeSpace(),
                 Choice = builder.BuildChoice(t, ticketHelper, ticketData, false),
                 Odds = builder.BuildOdds(t, ticketData, ticketHelper.GetOddsTypeNameById),
                 Stake = builder.BuildStake(t, ticketHelper),

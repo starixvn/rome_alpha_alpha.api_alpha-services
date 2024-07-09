@@ -6,5 +6,10 @@
     <Setting Key="Age_Chatbot_CustomerStatusSel" SpName="Age_Chatbot_CustomerStatusSel" DbName="DBCust.CustDB.wsv_alp" />
 
     <Setting Key="Age_ManageAPI_CustInfo" SpName="Age_ManageAPI_CustInfo" DbName="DBAGE.bodb02.wsv_alp" />
+    <Setting Key="EAS_API_GetProductList" SpName="EAS_API_GetProductList" DbName="DBAGE.bodb02.wsv_xnap">
+      <Mapping DataField="ProductID" ObjectProperty="Id"></Mapping>
+      <Mapping DataField="ProductCode" ObjectProperty="Code"></Mapping>
+      <Mapping DataField="ProductName" ObjectProperty="Name"></Mapping>
+    </Setting>
   </Function>
 </Functions>

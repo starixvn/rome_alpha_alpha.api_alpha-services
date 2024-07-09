@@ -72,4 +72,24 @@ public class CustomerGrpcService : Customer.CustomerBase
             IsBelonging = isBelonging
         };
     }
+
+    public override async Task<GetAllProductsResponse> GetAllProducts(GetAllProductsRequest request, ServerCallContext context)
+    {
+        var products = await customerService.GetAllProducts(request.SiteName, request.Currency);
+        var result = new GetAllProductsResponse();
+
+        result.Products.AddRange(products.Select(p => new ProductModel {
+            Id = p.Id,
+            Code = p.Code,
+            Name = p.Name
+        }));
+
+        return result;
+    }
+
+    public override async Task<ClearProductsCacheResponse> ClearProductsCache(ClearProductsCacheRequest request, ServerCallContext context)
+    {
+        await customerService.ClearProductsCache(request.SiteName, request.Currency);
+        return new ClearProductsCacheResponse { Result = true };
+    }
 }

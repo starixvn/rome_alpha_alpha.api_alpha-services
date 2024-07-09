@@ -32,6 +32,7 @@ message GetOutstandingReportRequest {
   string sortPropertyName = 9;
   bool isDescendingSort = 10;
   string productGroup = 11;
+  string productIds = 12;
 } 
 
 message GetSuperOutstandingResponse {
@@ -118,6 +119,7 @@ message GetWinLossDetailReportRequest {
   string fromDate = 10; 
   string toDate = 11; 
   string productGroup = 12;
+  string productIds = 13;
 } 
 
 message GetSuperWinLossDetailResponse {
