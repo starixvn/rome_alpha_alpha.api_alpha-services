@@ -1,6 +1,5 @@
 using System.Data;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 
 namespace Alpha.Reports.API.Tests.Helpers;
 
@@ -23,17 +22,17 @@ public class FileHelper
         return dataSet;
     }
 
-    public static T ReadJson<T>(string relativeFilePath, JsonSerializerSettings settings)
+    public static T ReadJson<T>(string relativeFilePath, JsonSerializerOptions settings)
     {
         var json = ReadContent(relativeFilePath);
-        return JsonConvert.DeserializeObject<T>(json, settings);
+        return JsonSerializer.Deserialize<T>(json, settings);
     }
 
     public static T ReadJson<T>(string relativeFilePath)
     {
-        var settings = new JsonSerializerSettings
+        var settings = new JsonSerializerOptions
         {
-            ContractResolver = new PrivateSetterContractResolver()
+            IgnoreReadOnlyFields = false
         };
         return ReadJson<T>(relativeFilePath, settings);
     }

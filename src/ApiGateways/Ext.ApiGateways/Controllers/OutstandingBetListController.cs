@@ -8,6 +8,8 @@ using GrpcBetLists;
 using Common.Logging.Extensions;
 using Alpha.Utilities.Constants;
 using GrpcCustomer;
+using Microsoft.Extensions.Options;
+using Ext.ApiGateways.Configurations;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -17,16 +19,19 @@ public class OutstandingBetListController : BaseAPIController
     private readonly BetLists.BetListsClient apiClient;
     private readonly ICustomerService customerService;
     private readonly ILogger<OutstandingBetListController> logger;
+    private readonly ExtApiGatewaysAppSettings appSettings;
 
     public OutstandingBetListController(
         BetLists.BetListsClient apiClient,
         ICustomerService customerService,
         ILogger<OutstandingBetListController> logger,
-        Customer.CustomerClient customerClient) : base(customerClient)
+        Customer.CustomerClient customerClient,
+        IOptions<ExtApiGatewaysAppSettings> appSettings) : base(customerClient)
     {
         this.apiClient = apiClient;
         this.customerService = customerService;
         this.logger = logger;
+        this.appSettings = appSettings.Value;
     }
 
     [HttpPost]
@@ -112,7 +117,7 @@ public class OutstandingBetListController : BaseAPIController
             //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
-        var productIds = await GetSelectedProductIds(products);
+        var productIds = GetSelectedProductIds(products, appSettings.ProductList);
         var betListsRequest = new GetRunningBetListRequest
         {
             CustId = downlineInfo.CustId,

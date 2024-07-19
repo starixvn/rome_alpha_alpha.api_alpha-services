@@ -4,7 +4,7 @@ using Alpha.BetLists.API.Models.Parlay;
 using Alpha.Utilities.Helpers;
 using Alpha.Utilities.Models;
 using Grpc.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace GrpcBetLists;
 
@@ -20,7 +20,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             return Task.FromResult(response);
         }
 
-        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<TicketDto>>(key);
+        var detailKeyModel = JsonSerializer.Deserialize<DetailKeyModel<TicketDto>>(key);
         if (request.RefNo != detailKeyModel.RefNo)
         {
             return Task.FromResult(response);
@@ -51,7 +51,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             return response;
         }
 
-        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<TicketDto>>(key);
+        var detailKeyModel = JsonSerializer.Deserialize<DetailKeyModel<TicketDto>>(key);
         if (request.RefNo != detailKeyModel.RefNo)
         {
             return response;

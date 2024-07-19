@@ -4,7 +4,6 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.HttpLogging;
-using FanexLibs.Data;
 using Alpha.Utilities.Models;
 using Alpha.Utilities.Configurations;
 
@@ -22,9 +21,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
-            .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
-            .AddFanexCachingMemory()
             .AddOneBookUm(Configuration)
             .AddCustomMVC(Configuration)
             .AddCustomRateLimiter(Configuration)

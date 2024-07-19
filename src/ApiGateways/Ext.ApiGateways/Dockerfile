@@ -9,7 +9,9 @@ COPY ./src/BuildingBlocks/FanexLibs/FanexLibs.Logging/FanexLibs.Logging.csproj .
 COPY ./src/BuildingBlocks/Alpha.Utilities/Alpha.Utilities.csproj ./BuildingBlocks/Alpha.Utilities/
 
 RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
-RUN dotnet restore ApiGateways/Ext.ApiGateways/Ext.ApiGateways.csproj -v n
+
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
+    dotnet restore ApiGateways/Ext.ApiGateways/Ext.ApiGateways.csproj -v n
 
 # Copy everything else and build
 COPY /src/ApiGateways/Ext.ApiGateways ./ApiGateways/Ext.ApiGateways

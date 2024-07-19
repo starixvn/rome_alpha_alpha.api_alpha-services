@@ -33,6 +33,11 @@ static IHostBuilder CreateHostBuilder(string[] args)
        .Build();
 
     var builder = Host.CreateDefaultBuilder(args)
+        .ConfigureAppConfiguration((hostingContext, config) =>
+        {
+            config.AddJsonFile("common-appsettings.json", optional: true, reloadOnChange: false)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+        })
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();

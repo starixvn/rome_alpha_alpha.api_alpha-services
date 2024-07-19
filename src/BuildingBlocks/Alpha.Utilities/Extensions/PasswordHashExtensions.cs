@@ -1,7 +1,7 @@
 
 using Microsoft.VisualBasic;
 
-namespace Ext.ApiGateways.Extensions;
+namespace Alpha.Utilities.Extensions;
 
 public static class PasswordHashExtensions
 {

@@ -7,7 +7,9 @@ COPY ./src/BuildingBlocks/FanexLibs/FanexLibs.Data/FanexLibs.Data.csproj ./Build
 COPY ./src/BuildingBlocks/FanexLibs/FanexLibs.Logging/FanexLibs.Logging.csproj ./BuildingBlocks/FanexLibs/FanexLibs.Logging/FanexLibs.Logging.csproj
 COPY ./src/Services/Alpha.Customer.API/Alpha.Customer.API.csproj ./Services/Alpha.Customer.API/Alpha.Customer.API.csproj
 RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
-RUN dotnet restore Services/Alpha.Customer.API/Alpha.Customer.API.csproj -v n
+
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
+    dotnet restore Services/Alpha.Customer.API/Alpha.Customer.API.csproj -v n
 
 # Copy everything else and build
 COPY /src/BuildingBlocks/Common.Logging ./BuildingBlocks/Common.Logging

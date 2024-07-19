@@ -1,0 +1,320 @@
+{
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+        }
+    },
+    "AllowedHosts": "*",
+    "Serilog": {
+        "MinimumLevel": {
+            "Default": "Information",
+            "Override": {
+                "Microsoft": "Information",
+                "System": "Warning"
+            }
+        }
+    },
+    "RateLimitConfigs": {
+        "RateLimitByGlobal": {
+            "AutoReplenishment": true,
+            "PermitLimit": 250,
+            "Window": 1,
+            "Unit": "s",
+            "SegmentsPerWindow": 1
+        },
+        "RateLimitBySecond": {
+            "AutoReplenishment": true,
+            "PermitLimit": 100,
+            "Window": 1,
+            "Unit": "s",
+            "SegmentsPerWindow": 1
+        },
+        "RateLimitByMinute": {
+            "AutoReplenishment": true,
+            "PermitLimit": 5000,
+            "Window": 1,
+            "Unit": "m",
+            "SegmentsPerWindow": 3
+        },
+        "RateLimitByHour": {
+            "AutoReplenishment": true,
+            "PermitLimit": 50000,
+            "Window": 1,
+            "Unit": "h",
+            "SegmentsPerWindow": 6
+        }
+    },
+    "ProductList" : [
+        {
+            "id": 1,
+            "name": "Sportsbook",
+            "code": "SB"
+        },
+        {
+            "id": 3,
+            "name": "Number Game",
+            "code": "NG"
+        },
+        {
+            "id": 5,
+            "name": "Virtual Sports",
+            "code": "VS"
+        },
+        {
+            "id": 6,
+            "name": "Saba Casino",
+            "code": "CS"
+        },
+        {
+            "id": 8,
+            "name": "RNG Keno",
+            "code": "KN"
+        },
+        {
+            "id": 11,
+            "name": "AG Casino",
+            "code": "AGC"
+        },
+        {
+            "id": 21,
+            "name": "Allbet",
+            "code": "AB"
+        },
+        {
+            "id": 22,
+            "name": "Macau Games",
+            "code": "VB"
+        },
+        {
+            "id": 28,
+            "name": "Lottery",
+            "code": "LT"
+        },
+        {
+            "id": 31,
+            "name": "Exchange",
+            "code": "BX"
+        },
+        {
+            "id": 32,
+            "name": "PP",
+            "code": "PP"
+        },
+        {
+            "id": 34,
+            "name": "Arcadia Gaming",
+            "code": "CC"
+        },
+        {
+            "id": 36,
+            "name": "SG",
+            "code": "SG"
+        },
+        {
+            "id": 37,
+            "name": "Saba Promotion",
+            "code": "SPR"
+        },
+        {
+            "id": 38,
+            "name": "Virtual Games",
+            "code": "VRG"
+        },
+        {
+            "id": 39,
+            "name": "SA Gaming",
+            "code": "SAG"
+        },
+        {
+            "id": 40,
+            "name": "Table Game",
+            "code": "TG"
+        },
+        {
+            "id": 42,
+            "name": "SABA.games",
+            "code": "SBC"
+        },
+        {
+            "id": 43,
+            "name": "Togel 4D",
+            "code": "I4D"
+        },
+        {
+            "id": 45,
+            "name": "AE Sexy",
+            "code": "SXG"
+        },
+        {
+            "id": 46,
+            "name": "IBCBet Live Casino",
+            "code": "IBCLC"
+        },
+        {
+            "id": 47,
+            "name": "BBIN",
+            "code": "BBIN"
+        },
+        {
+            "id": 50,
+            "name": "Funky Games",
+            "code": "RNGW"
+        },
+        {
+            "id": 51,
+            "name": "WM",
+            "code": "WM"
+        },
+        {
+            "id": 52,
+            "name": "ION",
+            "code": "ION"
+        },
+        {
+            "id": 55,
+            "name": "PG Soft",
+            "code": "PGS"
+        },
+        {
+            "id": 56,
+            "name": "Joker",
+            "code": "JK"
+        },
+        {
+            "id": 57,
+            "name": "BG",
+            "code": "BGG"
+        },
+        {
+            "id": 60,
+            "name": "MaxGame",
+            "code": "MXG"
+        },
+        {
+            "id": 61,
+            "name": "Habanero",
+            "code": "HB"
+        },
+        {
+            "id": 62,
+            "name": "CG",
+            "code": "CG"
+        },
+        {
+            "id": 63,
+            "name": "Sports Lottery",
+            "code": "SLT"
+        },
+        {
+            "id": 65,
+            "name": "PP Live Casino",
+            "code": "PPL"
+        },
+        {
+            "id": 66,
+            "name": "Vgaming",
+            "code": "VGA"
+        },
+        {
+            "id": 67,
+            "name": "AdvantPlay",
+            "code": "AP"
+        },
+        {
+            "id": 68,
+            "name": "AdvantPlay Mini",
+            "code": "APM"
+        },
+        {
+            "id": 69,
+            "name": "Bitcoin",
+            "code": "BTC"
+        },
+        {
+            "id": 70,
+            "name": "FGG",
+            "code": "FGGL"
+        },
+        {
+            "id": 72,
+            "name": "SEAL Entertainment",
+            "code": "SEA"
+        },
+        {
+            "id": 73,
+            "name": "MG-RNG",
+            "code": "MGRNG"
+        },
+        {
+            "id": 74,
+            "name": "Player Tips",
+            "code": "TIP"
+        },
+        {
+            "id": 75,
+            "name": "Jili",
+            "code": "JIG"
+        },
+        {
+            "id": 76,
+            "name": "YeeBet",
+            "code": "YB"
+        },
+        {
+            "id": 78,
+            "name": "UU SLOTS",
+            "code": "UUSL"
+        },
+        {
+            "id": 79,
+            "name": "Live22",
+            "code": "L22"
+        },
+        {
+            "id": 80,
+            "name": "WE Live Casino",
+            "code": "WE"
+        },
+        {
+            "id": 86,
+            "name": "SABA xD",
+            "code": "SNG"
+        },
+        {
+            "id": 87,
+            "name": "FastSpin",
+            "code": "FS"
+        },
+        {
+            "id": 88,
+            "name": "Virtual Sports 5",
+            "code": "VS5"
+        },
+        {
+            "id": 89,
+            "name": "FA CHAI",
+            "code": "FAC"
+        },
+        {
+            "id": 85,
+            "name": "Nextspin",
+            "code": "NS"
+        },
+        {
+            "id": 96,
+            "name": "ON Casino",
+            "code": "ON"
+        },
+        {
+            "id": 100,
+            "name": "Playtech",
+            "code": "PTRNG"
+        },
+        {
+            "id": 90,
+            "name": "GPI Live Casino",
+            "code": "GPILC"
+        }
+    ]
+}

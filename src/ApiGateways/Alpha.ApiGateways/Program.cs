@@ -28,8 +28,13 @@ finally
     Log.CloseAndFlush();
 }
 
-static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
+static IHostBuilder CreateHostBuilder(string[] args) 
+    => Host.CreateDefaultBuilder(args)
+        .ConfigureAppConfiguration((hostingContext, config) =>
+        {
+            config.AddJsonFile("common-appsettings.json", optional: true, reloadOnChange: false)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+        })
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();

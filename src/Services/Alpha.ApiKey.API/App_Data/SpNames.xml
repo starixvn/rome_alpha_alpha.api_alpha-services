@@ -18,4 +18,10 @@
     <Setting Key="Age_ManageAPI_Ins" SpName="Age_ManageAPI_Ins" DbName="DBCust.CustDB.wsv_alp"/>
     <Setting Key="Age_ManageAPI_Upd" SpName="Age_ManageAPI_Upd" DbName="DBCust.CustDB.wsv_alp"/>
     <Setting Key="Age_ManageAPI_Del" SpName="Age_ManageAPI_Del" DbName="DBCust.CustDB.wsv_alp"/>
+    <Setting Key="EAS_API_CheckSecretKeyUser" SpName="EAS_API_CheckSecretKeyUser_UAT3" DbName="DBCust.CustDB.wsv_xnap"/>
+    <Setting Key="EAS_API_SelGroupBySecretKey" SpName="EAS_API_SelGroupBySecretKey_UAT3" DbName="DBPOL.NAP_UserControl.wsv_xnap">
+        <Mappings>
+            <Mapping DataField="APISecretKey" ObjectProperty="Key" />
+        </Mappings>
+    </Setting>
 </Functions>

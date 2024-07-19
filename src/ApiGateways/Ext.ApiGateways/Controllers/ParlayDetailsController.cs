@@ -9,7 +9,7 @@ using Common.Logging.Extensions;
 using Ext.ApiGateways.Requests;
 using Alpha.Utilities.Constants;
 using Alpha.Utilities.Helpers;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -62,7 +62,7 @@ public class ParlayDetailsController : Controller
 
 
         var key = AesService.Decrypt(request.DetailKey);
-        var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<object>>(key);
+        var detailKeyModel = JsonSerializer.Deserialize<DetailKeyModel<object>>(key);
         if(!detailKeyModel.SupportDetails) {
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.NotSupportGetParlayDetails };
         }

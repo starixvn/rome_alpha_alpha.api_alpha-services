@@ -5,14 +5,18 @@ WORKDIR /src
 COPY ./src/BuildingBlocks/Common.Logging/Common.Logging.csproj ./BuildingBlocks/Common.Logging/Common.Logging.csproj
 COPY ./src/BuildingBlocks/FanexLibs/FanexLibs.Data/FanexLibs.Data.csproj ./BuildingBlocks/FanexLibs/FanexLibs.Data/FanexLibs.Data.csproj
 COPY ./src/BuildingBlocks/FanexLibs/FanexLibs.Logging/FanexLibs.Logging.csproj ./BuildingBlocks/FanexLibs/FanexLibs.Logging/FanexLibs.Logging.csproj
+COPY ./src/BuildingBlocks/Alpha.Utilities/Alpha.Utilities.csproj ./BuildingBlocks/Alpha.Utilities/
 COPY ./src/Services/Alpha.ApiKey.API/Alpha.ApiKey.API.csproj ./Services/Alpha.ApiKey.API/Alpha.ApiKey.API.csproj
 RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
-RUN dotnet restore Services/Alpha.ApiKey.API/Alpha.ApiKey.API.csproj -v n
+
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
+    dotnet restore Services/Alpha.ApiKey.API/Alpha.ApiKey.API.csproj -v n
 
 # Copy everything else and build
 COPY /src/BuildingBlocks/Common.Logging ./BuildingBlocks/Common.Logging
 COPY /src/BuildingBlocks/FanexLibs/FanexLibs.Data ./BuildingBlocks/FanexLibs/FanexLibs.Data
 COPY /src/BuildingBlocks/FanexLibs/FanexLibs.Logging ./BuildingBlocks/FanexLibs/FanexLibs.Logging
+COPY /src/BuildingBlocks/Alpha.Utilities ./BuildingBlocks/Alpha.Utilities
 COPY /src/Services/Alpha.ApiKey.API ./Services/Alpha.ApiKey.API
 WORKDIR /src/Services/Alpha.ApiKey.API
 RUN dotnet publish -r linux-x64 --self-contained false -o /app

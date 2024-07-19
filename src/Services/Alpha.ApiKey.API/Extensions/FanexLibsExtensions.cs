@@ -1,6 +1,6 @@
 using Fanex.Caching;
 
-namespace Ext.ApiGateways.Extensions;
+namespace Alpha.ApiKey.API.Extensions;
 
 public static class FanexLibsExtensions
 {

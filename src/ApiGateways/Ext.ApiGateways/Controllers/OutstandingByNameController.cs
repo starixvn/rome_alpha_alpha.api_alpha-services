@@ -8,7 +8,8 @@ using System.Security.Claims;
 using Alpha.Utilities.Constants;
 using GrpcReports;
 using GrpcCustomer;
-using Ext.ApiGateways.Requests;
+using Ext.ApiGateways.Configurations;
+using Microsoft.Extensions.Options;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -18,16 +19,19 @@ public class OutstandingByNameController : BaseAPIController
     private readonly Reports.ReportsClient reportsClient;
     private readonly ICustomerService customerService;
     private readonly ILogger<OutstandingByNameController> logger;
+    private readonly ExtApiGatewaysAppSettings appSettings;
 
     public OutstandingByNameController(
         Reports.ReportsClient reportsClient,
         ICustomerService customerService,
         ILogger<OutstandingByNameController> logger,
-        Customer.CustomerClient customerClient) : base(customerClient)
+        Customer.CustomerClient customerClient,
+        IOptions<ExtApiGatewaysAppSettings> appSettings) : base(customerClient)
     {
         this.reportsClient = reportsClient;
         this.customerService = customerService;
         this.logger = logger;
+        this.appSettings = appSettings.Value;
     }
 
     [HttpPost]
@@ -160,7 +164,7 @@ public class OutstandingByNameController : BaseAPIController
             //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
-        var productIds = await GetSelectedProductIds(products);
+        var productIds = GetSelectedProductIds(products, appSettings.ProductList);
         var reportRequest = new GetOutstandingReportRequest
         {
             CustId = downlineInfo.CustId,

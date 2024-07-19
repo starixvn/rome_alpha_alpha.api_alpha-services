@@ -33,7 +33,7 @@ public class ProductController : Controller
 
         var result = await apiClient.GetAllProductsAsync(request);
 
-        return Json(result.Products.Select(p => new Ext.ApiGateways.Models.ProductModel(p.Name, p.Code)));
+        return Json(result.Products.Select(p => new Ext.ApiGateways.Models.ProductModelViewModel(p.Name, p.Code)));
     }
 
     [HttpPost]

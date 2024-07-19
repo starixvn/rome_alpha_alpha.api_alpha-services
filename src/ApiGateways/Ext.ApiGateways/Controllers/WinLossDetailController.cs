@@ -8,6 +8,8 @@ using System.Security.Claims;
 using Common.Logging.Extensions;
 using Alpha.Utilities.Constants;
 using GrpcCustomer;
+using Microsoft.Extensions.Options;
+using Ext.ApiGateways.Configurations;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -17,16 +19,19 @@ public class WinLossDetailController : BaseAPIController
     private readonly Reports.ReportsClient apiClient;
     private readonly ICustomerService customerService;
     private readonly ILogger<WinLossDetailController> logger;
+    private readonly ExtApiGatewaysAppSettings appSettings;
 
     public WinLossDetailController(
         Reports.ReportsClient apiClient,
         ICustomerService customerService,
         ILogger<WinLossDetailController> logger,
-        Customer.CustomerClient customerClient) : base(customerClient)
+        Customer.CustomerClient customerClient,
+        IOptions<ExtApiGatewaysAppSettings> appSettings) : base(customerClient)
     {
         this.apiClient = apiClient;
         this.customerService = customerService;
         this.logger = logger;
+        this.appSettings = appSettings.Value;
     }
 
     [HttpPost]
@@ -126,7 +131,7 @@ public class WinLossDetailController : BaseAPIController
             //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
-        var productIds = await GetSelectedProductIds(products);
+        var productIds = GetSelectedProductIds(products, appSettings.ProductList);
         var reportRequest = new GetWinLossDetailReportRequest
         {
             CustName = string.Empty,

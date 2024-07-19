@@ -8,10 +8,10 @@ using Alpha.BetLists.API.Services;
 using Alpha.BetLists.API.Models.Parlay;
 using Fanex.BetDetails.BetBuilder.Criteria;
 using Fanex.BetDetails.BetBuilder.Services;
-using Newtonsoft.Json;
 using Alpha.Utilities.Helpers;
 using Alpha.BetLists.API.Models.TicketDetail;
 using Alpha.Utilities.Models;
+using System.Text.Json;
 using BetListNPOI.HSSF.Record.Chart;
 using Alpha.BetLists.API.Constants;
 
@@ -92,9 +92,10 @@ namespace Alpha.BetLists.API.Helpers
                 return string.Empty;
             }
 
-            var key = JsonConvert.SerializeObject(new Get3rdProductTicketDetailModel(
+            var key = JsonSerializer.Serialize(new Get3rdProductTicketDetailModel(
                 int.Parse(t.GetTransactionType()),
-                productId));
+                productId,
+                t.RefNo));
             return AesService.Encrypt(key);
         }
 
@@ -187,7 +188,7 @@ namespace Alpha.BetLists.API.Helpers
 
         private static string GetParlayDetailKey(TicketDto t, byte parlayProductId, string choice)
         {
-            var key = JsonConvert.SerializeObject(new DetailKeyModel<TicketDto>()
+            var key = JsonSerializer.Serialize(new DetailKeyModel<TicketDto>()
             {
                 ticket = t,
                 ParlayProductId = parlayProductId,

@@ -3,7 +3,7 @@ using Alpha.Reports.API.Requests;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using GrpcCustomer;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Alpha.Reports.API.Interceptors;
 
@@ -45,7 +45,7 @@ public class CheckBelongingInterceptor : Interceptor
             return true;
         }
 
-        var baseRequest = JsonConvert.DeserializeObject<BaseRequest>(request.ToString());
+        var baseRequest = JsonSerializer.Deserialize<BaseRequest>(request.ToString());
         if (baseRequest == null || baseRequest.ViewerId == 0 || string.IsNullOrWhiteSpace(baseRequest.CustName))
         {
             return true;

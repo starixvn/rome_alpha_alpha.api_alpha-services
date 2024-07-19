@@ -7,18 +7,21 @@ using Alpha.BetLists.API.Params;
 using Alpha.Utilities.Helpers;
 using Fanex.BetList.Core.Entities;
 using Grpc.Core;
-using Newtonsoft.Json;
 using Alpha.Utilities.Extensions;
+using System.Text.Json;
 
 namespace GrpcBetLists;
 
 public partial class BetListsGrpcService : BetLists.BetListsBase
 {
+    private const int MaxPagingSize = 1000000;
+
     public override async Task<SuperViewTicketDetailsResponse> SuperViewTicketDetails(GetTicketDetailsRequest request, ServerCallContext context)
     {
         var response = new SuperViewTicketDetailsResponse();
         var param = CreateCasinoDetailsParam(request);
-        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) || param.TransType < 0)
+        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) 
+            || param.TransType < 0 || request.RefNo != param.RefNo)
         {
             return response;
         }
@@ -50,7 +53,9 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var response = new MasterViewTicketDetailsResponse();
 
         var param = CreateCasinoDetailsParam(request);
-        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) || param.TransType < 0)
+        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) 
+            || param.TransType < 0
+            || request.RefNo != param.RefNo)
         {
             return response;
         }
@@ -79,7 +84,9 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var response = new AgentViewTicketDetailsResponse();
 
         var param = CreateCasinoDetailsParam(request);
-        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) || param.TransType < 0)
+        if (!ticketDetailsMapper.CheckProductIdIsAllowed(param.ProductId) 
+            || param.TransType < 0 
+            || request.RefNo != param.RefNo)
         {
             return response;
         }
@@ -122,14 +129,18 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         if (!string.IsNullOrEmpty(request.DetailKey))
         {
             var key = AesService.Decrypt(request.DetailKey);
-            dynamic get3rdProductTicketFromKey = JsonConvert.DeserializeObject(key);
+            dynamic get3rdProductTicketFromKey = JsonSerializer.Deserialize<object>(key);
             if (get3rdProductTicketFromKey != null)
             {
                 productId = get3rdProductTicketFromKey.ProductId;
                 transType = get3rdProductTicketFromKey.TransType;
+                
+                return new CasinoDetailsParam(
+                    get3rdProductTicketFromKey.RefNo, request.CustId, (byte)transType, productId, 1, MaxPagingSize);
             }
         }
+
         return new CasinoDetailsParam(
-            request.RefNo, request.CustId, (byte)transType, productId, 1, 1000000);
+            request.RefNo, request.CustId, (byte)transType, productId, 1, MaxPagingSize);
     }
 }

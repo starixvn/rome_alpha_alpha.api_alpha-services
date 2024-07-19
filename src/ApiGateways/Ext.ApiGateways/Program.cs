@@ -37,12 +37,17 @@ static IHostBuilder CreateHostBuilder(string[] args)
         .Build();
 
     return Host.CreateDefaultBuilder(args)
-         .ConfigureWebHostDefaults(webBuilder =>
-         {
-             webBuilder.UseStartup<Startup>();
+            .ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddJsonFile("common-appsettings.json", optional: true, reloadOnChange: false)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
 
-             var port = int.Parse(config["GatewaysSettings:Port"]);
-             webBuilder.UseUrls($"http://0.0.0.0:{port}");
-         })
-         .UseSerilog(SeriLogger.Configure, true);
+                var port = int.Parse(config["GatewaysSettings:Port"]);
+                webBuilder.UseUrls($"http://0.0.0.0:{port}");
+            })
+            .UseSerilog(SeriLogger.Configure, true);
 }

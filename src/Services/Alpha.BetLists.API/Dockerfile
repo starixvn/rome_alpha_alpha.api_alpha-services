@@ -10,7 +10,9 @@ COPY ./src/BuildingBlocks/Alpha.Utilities/Alpha.Utilities.csproj ./BuildingBlock
 
 COPY ./src/Services/Alpha.BetLists.API/Alpha.BetLists.API.csproj ./Services/Alpha.BetLists.API/Alpha.BetLists.API.csproj
 RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
-RUN dotnet restore Services/Alpha.BetLists.API/Alpha.BetLists.API.csproj -v n
+
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
+    dotnet restore Services/Alpha.BetLists.API/Alpha.BetLists.API.csproj -v n
 
 # Copy everything else and build
 COPY /src/BuildingBlocks/Common.Logging ./BuildingBlocks/Common.Logging

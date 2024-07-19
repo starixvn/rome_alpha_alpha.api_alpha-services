@@ -13,10 +13,9 @@ public class BaseAPIController : Controller
         this.customerClient = customerClient;
     }
 
-    protected async Task<string> GetSelectedProductIds(string codes) {
+    protected string GetSelectedProductIds(string codes, IEnumerable<Ext.ApiGateways.Models.ProductModel> productList) {
         var request = new GetAllProductsRequest();
-        var response = await customerClient.GetAllProductsAsync(request);
-        var products = response.Products ?? Enumerable.Empty<ProductModel>();
+        var products = productList ?? Enumerable.Empty<Ext.ApiGateways.Models.ProductModel>();
 
         if(string.IsNullOrWhiteSpace(codes) || 
             string.Equals("All", codes, StringComparison.OrdinalIgnoreCase)) {

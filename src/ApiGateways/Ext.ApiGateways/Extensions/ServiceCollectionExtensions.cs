@@ -15,11 +15,12 @@ using System.Reflection;
 using System.Threading.RateLimiting;
 using System.Globalization;
 using GrpcBetLists;
-using Newtonsoft.Json.Serialization;
 using Alpha.Utilities.Infrastructure;
 using Alpha.Utilities.Configurations;
 using Alpha.Utilities.Interceptors;
 using Common.Logging.Extensions;
+using System.Text.Json;
+using GrpcExtApiKey;
 
 namespace Ext.ApiGateways.Extensions;
 
@@ -110,10 +111,14 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<GrpcExceptionInterceptor>();
         services.AddTransient<ReportsGrpcExceptionInterceptor>();
-
         services.AddScoped<IApiKeyService, ApiKeyService>();
-
         services.AddTransient<ICustomerService, CustomerService>();
+
+        services.AddGrpcClient<ExtApiKey.ExtApiKeyClient>((services, options) =>
+        {
+            var apiKeyApi = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcApiKey;
+            options.Address = new Uri(apiKeyApi);
+        }).AddInterceptor<GrpcExceptionInterceptor>();
 
         services.AddGrpcClient<Customer.CustomerClient>((services, options) =>
         {
@@ -140,10 +145,18 @@ public static class ServiceCollectionExtensions
         })
         .AddInterceptor<ReportsGrpcExceptionInterceptor>();
 
-        services.AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ContractResolver =
-                new CamelCasePropertyNamesContractResolver());
+        services.AddControllersWithViews();
+        
+        services.AddMvc().AddJsonOptions(options => {
+            options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        });
+
+        // also the following given it's a Web API project
+        services.AddControllers().AddJsonOptions(options => {
+            options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        });
 
         return services;
     }

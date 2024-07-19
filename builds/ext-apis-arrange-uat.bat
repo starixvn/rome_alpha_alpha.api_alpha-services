@@ -26,6 +26,7 @@
 @node -e "let pkg=require('./%settingsFile%'); pkg.Urls.GrpcCustomer='%customerApiUrl%'; require('fs').writeFileSync('%resultFile%', JSON.stringify(pkg, null, 4));"
 @node -e "let pkg=require('./%settingsFile%'); pkg.Urls.GrpcReports='%reportsApiUrl%'; require('fs').writeFileSync('%resultFile%', JSON.stringify(pkg, null, 4));"
 @node -e "let pkg=require('./%settingsFile%'); pkg.Urls.GrpcBetLists='%betlistsApiUrl%'; require('fs').writeFileSync('%resultFile%', JSON.stringify(pkg, null, 4));"
+@node -e "let pkg=require('./%settingsFile%'); pkg.Urls.GrpcApiKey='%apiKeyApiUrl%'; require('fs').writeFileSync('%resultFile%', JSON.stringify(pkg, null, 4));"
 @node -e "let pkg=require('./%settingsFile%'); pkg.Urls.ApiServer='%extApiServerUrl%'; require('fs').writeFileSync('%resultFile%', JSON.stringify(pkg, null, 4));"
 
 @call cd ../Alpha.ApiGateways
