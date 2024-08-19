@@ -76,7 +76,7 @@
     <PackageReference Include="Fanex.BetList.Spadegaming" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SportsLottery" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.TableGames" Version="2.0.0" />
-    <PackageReference Include="Fanex.BetList.VGaming" Version="2.0.0.7-PromotionPrize" />
+    <PackageReference Include="Fanex.BetList.VGaming" Version="2.0.0.7" />
     <PackageReference Include="Fanex.BetList.VirtualGames" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.VirtualSports" Version="2.0.0.9" />
     <PackageReference Include="Fanex.BetList.VoidBridge" Version="2.0.0" />
