@@ -33,6 +33,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
                 Company = reportData.TotalData.Company.FormatNumber(),
                 NetTurnover = reportData.TotalData.NetTurnover.FormatNumber(),
                 GrossComm = reportData.TotalData.GrossComm.FormatNumber(),
+                RewardAmount = reportData.TotalData.RewardAmount.FormatNumber(),
+                RewardCurrency = reportData.TotalData.RewardCurrency
             }
         };
 
@@ -56,6 +58,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Company = o.Company.FormatNumber(),
             NetTurnover = o.NetTurnover.FormatNumber(),
             GrossComm = o.GrossComm.FormatNumber(),
+            RewardAmount = o.RewardAmount.FormatNumber(),
+            RewardCurrency = o.RewardCurrency
         }));
 
         return response;
@@ -84,6 +88,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
                 Company = reportData.TotalData.Company.FormatNumber(),
                 NetTurnover = reportData.TotalData.NetTurnover.FormatNumber(),
                 GrossComm = reportData.TotalData.GrossComm.FormatNumber(),
+                RewardAmount = reportData.TotalData.RewardAmount.FormatNumber(),
+                RewardCurrency = reportData.TotalData.RewardCurrency
             }
         };
 
@@ -104,6 +110,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Company = o.Company.FormatNumber(),
             NetTurnover = o.NetTurnover.FormatNumber(),
             GrossComm = o.GrossComm.FormatNumber(),
+            RewardAmount = o.RewardAmount.FormatNumber(),
+            RewardCurrency = o.RewardCurrency
         }));
 
         return response;
@@ -129,6 +137,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
                 Company = reportData.TotalData.Company.FormatNumber(),
                 NetTurnover = reportData.TotalData.NetTurnover.FormatNumber(),
                 GrossComm = reportData.TotalData.GrossComm.FormatNumber(),
+                RewardAmount = reportData.TotalData.RewardAmount.FormatNumber(),
+                RewardCurrency = reportData.TotalData.RewardCurrency
             }
         };
 
@@ -146,6 +156,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             Company = o.Company.FormatNumber(),
             NetTurnover = o.NetTurnover.FormatNumber(),
             GrossComm = o.GrossComm.FormatNumber(),
+            RewardAmount = o.RewardAmount.FormatNumber(),
+            RewardCurrency = o.RewardCurrency
         }));
 
         return response;
