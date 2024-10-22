@@ -87,7 +87,8 @@
     <PackageReference Include="Fanex.BetList.Live22" Version="1.0.0.1" />
     <PackageReference Include="Fanex.BetList.UUSlots" Version="1.0.0" />
     <PackageReference Include="Fanex.BetList.FastSpin" Version="1.0.0.1" />
-    <PackageReference Include="Fanex.BetList.Nextspin " Version="1.0.0" />
+    <PackageReference Include="Fanex.BetList.Nextspin" Version="1.0.0" />
+    <PackageReference Include="Fanex.BetList.Playtech" Version="1.0.0" />
 
     <PackageReference Include="Alpha.IPInfo" Version="1.0.0" />
   </ItemGroup>
