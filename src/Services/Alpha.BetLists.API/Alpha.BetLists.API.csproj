@@ -32,7 +32,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Fanex.BetDetails.BetBuilder" Version="1.0.0.2" />
-    <PackageReference Include="Fanex.BetList.Core" Version="3.0.4.2" />
+    <PackageReference Include="Fanex.BetList.Core" Version="3.0.4.3" />
     <PackageReference Include="Fanex.BetList.Core.RemotingRef" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.AdvantPlay" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.AdvantPlayMini" Version="2.0.0" />
@@ -49,6 +49,7 @@
     <PackageReference Include="Fanex.BetList.GDG" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.GlobalGaming" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.GoldDeluxe" Version="2.0.0" />
+    <PackageReference Include="Fanex.BetList.GPI" Version="1.0.0-beta-02" />
     <PackageReference Include="Fanex.BetList.GTCasino" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.Habanero" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.IONCasino" Version="2.0.0" />
