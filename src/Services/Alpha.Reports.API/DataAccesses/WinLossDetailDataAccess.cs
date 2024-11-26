@@ -113,7 +113,9 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             SuperWinLoss = reader.ToDecimal("SAgWinLoss"),
             SuperComm = reader.ToDecimal("SAgComm"),
             NetTurnover = reader.ToDecimal("TurnoverNoDraw"),
-            GrossComm = reader.ToDecimal("GrossComm")
+            GrossComm = reader.ToDecimal("GrossComm"),
+            RewardAmount = reader.ToDecimal("RewardAmount"),
+            RewardCurrency = reader.ToString("RewardCurrency")
         };
 
         return winLossDetail;
@@ -134,7 +136,9 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             MasterWinLoss = reader.ToDecimal("MAgWinLoss"),
             MasterComm = reader.ToDecimal("MAgComm"),
             NetTurnover = reader.ToDecimal("TurnoverNoDraw"),
-            GrossComm = reader.ToDecimal("GrossComm")
+            GrossComm = reader.ToDecimal("GrossComm"),
+            RewardAmount = reader.ToDecimal("RewardAmount"),
+            RewardCurrency = reader.ToString("RewardCurrency")
         };
 
         return winLossDetail;
@@ -153,7 +157,9 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             AgentWinLoss = reader.ToDecimal("AgWinLoss"),
             AgentComm = reader.ToDecimal("AgComm"),
             NetTurnover = reader.ToDecimal("TurnoverNoDraw"),
-            GrossComm = reader.ToDecimal("GrossComm")
+            GrossComm = reader.ToDecimal("GrossComm"),
+            RewardAmount = reader.ToDecimal("RewardAmount"),
+            RewardCurrency = reader.ToString("RewardCurrency")
         };
 
         return winLossDetail;

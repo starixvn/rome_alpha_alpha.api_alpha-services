@@ -8,7 +8,7 @@ service Reports {
   rpc GetSuperOutstanding(GetOutstandingReportRequest) returns (GetSuperOutstandingResponse);
   rpc GetSuperOnMasterOutstanding(GetOutstandingReportRequest) returns (GetSuperOnMasterOutstandingResponse);
   rpc GetSuperOnAgentOutstanding(GetOutstandingReportRequest) returns (GetSuperOnAgentOutstandingResponse);
-  
+
   rpc GetMasterOutstanding(GetOutstandingReportRequest) returns (GetMasterOutstandingResponse);
   rpc GetMasterOnAgentOutstanding(GetOutstandingReportRequest) returns (GetMasterOnAgentOutstandingResponse);
 
@@ -33,7 +33,7 @@ message GetOutstandingReportRequest {
   bool isDescendingSort = 10;
   string productGroup = 11;
   string productIds = 12;
-} 
+}
 
 message GetSuperOutstandingResponse {
   repeated SuperOutstandingModel report = 1;
@@ -113,14 +113,14 @@ message GetWinLossDetailReportRequest {
   sint32 custLevelId = 5;
   int32 viewerId = 6;
   sint32 viewerLevelId = 7;
- 
+
   string sortPropertyName = 8;
   bool isDescendingSort = 9;
-  string fromDate = 10; 
-  string toDate = 11; 
+  string fromDate = 10;
+  string toDate = 11;
   string productGroup = 12;
   string productIds = 13;
-} 
+}
 
 message GetSuperWinLossDetailResponse {
   repeated SuperWinLossDetailModel report = 1;
@@ -159,8 +159,10 @@ message SuperWinLossDetailModel {
   string superWinLoss = 15;
   string superComm = 16;
   string superTotal = 17;
-  
+
   string company = 18;
+  string rewardAmount = 19;
+  string rewardCurrency = 20;
 }
 
 message MasterWinLossDetailModel {
@@ -183,6 +185,8 @@ message MasterWinLossDetailModel {
   string masterTotal = 14;
 
   string company = 15;
+  string rewardAmount = 16;
+  string rewardCurrency = 17;
 }
 
 
@@ -202,4 +206,6 @@ message AgentWinLossDetailModel {
   string agentTotal = 11;
 
   string company = 12;
+  string rewardAmount = 13;
+  string rewardCurrency = 14;
 }

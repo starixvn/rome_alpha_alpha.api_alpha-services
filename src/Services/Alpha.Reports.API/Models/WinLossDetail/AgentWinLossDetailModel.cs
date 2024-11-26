@@ -27,4 +27,8 @@ public class AgentWinLossDetailModel
     public decimal AgentTotal => AgentWinLoss + AgentComm;
 
     public decimal Company => -(AgentTotal + MemberTotal);
+
+    public decimal RewardAmount { get; set; }
+
+    public string RewardCurrency { get; set; }
 }
