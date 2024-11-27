@@ -141,26 +141,27 @@ message SuperWinLossDetailModel {
   string turnover = 3;
   string netTurnover = 4;
   string grossComm = 5;
+  string rewardAmount = 6;
+  string rewardCurrency = 7;
 
-  string memberWinLoss = 6;
-  string memberComm = 7;
-  string memberTotal = 8;
+  string memberWinLoss = 8;
+  string memberComm = 9;
+  string memberTotal = 10;
 
-  string agentWinLoss = 9;
-  string agentComm = 10;
-  string agentTotal = 11;
+  string agentWinLoss = 11;
+  string agentComm = 12;
+  string agentTotal = 13;
 
-  string masterWinLoss = 12;
-  string masterComm = 13;
-  string masterTotal = 14;
+  string masterWinLoss = 14;
+  string masterComm = 15;
+  string masterTotal = 16;
 
-  string superWinLoss = 15;
-  string superComm = 16;
-  string superTotal = 17;
+  string superWinLoss = 17;
+  string superComm = 18;
+  string superTotal = 19;
 
-  string company = 18;
-  string rewardAmount = 19;
-  string rewardCurrency = 20;
+  string company = 20;
+
 }
 
 message MasterWinLossDetailModel {
@@ -169,22 +170,22 @@ message MasterWinLossDetailModel {
   string turnover = 3;
   string netTurnover = 4;
   string grossComm = 5;
+  string rewardAmount = 6;
+  string rewardCurrency = 7;
 
-  string memberWinLoss = 6;
-  string memberComm = 7;
-  string memberTotal = 8;
+  string memberWinLoss = 8;
+  string memberComm = 9;
+  string memberTotal = 10;
 
-  string agentWinLoss = 9;
-  string agentComm = 10;
-  string agentTotal = 11;
+  string agentWinLoss = 11;
+  string agentComm = 12;
+  string agentTotal = 13;
 
-  string masterWinLoss = 12;
-  string masterComm = 13;
-  string masterTotal = 14;
+  string masterWinLoss = 14;
+  string masterComm = 15;
+  string masterTotal = 16;
 
-  string company = 15;
-  string rewardAmount = 16;
-  string rewardCurrency = 17;
+  string company = 17;
 }
 
 
@@ -194,16 +195,16 @@ message AgentWinLossDetailModel {
   string turnover = 3;
   string netTurnover = 4;
   string grossComm = 5;
+  string rewardAmount = 6;
+  string rewardCurrency = 7;
 
-  string memberWinLoss = 6;
-  string memberComm = 7;
-  string memberTotal = 8;
+  string memberWinLoss = 8;
+  string memberComm = 9;
+  string memberTotal = 10;
 
-  string agentWinLoss = 9;
-  string agentComm = 10;
-  string agentTotal = 11;
+  string agentWinLoss = 11;
+  string agentComm = 12;
+  string agentTotal = 13;
 
-  string company = 12;
-  string rewardAmount = 13;
-  string rewardCurrency = 14;
+  string company = 14;
 }

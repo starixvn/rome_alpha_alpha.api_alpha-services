@@ -38,7 +38,4 @@
       <CopyToOutputDirectory>ALWAYS</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BuildingBlocks\Alpha.Utilities\Alpha.Utilities.csproj" />
-  </ItemGroup>
 </Project>
