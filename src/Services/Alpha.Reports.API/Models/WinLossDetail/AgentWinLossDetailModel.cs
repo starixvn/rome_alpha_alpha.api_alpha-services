@@ -10,25 +10,25 @@ public class AgentWinLossDetailModel
 
     public decimal Turnover { get; set; }
 
+    public decimal NetTurnover { get; set; }
+
+    public decimal GrossComm { get; set; }
+
+    public decimal RewardAmount { get; set; }
+
+    public string RewardCurrency { get; set; }
+
     public decimal MemberWinLoss { get; set; }
 
     public decimal MemberComm { get; set; }
+
+    public decimal MemberTotal => MemberWinLoss + MemberComm;
 
     public decimal AgentWinLoss { get; set; }
 
     public decimal AgentComm { get; set; }
 
-    public decimal NetTurnover { get; set; }
-
-    public decimal GrossComm { get; set; }
-
-    public decimal MemberTotal => MemberWinLoss + MemberComm;
-
     public decimal AgentTotal => AgentWinLoss + AgentComm;
 
-    public decimal Company => -(AgentTotal + MemberTotal);
-
-    public decimal RewardAmount { get; set; }
-
-    public string RewardCurrency { get; set; }
+    public virtual decimal Company => -(AgentTotal + MemberTotal);    
 }

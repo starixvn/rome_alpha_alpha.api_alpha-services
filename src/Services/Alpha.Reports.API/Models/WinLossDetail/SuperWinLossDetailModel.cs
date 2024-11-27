@@ -8,5 +8,5 @@ public class SuperWinLossDetailModel : MasterWinLossDetailModel
 
     public decimal SuperTotal => SuperWinLoss + SuperComm;
 
-    public new decimal Company => -(SuperTotal + MasterTotal + AgentTotal + MemberTotal);
+    public override decimal Company => -(SuperTotal + MasterTotal + AgentTotal + MemberTotal);
 }
