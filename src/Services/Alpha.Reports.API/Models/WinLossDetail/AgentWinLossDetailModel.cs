@@ -16,7 +16,7 @@ public class AgentWinLossDetailModel
 
     public decimal RewardAmount { get; set; }
 
-    public string RewardCurrency { get; set; }
+    public string RewardCurrency { get; set; } = string.Empty;
 
     public decimal MemberWinLoss { get; set; }
 
