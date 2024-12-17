@@ -1,3 +1,4 @@
+using Alpha.BetLists.API.Helpers;
 using Fanex.Data;
 using Fanex.Data.Repository;
 
@@ -47,7 +48,11 @@ namespace Alpha.BetLists.API.Criteria
         public DateTime BalanceUpDate { get; }
 
         public override string GetSettingKey()
-            => "Acc_BetList_Detail_" + ProductId;
+        {
+            var settingKey = TicketDetailsHelper.GetTicketDetailSettingKey(ProductId);
+
+            return settingKey ?? "Acc_BetList_Detail_" + ProductId;
+        }
 
         public override bool IsValid()
             => RefNo > 0

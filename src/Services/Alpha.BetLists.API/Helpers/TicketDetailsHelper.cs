@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using Alpha.Utilities.Helpers;
 using Alpha.BetLists.API.Models.TicketDetail;
 using Alpha.Utilities.Models;
+using BetListNPOI.HSSF.Record.Chart;
+using Alpha.BetLists.API.Constants;
 
 namespace Alpha.BetLists.API.Helpers
 {
@@ -25,6 +27,20 @@ namespace Alpha.BetLists.API.Helpers
             SingleParlay,
             MixParlay,
             MixParlayDetail,
+        };
+
+        private static readonly IDictionary<string, int[]> TicketDetailsSettingKeyMappers = new Dictionary<string, int[]>(){
+            { "Acc_BetList_LC_Detail",
+            new int[] { ProductIdConstants.Allbet, ProductIdConstants.SAGaming, ProductIdConstants.AESexy, ProductIdConstants.IBCBetLiveCasino,
+            ProductIdConstants.ION, ProductIdConstants.PGSoft, ProductIdConstants.WMLiveCasino, ProductIdConstants.BGLiveCasino,
+            ProductIdConstants.PPLiveCasino, ProductIdConstants.FGG, ProductIdConstants.YeeBet, ProductIdConstants.WELiveCasino,
+            ProductIdConstants.ONCasino, ProductIdConstants.GPILiveCasino } },
+            { "Acc_BetList_RNG_Detail",
+                new int[] { ProductIdConstants.SabaCasino, ProductIdConstants.FunkyGames, ProductIdConstants.Joker,
+                ProductIdConstants.MaxGame,ProductIdConstants.Habanero, ProductIdConstants.CreativeGaming, ProductIdConstants.AdvantPlay,
+                ProductIdConstants.AdvantPlayMini, ProductIdConstants.SEALEntertainment, ProductIdConstants.MGRNG, ProductIdConstants.Jili,
+                ProductIdConstants.Live22, ProductIdConstants.UUSLOTS, ProductIdConstants.SABAxD, ProductIdConstants.FastSpin,
+                ProductIdConstants.FACHAI, ProductIdConstants.Nextspin, ProductIdConstants.Playtech, ProductIdConstants.GPIRNG } }
         };
 
         private static int GetProductIdByChoice(string choice, TicketDetailsMapperModel mapper)
@@ -280,6 +296,9 @@ namespace Alpha.BetLists.API.Helpers
             }
             return sb;
         }
+
+        public static string GetTicketDetailSettingKey(int productId)
+            => TicketDetailsSettingKeyMappers.FirstOrDefault(mapper => mapper.Value.Contains(productId)).Key;
 
     }
 }
