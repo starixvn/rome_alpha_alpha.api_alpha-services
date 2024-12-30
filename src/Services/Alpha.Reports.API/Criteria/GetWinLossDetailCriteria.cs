@@ -13,13 +13,15 @@ public class GetWinLossDetailCriteria : ReportProductCriteria
         byte custLevel,
         string productDetails,
         DateTime fromDate,
-        DateTime toDate)
+        DateTime toDate,
+        int level)
         : base(custId, balanceUpDay, moveBetsDay, productIds)
     {
         CustLevel = custLevel;
         ProductDetails = productDetails;
         FromDate = fromDate;
         ToDate = toDate;
+        Level = level;
     }
 
     [SpParam(Ignored = true)]
@@ -30,6 +32,9 @@ public class GetWinLossDetailCriteria : ReportProductCriteria
     public DateTime FromDate { get; }
 
     public DateTime ToDate { get; }
+
+    [SpParam(SqlParamName = "LevelType")]
+    public int Level { get; }
 
     public override string GetSettingKey()
         => "Age_Rpt_API_WinLossDetail_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);

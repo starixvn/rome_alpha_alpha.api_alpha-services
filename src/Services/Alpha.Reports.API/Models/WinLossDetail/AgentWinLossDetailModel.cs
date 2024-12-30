@@ -28,6 +28,8 @@ public class AgentWinLossDetailModel
 
     public decimal AgentComm { get; set; }
 
+    public bool IsDirectMember { get; set; }
+
     public decimal AgentTotal => AgentWinLoss + AgentComm;
 
     public virtual decimal Company => -(AgentTotal + MemberTotal);    

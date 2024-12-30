@@ -6,11 +6,12 @@ namespace Alpha.Reports.API.Criteria;
 
 public class GetOutstandingCriteria : CriteriaBase
 {
-    public GetOutstandingCriteria(byte custLevel, int custId, string productIds)
+    public GetOutstandingCriteria(byte custLevel, int custId, string productIds, int level)
     {
         CustLevel = custLevel;
         CustId = custId;
         ProductIds = productIds;
+        Level = level;
     }
 
     public int CustId { get; }
@@ -19,6 +20,9 @@ public class GetOutstandingCriteria : CriteriaBase
     public byte CustLevel { get; }
 
     public string ProductIds { get; }
+
+    [SpParam(SqlParamName = "LevelType")]
+    public int Level { get; }
 
     public override string GetSettingKey()
         => "Age_Rpt_Outstanding_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);

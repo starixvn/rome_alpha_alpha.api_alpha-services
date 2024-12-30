@@ -3,6 +3,7 @@ using Alpha.Reports.API.Params;
 using Alpha.Reports.API.Criteria;
 using Fanex.Data.Repository;
 using Alpha.PartialUM.Services;
+using Alpha.Utilities.Models;
 
 namespace Alpha.Reports.API.Services;
 
@@ -29,7 +30,9 @@ public class OutstandingService : IOutstandingService
             return Enumerable.Empty<OutstandingModel>();
         }
 
-        var criteria = new GetOutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds);
+        CriteriaBase criteria = param.CustLevel == UserLevelModel.Agent ?        
+            new GetMemberOutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds) :
+            new GetOutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds, param.Level);
         partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
         return await dynamicRepository.FetchAsync<OutstandingModel>(criteria);

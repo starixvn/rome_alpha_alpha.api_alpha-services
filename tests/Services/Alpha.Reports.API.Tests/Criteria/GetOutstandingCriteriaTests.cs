@@ -12,7 +12,7 @@ public class GetOutstandingCriteriaTests
     public void GetSettingKey_WhenViewAgentLevel_ReturnsValidSettingKey(byte level, string expectedSettingKey)
     {
         // Arrange
-        var criteria = new GetOutstandingCriteria(level, 0, string.Empty);
+        var criteria = new GetOutstandingCriteria(level, 0, string.Empty, 0);
 
         // Act
         var actualSettingKey = criteria.GetSettingKey();
@@ -28,7 +28,7 @@ public class GetOutstandingCriteriaTests
     public void IsValid_WhenLevelIsNotMember_ReturnsValid(byte level)
     {
         // Arrange
-        var criteria = new GetOutstandingCriteria(level, 0, string.Empty);
+        var criteria = new GetOutstandingCriteria(level, 0, string.Empty, 0);
         var expectedIsValid = true;
 
         // Act
@@ -42,7 +42,7 @@ public class GetOutstandingCriteriaTests
     public void IsValid_WhenLevelIsMember_ReturnsInvalid()
     {
         // Arrange
-        var criteria = new GetOutstandingCriteria(UserLevelModel.Member, 0, string.Empty);
+        var criteria = new GetOutstandingCriteria(UserLevelModel.Member, 0, string.Empty, 0);
         var expectedIsValid = false;
 
         // Act

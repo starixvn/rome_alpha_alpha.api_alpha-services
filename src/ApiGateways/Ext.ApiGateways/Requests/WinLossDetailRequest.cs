@@ -15,6 +15,9 @@ public class WinLossDetailRequest
     [FromBody]
     public DateTime? ToDate { get; set; }
 
+    [FromBody]
+    public int Level { get; set; }
+
     public bool ValidateDateRange()
     {
         if (!FromDate.HasValue || !ToDate.HasValue)

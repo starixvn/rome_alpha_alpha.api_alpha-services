@@ -24,6 +24,7 @@ public class GetWinLossDetailReportParam
         SiteName = request.Site;
         ProductGroup = request.ProductGroup;
         ProductIds = request.ProductIds.ToListInt();
+        Level = request.Level;
     }
 
     public int ViewerId { get; }
@@ -43,9 +44,12 @@ public class GetWinLossDetailReportParam
     public string ProductGroup { get; set; }
 
     public DateTime MinDate { get; }
+    public int Level { get; }
 
     public bool IsValid() =>
-        CustLevel > UserLevelModel.Member &&
-        CustId > 0 &&
-        !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
+        CustLevel > UserLevelModel.Member 
+        && CustId > 0 
+        && !UserLevelModel.IsUpline(CustLevel, ViewerLevel)
+        && 0 <= Level 
+        && Level <= 2;
 }

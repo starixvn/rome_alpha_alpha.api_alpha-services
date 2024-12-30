@@ -1,5 +1,3 @@
-using Alpha.Utilities.Models;
-
 namespace Alpha.Reports.API.Models;
 
 public class OutstandingModel
@@ -8,13 +6,13 @@ public class OutstandingModel
 
     public string CustName { get; set; }
 
-    public decimal MemberOutstanding { get; private set; }
+    public decimal MemberOutstanding { get; set; }
 
-    public decimal AgentOutstanding { get; private set; }
+    public decimal AgentOutstanding { get; set; }
 
-    public decimal MasterOutstanding { get; private set; }
+    public decimal MasterOutstanding { get; set; }
 
-    public decimal SuperOutstanding { get; private set; }
+    public decimal SuperOutstanding { get; set; }
 
     public decimal? ToWin { get; set; }
 
@@ -23,6 +21,9 @@ public class OutstandingModel
     public decimal? MasterRisk { get; set; }
 
     public decimal? AgentRisk { get; set; }
+
+    public bool IsDirectMember { get; set; }
+
     public static OutstandingModel GetAccumulatedData(IEnumerable<OutstandingModel> outstandings)
     {
         var accumulatedData = new OutstandingModel();

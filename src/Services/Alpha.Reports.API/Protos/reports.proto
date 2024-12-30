@@ -33,6 +33,7 @@ message GetOutstandingReportRequest {
   bool isDescendingSort = 10;
   string productGroup = 11;
   string productIds = 12;
+  int32 level = 13;
 }
 
 message GetSuperOutstandingResponse {
@@ -69,8 +70,9 @@ message SuperOutstandingModel {
   string custName = 1;
   string memberOutstanding = 2;
   string superOutstanding = 3;
-  string memberWin = 4;
-  string superRisk = 5;
+  bool isDirectMember = 4;
+  string memberWin = 5;
+  string superRisk = 6;
 }
 
 message SuperOnMasterOutstandingModel {
@@ -78,8 +80,9 @@ message SuperOnMasterOutstandingModel {
   string memberOutstanding = 2;
   string masterOutstanding = 3;
   string superOutstanding = 4;
-  string memberWin = 5;
-  string superRisk = 6;
+  bool isDirectMember = 5;
+  string memberWin = 6;
+  string superRisk = 7;
 }
 
 message SuperOnAgentOutstandingModel {
@@ -96,8 +99,9 @@ message MasterOutstandingModel {
   string custName = 1;
   string memberOutstanding = 2;
   string masterOutstanding = 3;
-  string memberWin = 4;
-  string masterRisk = 5;
+  bool isDirectMember = 4;
+  string memberWin = 5;
+  string masterRisk = 6;
 }
 
 message MasterOnAgentOutstandingModel {
@@ -132,6 +136,7 @@ message GetWinLossDetailReportRequest {
   string toDate = 11;
   string productGroup = 12;
   string productIds = 13;
+  int32 level = 14;
 }
 
 message GetSuperWinLossDetailResponse {
@@ -175,6 +180,7 @@ message SuperWinLossDetailModel {
   string superTotal = 19;
 
   string company = 20;
+  bool isDirectMember = 21;
 
 }
 
@@ -200,6 +206,7 @@ message MasterWinLossDetailModel {
   string masterTotal = 16;
 
   string company = 17;
+  bool isDirectMember = 18;
 }
 
 

@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Alpha.Utilities.Constants;
 using GrpcReports;
 using GrpcCustomer;
+using Ext.ApiGateways.Requests;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -34,7 +35,8 @@ public class OutstandingByNameController : BaseAPIController
     [Route("api/[controller]/{custName}/{product=All}")]
     public async Task<IActionResult> Index(
         [FromRoute] string custName,
-        [FromRoute] string product)
+        [FromRoute] string product,
+        [FromBody] OutstandingRequest request)
     {
         if (!ProductGroupConstants.IsValid(product))
         {
@@ -62,7 +64,8 @@ public class OutstandingByNameController : BaseAPIController
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
             CustName = custName,
-            ProductGroup = product
+            ProductGroup = product,
+            Level = request.Level
         };
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)
@@ -140,7 +143,8 @@ public class OutstandingByNameController : BaseAPIController
     [Route("api/[controller]/{custName}")]  
     public async Task<IActionResult> GetByProductCodes(
         [FromRoute] string custName,
-        [FromQuery] string products)
+        [FromQuery] string products,
+        [FromBody] OutstandingRequest request)
     {
         logger.LogRequest("OutstandingByName", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
@@ -165,7 +169,8 @@ public class OutstandingByNameController : BaseAPIController
             ViewerLevelId = viewerInfo.RoleId,
             CustName = custName,
             ProductGroup = ProductGroupConstants.All,
-            ProductIds = productIds
+            ProductIds = productIds,
+            Level = request.Level
         };
 
         if (viewerInfo.RoleId == UserLevelModel.Super && downlineInfo.RoleId == UserLevelModel.Super)

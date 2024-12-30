@@ -68,7 +68,8 @@ public class WinLossDetailController : BaseAPIController
             ViewerLevelId = viewerInfo.RoleId,
             FromDate = request.FromDate.Value.ToShortDateString(),
             ToDate = request.ToDate.Value.ToShortDateString(),
-            ProductGroup = product
+            ProductGroup = product,
+            Level = request.Level
         };
 
         return viewerInfo.RoleId switch
@@ -136,7 +137,8 @@ public class WinLossDetailController : BaseAPIController
             FromDate = request.FromDate.Value.ToShortDateString(),
             ToDate = request.ToDate.Value.ToShortDateString(),
             ProductGroup = ProductGroupConstants.All,
-            ProductIds = productIds
+            ProductIds = productIds,
+            Level = request.Level
         };
 
         return viewerInfo.RoleId switch
