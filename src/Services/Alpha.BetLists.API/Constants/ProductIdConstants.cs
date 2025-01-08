@@ -35,4 +35,5 @@ public static class ProductIdConstants
     public const int Playtech = 100;
     public const int GPIRNG = 48;
     public const int GPILiveCasino = 90;
+    public const int PLAYSTAR = 91;
 }

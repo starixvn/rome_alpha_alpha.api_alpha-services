@@ -40,7 +40,7 @@ namespace Alpha.BetLists.API.Helpers
                 ProductIdConstants.MaxGame,ProductIdConstants.Habanero, ProductIdConstants.CreativeGaming, ProductIdConstants.AdvantPlay,
                 ProductIdConstants.AdvantPlayMini, ProductIdConstants.SEALEntertainment, ProductIdConstants.MGRNG, ProductIdConstants.Jili,
                 ProductIdConstants.Live22, ProductIdConstants.UUSLOTS, ProductIdConstants.SABAxD, ProductIdConstants.FastSpin,
-                ProductIdConstants.FACHAI, ProductIdConstants.Nextspin, ProductIdConstants.Playtech, ProductIdConstants.GPIRNG } }
+                ProductIdConstants.FACHAI, ProductIdConstants.Nextspin, ProductIdConstants.Playtech, ProductIdConstants.GPIRNG, ProductIdConstants.PLAYSTAR } }
         };
 
         private static int GetProductIdByChoice(string choice, TicketDetailsMapperModel mapper)
