@@ -58,7 +58,7 @@
     <PackageReference Include="Fanex.BetList.Keno" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.KenoLottery" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.LeapGaming" Version="2.0.0.1" />
-    <PackageReference Include="Fanex.BetList.LiveCasinoCore" Version="1.0.0.5-sa-03" />
+    <PackageReference Include="Fanex.BetList.LiveCasinoCore" Version="1.0.0.5" />
     <PackageReference Include="Fanex.BetList.MaxGame" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.MetricGaming" Version="2.0.0" />
     <PackageReference Include="Fanex.BetList.MGRNGCasino" Version="2.0.0" />
@@ -72,7 +72,7 @@
     <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.0.4" />
     <PackageReference Include="Fanex.BetList.RNGWar" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SabaClub" Version="2.0.0.4" />
-    <PackageReference Include="Fanex.BetList.SAGaming" Version="2.0.0.1-Beta-07" />
+    <PackageReference Include="Fanex.BetList.SAGaming" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SealEntertainment" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SexyGaming" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.Spadegaming" Version="2.0.0.1" />
