@@ -22,7 +22,7 @@ COPY /src/Services/Alpha.Reports.API ./Services/Alpha.Reports.API
 WORKDIR /src/Services/Alpha.Reports.API
 RUN dotnet publish -r linux-x64 --self-contained false -o /app
 
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine as base
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine-25h1 as base
 
 RUN adduser --disabled-password \
     --home /app \
