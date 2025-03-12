@@ -7,7 +7,7 @@ public static class ProductIdConstants
     public const int SAGaming = 39;
     public const int AESexy = 45;
     public const int IBCBetLiveCasino = 46;
-    public const int FunkyGames = 50;
+    public const int FunkyGamesOld = 50;
     public const int ION = 52;
     public const int PGSoft = 55;
     public const int Joker = 56;
@@ -38,4 +38,5 @@ public static class ProductIdConstants
     public const int PLAYSTAR = 91;
     public const int ASKMESLOT = 103;
     public const int SabaKeno = 102;
+    public const int FUNKYGAMES = 104;
 }
