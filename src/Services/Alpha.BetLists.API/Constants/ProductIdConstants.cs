@@ -37,4 +37,5 @@ public static class ProductIdConstants
     public const int GPILiveCasino = 90;
     public const int PLAYSTAR = 91;
     public const int ASKMESLOT = 103;
+    public const int SabaKeno = 102;
 }

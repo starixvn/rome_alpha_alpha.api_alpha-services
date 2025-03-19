@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fanex.BetList.SABAKeno" Version="1.0.0" />
     <PackageReference Include="Fanex.BetList.SABAxD" Version="1.0.0" />
     <PackageReference Include="Fanex.Common" Version="1.1.1-beta1" />
     <PackageReference Include="Fanex.RemotingRef" Version="1.5.4" />
