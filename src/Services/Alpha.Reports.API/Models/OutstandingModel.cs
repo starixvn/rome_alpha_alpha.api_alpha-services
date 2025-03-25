@@ -25,16 +25,14 @@ public class OutstandingModel
     public decimal? AgentRisk { get; set; }
     public static OutstandingModel GetAccumulatedData(IEnumerable<OutstandingModel> outstandings)
     {
-        var accumulatedData = new OutstandingModel
-        {
-            ToWin = outstandings.Select(i => i.ToWin).Sum(),
-            AgentRisk = outstandings.Select(i => i.AgentRisk).Sum(),
-            MasterRisk = outstandings.Select(i => i.MasterRisk).Sum(),
-            SuperRisk = outstandings.Select(i => i.SuperRisk).Sum()
-        };
+        var accumulatedData = new OutstandingModel();
 
         foreach (var outstanding in outstandings)
         {
+            accumulatedData.ToWin = (accumulatedData.ToWin ?? 0) + (outstanding.ToWin ?? 0);
+            accumulatedData.AgentRisk = (accumulatedData.AgentRisk ?? 0) + (outstanding.AgentRisk ?? 0);
+            accumulatedData.MasterRisk = (accumulatedData.MasterRisk ?? 0) + (outstanding.MasterRisk ?? 0);
+            accumulatedData.SuperRisk = (accumulatedData.SuperRisk ?? 0) + (outstanding.SuperRisk ?? 0);
             accumulatedData.MemberOutstanding += outstanding.MemberOutstanding;
             accumulatedData.AgentOutstanding += outstanding.AgentOutstanding;
             accumulatedData.MasterOutstanding += outstanding.MasterOutstanding;
