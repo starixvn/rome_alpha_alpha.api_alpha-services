@@ -68,6 +68,8 @@ message SuperOutstandingModel {
   string custName = 1;
   string memberOutstanding = 2;
   string superOutstanding = 3;
+  string memberWin = 4;
+  string superRisk = 5;
 }
 
 message SuperOnMasterOutstandingModel {
@@ -75,6 +77,8 @@ message SuperOnMasterOutstandingModel {
   string memberOutstanding = 2;
   string masterOutstanding = 3;
   string superOutstanding = 4;
+  string memberWin = 5;
+  string superRisk = 6;
 }
 
 message SuperOnAgentOutstandingModel {
@@ -83,12 +87,16 @@ message SuperOnAgentOutstandingModel {
   string agentOutstanding = 3;
   string masterOutstanding = 4;
   string superOutstanding = 5;
+  string memberWin = 6;
+  string superRisk = 7;
 }
 
 message MasterOutstandingModel {
   string custName = 1;
   string memberOutstanding = 2;
   string masterOutstanding = 3;
+  string memberWin = 4;
+  string masterRisk = 5;
 }
 
 message MasterOnAgentOutstandingModel {
@@ -96,12 +104,16 @@ message MasterOnAgentOutstandingModel {
   string memberOutstanding = 2;
   string agentOutstanding = 3;
   string masterOutstanding = 4;
+  string memberWin = 5;
+  string masterRisk = 6;
 }
 
 message AgentOutstandingModel {
   string custName = 1;
   string memberOutstanding = 2;
   string agentOutstanding = 3;
+  string memberWin = 4;
+  string agentRisk = 5;
 }
 
 message GetWinLossDetailReportRequest {

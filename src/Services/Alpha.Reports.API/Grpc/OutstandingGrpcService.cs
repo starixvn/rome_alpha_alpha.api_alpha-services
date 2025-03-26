@@ -11,13 +11,16 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var outstandings = await GetOutstanding(request);
         var total = OutstandingModel.GetAccumulatedData(outstandings);
+        var hasToWinValue = TotalHasToWinValue(outstandings);
 
         var response = new GetSuperOutstandingResponse
         {
             Total = new SuperOutstandingModel
             {
                 MemberOutstanding = total.MemberOutstanding.FormatNumber(),
-                SuperOutstanding = total.SuperOutstanding.FormatNumber()
+                SuperOutstanding = total.SuperOutstanding.FormatNumber(),
+                MemberWin = hasToWinValue ? total.ToWin.FormatNumber() : StringExtensions.NotAvailableNumber,
+                SuperRisk = hasToWinValue ? total.SuperRisk.FormatNumber() : StringExtensions.NotAvailableNumber
             }
         };
 
@@ -25,7 +28,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             CustName = o.CustName,
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
-            SuperOutstanding = o.SuperOutstanding.FormatNumber()
+            SuperOutstanding = o.SuperOutstanding.FormatNumber(),
+            MemberWin = o.ToWin.FormatNumber(),
+            SuperRisk = o.SuperRisk.FormatNumber()
         }));
 
         return response;
@@ -35,6 +40,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var outstandings = await GetOutstanding(request);
         var total = OutstandingModel.GetAccumulatedData(outstandings);
+        var hasToWinValue = TotalHasToWinValue(outstandings);
 
         var response = new GetSuperOnMasterOutstandingResponse
         {
@@ -42,7 +48,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
             {
                 MemberOutstanding = total.MemberOutstanding.FormatNumber(),
                 MasterOutstanding = total.MasterOutstanding.FormatNumber(),
-                SuperOutstanding = total.SuperOutstanding.FormatNumber()
+                SuperOutstanding = total.SuperOutstanding.FormatNumber(),
+                MemberWin = hasToWinValue ? total.ToWin.FormatNumber() : StringExtensions.NotAvailableNumber,
+                SuperRisk = hasToWinValue ? total.SuperRisk.FormatNumber() : StringExtensions.NotAvailableNumber
             }
         };
 
@@ -51,7 +59,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
             CustName = o.CustName,
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
             MasterOutstanding = o.MasterOutstanding.FormatNumber(),
-            SuperOutstanding = o.SuperOutstanding.FormatNumber()
+            SuperOutstanding = o.SuperOutstanding.FormatNumber(),
+            MemberWin = o.ToWin.FormatNumber(),
+            SuperRisk = o.SuperRisk.FormatNumber()
         }));
 
         return response;
@@ -61,6 +71,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var outstandings = await GetOutstanding(request);
         var total = OutstandingModel.GetAccumulatedData(outstandings);
+        var hasToWinValue = TotalHasToWinValue(outstandings);
 
         var response = new GetSuperOnAgentOutstandingResponse
         {
@@ -69,7 +80,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
                 MemberOutstanding = total.MemberOutstanding.FormatNumber(),
                 AgentOutstanding = total.AgentOutstanding.FormatNumber(),
                 MasterOutstanding = total.MasterOutstanding.FormatNumber(),
-                SuperOutstanding = total.SuperOutstanding.FormatNumber()
+                SuperOutstanding = total.SuperOutstanding.FormatNumber(),
+                MemberWin = hasToWinValue ? total.ToWin.FormatNumber() : StringExtensions.NotAvailableNumber,
+                SuperRisk = hasToWinValue ? total.SuperRisk.FormatNumber() : StringExtensions.NotAvailableNumber
             }
         };
 
@@ -79,7 +92,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
             AgentOutstanding = o.AgentOutstanding.FormatNumber(),
             MasterOutstanding = o.MasterOutstanding.FormatNumber(),
-            SuperOutstanding = o.SuperOutstanding.FormatNumber()
+            SuperOutstanding = o.SuperOutstanding.FormatNumber(),
+            MemberWin = o.ToWin.FormatNumber(),
+            SuperRisk = o.SuperRisk.FormatNumber()
         }));
 
         return response;
@@ -89,6 +104,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var outstandings = await GetOutstanding(request);
         var total = OutstandingModel.GetAccumulatedData(outstandings);
+        var hasToWinValue = TotalHasToWinValue(outstandings);
 
         var response = new GetMasterOutstandingResponse
         {
@@ -96,6 +112,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             {
                 MemberOutstanding = total.MemberOutstanding.FormatNumber(),
                 MasterOutstanding = total.MasterOutstanding.FormatNumber(),
+                MemberWin = hasToWinValue ? total.ToWin.FormatNumber() : StringExtensions.NotAvailableNumber,
+                MasterRisk = hasToWinValue ? total.MasterRisk.FormatNumber() : StringExtensions.NotAvailableNumber
             }
         };
 
@@ -103,7 +121,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             CustName = o.CustName,
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
-            MasterOutstanding = o.MasterOutstanding.FormatNumber()
+            MasterOutstanding = o.MasterOutstanding.FormatNumber(),
+            MemberWin = o.ToWin.FormatNumber(),
+            MasterRisk = o.MasterRisk.FormatNumber()
         }));
 
         return response;
@@ -113,6 +133,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var outstandings = await GetOutstanding(request);
         var total = OutstandingModel.GetAccumulatedData(outstandings);
+        var hasToWinValue = TotalHasToWinValue(outstandings);
 
         var response = new GetMasterOnAgentOutstandingResponse
         {
@@ -120,7 +141,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
             {
                 MemberOutstanding = total.MemberOutstanding.FormatNumber(),
                 AgentOutstanding = total.AgentOutstanding.FormatNumber(),
-                MasterOutstanding = total.MasterOutstanding.FormatNumber()
+                MasterOutstanding = total.MasterOutstanding.FormatNumber(),
+                MemberWin = hasToWinValue ? total.ToWin.FormatNumber() : StringExtensions.NotAvailableNumber,
+                MasterRisk = hasToWinValue ? total.MasterRisk.FormatNumber() : StringExtensions.NotAvailableNumber
             }
         };
 
@@ -129,7 +152,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
             CustName = o.CustName,
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
             AgentOutstanding = o.AgentOutstanding.FormatNumber(),
-            MasterOutstanding = o.MasterOutstanding.FormatNumber()
+            MasterOutstanding = o.MasterOutstanding.FormatNumber(),
+            MemberWin = o.ToWin.FormatNumber(),
+            MasterRisk = o.MasterRisk.FormatNumber()
         }));
 
         return response;
@@ -139,13 +164,16 @@ public partial class ReportGrpcService : Reports.ReportsBase
     {
         var outstandings = await GetOutstanding(request);
         var total = OutstandingModel.GetAccumulatedData(outstandings);
+        var hasToWinValue = TotalHasToWinValue(outstandings);
 
         var response = new GetAgentOutstandingResponse
         {
             Total = new AgentOutstandingModel
             {
                 MemberOutstanding = total.MemberOutstanding.FormatNumber(),
-                AgentOutstanding = total.AgentOutstanding.FormatNumber()
+                AgentOutstanding = total.AgentOutstanding.FormatNumber(),
+                MemberWin = hasToWinValue ? total.ToWin.FormatNumber() : StringExtensions.NotAvailableNumber,
+                AgentRisk = hasToWinValue ? total.AgentRisk.FormatNumber() : StringExtensions.NotAvailableNumber
             }
         };
 
@@ -153,7 +181,9 @@ public partial class ReportGrpcService : Reports.ReportsBase
         {
             CustName = o.CustName,
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
-            AgentOutstanding = o.AgentOutstanding.FormatNumber()
+            AgentOutstanding = o.AgentOutstanding.FormatNumber(),
+            MemberWin = o.ToWin.FormatNumber(),
+            AgentRisk = o.AgentRisk.FormatNumber()
         }));
 
         return response;
@@ -178,4 +208,7 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         return outstandings;
     }
+
+    private static bool TotalHasToWinValue(IEnumerable<OutstandingModel> data)
+        => data.Any(i => i.ToWin.HasValue);
 }

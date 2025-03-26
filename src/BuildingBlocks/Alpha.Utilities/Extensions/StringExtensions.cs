@@ -2,6 +2,8 @@ namespace Alpha.Utilities.Extensions;
 
 public static class StringExtensions
 {
+    public static string NotAvailableNumber = "N/A";
+
     public static string FormatNumber(this decimal numberValue)
     {
         var result = numberValue.ToString("#,##0.00");
@@ -10,7 +12,10 @@ public static class StringExtensions
             ? $"-{result}"
             : result;
     }
-    
+
+    public static string FormatNumber(this decimal? numberValue)
+        => numberValue.HasValue ? FormatNumber(numberValue.Value) : NotAvailableNumber;
+
     public static List<int> ToListInt(this string delimitedString)
     {
         if (string.IsNullOrWhiteSpace(delimitedString))
@@ -28,16 +33,18 @@ public static class StringExtensions
 
     public static string CorrectDateTimeSpace(this string dateTime)
     {
-        var suffix = new[] {"AM", "PM", "am", "pm" };
+        var suffix = new[] { "AM", "PM", "am", "pm" };
         var result = dateTime;
 
-        foreach(var s in suffix) {
+        foreach (var s in suffix)
+        {
             var expectedS = " " + s;
-            if(result.IndexOf(expectedS) == -1) {
+            if (result.IndexOf(expectedS) == -1)
+            {
                 result = result.Replace(s, expectedS);
             }
         }
 
-       return result;
+        return result;
     }
 }
