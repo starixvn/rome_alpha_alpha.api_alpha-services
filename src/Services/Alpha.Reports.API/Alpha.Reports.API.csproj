@@ -6,16 +6,15 @@
     <Nullable>disable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="Alpha.Reports.API.Tests" />
-    <Content Include="App_Data\**">
+    <Content Include="App_Data\SpNames.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
     <PackageReference Include="Fanex.Common" Version="1.1.1-beta1" />
@@ -35,7 +34,7 @@
     <Protobuf Include="Protos\customer.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\reports.proto" GrpcServices="Server" />
   </ItemGroup>
- 
+
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Data\FanexLibs.Data.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Logging\FanexLibs.Logging.csproj" />
@@ -44,4 +43,3 @@
     <ProjectReference Include="..\..\BuildingBlocks\Alpha.Utilities\Alpha.Utilities.csproj" />
   </ItemGroup>
 </Project>
- 
