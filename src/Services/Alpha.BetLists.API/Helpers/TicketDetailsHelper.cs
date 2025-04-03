@@ -34,14 +34,14 @@ namespace Alpha.BetLists.API.Helpers
             new int[] { ProductIdConstants.Allbet, ProductIdConstants.SAGaming, ProductIdConstants.AESexy, ProductIdConstants.IBCBetLiveCasino,
             ProductIdConstants.ION, ProductIdConstants.PGSoft, ProductIdConstants.WMLiveCasino, ProductIdConstants.BGLiveCasino,
             ProductIdConstants.PPLiveCasino, ProductIdConstants.FGG, ProductIdConstants.YeeBet, ProductIdConstants.WELiveCasino,
-            ProductIdConstants.ONCasino, ProductIdConstants.GPILiveCasino } },
+            ProductIdConstants.ONCasino, ProductIdConstants.GPILiveCasino, ProductIdConstants.MicrogamingLive } },
             { "Acc_BetList_RNG_Detail",
                 new int[] { ProductIdConstants.SabaCasino, ProductIdConstants.FunkyGamesOld, ProductIdConstants.Joker,
                 ProductIdConstants.MaxGame,ProductIdConstants.Habanero, ProductIdConstants.CreativeGaming, ProductIdConstants.AdvantPlay,
                 ProductIdConstants.AdvantPlayMini, ProductIdConstants.SEALEntertainment, ProductIdConstants.MGRNG, ProductIdConstants.Jili,
                 ProductIdConstants.Live22, ProductIdConstants.UUSLOTS, ProductIdConstants.SABAxD, ProductIdConstants.FastSpin,
                 ProductIdConstants.FACHAI, ProductIdConstants.Nextspin, ProductIdConstants.Playtech, ProductIdConstants.GPIRNG, ProductIdConstants.PLAYSTAR,
-                ProductIdConstants.ASKMESLOT, ProductIdConstants.SabaKeno, ProductIdConstants.FUNKYGAMES
+                ProductIdConstants.ASKMESLOT, ProductIdConstants.SabaKeno, ProductIdConstants.FUNKYGAMES, ProductIdConstants.HOTDOG, ProductIdConstants.OdinGaming
                  } }
         };
 
