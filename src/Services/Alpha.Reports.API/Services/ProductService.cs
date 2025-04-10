@@ -1,6 +1,7 @@
 using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.Models;
 using Alpha.Utilities.Constants;
+using Alpha.Utilities.Extensions;
 using Fanex.Caching;
 using Fanex.Data.Repository;
 
@@ -11,6 +12,10 @@ public interface IProductService
     IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTime? minReportDate = null);
 
     IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group);
+
+    IEnumerable<int> FilterProductIdsByCustomer(string productNames, string language, DateTime? minReportDate = null);
+
+    Task<IEnumerable<ProductModel>> GetProducts(string site, int currencyId, byte settingStatus, DateTime? minReportDate);
 }
 
 public class ProductService : IProductService
@@ -18,11 +23,13 @@ public class ProductService : IProductService
     private const string ProductsCacheKey = "Alpha.Reports.Services.Impl.ProductServiceImpl.Products";
     private readonly IDynamicRepository dynamicRepository;
     private readonly ICacheService cacheService;
+    private readonly ICacheRefService cacheRefService;
 
-    public ProductService(IDynamicRepository dynamicRepository, ICacheService cacheService)
+    public ProductService(IDynamicRepository dynamicRepository, ICacheService cacheService, ICacheRefService cacheRefService)
     {
         this.dynamicRepository = dynamicRepository;
         this.cacheService = cacheService;
+        this.cacheRefService = cacheRefService;
     }
 
     public IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTime? minReportDate = null)
@@ -78,5 +85,33 @@ public class ProductService : IProductService
         }
 
         return products.Where(p => p != ProductIdConstants.Sportsbook);
+    }
+
+    public IEnumerable<int> FilterProductIdsByCustomer(string productNames, string language, DateTime? minReportDate = null)
+    {
+        var products = GetProductsForCustomer(minReportDate);
+
+        if (!productNames.Equals(ProductGroupConstants.All, StringComparison.OrdinalIgnoreCase))
+        {
+            var productNamesList = productNames.ToListString();
+            products = products.Where(p => productNamesList.Contains(cacheRefService.GetProductName(p.Id, language), StringComparer.OrdinalIgnoreCase)
+                || productNamesList.Contains(cacheRefService.GetProductName(p.Type, language), StringComparer.OrdinalIgnoreCase));
+        }
+
+        return products.Select(p => p.Id);
+    }
+
+    public async Task<IEnumerable<ProductModel>> GetProducts(string site, int currencyId, byte settingStatus, DateTime? minReportDate)
+    {
+        var products = await cacheService.GetOrSetAsync(
+            $"{ProductsCacheKey}-{site}-{currencyId}",
+            async () =>
+            {
+                var products = await dynamicRepository.FetchAsync<ProductModel>(new GetProductsBySiteCurrencyCriteria(site, currencyId, settingStatus));
+                return products.Where(p => !p.IsHidden);
+            },
+            new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
+
+        return products.Where(p => IsRemainSupportProduct(p, minReportDate));
     }
 }

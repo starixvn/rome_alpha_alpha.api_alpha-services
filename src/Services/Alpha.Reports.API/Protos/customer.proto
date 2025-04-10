@@ -15,4 +15,6 @@ message GetDownlineInfoRequest {
 
 message GetDownlineInfoResponse {
     bool isBelonging = 1;
+    int32 custId = 2;
+    int32 roleId = 3;
 }

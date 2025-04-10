@@ -4,6 +4,7 @@ using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Models.WinLossDetail;
 using Fanex.Common.Extensions;
+using Fanex.Data.Repository;
 
 namespace Alpha.Reports.API.DataAccesses;
 
@@ -12,6 +13,9 @@ public interface IWinLossDetailDataAccess
     Task<ReportDataModel<SuperWinLossDetailModel>> GetSuperWinLossDetail(GetWinLossDetailCriteria criteria);
     Task<ReportDataModel<MasterWinLossDetailModel>> GetMasterWinLossDetail(GetWinLossDetailCriteria criteria);
     Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetMemberWinLossDetailCriteria criteria);
+    Task<SummaryWinLossDetail> GetSuperWinLossDetailSummary(ICriteria criteria, string member);
+    Task<SummaryWinLossDetail> GetMasterWinLossDetailSummary(ICriteria criteria, string member);
+    Task<SummaryWinLossDetail> GetAgentWinLossDetailSummary(ICriteria criteria, string member);
 }
 
 public class WinLossDetailDataAccess : IWinLossDetailDataAccess
@@ -70,7 +74,6 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
         return new ReportDataModel<MasterWinLossDetailModel>(winLossDetails,
             totalWinLoss);
     }
-
 
     public async Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetMemberWinLossDetailCriteria criteria)
     {
@@ -167,5 +170,95 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
         };
 
         return winLossDetail;
+    }
+
+    public async Task<SummaryWinLossDetail> GetSuperWinLossDetailSummary(ICriteria criteria, string member)
+    {
+        if (criteria.IsValid())
+        {
+            using var db = ReportObjectDbFactory.CreateInstance(criteria.GetSettingKey());
+            using var reader = await db.ExecuteReaderAsync(criteria);
+            if (reader != null)
+            {
+                if (string.IsNullOrWhiteSpace(member) && reader.NextResult() && reader.Read())
+                {
+                    var total = BuildSuperWinLossDetail(reader, false);
+                    return new SummaryWinLossDetail(total);
+                }
+
+                while (reader.Read())
+                {
+                    var custName = reader.ToString("CustName");
+
+                    if (custName.Equals(member, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var total = BuildSuperWinLossDetail(reader, true);
+                        return new SummaryWinLossDetail(total);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public async Task<SummaryWinLossDetail> GetMasterWinLossDetailSummary(ICriteria criteria, string member)
+    {
+        if (criteria.IsValid())
+        {
+            using var db = ReportObjectDbFactory.CreateInstance(criteria.GetSettingKey());
+            using var reader = await db.ExecuteReaderAsync(criteria);
+            if (reader != null)
+            {
+                if (string.IsNullOrWhiteSpace(member) && reader.NextResult() && reader.Read())
+                {
+                    var total = BuildMasterWinLossDetail(reader, false);
+                    return new SummaryWinLossDetail(total);
+                }
+
+                while (reader.Read())
+                {
+                    var custName = reader.ToString("CustName");
+
+                    if (custName.Equals(member, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var total = BuildMasterWinLossDetail(reader, true);
+                        return new SummaryWinLossDetail(total);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public async Task<SummaryWinLossDetail> GetAgentWinLossDetailSummary(ICriteria criteria, string member)
+    {
+        if (criteria.IsValid())
+        {
+            using var db = ReportObjectDbFactory.CreateInstance(criteria.GetSettingKey());
+            using var reader = await db.ExecuteReaderAsync(criteria);
+            if (reader != null)
+            {
+                if (string.IsNullOrWhiteSpace(member) && reader.NextResult() && reader.Read())
+                {
+                    var total = BuildAgentWinLossDetail(reader);
+                    return new SummaryWinLossDetail(total);
+                }
+
+                while (reader.Read())
+                {
+                    var custName = reader.ToString("CustName");
+
+                    if (custName.Equals(member, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var total = BuildAgentWinLossDetail(reader);
+                        return new SummaryWinLossDetail(total);
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }

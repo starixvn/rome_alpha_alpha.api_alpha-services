@@ -12,6 +12,8 @@ using Alpha.Reports.API.Interceptors;
 using Alpha.Reports.API.DataAccesses;
 using Microsoft.AspNetCore.Diagnostics;
 using Alpha.Utilities.Interceptors;
+using Fanex.RemotingRef;
+using System.Reflection;
 
 namespace Alpha.Reports.API;
 
@@ -33,6 +35,7 @@ public class Startup
            .ConfigurePartialUMServices(Configuration)
            .AddGrpc();
 
+        AddRemotingRef(services, Configuration);
         AddReportDI(services);
 
         services
@@ -118,5 +121,16 @@ public class Startup
         }).AddInterceptor<GrpcExceptionInterceptor>();
 
         services.AddGrpc(c => c.Interceptors.Add<CheckBelongingInterceptor>());
+    }
+
+    private static IServiceCollection AddRemotingRef(IServiceCollection services, IConfiguration configuration)
+    {
+        RefDataTypeContainer
+            .ConnectTo(new Uri(configuration["RemotingRefUrl"]))
+            .FromApplication(Assembly.GetExecutingAssembly().FullName);
+
+        return services
+            .AddSingleton<IRemotingRefService, RemotingRefService>()
+            .AddSingleton<ICacheRefService, CacheRefService>();
     }
 }

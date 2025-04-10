@@ -10,6 +10,8 @@ public interface IReportDateService
     DateTime GetBalanceUpDay();
 
     DateTime GetMoveBetsDay();
+
+    BalanceUpDayAndMoveBetsDayModel GetBalanceUpDayAndMoveBetsDay();
 }
 
 public class ReportDateService : IReportDateService

@@ -7,6 +7,8 @@ public static class UserLevelModel
     public const byte Agent = 2;
     public const byte Member = 1;
 
+    public static bool IsSuperLevel(byte level) => level == Super;
+
     public static bool IsMasterLevel(byte level) => level == Master;
 
     public static bool IsAgentLevel(byte level) => level == Agent;

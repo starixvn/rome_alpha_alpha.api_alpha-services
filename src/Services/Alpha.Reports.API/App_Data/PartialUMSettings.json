@@ -13,6 +13,15 @@
           },
           {
             "SettingKey": "Age_Rpt_API_WinLossDetail_Member"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Master"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Agent"
+          },
+          {
+            "SettingKey": "Age_Rpt_WinLossDetail_Member"
           }
         ]
       },

@@ -17,6 +17,7 @@ service Reports {
   rpc GetSuperWinLossDetail(GetWinLossDetailReportRequest) returns (GetSuperWinLossDetailResponse);
   rpc GetMasterWinLossDetail(GetWinLossDetailReportRequest) returns (GetMasterWinLossDetailResponse);
   rpc GetAgentWinLossDetail(GetWinLossDetailReportRequest) returns (GetAgentWinLossDetailResponse);
+  rpc GetSummaryWinLossDetail(GetWinLossDetailSummaryRequest) returns (GetWinLossDetailSummaryResponse);
 }
 
 message GetOutstandingReportRequest {
@@ -139,6 +140,19 @@ message GetWinLossDetailReportRequest {
   int32 level = 14;
 }
 
+message GetWinLossDetailSummaryRequest {
+  int32 custId = 1;
+  sint32 custLevelId = 2;
+  string site = 3;
+  string fromDate = 4;
+  string toDate = 5;
+  string productNames = 6;
+  string productDetails = 7;
+  string username = 8;
+  int32 level = 9;
+  string language = 10;
+}
+
 message GetSuperWinLossDetailResponse {
   repeated SuperWinLossDetailModel report = 1;
   SuperWinLossDetailModel total = 2;
@@ -181,7 +195,6 @@ message SuperWinLossDetailModel {
 
   string company = 20;
   bool isDirectMember = 21;
-
 }
 
 message MasterWinLossDetailModel {
@@ -228,4 +241,27 @@ message AgentWinLossDetailModel {
   string agentTotal = 13;
 
   string company = 14;
+}
+
+message GetWinLossDetailSummaryResponse {
+  int32 betCount = 1;
+  string turnover = 2;
+  string netTurnover = 3;
+  string grossComm = 4;
+  string memberWinLoss = 5;
+  string memberComm = 6;
+  string memberTotal = 7;
+  string agentWinLoss = 8;
+  string agentComm = 9;
+  string agentTotal = 10;
+  string masterWinLoss = 11;
+  string masterComm = 12;
+  string masterTotal = 13;
+  string superWinLoss = 14;
+  string superComm = 15;
+  string superTotal = 16;
+  string company = 17;
+  string downlineTotal = 18;
+  string productIds = 19;
+  string productDetailIds = 20;
 }

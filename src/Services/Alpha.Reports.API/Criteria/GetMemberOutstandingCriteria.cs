@@ -14,8 +14,7 @@ public class GetMemberOutstandingCriteria : CriteriaBase
 
     public string ProductIds { get; }
 
-    public override string GetSettingKey()
-        => "Age_Rpt_Outstanding_Member";
+    public override string GetSettingKey() => "Age_Rpt_Outstanding_Member";
 
     public override bool IsValid() => true;
 }

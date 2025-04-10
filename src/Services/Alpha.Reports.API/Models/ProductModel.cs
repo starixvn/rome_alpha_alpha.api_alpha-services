@@ -14,15 +14,17 @@ public class ProductModel
         TypeName = type == 0 ? string.Empty : name;
     }
 
-    public int Id { get; protected set; }
+    public int Id { get; set; }
 
-    public string Name { get; protected set; }
+    public string Name { get; set; }
 
-    public DateTime? EndOfSupportDate { get; protected set; }
+    public DateTime? EndOfSupportDate { get; set; }
 
-    public int Type { get; protected set; }
+    public int Type { get; set; }
 
-    public string TypeName { get; protected set; }
+    public string TypeName { get; set; }
 
-    public int OrderNo { get; protected set; }
+    public int OrderNo { get; set; }
+
+    public bool IsHidden { get; set; }
 }

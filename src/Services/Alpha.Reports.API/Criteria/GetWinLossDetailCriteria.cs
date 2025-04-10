@@ -3,7 +3,7 @@ using Fanex.Data;
 
 namespace Alpha.Reports.API.Criteria;
 
-public class GetWinLossDetailCriteria : ReportProductCriteria
+public class GetWinLossDetailCriteria : GetMemberWinLossDetailCriteria
 {
     public GetWinLossDetailCriteria(
         int custId,
@@ -14,30 +14,17 @@ public class GetWinLossDetailCriteria : ReportProductCriteria
         string productDetails,
         DateTime fromDate,
         DateTime toDate,
-        int level)
-        : base(custId, balanceUpDay, moveBetsDay, productIds)
+        int level) : base(custId, balanceUpDay, moveBetsDay, productIds, productDetails, fromDate, toDate)
     {
         CustLevel = custLevel;
-        ProductDetails = productDetails;
-        FromDate = fromDate;
-        ToDate = toDate;
-        Level = level;
+        LevelType = level;
     }
 
     [SpParam(Ignored = true)]
     public byte CustLevel { get; }
 
-    public string ProductDetails { get; }
-
-    public DateTime FromDate { get; }
-
-    public DateTime ToDate { get; }
-
-    [SpParam(SqlParamName = "LevelType")]
-    public int Level { get; }
+    public int LevelType { get; }
 
     public override string GetSettingKey()
         => "Age_Rpt_API_WinLossDetail_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);
-
-    public override bool IsValid() => true;
 }

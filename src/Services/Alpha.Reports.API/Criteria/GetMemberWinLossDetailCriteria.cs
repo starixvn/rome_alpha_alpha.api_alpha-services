@@ -1,6 +1,3 @@
-using Alpha.Utilities.Models;
-using Fanex.Data;
-
 namespace Alpha.Reports.API.Criteria;
 
 public class GetMemberWinLossDetailCriteria : ReportProductCriteria
@@ -10,20 +7,14 @@ public class GetMemberWinLossDetailCriteria : ReportProductCriteria
         DateTime balanceUpDay,
         DateTime moveBetsDay,
         IEnumerable<int> productIds,
-        byte custLevel,
         string productDetails,
         DateTime fromDate,
-        DateTime toDate)
-        : base(custId, balanceUpDay, moveBetsDay, productIds)
+        DateTime toDate) : base(custId, balanceUpDay, moveBetsDay, productIds)
     {
-        CustLevel = custLevel;
         ProductDetails = productDetails;
         FromDate = fromDate;
         ToDate = toDate;
     }
-
-    [SpParam(Ignored = true)]
-    public byte CustLevel { get; }
 
     public string ProductDetails { get; }
 
@@ -31,8 +22,7 @@ public class GetMemberWinLossDetailCriteria : ReportProductCriteria
 
     public DateTime ToDate { get; }
 
-    public override string GetSettingKey()
-        => "Age_Rpt_API_WinLossDetail_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);
+    public override string GetSettingKey() => "Age_Rpt_API_WinLossDetail_Member";
 
     public override bool IsValid() => true;
 }

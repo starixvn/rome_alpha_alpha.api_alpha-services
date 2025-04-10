@@ -1,28 +1,24 @@
 using Alpha.Utilities.Models;
 using Fanex.Data;
-using Fanex.Data.Repository;
 
 namespace Alpha.Reports.API.Criteria;
 
-public class GetOutstandingCriteria : CriteriaBase
+public class GetOutstandingCriteria : GetMemberOutstandingCriteria
 {
-    public GetOutstandingCriteria(byte custLevel, int custId, string productIds, int level)
+    public GetOutstandingCriteria(
+        byte custLevel,
+        int custId,
+        string productIds,
+        int level) : base(custId, productIds)
     {
         CustLevel = custLevel;
-        CustId = custId;
-        ProductIds = productIds;
-        Level = level;
+        LevelType = level;
     }
-
-    public int CustId { get; }
 
     [SpParam(Ignored = true)]
     public byte CustLevel { get; }
 
-    public string ProductIds { get; }
-
-    [SpParam(SqlParamName = "LevelType")]
-    public int Level { get; }
+    public int LevelType { get; }
 
     public override string GetSettingKey()
         => "Age_Rpt_Outstanding_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);

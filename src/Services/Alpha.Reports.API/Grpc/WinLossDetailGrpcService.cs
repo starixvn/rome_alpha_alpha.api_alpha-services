@@ -164,4 +164,36 @@ public partial class ReportGrpcService : Reports.ReportsBase
 
         return response;
     }
+
+    public override async Task<GetWinLossDetailSummaryResponse> GetSummaryWinLossDetail(GetWinLossDetailSummaryRequest request, ServerCallContext context)
+    {
+        var param = new GetWinLossDetailSummaryParam(request, settings);
+        var summary = await winLossDetailService.GetSummaryWinLossDetail(param);
+
+        return summary == null
+            ? null
+            : new GetWinLossDetailSummaryResponse
+            {
+                BetCount = summary.BetCount,
+                Turnover = summary.Turnover.FormatNumber(),
+                NetTurnover = summary.NetTurnover.FormatNumber(),
+                GrossComm = summary.GrossComm.FormatNumber(),
+                MemberWinLoss = summary.MemberWinLoss.FormatNumber(),
+                MemberComm = summary.MemberComm.FormatNumber(),
+                MemberTotal = summary.MemberTotal.FormatNumber(),
+                AgentWinLoss = summary.AgentWinLoss.FormatNumber(),
+                AgentComm = summary.AgentComm.FormatNumber(),
+                AgentTotal = summary.AgentTotal.FormatNumber(),
+                MasterWinLoss = summary.MasterWinLoss.FormatNumber(),
+                MasterComm = summary.MasterComm.FormatNumber(),
+                MasterTotal = summary.MasterTotal.FormatNumber(),
+                SuperWinLoss = summary.SuperWinLoss.FormatNumber(),
+                SuperComm = summary.SuperComm.FormatNumber(),
+                SuperTotal = summary.SuperTotal.FormatNumber(),
+                Company = summary.Company.FormatNumber(),
+                DownlineTotal = summary.DownlineTotal.FormatNumber(),
+                ProductIds = summary.ProductIds,
+                ProductDetailIds = summary.ProductDetailIds
+            };
+    }
 }

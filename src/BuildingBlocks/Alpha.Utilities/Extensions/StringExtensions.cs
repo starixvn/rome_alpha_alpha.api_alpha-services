@@ -17,19 +17,15 @@ public static class StringExtensions
         => numberValue.HasValue ? FormatNumber(numberValue.Value) : NotAvailableNumber;
 
     public static List<int> ToListInt(this string delimitedString)
-    {
-        if (string.IsNullOrWhiteSpace(delimitedString))
-        {
-            return Enumerable.Empty<int>().ToList();
-        }
+        => ToListString(delimitedString)
+        .Where(str => int.TryParse(str, out _))
+        .Select(str => Convert.ToInt32(str))
+        .ToList();
 
-        var ids = delimitedString
-            .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-            .Where(str => int.TryParse(str, out _))
-            .Select(str => Convert.ToInt32(str)).ToList();
-
-        return ids;
-    }
+    public static IEnumerable<string> ToListString(this string delimitedString)
+        => string.IsNullOrWhiteSpace(delimitedString)
+        ? new List<string>()
+        : delimitedString.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
     public static string CorrectDateTimeSpace(this string dateTime)
     {
