@@ -36,7 +36,10 @@ public static class ProductIdConstants
     public const int GPIRNG = 48;
     public const int GPILiveCasino = 90;
     public const int PLAYSTAR = 91;
+    public const int HOTDOG = 95;
     public const int ASKMESLOT = 103;
     public const int SabaKeno = 102;
     public const int FUNKYGAMES = 104;
+    public const int OdinGaming = 105;
+    public const int MicrogamingLive = 107;
 }
