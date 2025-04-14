@@ -31,7 +31,7 @@ public class OutstandingService : IOutstandingService
         }
 
         CriteriaBase criteria = param.CustLevel == UserLevelModel.Agent ?        
-            new GetMemberOutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds) :
+            new GetMemberOutstandingCriteria(param.CustId, param.ProductIds) :
             new GetOutstandingCriteria(param.CustLevel, param.CustId, param.ProductIds, param.Level);
         partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
