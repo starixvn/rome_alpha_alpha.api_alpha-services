@@ -42,6 +42,11 @@ public class WinLossDetailController : Controller
         [FromHeader] string timestamp,
         [FromBody] WinLossDetailRequest request)
     {
+        if (request.Level < 0 || 2 < request.Level)
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.InvalidLevel };
+        }
+
         if (!request.ValidateDateRange())
         {
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail =  LoggingConstants.DateIsInvalid };
@@ -83,7 +88,8 @@ public class WinLossDetailController : Controller
             ViewerLevelId = viewerInfo.RoleId,
             FromDate = request.FromDate.ToShortDateString(),
             ToDate = request.ToDate.ToShortDateString(),
-            ProductGroup = ProductGroupConstants.All
+            ProductGroup = ProductGroupConstants.All,
+            Level = request.Level
         };
 
         return downlineInfo.RoleId switch

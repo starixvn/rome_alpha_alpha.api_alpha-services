@@ -2,6 +2,7 @@ namespace Alpha.Utilities.Constants
 {
     public static class LoggingConstants
     {
+        public const string InvalidLevel = "Invalid Level";
         public const string DateIsInvalid = "Input date(s) is invalid";
         public const string ProductIsInvalid = "Product is invalid";
         public const string DetailKeyIsInvalid = "Detail Key is invalid";

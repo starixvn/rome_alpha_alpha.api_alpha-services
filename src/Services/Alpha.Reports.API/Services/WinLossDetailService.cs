@@ -61,7 +61,8 @@ public class WinLossDetailService : IWinLossDetailService
             param.CustLevel,
             productDetailsXML,
             param.FromDate,
-            param.ToDate);
+            param.ToDate,
+            param.Level);
 
         partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
@@ -94,7 +95,8 @@ public class WinLossDetailService : IWinLossDetailService
             param.CustLevel,
             productDetailsXML,
             param.FromDate,
-            param.ToDate);
+            param.ToDate,
+            param.Level);
 
         partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
@@ -122,7 +124,7 @@ public class WinLossDetailService : IWinLossDetailService
 
         var productDetailsXML = productDetailService.BuildProductDetailsXML(products, productDetails, productOfferProductDetail);
 
-        var criteria = new GetWinLossDetailCriteria(
+        var criteria = new GetMemberWinLossDetailCriteria(
             param.CustId,
             balanceUpDay,
             moveBetsDay,

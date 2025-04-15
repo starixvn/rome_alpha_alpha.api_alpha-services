@@ -11,7 +11,8 @@ public class GetOutstandingReportParam
         int custId,
         string productIds,
         bool autoFollowBetIsDummyAgent,
-        string siteName)
+        string siteName,
+        int level)
     {
         ViewerLevel = viewerLevel;
         CustLevel = custLevel;
@@ -19,6 +20,7 @@ public class GetOutstandingReportParam
         ProductIds = productIds;
         AutoFollowBetIsDummyAgent = autoFollowBetIsDummyAgent;
         SiteName = siteName;
+        Level = level;
     }
 
     public byte ViewerLevel { get; }
@@ -27,7 +29,11 @@ public class GetOutstandingReportParam
     public string ProductIds { get; }
     public bool AutoFollowBetIsDummyAgent { get; }
     public string SiteName { get; }
+    public int Level { get; }
 
     public bool IsValid()
-        => CustId > 0 && !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
+        => CustId > 0 
+        && !UserLevelModel.IsUpline(CustLevel, ViewerLevel)
+        && 0 <= Level 
+        && Level <= 2;
 }

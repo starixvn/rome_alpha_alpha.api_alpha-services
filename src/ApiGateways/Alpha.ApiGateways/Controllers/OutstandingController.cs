@@ -42,6 +42,11 @@ public class OutstandingController : Controller
         [FromHeader] string timestamp,
         [FromBody] OutstandingRequest request)
     {
+        if (request.Level < 0 || 2 < request.Level)
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.InvalidLevel };
+        }
+        
         var apiKeyRequest = new ApiKeyRequest
         {
             Key = key,
@@ -70,7 +75,8 @@ public class OutstandingController : Controller
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
             CustName = request.CustName,
-            ProductGroup = ProductGroupConstants.All
+            ProductGroup = ProductGroupConstants.All,
+            Level = request.Level
         };
 
         var accountStatus = await customerService.GetCustomerStatus(downlineInfo.CustId);

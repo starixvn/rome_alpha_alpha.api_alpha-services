@@ -11,7 +11,7 @@ public interface IWinLossDetailDataAccess
 {
     Task<ReportDataModel<SuperWinLossDetailModel>> GetSuperWinLossDetail(GetWinLossDetailCriteria criteria);
     Task<ReportDataModel<MasterWinLossDetailModel>> GetMasterWinLossDetail(GetWinLossDetailCriteria criteria);
-    Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetWinLossDetailCriteria criteria);
+    Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetMemberWinLossDetailCriteria criteria);
 }
 
 public class WinLossDetailDataAccess : IWinLossDetailDataAccess
@@ -29,12 +29,13 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             {
                 while (reader.Read())
                 {
-                    winLossDetails.Add(BuildSuperWinLossDetail(reader));
+                    var isDirectMember = reader.ToString("IsDirectMember") == "1";
+                    winLossDetails.Add(BuildSuperWinLossDetail(reader, isDirectMember));
                 }
 
                 if (reader.NextResult() && reader.Read())
                 {
-                    totalWinLoss = BuildSuperWinLossDetail(reader);
+                    totalWinLoss = BuildSuperWinLossDetail(reader, false);
                 }
             }
         }
@@ -55,12 +56,13 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             {
                 while (reader.Read())
                 {
-                    winLossDetails.Add(BuildMasterWinLossDetail(reader));
+                    var isDirectMember = reader.ToString("IsDirectMember") == "1";
+                    winLossDetails.Add(BuildMasterWinLossDetail(reader, isDirectMember));
                 }
 
                 if (reader.NextResult() && reader.Read())
                 {
-                    totalWinLoss = BuildMasterWinLossDetail(reader);
+                    totalWinLoss = BuildMasterWinLossDetail(reader, false);
                 }
             }
         }
@@ -70,7 +72,7 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
     }
 
 
-    public async Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetWinLossDetailCriteria criteria)
+    public async Task<ReportDataModel<AgentWinLossDetailModel>> GetAgentWinLossDetail(GetMemberWinLossDetailCriteria criteria)
     {
         var winLossDetails = new List<AgentWinLossDetailModel>();
         var totalWinLoss = new AgentWinLossDetailModel();
@@ -96,7 +98,7 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
         return new ReportDataModel<AgentWinLossDetailModel>(winLossDetails, totalWinLoss);
     }
 
-    private static SuperWinLossDetailModel BuildSuperWinLossDetail(IDataReader reader)
+    private static SuperWinLossDetailModel BuildSuperWinLossDetail(IDataReader reader, bool isDirectMember)
     {
         var winLossDetail = new SuperWinLossDetailModel
         {
@@ -115,13 +117,14 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             NetTurnover = reader.ToDecimal("TurnoverNoDraw"),
             GrossComm = reader.ToDecimal("GrossComm"),
             RewardAmount = reader.ToDecimal("RewardAmount"),
-            RewardCurrency = reader.ToString("RewardCurrency")
+            RewardCurrency = reader.ToString("RewardCurrency"),
+            IsDirectMember = isDirectMember
         };
 
         return winLossDetail;
     }
 
-    private static MasterWinLossDetailModel BuildMasterWinLossDetail(IDataReader reader)
+    private static MasterWinLossDetailModel BuildMasterWinLossDetail(IDataReader reader, bool isDirectMember)
     {
         var winLossDetail = new MasterWinLossDetailModel
         {
@@ -138,7 +141,8 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             NetTurnover = reader.ToDecimal("TurnoverNoDraw"),
             GrossComm = reader.ToDecimal("GrossComm"),
             RewardAmount = reader.ToDecimal("RewardAmount"),
-            RewardCurrency = reader.ToString("RewardCurrency")
+            RewardCurrency = reader.ToString("RewardCurrency"),
+            IsDirectMember = isDirectMember
         };
 
         return winLossDetail;

@@ -59,7 +59,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             NetTurnover = o.NetTurnover.FormatNumber(),
             GrossComm = o.GrossComm.FormatNumber(),
             RewardAmount = o.RewardAmount.FormatNumber(),
-            RewardCurrency = o.RewardCurrency
+            RewardCurrency = o.RewardCurrency,
+            IsDirectMember = o.IsDirectMember
         }));
 
         return response;
@@ -111,7 +112,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             NetTurnover = o.NetTurnover.FormatNumber(),
             GrossComm = o.GrossComm.FormatNumber(),
             RewardAmount = o.RewardAmount.FormatNumber(),
-            RewardCurrency = o.RewardCurrency
+            RewardCurrency = o.RewardCurrency,
+            IsDirectMember = o.IsDirectMember
         }));
 
         return response;

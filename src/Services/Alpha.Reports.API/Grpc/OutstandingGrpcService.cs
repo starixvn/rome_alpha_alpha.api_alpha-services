@@ -30,7 +30,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
             SuperOutstanding = o.SuperOutstanding.FormatNumber(),
             MemberWin = o.ToWin.FormatNumber(),
-            SuperRisk = o.SuperRisk.FormatNumber()
+            SuperRisk = o.SuperRisk.FormatNumber(),
+            IsDirectMember = o.IsDirectMember
         }));
 
         return response;
@@ -61,7 +62,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             MasterOutstanding = o.MasterOutstanding.FormatNumber(),
             SuperOutstanding = o.SuperOutstanding.FormatNumber(),
             MemberWin = o.ToWin.FormatNumber(),
-            SuperRisk = o.SuperRisk.FormatNumber()
+            SuperRisk = o.SuperRisk.FormatNumber(),
+            IsDirectMember = o.IsDirectMember
         }));
 
         return response;
@@ -123,7 +125,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             MemberOutstanding = o.MemberOutstanding.FormatNumber(),
             MasterOutstanding = o.MasterOutstanding.FormatNumber(),
             MemberWin = o.ToWin.FormatNumber(),
-            MasterRisk = o.MasterRisk.FormatNumber()
+            MasterRisk = o.MasterRisk.FormatNumber(),
+            IsDirectMember = o.IsDirectMember
         }));
 
         return response;
@@ -201,7 +204,8 @@ public partial class ReportGrpcService : Reports.ReportsBase
             request.CustId,
             validUserSelectedProductIds.JoinWithComma(),
             request.AutoFollowBetIsDummyAgent,
-            request.Site);
+            request.Site,
+            request.Level);
 
         var outstandings = (await outstandingService.GetReport(param))
             .OrderBy(request.SortPropertyName, request.IsDescendingSort);
