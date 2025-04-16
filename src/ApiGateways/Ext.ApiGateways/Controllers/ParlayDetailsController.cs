@@ -49,7 +49,8 @@ public class ParlayDetailsController : Controller
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
         var isBelonging = await customerService.GetBelongingInfo(custId, downlineInfo.CustId, 0, refNo);
@@ -63,7 +64,7 @@ public class ParlayDetailsController : Controller
         var key = AesService.Decrypt(request.DetailKey);
         var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<object>>(key);
         if(!detailKeyModel.SupportDetails) {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.NotSupportGetParlayDetails }; 
+            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.NotSupportGetParlayDetails };
         }
 
         var getParlayDetailsRequest = new GetParlayDetailRequest
@@ -77,7 +78,7 @@ public class ParlayDetailsController : Controller
         {
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DetailKeyIsInvalid };
         }
-        
+
         return Json(result);
     }
 

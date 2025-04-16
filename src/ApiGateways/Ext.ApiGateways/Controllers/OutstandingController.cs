@@ -50,7 +50,8 @@ public class OutstandingController : BaseAPIController
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var reportRequest = new GetOutstandingReportRequest
@@ -115,7 +116,8 @@ public class OutstandingController : BaseAPIController
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);

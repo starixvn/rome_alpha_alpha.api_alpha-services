@@ -52,7 +52,8 @@ public class OutstandingByNameController : BaseAPIController
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var reportRequest = new GetOutstandingReportRequest
@@ -140,7 +141,7 @@ public class OutstandingByNameController : BaseAPIController
 
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    [Route("api/[controller]/{custName}")]  
+    [Route("api/[controller]/{custName}")]
     public async Task<IActionResult> GetByProductCodes(
         [FromRoute] string custName,
         [FromQuery] string products,
@@ -155,7 +156,8 @@ public class OutstandingByNameController : BaseAPIController
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);
