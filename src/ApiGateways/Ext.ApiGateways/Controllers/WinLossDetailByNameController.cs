@@ -56,7 +56,8 @@ public class WinLossDetailByNameController : BaseAPIController
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var reportRequest = new GetWinLossDetailReportRequest
@@ -125,7 +126,8 @@ public class WinLossDetailByNameController : BaseAPIController
 
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);

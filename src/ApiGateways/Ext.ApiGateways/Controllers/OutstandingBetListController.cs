@@ -50,7 +50,8 @@ public class OutstandingBetListController : BaseAPIController
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
         var betListsRequest = new GetRunningBetListRequest
@@ -107,7 +108,8 @@ public class OutstandingBetListController : BaseAPIController
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);

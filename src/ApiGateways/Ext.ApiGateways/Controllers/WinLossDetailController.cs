@@ -31,7 +31,7 @@ public class WinLossDetailController : BaseAPIController
 
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    [Route("api/[controller]/{product=All}")]                   
+    [Route("api/[controller]/{product=All}")]
     public async Task<IActionResult> Index(
         [FromRoute] string product,
         [FromBody] WinLossDetailRequest request)
@@ -54,7 +54,8 @@ public class WinLossDetailController : BaseAPIController
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var reportRequest = new GetWinLossDetailReportRequest
@@ -103,7 +104,7 @@ public class WinLossDetailController : BaseAPIController
 
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    [Route("api/[controller]/index")]                   
+    [Route("api/[controller]/index")]
     public async Task<IActionResult> GetByProductCodes(
         [FromQuery] string products,
         [FromBody] WinLossDetailRequest request)
@@ -121,7 +122,8 @@ public class WinLossDetailController : BaseAPIController
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
+            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);
