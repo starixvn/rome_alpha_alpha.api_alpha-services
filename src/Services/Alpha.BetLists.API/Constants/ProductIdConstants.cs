@@ -42,4 +42,7 @@ public static class ProductIdConstants
     public const int FUNKYGAMES = 104;
     public const int OdinGaming = 105;
     public const int MicrogamingLive = 107;
+
+    public const int LiveCasinoDummy = 998;
+    public const int RNGCasinoDummy = 999;
 }
