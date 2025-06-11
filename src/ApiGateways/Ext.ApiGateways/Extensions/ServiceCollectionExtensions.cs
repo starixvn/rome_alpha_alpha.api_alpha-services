@@ -1,25 +1,26 @@
 
+using System.Globalization;
+using System.Reflection;
+using System.Threading.RateLimiting;
+using Alpha.Utilities.Configurations;
+using Alpha.Utilities.Infrastructure;
+using Alpha.Utilities.Interceptors;
+using Common.Logging.Extensions;
 using Ext.ApiGateways.Infrastructure.Filters;
 using Ext.ApiGateways.Infrastructure.Middlewares;
 using Ext.ApiGateways.Services;
+using GrpcBetLists;
+using GrpcCustomer;
+using GrpcExtApiKey;
+using GrpcReports;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
-using GrpcCustomer;
-using GrpcReports;
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
-using System.Threading.RateLimiting;
-using System.Globalization;
-using GrpcBetLists;
 using Newtonsoft.Json.Serialization;
-using Alpha.Utilities.Infrastructure;
-using Alpha.Utilities.Configurations;
-using Alpha.Utilities.Interceptors;
-using Common.Logging.Extensions;
 
 namespace Ext.ApiGateways.Extensions;
 
@@ -115,6 +116,12 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<ICustomerService, CustomerService>();
 
+        services.AddGrpcClient<ExtApiKey.ExtApiKeyClient>((services, options) =>
+        {
+            var apiKeyApi = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcApiKey;
+            options.Address = new Uri(apiKeyApi);
+        }).AddInterceptor<GrpcExceptionInterceptor>();
+
         services.AddGrpcClient<Customer.CustomerClient>((services, options) =>
         {
             var customerApi = services.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcCustomer;
@@ -140,10 +147,9 @@ public static class ServiceCollectionExtensions
         })
         .AddInterceptor<ReportsGrpcExceptionInterceptor>();
 
-        services.AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ContractResolver =
-                new CamelCasePropertyNamesContractResolver());
+        services
+            .AddControllersWithViews()
+            .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
         return services;
     }

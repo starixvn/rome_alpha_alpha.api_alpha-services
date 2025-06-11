@@ -60,14 +60,19 @@ public class ApiKeyService : IApiKeyService
         var passPhraseInvalid = !passPhrase.Equals(apiKey.PassPhrase);
         var signatureInvalid = !signature.Equals(Convert.ToBase64String(signatureValue));
 
-        if (apiKey.IsExpired || passPhraseInvalid || signatureInvalid)
+        if (apiKey.IsExpired)
         {
-            var message = "Key expired";
-            if (passPhraseInvalid ||signatureInvalid)
-            {
-                message = "Pass phrase or signature is invalid";
-            }
-            return new VerifyApiKeyResult(false, message);
+            return new VerifyApiKeyResult(false, "Key expired");
+        }
+
+        if (passPhraseInvalid)
+        {
+            return new VerifyApiKeyResult(false, "Pass phrase is invalid: " + passPhrase + " vs " + apiKey.PassPhrase);
+        }
+
+        if (signatureInvalid)
+        {
+            return new VerifyApiKeyResult(false, "Signature is invalid: " + signature + " vs " + Convert.ToBase64String(signatureValue));
         }
 
         return new VerifyApiKeyResult(true) { CustId = apiKey.CustId, RoleId = apiKey.RoleId, Scopes = apiKey.ScopeIdList };

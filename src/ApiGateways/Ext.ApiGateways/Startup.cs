@@ -1,12 +1,11 @@
-using FanexLibs.Logging;
-using Ext.ApiGateways.Extensions;
-using static System.Net.Mime.MediaTypeNames;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.HttpLogging;
-using FanexLibs.Data;
-using Alpha.Utilities.Models;
 using Alpha.Utilities.Configurations;
+using Alpha.Utilities.Models;
+using Ext.ApiGateways.Extensions;
+using FanexLibs.Logging;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.OpenApi.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Ext.ApiGateways;
 
@@ -22,7 +21,6 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
-            .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
             .AddFanexCachingMemory()
             .AddOneBookUm(Configuration)

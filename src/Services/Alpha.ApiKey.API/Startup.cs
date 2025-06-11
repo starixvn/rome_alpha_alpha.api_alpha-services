@@ -1,5 +1,6 @@
 using Alpha.ApiKey.API.Models;
 using Alpha.ApiKey.API.Services;
+using Fanex.Caching;
 using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcApiKey;
@@ -24,7 +25,9 @@ public class Startup
         services
             .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
+            .AddSingleton<ICacheService, CacheService>()
             .AddTransient<IApiKeyService, ApiKeyService>()
+            .AddTransient<IExtApiKeyService, ExtApiKeyService>()
             .AddGrpc();
 
         services

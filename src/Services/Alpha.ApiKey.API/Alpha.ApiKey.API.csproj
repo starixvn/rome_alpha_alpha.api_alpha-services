@@ -8,12 +8,14 @@
 
   <ItemGroup>
     <Protobuf Include="Proto\apikey.proto" GrpcServices="Server" />
+    <Protobuf Include="Proto\extapikey.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Fanex.Caching.AspNetCore" Version="2.2.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Data\FanexLibs.Data.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Alpha.Utilities\Alpha.Utilities.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FanexLibs\FanexLibs.Logging\FanexLibs.Logging.csproj" />
   </ItemGroup>
 
