@@ -63,9 +63,6 @@ public class Startup
                     return;
                 }
 
-                var logger = app.ApplicationServices.GetService<Fanex.Logging.ILogger>();
-                logger.Error(ex.Error.Message, ex.Error);
-
                 if (ex.Error is GrpcException)
                 {
                     var info = ex.Error as GrpcException;

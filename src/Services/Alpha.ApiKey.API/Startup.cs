@@ -4,6 +4,7 @@ using Fanex.Caching;
 using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcApiKey;
+using GrpcExtApiKey;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -69,6 +70,7 @@ public class Startup
         {
             endpoints.MapControllers();
             endpoints.MapGrpcService<ApiKeyGrpcService>();
+            endpoints.MapGrpcService<ExtApiKeyGrpcService>();
             endpoints.MapGet("/", () => $"{typeof(Startup).Assembly.GetName().Name} is running!");
         });
     }
