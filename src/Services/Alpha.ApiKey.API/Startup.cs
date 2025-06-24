@@ -1,5 +1,6 @@
 using Alpha.ApiKey.API.Models;
 using Alpha.ApiKey.API.Services;
+using Alpha.Utilities.Interceptors;
 using Fanex.Caching;
 using FanexLibs.Data;
 using FanexLibs.Logging;
@@ -28,8 +29,13 @@ public class Startup
             .AddFanexLogging(Configuration)
             .AddSingleton<ICacheService, CacheService>()
             .AddTransient<IApiKeyService, ApiKeyService>()
-            .AddTransient<IExtApiKeyService, ExtApiKeyService>()
-            .AddGrpc();
+            .AddTransient<IExtApiKeyService, ExtApiKeyService>();
+
+        services.AddGrpc(options =>
+        {
+            options.Interceptors.Add<GrpcServerExceptionInterceptor>();
+            options.EnableDetailedErrors = true;
+        });
 
         services
             .AddControllers()
