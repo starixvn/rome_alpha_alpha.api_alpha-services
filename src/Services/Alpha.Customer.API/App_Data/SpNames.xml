@@ -3,7 +3,7 @@
   <Function Name="Customer Information">
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.wsv_alp" />
     <Setting Key="Age_CustomerSelCheckBelonging" SpName="Age_CustomerSelCheckBelonging" DbName="DBAGE.bodb02.wsv_alp" />
-    <Setting Key="Age_Chatbot_CustomerStatusSel" SpName="Age_Chatbot_CustomerStatusSel" DbName="DBCust.CustDB.wsv_alp" />
+    <Setting Key="Age_Chatbot_CustomerStatusSel" SpName="Age_Chatbot_CustomerStatusSel" DbName="DBCUST.CustDB.wsv_alp" />
 
     <Setting Key="Age_ManageAPI_CustInfo" SpName="Age_ManageAPI_CustInfo" DbName="DBAGE.bodb02.wsv_alp" />
     <Setting Key="EAS_API_GetProductList" SpName="EAS_API_GetProductList" DbName="DBAGE.bodb02.wsv_xnap">

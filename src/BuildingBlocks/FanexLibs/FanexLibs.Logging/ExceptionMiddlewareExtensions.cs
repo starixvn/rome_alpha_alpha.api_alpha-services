@@ -18,27 +18,18 @@ public static class ExceptionMiddlewareExtensions
         {
             appError.Run(async context =>
             {
-                Console.WriteLine("ExceptionMiddlewareExtensions");
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.ContentType = "application/json";
+                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
 
-                try
+                if (contextFeature != null)
                 {
-                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                    context.Response.ContentType = "application/json";
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    var exception = contextFeature.Error;
+                    var logger = app.ApplicationServices.GetService<Fanex.Logging.ILogger>();
+                    await logger.ErrorAsync(await BuildError(context.Request, exception));
 
-                    if (contextFeature != null)
-                    {
-                        var exception = contextFeature.Error;
-                        var logger = app.ApplicationServices.GetService<Fanex.Logging.ILogger>();
-                        await logger.ErrorAsync(await BuildError(context.Request, exception));
-
-                        await ExceptionHandler.HandleAsync(exception, context).ConfigureAwait(false);
-                        await context.Response.WriteAsync("Internal Server Error.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception in ExceptionHandler: {ex.Message}, {ex.StackTrace}");
+                    await ExceptionHandler.HandleAsync(exception, context).ConfigureAwait(false);
+                    await context.Response.WriteAsync("Internal Server Error.");
                 }
             });
         });
