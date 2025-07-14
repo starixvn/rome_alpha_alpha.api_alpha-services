@@ -17,5 +17,6 @@ namespace Alpha.Utilities.Constants
         public const string TicketMustBelongToMember = "Ticket must belong to member";
 
         public const string SearchAccountMustNotBeProtectedMode = "Search account status must not be protected mode";
+        public const string WrongSecretKey = "Wrong SecretKey";
     }
 }

@@ -1,8 +1,11 @@
 using Alpha.ApiKey.API.Models;
 using Alpha.ApiKey.API.Services;
+using Alpha.Utilities.Interceptors;
+using Fanex.Caching;
 using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcApiKey;
+using GrpcExtApiKey;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -24,8 +27,15 @@ public class Startup
         services
             .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
+            .AddSingleton<ICacheService, CacheService>()
             .AddTransient<IApiKeyService, ApiKeyService>()
-            .AddGrpc();
+            .AddTransient<IExtApiKeyService, ExtApiKeyService>();
+
+        services.AddGrpc(options =>
+        {
+            options.Interceptors.Add<GrpcServerExceptionInterceptor>();
+            options.EnableDetailedErrors = true;
+        });
 
         services
             .AddControllers()
@@ -66,6 +76,7 @@ public class Startup
         {
             endpoints.MapControllers();
             endpoints.MapGrpcService<ApiKeyGrpcService>();
+            endpoints.MapGrpcService<ExtApiKeyGrpcService>();
             endpoints.MapGet("/", () => $"{typeof(Startup).Assembly.GetName().Name} is running!");
         });
     }

@@ -1,4 +1,5 @@
 using Alpha.Customer.API.Extensions;
+using Alpha.Utilities.Interceptors;
 using FanexLibs.Data;
 using FanexLibs.Logging;
 using GrpcCustomer;
@@ -21,8 +22,13 @@ public class Startup
             .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
             .AddFanexCachingMemory()
-            .AddCustomerServices(Configuration)
-            .AddGrpc();
+            .AddCustomerServices(Configuration);
+
+        services.AddGrpc(options =>
+        {
+            options.Interceptors.Add<GrpcServerExceptionInterceptor>();
+            options.EnableDetailedErrors = true;
+        });
 
         services
             .AddControllers()

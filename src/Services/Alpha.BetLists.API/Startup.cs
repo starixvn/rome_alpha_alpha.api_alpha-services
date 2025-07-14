@@ -46,9 +46,14 @@ public class Startup
            .AddFanexData(Configuration)
            .AddFanexLogging(Configuration)
            .AddFanexCachingMemory()
-           .ConfigurePartialUMServices(Configuration)
-           .AddGrpc();
+           .ConfigurePartialUMServices(Configuration);
 
+        services.AddGrpc(options =>
+        {
+            options.Interceptors.Add<GrpcServerExceptionInterceptor>();
+            options.EnableDetailedErrors = true;
+        });
+        
         AddDIs(services);
 
         services

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-    <Setting Key="Age_ManageAPI_SelByCust" SpName="Age_ManageAPI_SelByCust" DbName="DBCust.CustDB.wsv_alp">
+    <Setting Key="Age_ManageAPI_SelByCust" SpName="Age_ManageAPI_SelByCust" DbName="DBCUST.CustDB.wsv_alp">
         <Mappings>
             <Mapping DataField="APIname" ObjectProperty="Name" />
             <Mapping DataField="APIkey" ObjectProperty="Key" />
             <Mapping DataField="ExpiredDate" ObjectProperty="ExpirationDate" />
         </Mappings>
     </Setting>
-    <Setting Key="Age_ManageAPI_SelByKey" SpName="Age_ManageAPI_SelByKey" DbName="DBCust.CustDB.wsv_alp">
+    <Setting Key="Age_ManageAPI_SelByKey" SpName="Age_ManageAPI_SelByKey" DbName="DBCUST.CustDB.wsv_alp">
         <Mappings>
             <Mapping DataField="APIname" ObjectProperty="Name" />
             <Mapping DataField="APIkey" ObjectProperty="Key" />
@@ -15,7 +15,8 @@
             <Mapping DataField="ExpiredDate" ObjectProperty="ExpirationDate" />
         </Mappings>
     </Setting>
-    <Setting Key="Age_ManageAPI_Ins" SpName="Age_ManageAPI_Ins" DbName="DBCust.CustDB.wsv_alp"/>
-    <Setting Key="Age_ManageAPI_Upd" SpName="Age_ManageAPI_Upd" DbName="DBCust.CustDB.wsv_alp"/>
-    <Setting Key="Age_ManageAPI_Del" SpName="Age_ManageAPI_Del" DbName="DBCust.CustDB.wsv_alp"/>
+    <Setting Key="Age_ManageAPI_Ins" SpName="Age_ManageAPI_Ins" DbName="DBCUST.CustDB.wsv_alp"/>
+    <Setting Key="Age_ManageAPI_Upd" SpName="Age_ManageAPI_Upd" DbName="DBCUST.CustDB.wsv_alp"/>
+    <Setting Key="Age_ManageAPI_Del" SpName="Age_ManageAPI_Del" DbName="DBCUST.CustDB.wsv_alp"/>
+    <Setting Key="EAS_API_CheckSecretKeyUser" SpName="EAS_API_CheckSecretKeyUser" DbName="DBCUST.CustDB.wsv_xnap"/>
 </Functions>

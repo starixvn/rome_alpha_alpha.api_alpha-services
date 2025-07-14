@@ -2,7 +2,6 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace Alpha.Utilities.Helpers
-
 {
     public static class AesService
     {

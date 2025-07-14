@@ -3,12 +3,12 @@
   <Function Name="Base Functions">
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
     <Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail" DbName="DBAGE.bodb02.wsv_alp" Plain="0" />
-    <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCust.IPDB.wsv_alp" Plain="0" />
-    <Setting Key="Age_IPRangesByCountrySelByIPList" SpName="Age_IPRangesByCountrySelByIPList" DbName="DBCust.IPDB.wsv_alp" Plain="0" />
-    <Setting Key="Age_IPRangesByCountrySelByIPV6List" SpName="Age_IPRangesByCountrySelByIPV6List" DbName="DBCust.IPDB.wsv_alp" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCUST.IPDB.wsv_alp" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySelByIPList" SpName="Age_IPRangesByCountrySelByIPList" DbName="DBCUST.IPDB.wsv_alp" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySelByIPV6List" SpName="Age_IPRangesByCountrySelByIPV6List" DbName="DBCUST.IPDB.wsv_alp" Plain="0" />
  </Function>
   <Function Name="Partial UM">
-    <Setting Key="Acc_CheckUM_ByReport" SpName="Acc_CheckUM_ByReport" DbName="DBCust.CustDB.wsv_alp" Plain="0" />
+    <Setting Key="Acc_CheckUM_ByReport" SpName="Acc_CheckUM_ByReport" DbName="DBCUST.CustDB.wsv_alp" Plain="0" />
   </Function>
   <Function Name="Products">
     <Setting Key="Age_Rpt_GetProductList" SpName="Age_Rpt_GetProductList" DbName="DBAGE.bodb02.wsv_alp" Plain="0">

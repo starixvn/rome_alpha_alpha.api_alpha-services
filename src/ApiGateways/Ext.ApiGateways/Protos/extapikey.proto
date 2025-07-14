@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcExtApiKey";
+
+package ExtApiKey;
+
+service ExtApiKey {
+    rpc VerifyExtApiKey(VerifyExtApiKeyRequest) returns (VerifyExtApiKeyResponse) {}
+}
+
+message VerifyExtApiKeyRequest {
+    string key = 1;
+    string username = 2;
+    string password = 3;
+}
+
+message VerifyExtApiKeyResponse {
+    bool isAuthenticated = 1;
+    int32 custId = 2;
+    int32 subAccId = 3;
+    string errMsg = 4;
+    string site = 5;
+    int32 currency = 6;
+}
