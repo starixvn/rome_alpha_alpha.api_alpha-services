@@ -35,7 +35,7 @@ public class ExtApiKeyGrpcService : ExtApiKey.ExtApiKeyBase
             CustId = result.CustId,
             SubAccId = result.SubAccId,
             ErrMsg = result.ErrMsg ?? string.Empty,
-            Site = result.Site,
+            Site = result.Site ?? string.Empty,
             Currency = result.Currency,
         };
 
