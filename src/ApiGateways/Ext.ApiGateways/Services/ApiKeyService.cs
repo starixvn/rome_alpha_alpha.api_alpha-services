@@ -26,7 +26,12 @@ namespace Ext.ApiGateways.Services
             var response = await apiKeyClient.VerifyExtApiKeyAsync(new VerifyExtApiKeyRequest { Key = key, Username = username, Password = password });
             logger.LogDebug($"grpc response {ToJson(response)}");
 
-            return new VerifyApiKeyResult
+            return response == null
+            ? new VerifyApiKeyResult
+            {
+                IsAuthenticated = false
+            }
+            : new VerifyApiKeyResult
             {
                 IsAuthenticated = response.IsAuthenticated,
                 CustId = response.CustId,
