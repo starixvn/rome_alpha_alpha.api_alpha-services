@@ -103,6 +103,7 @@ public class ProductService : IProductService
 
     private static IEnumerable<int> FilterNonSportsbookProducts(IEnumerable<int> products)
     {
-        return products.Where(p => p != ProductIdConstants.Sportsbook && p != ProductIdConstants.CashBilling);
+        var excludedProducts = new[] { ProductIdConstants.Sportsbook, ProductIdConstants.CashBilling };
+        return products.Where(p => !excludedProducts.Contains(p));
     }
 }
