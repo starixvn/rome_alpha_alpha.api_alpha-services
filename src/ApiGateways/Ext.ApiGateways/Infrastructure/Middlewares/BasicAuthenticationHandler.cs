@@ -71,7 +71,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
         logger.LogFailedAuthentication($"AuthenticateFailed: {verifyApiKeyResult?.ErrMsg}", Request.Headers, RequestLoggingConstants.RequestKeys);
 
-        failReason = verifyApiKeyResult?.ErrMsg != null ? verifyApiKeyResult.ErrMsg : LoggingConstants.KeyUsernamePasswordIsInvalid;;
+        failReason = verifyApiKeyResult?.ErrMsg != null ? verifyApiKeyResult.ErrMsg : LoggingConstants.KeyUsernamePasswordIsInvalid;
         return AuthenticateResult.Fail(failReason);
     }
 
