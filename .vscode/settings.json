@@ -7,5 +7,9 @@
   "coverage-gutters.showRulerCoverage": true,
   "dotnet-test-explorer.testArguments": "--collect:\"XPlat Code Coverage\"",
   "dotnet-test-explorer.treeMode": "full",
-  "dotnet.defaultSolution": "Alpha.Services.sln"
+  "dotnet.defaultSolution": "Alpha.Services.sln",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "https-sonarqube-nexdev-net-",
+    "projectKey": "Pioneers-AlphaAPI"
+  }
 }
