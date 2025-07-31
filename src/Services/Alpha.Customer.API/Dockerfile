@@ -20,7 +20,7 @@ COPY /src/BuildingBlocks/Alpha.Utilities ./BuildingBlocks/Alpha.Utilities
 WORKDIR /src/Services/Alpha.Customer.API
 RUN dotnet publish -r linux-x64 --self-contained false -o /app
 
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine-25h1 as base
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine-25h1 AS base
 
 RUN adduser --disabled-password \
     --home /app \
