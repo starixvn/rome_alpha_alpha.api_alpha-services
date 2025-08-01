@@ -7,10 +7,10 @@ namespace Alpha.ApiGateways.Extensions
     {
         public static PartitionedRateLimiter<HttpContext> CreateGlobalPartitionedRateLimiter(this IConfiguration configuration)
         {
+            const string partitionKey = "RateLimitByGlobalKey";
             return PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
             {
-                var partitionKey = "RateLimitByGlobalKey";
-                var rateLimitConfig = configuration.GetSection(RateLimitConfig.ConfigByGlobal).Get<RateLimitConfig>();
+                RateLimitConfig rateLimitConfig = configuration.GetSection(RateLimitConfig.ConfigByGlobal).Get<RateLimitConfig>();
                 httpContext.Request.Headers["RateLimiterMessage"] = rateLimitConfig.GetMessage(RateLimitConfig.ConfigByGlobal);
 
                 return RateLimitPartition.GetSlidingWindowLimiter(partitionKey, partition => new SlidingWindowRateLimiterOptions
@@ -28,9 +28,9 @@ namespace Alpha.ApiGateways.Extensions
             return PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
             {
                 var headers = httpContext.Request.Headers;
-                var partitionKey = headers.ContainsKey("Key") ? headers["Key"].ToString() : string.Empty;
+                string partitionKey = headers.ContainsKey("Key") ? headers["Key"].ToString() : string.Empty;
 
-                var rateLimitConfig = configuration.GetSection(rateLimiterName).Get<RateLimitConfig>();
+                RateLimitConfig rateLimitConfig = configuration.GetSection(rateLimiterName).Get<RateLimitConfig>();
 
                 httpContext.Request.Headers["RateLimiterMessage"] = rateLimitConfig.GetMessage(rateLimiterName);
 

@@ -16,6 +16,7 @@ namespace Alpha.BetLists.API.Models.Parlay
             { BetStatus.Refund, 6 }
         };
 
+        // Place all constructors together (adjacent)
         public ComboParlayDetailViewModel(
             ComboParlayDetailData comboParlayDetailData,
             ITicketHelper ticketHelper)
@@ -31,10 +32,6 @@ namespace Alpha.BetLists.API.Models.Parlay
             IsRunningTicket = !comboParlayDetailData.ComboParlayDetails.Any();
         }
 
-        public IEnumerable<ComboParlayDetailWrapper> ComboParlayDetailWrappers { get; }
-
-        public IEnumerable<IGrouping<string, ComboParlayDetailWrapper>> ComboParlayDetailWrapperGroups { get; }
-
         public ComboParlayDetailViewModel(string totalWinLost, string outStanding, string title, bool isDataTooHuge, bool isRunningTicket)
         {
             this.TotalWinLost = totalWinLost;
@@ -42,8 +39,11 @@ namespace Alpha.BetLists.API.Models.Parlay
             this.Title = title;
             this.IsDataTooHuge = isDataTooHuge;
             this.IsRunningTicket = isRunningTicket;
-
         }
+
+        public IEnumerable<ComboParlayDetailWrapper> ComboParlayDetailWrappers { get; }
+
+        public IEnumerable<IGrouping<string, ComboParlayDetailWrapper>> ComboParlayDetailWrapperGroups { get; }
 
         public string TotalWinLost { get; }
 

@@ -1,13 +1,11 @@
-
-using Microsoft.AspNetCore.Mvc;
-using Ext.ApiGateways.Services;
-using Alpha.Utilities.Models;
-using System.Net;
 using System.Security.Claims;
-using GrpcBetLists;
+using Alpha.Utilities.Constants;
+using Alpha.Utilities.Models;
 using Common.Logging.Extensions;
 using Ext.ApiGateways.Requests;
-using Alpha.Utilities.Constants;
+using Ext.ApiGateways.Services;
+using GrpcBetLists;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ext.ApiGateways.Controllers;
 
@@ -39,7 +37,11 @@ public class TicketDetailsController : Controller
 
         logger.LogRequest("TicketDetails", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || !int.TryParse(nameIdentifierClaim.Value, out var custId))
+        {
+            return Unauthorized("User identifier claim is missing or invalid.");
+        }
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);

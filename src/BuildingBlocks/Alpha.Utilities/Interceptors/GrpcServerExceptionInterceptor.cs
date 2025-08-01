@@ -23,7 +23,7 @@ public class GrpcServerExceptionInterceptor : Interceptor
         }
         catch (Exception ex)
         {
-            _logger.Error($"Error thrown by {context.Method}.", ex);                
+            await _logger.ErrorAsync($"Error thrown by {context.Method}.", ex);
 
             throw;
         }

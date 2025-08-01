@@ -47,15 +47,18 @@ public class WinLossDetailController : BaseAPIController
         {
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DateIsInvalid };
         }
-
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
-
+       
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || string.IsNullOrWhiteSpace(nameIdentifierClaim.Value))
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = "User identifier claim is missing." };
+        }
+        var custId = int.Parse(nameIdentifierClaim.Value);
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
-            return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
+            return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);          
         }
 
         var reportRequest = new GetWinLossDetailReportRequest
@@ -116,14 +119,18 @@ public class WinLossDetailController : BaseAPIController
             throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.DateIsInvalid };
         }
 
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || string.IsNullOrWhiteSpace(nameIdentifierClaim.Value))
+        {
+            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = "User identifier claim is missing." };
+        }
+        var custId = int.Parse(nameIdentifierClaim.Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
             return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);

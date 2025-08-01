@@ -7,9 +7,9 @@ namespace Ext.ApiGateways.Extensions
     {
         public static PartitionedRateLimiter<HttpContext> CreateGlobalPartitionedRateLimiter(this IConfiguration configuration)
         {
+            const string partitionKey = "RateLimitByGlobalKey";
             return PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
             {
-                var partitionKey = "RateLimitByGlobalKey";
                 var rateLimitConfig = configuration.GetSection(RateLimitConfig.ConfigByGlobal).Get<RateLimitConfig>();
 
                 httpContext.Request.Headers["RateLimiterMessage"] = rateLimitConfig.GetMessage(RateLimitConfig.ConfigByGlobal);

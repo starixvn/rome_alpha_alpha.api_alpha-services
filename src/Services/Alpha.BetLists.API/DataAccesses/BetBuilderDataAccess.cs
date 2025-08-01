@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Alpha.BetLists.API.Criteria;
 using Fanex.BetDetails.BetBuilder.Criteria;
 using Fanex.BetDetails.BetBuilder.DataAccesses;

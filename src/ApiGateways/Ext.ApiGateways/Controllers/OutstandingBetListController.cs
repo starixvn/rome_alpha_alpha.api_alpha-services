@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Ext.ApiGateways.Services;
 using Alpha.Utilities.Models;
@@ -43,7 +42,12 @@ public class OutstandingBetListController : BaseAPIController
 
         logger.LogRequest("OutstandingBetList", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || string.IsNullOrEmpty(nameIdentifierClaim.Value))
+        {
+            return Unauthorized("NameIdentifier claim is missing.");
+        }
+        var custId = int.Parse(nameIdentifierClaim.Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
@@ -51,7 +55,6 @@ public class OutstandingBetListController : BaseAPIController
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
             return BadRequest(LoggingConstants.SearchAccountMustBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
         var betListsRequest = new GetRunningBetListRequest
@@ -101,7 +104,12 @@ public class OutstandingBetListController : BaseAPIController
     {
         logger.LogRequest("OutstandingBetList", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || string.IsNullOrEmpty(nameIdentifierClaim.Value))
+        {
+            return Unauthorized("NameIdentifier claim is missing.");
+        }
+        var custId = int.Parse(nameIdentifierClaim.Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
@@ -109,7 +117,6 @@ public class OutstandingBetListController : BaseAPIController
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
             return BadRequest(LoggingConstants.SearchAccountMustBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);

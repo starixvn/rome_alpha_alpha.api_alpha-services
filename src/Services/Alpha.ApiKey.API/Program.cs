@@ -13,7 +13,7 @@ try
     Log.Information("Configuring web host ({ApplicationContext})...", appName);
     var host = CreateHostBuilder(args).Build();
     Log.Information("Starting web host ({ApplicationContext})...", appName);
-    host.Run();
+    await host.RunAsync();
 }
 catch (Exception ex)
 {

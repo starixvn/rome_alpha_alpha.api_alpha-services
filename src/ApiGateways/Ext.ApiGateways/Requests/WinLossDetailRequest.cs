@@ -28,7 +28,7 @@ public class WinLossDetailRequest
         var fromDate = FromDate.Value;
         var toDate = ToDate.Value;
 
-        var currentDate = DateTime.Now.Date;
+        var currentDate = DateTimeOffset.Now.Date;
         var minDate = currentDate.AddDays(-MaxDateRangeInDays);
         var minFromDate = toDate.AddDays(-MaxDateRangeInDays);
 

@@ -1,5 +1,3 @@
-using Alpha.BetLists.API.Extensions;
-
 namespace Alpha.BetLists.API.Params;
 
 public class GetRunningBetListParam

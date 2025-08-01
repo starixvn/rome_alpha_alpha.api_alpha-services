@@ -130,6 +130,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             }
         }
         return new CasinoDetailsParam(
-            request.RefNo, request.CustId, (byte)transType, productId, 1, 1000000);
+            request.RefNo, request.CustId, (byte)transType, productId, 1, 1_000_000);
     }
 }

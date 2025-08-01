@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using GrpcReports;
 using Ext.ApiGateways.Services;
@@ -13,6 +12,7 @@ using Ext.ApiGateways.Requests;
 namespace Ext.ApiGateways.Controllers;
 
 [ApiController]
+[Route("api/[controller]")]
 public class OutstandingController : BaseAPIController
 {
     private readonly Reports.ReportsClient apiClient;
@@ -32,7 +32,7 @@ public class OutstandingController : BaseAPIController
 
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    [Route("api/[controller]/{product=All}")]
+    [Route("{product=All}")]
     public async Task<IActionResult> Index(
         [FromRoute] string product,
         [FromBody] OutstandingRequest request)
@@ -43,15 +43,18 @@ public class OutstandingController : BaseAPIController
         }
 
         logger.LogRequest("Outstanding", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
-
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
-
+      
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || string.IsNullOrEmpty(nameIdentifierClaim.Value))
+        {
+            return BadRequest("User identifier claim is missing.");
+        }
+        var custId = int.Parse(nameIdentifierClaim.Value);
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
             return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var reportRequest = new GetOutstandingReportRequest
@@ -103,21 +106,25 @@ public class OutstandingController : BaseAPIController
 
     [HttpPost]
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    [Route("api/[controller]/index")]
+    [Route("index")]
     public async Task<IActionResult> GetByProductCodes(
         [FromQuery] string products,
         [FromBody] OutstandingRequest request)
     {
         logger.LogRequest("Outstanding", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
 
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || string.IsNullOrEmpty(nameIdentifierClaim.Value))
+        {
+            return BadRequest("User identifier claim is missing.");
+        }
+        var custId = int.Parse(nameIdentifierClaim.Value);
 
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
 
         if (viewerInfo.RoleId == UserLevelModel.Member)
         {
             return BadRequest(LoggingConstants.ViewAccountMustNotBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.ViewAccountMustNotBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);

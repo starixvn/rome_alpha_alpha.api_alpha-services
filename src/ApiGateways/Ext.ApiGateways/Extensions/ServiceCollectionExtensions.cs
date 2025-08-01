@@ -1,4 +1,3 @@
-
 using System.Globalization;
 using System.Reflection;
 using System.Threading.RateLimiting;
@@ -58,7 +57,7 @@ public static class ServiceCollectionExtensions
         {
             options.AddPolicy("CorsPolicy",
                 builder => builder
-                .SetIsOriginAllowed((host) => true)
+                .SetIsOriginAllowed(_ => true)
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
@@ -81,7 +80,7 @@ public static class ServiceCollectionExtensions
         {
             var logger = services.BuildServiceProvider().GetRequiredService<ILogger<RateLimitConfig>>();
 
-            options.OnRejected = (context, cancellationToken) =>
+            options.OnRejected = (context, _) =>
             {
                 var headers = context.HttpContext.Request.Headers;
                 var rateLimiterMessage = headers.ContainsKey("RateLimiterMessage") ? headers["RateLimiterMessage"].ToString() : string.Empty;

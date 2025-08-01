@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Alpha.Reports.API.Tests.Helpers;
 
-public class FileHelper
+public static class FileHelper
 {
     public static string GetFilePath(string relativeFilePath)
     {

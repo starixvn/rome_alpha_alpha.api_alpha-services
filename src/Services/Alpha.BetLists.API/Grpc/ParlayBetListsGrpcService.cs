@@ -26,18 +26,12 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
             return Task.FromResult(response);
         }
 
-        switch (detailKeyModel.ParlayProductId)
+        response.Selections = detailKeyModel.ParlayProductId switch
         {
-            case TicketDetailsHelper.SingleParlay:
-                response.Selections = TicketDetailsHelper.GetSingleParlaySelections(detailKeyModel.ticket, betBuilderService).ToString();
-                break;
-            case TicketDetailsHelper.MixParlay:
-                response.Selections = TicketDetailsHelper.GetMixParlaySelections(detailKeyModel.ticket, parlayService, ticketHelper, builder).ToString();
-                break;
-            default:
-                response.Selections = string.Empty;
-                break;
-        }
+            TicketDetailsHelper.SingleParlay => TicketDetailsHelper.GetSingleParlaySelections(detailKeyModel.ticket, betBuilderService).ToString(),
+            TicketDetailsHelper.MixParlay => TicketDetailsHelper.GetMixParlaySelections(detailKeyModel.ticket, parlayService, ticketHelper, builder).ToString(),
+            _ => string.Empty,
+        };
         return Task.FromResult(response);
 
     }

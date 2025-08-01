@@ -51,7 +51,7 @@ public class Startup
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                    .SetIsOriginAllowed((host) => true)
+                    .SetIsOriginAllowed(_ => true)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
@@ -82,9 +82,10 @@ public class Startup
                     var logger = app.ApplicationServices.GetService<Fanex.Logging.ILogger>();
 
                     await logger.ErrorAsync("Error happens", ex.Error);
-                }
 
-                throw ex.Error;
+                    throw ex.Error;
+                }
+            
             });
         });
 

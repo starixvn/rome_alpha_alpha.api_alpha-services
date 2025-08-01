@@ -17,7 +17,7 @@ try
     var host = builder.Build();
 
     Log.Information("Starting web host ({ApplicationContext})...", appName);
-    host.Run();
+    await host.RunAsync();
 }
 catch (Exception ex)
 {

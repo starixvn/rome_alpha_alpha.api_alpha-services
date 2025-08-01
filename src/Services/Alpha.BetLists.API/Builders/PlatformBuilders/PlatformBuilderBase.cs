@@ -15,9 +15,12 @@ public static class PlatformBuilderBase
 
     public static string BuildPlatform(int? deviceType)
     {
-      if(deviceType == null) return NotAvailable;
+        if (deviceType == null)
+        {
+            return NotAvailable;
+        }
 
-      return PlatformInfo.ContainsKey((int)deviceType) ? PlatformInfo[(int)deviceType] : Uncategorized;
+        return PlatformInfo.ContainsKey((int)deviceType) ? PlatformInfo[(int)deviceType] : Uncategorized;
     }
 
 }
