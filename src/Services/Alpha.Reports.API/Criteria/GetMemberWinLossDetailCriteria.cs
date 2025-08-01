@@ -7,13 +7,13 @@ public class GetMemberWinLossDetailCriteria : ReportProductCriteria
 {
     public GetMemberWinLossDetailCriteria(
         int custId,
-        DateTime balanceUpDay,
-        DateTime moveBetsDay,
+        DateTimeOffset balanceUpDay,
+        DateTimeOffset moveBetsDay,
         IEnumerable<int> productIds,
         byte custLevel,
         string productDetails,
-        DateTime fromDate,
-        DateTime toDate)
+        DateTimeOffset fromDate,
+        DateTimeOffset toDate)
         : base(custId, balanceUpDay, moveBetsDay, productIds)
     {
         CustLevel = custLevel;
@@ -27,9 +27,9 @@ public class GetMemberWinLossDetailCriteria : ReportProductCriteria
 
     public string ProductDetails { get; }
 
-    public DateTime FromDate { get; }
+    public DateTimeOffset FromDate { get; }
 
-    public DateTime ToDate { get; }
+    public DateTimeOffset ToDate { get; }
 
     public override string GetSettingKey()
         => "Age_Rpt_API_WinLossDetail_" + UserLevelModel.GetDirectDownlineLevelName(CustLevel);

@@ -1,4 +1,3 @@
-
 using Fanex.Data.Repository;
 
 namespace Alpha.Reports.API.Criteria;
@@ -7,8 +6,8 @@ public abstract class ReportCriteriaBase : CriteriaBase
 {
     protected ReportCriteriaBase(
         int custId,
-        DateTime balanceUpDay,
-        DateTime moveBetsDay)
+        DateTimeOffset balanceUpDay,
+        DateTimeOffset moveBetsDay)
     {
         CustId = custId;
         BalanceUpDay = balanceUpDay;
@@ -17,9 +16,9 @@ public abstract class ReportCriteriaBase : CriteriaBase
 
     public int CustId { get; }
 
-    public DateTime BalanceUpDay { get; }
+    public DateTimeOffset BalanceUpDay { get; }
 
-    public DateTime MoveBetsDay { get; }
+    public DateTimeOffset MoveBetsDay { get; }
 
     public override bool IsValid() => CustId > 0;
 

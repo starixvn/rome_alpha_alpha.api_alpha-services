@@ -24,10 +24,16 @@ public class ProductController : Controller
     public async Task<IActionResult> GetAll()
     {        
         logger.LogRequest("GetAllProducts", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
-        var siteName = User.Claims.FirstOrDefault(x => x.Type == "SiteName").Value;
-        var currency = int.Parse(User.Claims.FirstOrDefault(x => x.Type == "Currency").Value);
+        var siteNameClaim = User.Claims.FirstOrDefault(x => x.Type == "SiteName");
+        var currencyClaim = User.Claims.FirstOrDefault(x => x.Type == "Currency");
+
+        if (siteNameClaim == null || currencyClaim == null || !int.TryParse(currencyClaim.Value, out var currency))
+        {
+            return BadRequest("Required claims are missing or invalid.");
+        }
+
         var request = new GetAllProductsRequest {
-            SiteName = siteName,
+            SiteName = siteNameClaim.Value,
             Currency = currency
         };
 
@@ -41,10 +47,16 @@ public class ProductController : Controller
     public async Task<IActionResult> ClearCache()
     {
         logger.LogRequest("ClearProductsCache", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
-        var siteName = User.Claims.FirstOrDefault(x => x.Type == "SiteName").Value;
-        var currency = int.Parse(User.Claims.FirstOrDefault(x => x.Type == "Currency").Value);
+        var siteNameClaim = User.Claims.FirstOrDefault(x => x.Type == "SiteName");
+        var currencyClaim = User.Claims.FirstOrDefault(x => x.Type == "Currency");
+
+        if (siteNameClaim == null || currencyClaim == null || !int.TryParse(currencyClaim.Value, out var currency))
+        {
+            return BadRequest("Required claims are missing or invalid.");
+        }
+
         var request = new ClearProductsCacheRequest {
-            SiteName = siteName,
+            SiteName = siteNameClaim.Value,
             Currency = currency
         };
 

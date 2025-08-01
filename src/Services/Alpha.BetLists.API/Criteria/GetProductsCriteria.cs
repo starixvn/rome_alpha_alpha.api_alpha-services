@@ -1,4 +1,3 @@
-using System;
 using Fanex.Data.Repository;
 
 namespace Alpha.BetLists.API.Criteria;

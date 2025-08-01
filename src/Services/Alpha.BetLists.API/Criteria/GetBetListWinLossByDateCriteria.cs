@@ -9,10 +9,10 @@ public class GetBetListWinLossByDateCriteria : CriteriaBase
     public GetBetListWinLossByDateCriteria(
         int custId,
         string productIds,
-        DateTime fromDate,
-        DateTime toDate,
+        DateTimeOffset fromDate,
+        DateTimeOffset toDate,
         string productDetails,
-        DateTime moveBetsDate,
+        DateTimeOffset moveBetsDate,
         int maxTotalRow)
     {
         CustId = custId;
@@ -29,16 +29,16 @@ public class GetBetListWinLossByDateCriteria : CriteriaBase
 
     public int CustId { get; }
 
-    public DateTime FromDate { get; }
+    public DateTimeOffset FromDate { get; }
 
-    public DateTime ToDate { get; }
+    public DateTimeOffset ToDate { get; }
 
     public string ProductIds { get; }
 
     public string ProductDetails { get; }
 
     [SpParam(SqlParamName = "movebetsday")]
-    public DateTime MoveBetsDate { get; }
+    public DateTimeOffset MoveBetsDate { get; }
 
     public bool ShowProgressiveBonus { get; }
 
@@ -56,5 +56,5 @@ public class GetBetListWinLossByDateCriteria : CriteriaBase
         CustId > 0
         && !string.IsNullOrWhiteSpace(ProductIds)
         && ToDate >= FromDate
-        && FromDate > DateTime.MinValue;
+        && FromDate > DateTimeOffset.MinValue;
 }

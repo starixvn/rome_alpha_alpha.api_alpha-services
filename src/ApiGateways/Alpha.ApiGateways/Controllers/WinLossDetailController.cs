@@ -86,8 +86,8 @@ public class WinLossDetailController : Controller
             CurrencyId = downlineInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            FromDate = request.FromDate.ToShortDateString(),
-            ToDate = request.ToDate.ToShortDateString(),
+            FromDate = request.FromDate.Date.ToString("yyyy-MM-dd"),
+            ToDate = request.ToDate.Date.ToString("yyyy-MM-dd"),
             ProductGroup = ProductGroupConstants.All,
             Level = request.Level
         };

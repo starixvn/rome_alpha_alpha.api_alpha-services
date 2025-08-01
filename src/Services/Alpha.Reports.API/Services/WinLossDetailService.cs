@@ -1,4 +1,3 @@
-
 using Alpha.PartialUM.Services;
 using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.DataAccesses;

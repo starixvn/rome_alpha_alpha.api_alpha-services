@@ -3,7 +3,7 @@ using Alpha.Reports.API.Tests.Helpers;
 
 namespace Alpha.Reports.API.Tests.Database.WinLossDetail;
 
-public class WinLossDetailDatabase
+public static class WinLossDetailDatabase
 {
     private readonly static DataSet masterWinLoss = FileHelper.LoadDataSet("\\Database\\WinLossDetail\\MasterWinLossDetailHasData.xml");
     private readonly static DataSet agentWinLoss = FileHelper.LoadDataSet("\\Database\\WinLossDetail\\AgentWinLossDetailHasData.xml");

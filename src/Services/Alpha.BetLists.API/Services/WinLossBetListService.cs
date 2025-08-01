@@ -42,7 +42,7 @@ public class WinLossBetListService : IWinLossBetListService
         return new BetListData(betListDataTuple.Item1, betListDataTuple.Item2.ToList<ITicketData>(), betListDataTuple.Item3);
     }
 
-    private async Task<Tuple<IEnumerable<TicketDto>, IEnumerable<TicketData>, BetlistOutputParams>> GetBetList(GetWinLossBetListParam param, DateTime fromDate)
+    private async Task<Tuple<IEnumerable<TicketDto>, IEnumerable<TicketData>, BetlistOutputParams>> GetBetList(GetWinLossBetListParam param, DateTimeOffset fromDate)
     {
         var productDetailsXML = productDetailService.BuildProductDetailsXML(param.ProductIds);
 

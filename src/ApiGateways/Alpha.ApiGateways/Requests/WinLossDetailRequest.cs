@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Alpha.ApiGateways.Requests;
 
@@ -10,20 +11,23 @@ public class WinLossDetailRequest
     public string CustName { get; set; }
 
     [FromBody]
-    public DateTime FromDate { get; set; } = DateTime.Now.AddDays(-MaxDateRangeInDays).Date;
+    [JsonRequired]
+    public DateTimeOffset? FromDate { get; set; } = DateTimeOffset.Now.AddDays(-MaxDateRangeInDays).Date;
 
     [FromBody]
-    public DateTime ToDate { get; set; } = DateTime.Now.Date;
+    [JsonRequired]
+    public DateTimeOffset? ToDate { get; set; } = DateTimeOffset.Now.Date;
 
     [FromBody]
-    public int Level { get; set; }
+    [JsonRequired]
+    public int? Level { get; set; }
 
     public bool ValidateDateRange()
     {
-        var fromDate = FromDate;
-        var toDate = ToDate;
+        var fromDate = FromDate ?? DateTimeOffset.MinValue;
+        var toDate = ToDate ?? DateTimeOffset.MinValue;
 
-        var currentDate = DateTime.Now.Date;
+        var currentDate = DateTimeOffset.Now.Date;
         var minDate = currentDate.AddDays(-MaxDateRangeInDays);
         var minFromDate = toDate.AddDays(-MaxDateRangeInDays);
 

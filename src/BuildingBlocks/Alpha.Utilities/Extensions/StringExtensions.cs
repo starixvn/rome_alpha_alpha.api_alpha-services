@@ -2,7 +2,7 @@ namespace Alpha.Utilities.Extensions;
 
 public static class StringExtensions
 {
-    public static string NotAvailableNumber = "N/A";
+    public const string NotAvailableNumber = "N/A";
 
     public static string FormatNumber(this decimal numberValue)
     {

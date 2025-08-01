@@ -15,29 +15,39 @@ public static class PartialUMSettingsHelper
 
         foreach (var function in settings.Functions)
         {
-            if (function.Settings == null || function.Name == null)
-            {
-                continue;
-            }
+            AddFunctionSettings(function);
+        }
+    }
 
-            foreach (var setting in function.Settings)
-            {
-                if (setting.SettingKey == null)
-                {
-                    continue;
-                }
+    private static void AddFunctionSettings(PartialUMFunctionSetting? function)
+    {
+        if (function?.Settings == null || function.Name == null)
+        {
+            return;
+        }
 
-                if (!functions.TryGetValue(setting.SettingKey, out var functionNames))
-                {
-                    functionNames = new List<string>();
-                    functions[setting.SettingKey] = functionNames;
-                }
+        foreach (var setting in function.Settings)
+        {
+            AddSettingToFunctions(setting, function.Name);
+        }
+    }
 
-                if (!functionNames.Any(f => f.Equals(function.Name, StringComparison.OrdinalIgnoreCase)))
-                {
-                    functionNames.Add(function.Name);
-                }
-            }
+    private static void AddSettingToFunctions(PartialUMSPSetting? setting, string functionName)
+    {
+        if (setting?.SettingKey == null)
+        {
+            return;
+        }
+
+        if (!functions.TryGetValue(setting.SettingKey, out var functionNames))
+        {
+            functionNames = new List<string>();
+            functions[setting.SettingKey] = functionNames;
+        }
+
+        if (!functionNames.Any(f => f.Equals(functionName, StringComparison.OrdinalIgnoreCase)))
+        {
+            functionNames.Add(functionName);
         }
     }
 

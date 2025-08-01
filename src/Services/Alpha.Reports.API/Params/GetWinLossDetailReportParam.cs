@@ -2,6 +2,7 @@ using Alpha.Utilities.Models;
 using GrpcReports;
 using Alpha.ApiKey.API.Models;
 using Alpha.Utilities.Extensions;
+using System.Globalization;
 
 namespace Alpha.Reports.API.Params;
 
@@ -17,10 +18,10 @@ public class GetWinLossDetailReportParam
         CurrencyId = request.CurrencyId;
         Settings = settings;
 
-        MinDate = DateTime.Now.Date.AddMonths(-1);
-        DateTime dt;
-        FromDate = DateTime.TryParse(request.FromDate, out dt) ? dt : DateTime.MinValue;
-        ToDate = DateTime.TryParse(request.ToDate, out dt) ? dt : DateTime.MinValue;
+        MinDate = DateTimeOffset.Now.Date.AddMonths(-1);
+        DateTimeOffset dt;
+        FromDate = DateTimeOffset.TryParse(request.FromDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt) ? dt : DateTimeOffset.MinValue;
+        ToDate = DateTimeOffset.TryParse(request.ToDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt) ? dt : DateTimeOffset.MinValue;
         SiteName = request.Site;
         ProductGroup = request.ProductGroup;
         ProductIds = request.ProductIds.ToListInt();
@@ -35,21 +36,27 @@ public class GetWinLossDetailReportParam
     public int CurrencyId { get; }
     public string SiteName { get; }
 
-    public DateTime FromDate { get; set; }
-    public DateTime ToDate { get; set; }
+    public DateTimeOffset FromDate { get; set; }
+    public DateTimeOffset ToDate { get; set; }
 
     public ReportsAppSettingsModel Settings { get; }
 
     public IEnumerable<int> ProductIds { get; set; }
     public string ProductGroup { get; set; }
 
-    public DateTime MinDate { get; }
+    public DateTimeOffset MinDate { get; }
     public int Level { get; }
 
-    public bool IsValid() =>
-        CustLevel > UserLevelModel.Member 
-        && CustId > 0 
-        && !UserLevelModel.IsUpline(CustLevel, ViewerLevel)
-        && 0 <= Level 
-        && Level <= 2;
+    public bool IsValid()
+    {
+        bool isCustLevelValid = CustLevel > UserLevelModel.Member;
+        bool isCustIdValid = CustId > 0;
+        bool isNotUpline = !UserLevelModel.IsUpline(CustLevel, ViewerLevel);
+        bool isLevelInRange = 0 <= Level && Level <= 2;
+
+        return isCustLevelValid
+            && isCustIdValid
+            && isNotUpline
+            && isLevelInRange;
+    }
 }

@@ -1,4 +1,3 @@
-
 using Alpha.Utilities.Extensions;
 
 namespace Alpha.Reports.API.Criteria;
@@ -7,8 +6,8 @@ public class ReportProductCriteria : ReportCriteriaBase
 {
     public ReportProductCriteria(
         int custId,
-        DateTime balanceUpDay,
-        DateTime moveBetsDay,
+        DateTimeOffset balanceUpDay,
+        DateTimeOffset moveBetsDay,
         IEnumerable<int> productIds)
         : base(custId, balanceUpDay, moveBetsDay)
     {

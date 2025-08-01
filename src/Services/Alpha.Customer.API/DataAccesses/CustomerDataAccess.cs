@@ -1,4 +1,3 @@
-
 using Alpha.Customer.API.Criteria;
 using Alpha.Customer.API.Models;
 using Fanex.Data;
@@ -24,16 +23,13 @@ public class CustomerDataAccess : ICustomerDataAccess
         {
             using var reader = await db.ExecuteReaderAsync(criteria);
 
-            if (reader != null)
+            if (reader != null && reader.Read())
             {
-                while (reader.Read())
-                {
-                    var custId = (int)reader["custid"];
-                    var roleId = (byte)reader["roleid"];
-                    var site = reader["site"].ToString();
-                    var currency = int.Parse((reader["currency"] ?? string.Empty).ToString());
-                    return new CustomerInfoModel(custId, roleId, site, currency);
-                }
+                var custId = (int)reader["custid"];
+                var roleId = (byte)reader["roleid"];
+                var site = reader["site"].ToString();
+                var currency = int.Parse((reader["currency"] ?? string.Empty).ToString());
+                return new CustomerInfoModel(custId, roleId, site, currency);
             }
         }
 

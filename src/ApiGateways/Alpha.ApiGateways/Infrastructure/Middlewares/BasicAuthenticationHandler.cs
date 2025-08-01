@@ -66,7 +66,12 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             return await Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name)));
         }
 
-        failReason = verifyApiKeyResult.ErrorMessage;
+        string errorMessage = "Unknown authentication error";
+        if (verifyApiKeyResult != null)
+        { 
+            errorMessage = verifyApiKeyResult.ErrorMessage ?? "Unknown authentication error";
+        }
+        failReason = errorMessage;
         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         Response.Headers.Add("WWW-Authenticate", "Basic realm=\"Realm\"");
         logger.LogFailedAuthentication($"AuthenticateFailed: {failReason}", Request.Headers, RequestLoggingConstants.RequestKeys);

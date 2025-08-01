@@ -1,4 +1,3 @@
-
 using Microsoft.VisualBasic;
 
 namespace Ext.ApiGateways.Extensions;
@@ -42,7 +41,7 @@ public static class PasswordHashExtensions
 
     public static string RandomNumberString(int length)
     {
-        string chars = "0123456789";
+        const string chars = "0123456789";
         string rndStr = string.Empty;
         Random rnd = new Random();
 

@@ -8,7 +8,7 @@ namespace Alpha.Reports.API.Services;
 
 public interface IProductService
 {
-    IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTime? minReportDate = null);
+    IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTimeOffset? minReportDate = null);
 
     IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group);
 }
@@ -25,7 +25,7 @@ public class ProductService : IProductService
         this.cacheService = cacheService;
     }
 
-    public IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTime? minReportDate = null)
+    public IEnumerable<int> FilterProductIdsByCustomer(IEnumerable<int> productIds, DateTimeOffset? minReportDate = null)
     {
         var customerProductIds = GetProductsForCustomer(minReportDate).Select(product => product.Id);
 
@@ -36,7 +36,7 @@ public class ProductService : IProductService
         return productIdList;
     }
 
-    private IEnumerable<ProductModel> GetProductsForCustomer(DateTime? minReportDate = null)
+    private IEnumerable<ProductModel> GetProductsForCustomer(DateTimeOffset? minReportDate = null)
     {
         var custProducts = GetProductsForReport();
 
@@ -48,7 +48,7 @@ public class ProductService : IProductService
         return custProducts.Where(product => IsRemainSupportProduct(product, minReportDate)).ToList();
     }
 
-    private static bool IsRemainSupportProduct(ProductModel product, DateTime? minReportDate)
+    private static bool IsRemainSupportProduct(ProductModel product, DateTimeOffset? minReportDate)
         => !minReportDate.HasValue
         || !product.EndOfSupportDate.HasValue
         || minReportDate.Value <= product.EndOfSupportDate.Value;

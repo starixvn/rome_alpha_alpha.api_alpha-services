@@ -19,13 +19,13 @@ public class RateLimitConfig
     public string GetMessage(string rateLimitConfig)
     {
         var message = $"Your Key reached limit {PermitLimit * 2} requests ";
-        switch (rateLimitConfig)
+        return rateLimitConfig switch
         {
-            case ConfigByGlobal: return $"System received too many requests";
-            case ConfigBySecond: return $"{message}per second";
-            case ConfigByMinute: return $"{message}per minute";
-            case ConfigByHour: return $"{message}per hour";
-            default: return "Unknown error";
-        }
+            ConfigByGlobal => $"System received too many requests",
+            ConfigBySecond => $"{message}per second",
+            ConfigByMinute => $"{message}per minute",
+            ConfigByHour => $"{message}per hour",
+            _ => "Unknown error"
+        };
     }
 }

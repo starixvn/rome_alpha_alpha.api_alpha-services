@@ -38,17 +38,19 @@ public class ParlaySelectionsController : Controller
     {
 
         logger.LogRequest("ParlaySelections", Request.Headers, Constants.RequestLoggingConstants.RequestKeys);
-
-
-        var custId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
-
+       
+        var nameIdentifierClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        if (nameIdentifierClaim == null || string.IsNullOrEmpty(nameIdentifierClaim.Value))
+        {
+            return Unauthorized("NameIdentifier claim is missing.");
+        }
+        var custId = int.Parse(nameIdentifierClaim.Value);
         var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            return BadRequest(LoggingConstants.SearchAccountMustBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustBeMember);         
         }
 
         var isBelonging = await customerService.GetBelongingInfo(custId, downlineInfo.CustId, 0, refNo);

@@ -1,24 +1,24 @@
-using Alpha.BetLists.API.Models;
-using GrpcBetLists;
-using Fanex.BetList.Core.Utils.TicketExt;
-using Fanex.BetList.Core.Entities;
 using System.Text;
-using Fanex.BetList.Core.Builder;
-using Alpha.BetLists.API.Services;
+using Alpha.BetLists.API.Constants;
+using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.Parlay;
+using Alpha.BetLists.API.Models.TicketDetail;
+using Alpha.BetLists.API.Services;
+using Alpha.Utilities.Helpers;
+using Alpha.Utilities.Models;
 using Fanex.BetDetails.BetBuilder.Criteria;
 using Fanex.BetDetails.BetBuilder.Services;
+using Fanex.BetList.Core.Builder;
+using Fanex.BetList.Core.Entities;
+using Fanex.BetList.Core.Utils.TicketExt;
+using GrpcBetLists;
 using Newtonsoft.Json;
-using Alpha.Utilities.Helpers;
-using Alpha.BetLists.API.Models.TicketDetail;
-using Alpha.Utilities.Models;
-using BetListNPOI.HSSF.Record.Chart;
-using Alpha.BetLists.API.Constants;
 
 namespace Alpha.BetLists.API.Helpers
 {
     public static class TicketDetailsHelper
     {
+        private const string DivCloseTag = "</div>";
         public const byte SingleParlay = 1;
         public const byte MixParlay = 2;
         public const byte MixParlayDetail = 3;
@@ -98,7 +98,8 @@ namespace Alpha.BetLists.API.Helpers
             return AesService.Encrypt(key);
         }
 
-        public static void GetExtraInfo(this object model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+        public static void GetExtraInfo<T>(this T model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+            where T : class
         {
             var productId = GetProductIdByChoice(choice, mapper);
             if (productId == -1)
@@ -218,9 +219,9 @@ namespace Alpha.BetLists.API.Helpers
                     {
                         sb.Append($"<span> - {detail.Result}</span>");
                     }
-                    sb.Append("</div>");
+                    sb.Append(DivCloseTag);
                 }
-                sb.Append("</div>");
+                sb.Append(DivCloseTag);
             }
             return sb;
         }
@@ -238,28 +239,43 @@ namespace Alpha.BetLists.API.Helpers
             var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
 
             StringBuilder sb = new StringBuilder();
-            if (parlayDetail.HasValidData)
+            if (!parlayDetail.HasValidData)
             {
-                foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
+                return sb;
+            }
+
+            AppendUnitStakeByOfferNames(sb, parlayDetail);
+            sb.Append("<div class='line'></div>");
+            AppendTickets(sb, parlayDetail, builder, ticketHelper);
+
+            return sb;
+        }
+
+        private static void AppendUnitStakeByOfferNames(StringBuilder sb, ComboParlayViewModel parlayDetail)
+        {
+            foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
+            {
+                sb.Append("<div class='offer-name-list'>");
+                sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
+                sb.Append(DivCloseTag);
+            }
+        }
+
+        private static void AppendTickets(StringBuilder sb, ComboParlayViewModel parlayDetail, IBetListHTMLBuilder builder, ITicketHelper ticketHelper)
+        {
+            var tickets = parlayDetail.BetListData.Tickets.ToList();
+            for (int i = 0; i < tickets.Count; i++)
+            {
+                var ticket = tickets[i];
+                sb.Append("<div class='ticket-list'>");
+                sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
+                sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
+                sb.Append(DivCloseTag);
+                if (i != tickets.Count - 1)
                 {
-                    sb.Append("<div class='offer-name-list'>");
-                    sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
-                    sb.Append("</div>");
-                }
-                sb.Append("<div class='line'></div>");
-                foreach (var ticket in parlayDetail.BetListData.Tickets)
-                {
-                    sb.Append("<div class='ticket-list'>");
-                    sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
-                    sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
-                    sb.Append("</div>");
-                    if (!ticket.Equals(parlayDetail.BetListData.Tickets.Last()))
-                    {
-                        sb.Append("<div class='line'></div>");
-                    }
+                    sb.Append("<div class='line'></div>");
                 }
             }
-            return sb;
         }
 
         public static StringBuilder GetMixParlayDetail(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
@@ -281,14 +297,14 @@ namespace Alpha.BetLists.API.Helpers
                 {
                     sb.Append("<div class='offer-name-list'>");
                     sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
-                    sb.Append("</div>");
+                    sb.Append(DivCloseTag);
                     sb.Append("<div class='line'></div>");
                     foreach (var ticket in parlayDetail.BetListData.Tickets)
                     {
                         sb.Append("<div class='ticket-list'>");
                         sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
                         sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
-                        sb.Append("</div>");
+                        sb.Append(DivCloseTag);
                         if (!ticket.Equals(parlayDetail.BetListData.Tickets.Last()))
                         {
                             sb.Append("<div class='line'></div>");

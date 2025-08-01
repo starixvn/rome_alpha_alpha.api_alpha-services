@@ -8,7 +8,7 @@ public class ReportProductCriteriaTests
     public void GetSettingKey_Always_ThrowNotImplementedException()
     {
         // Arrange
-        var criteria = new ReportProductCriteria(0, DateTime.Now, DateTime.Now, Enumerable.Empty<int>());
+        var criteria = new ReportProductCriteria(0, DateTimeOffset.Now, DateTimeOffset.Now, Enumerable.Empty<int>());
 
         // Act
         // Assert
@@ -20,7 +20,7 @@ public class ReportProductCriteriaTests
     {
         // Arrange
         var custId = 0;
-        var criteria = new ReportProductCriteria(custId, DateTime.Now, DateTime.Now, Enumerable.Empty<int>());
+        var criteria = new ReportProductCriteria(custId, DateTimeOffset.Now, DateTimeOffset.Now, Enumerable.Empty<int>());
         var expectedIsValid = false;
 
         // Act
@@ -35,7 +35,7 @@ public class ReportProductCriteriaTests
     {
         // Arrange
         var custId = -1;
-        var criteria = new ReportProductCriteria(custId, DateTime.Now, DateTime.Now, Enumerable.Empty<int>());
+        var criteria = new ReportProductCriteria(custId, DateTimeOffset.Now, DateTimeOffset.Now, Enumerable.Empty<int>());
         var expectedIsValid = false;
 
         // Act
@@ -49,7 +49,7 @@ public class ReportProductCriteriaTests
     public void IsValid_WhenProductIdsIsEmpty_ReturnsInvalid()
     {
         // Arrange
-        var criteria = new ReportProductCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>());
+        var criteria = new ReportProductCriteria(1, DateTimeOffset.Now, DateTimeOffset.Now, Enumerable.Empty<int>());
         var expectedIsValid = false;
 
         // Act
@@ -65,7 +65,7 @@ public class ReportProductCriteriaTests
         // Arrange
         var custId = 1;
         var productIds = new List<int> { 1, 2 };
-        var criteria = new ReportProductCriteria(custId, DateTime.Now, DateTime.Now, productIds);
+        var criteria = new ReportProductCriteria(custId, DateTimeOffset.Now, DateTimeOffset.Now, productIds);
         var expectedIsValid = true;
 
         // Act

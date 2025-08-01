@@ -1,4 +1,3 @@
-using Alpha.BetLists.API.Extensions;
 using Alpha.BetLists.API.Models;
 
 namespace Alpha.BetLists.API.Params;
@@ -19,9 +18,9 @@ public class GetWinLossBetListParam
         CustId = custId;
         RoleId = roleId;
 
-        DateTime dt;
-        FromDate = DateTime.TryParse(fromDate, out dt) ? dt : DateTime.MinValue;
-        ToDate = DateTime.TryParse(toDate, out dt) ? dt : DateTime.MinValue;
+        DateTimeOffset dto;
+        FromDate = DateTimeOffset.TryParse(fromDate, out dto) ? dto : DateTimeOffset.MinValue;
+        ToDate = DateTimeOffset.TryParse(toDate, out dto) ? dto : DateTimeOffset.MinValue;
 
         UserName = userName;
         ProductIds = productIds;
@@ -37,9 +36,9 @@ public class GetWinLossBetListParam
 
     public int CustId { get; }
 
-    public DateTime FromDate { get; }
+    public DateTimeOffset FromDate { get; }
 
-    public DateTime ToDate { get; }
+    public DateTimeOffset ToDate { get; }
 
     public string UserName { get; }
 
