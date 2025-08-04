@@ -41,9 +41,10 @@ public static class StringExtensions
         foreach (var s in suffix)
         {
             var expectedS = " " + s;
-            if (result.IndexOf(expectedS) == -1)
+            
+            if (!result.Contains(expectedS, StringComparison.InvariantCulture))
             {
-                result = result.Replace(s, expectedS);
+                result = result.Replace(s, expectedS, StringComparison.InvariantCulture);
             }
         }
 

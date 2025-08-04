@@ -17,8 +17,8 @@ public static class IPHelper
         }
 
         var localIps = new[] { "localhost", "::1" };
-
-        if (string.IsNullOrWhiteSpace(ip) || localIps.Any(s => ip.Equals(s)))
+    
+        if (string.IsNullOrWhiteSpace(ip) || Array.Exists(localIps, s => ip.Equals(s)))
         {
             ip = "127.0.0.1";
         }

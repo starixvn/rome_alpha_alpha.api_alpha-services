@@ -10,5 +10,5 @@ public static class ProductGroupConstants
     public static IReadOnlyList<string> Groups => ValidGroups;
 
     public static bool IsValid(string name)
-        => ValidGroups.Any(g => string.Equals(name, g, StringComparison.OrdinalIgnoreCase));
+        => Array.Exists(ValidGroups, g => string.Equals(name, g, StringComparison.OrdinalIgnoreCase));
 }

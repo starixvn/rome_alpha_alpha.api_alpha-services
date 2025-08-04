@@ -135,7 +135,6 @@ public class WinLossDetailByNameController : BaseAPIController
         if (downlineInfo.RoleId == UserLevelModel.Member)
         {
             return BadRequest(LoggingConstants.SearchAccountMustNotBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
         }
 
         var productIds = await GetSelectedProductIds(products);
