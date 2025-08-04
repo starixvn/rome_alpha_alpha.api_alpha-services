@@ -32,7 +32,7 @@ public static class EnumerableExtensions
         foreach (string prop in props)
         {
             // use reflection (not ComponentModel) to mirror LINQ
-            PropertyInfo pi = type.GetProperty(prop);
+            PropertyInfo? pi = type.GetProperty(prop);
             if (pi == null)
             {
                 return (IOrderedQueryable<T>)source;
@@ -53,7 +53,7 @@ public static class EnumerableExtensions
                 .MakeGenericMethod(typeof(T), type)
                 .Invoke(null, new object[] { source, lambda });
 
-        return (IOrderedQueryable<T>)result;
+        return (IOrderedQueryable<T>?)result ?? (IOrderedQueryable<T>)source;
     }
 
     public static Dictionary<int, bool> ToExistingDictionary(this IEnumerable<int> source)

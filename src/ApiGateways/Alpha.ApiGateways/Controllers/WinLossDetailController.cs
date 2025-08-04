@@ -1,13 +1,12 @@
-using System.Net;
 using Alpha.ApiGateways.Constants;
 using Alpha.ApiGateways.Requests;
 using Alpha.ApiGateways.Services;
+using Alpha.Utilities.Constants;
 using Alpha.Utilities.Models;
+using Common.Logging.Extensions;
 using GrpcReports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Common.Logging.Extensions;
-using Alpha.Utilities.Constants;
 
 namespace Alpha.ApiGateways.Controllers;
 
@@ -16,6 +15,7 @@ namespace Alpha.ApiGateways.Controllers;
 [ApiController]
 public class WinLossDetailController : Controller
 {
+    private const int MaxAllowedLevel = 2;
     private readonly Reports.ReportsClient apiClient;
     private readonly IApiKeyService apiKeyService;
     private readonly ICustomerService customerService;
@@ -42,14 +42,9 @@ public class WinLossDetailController : Controller
         [FromHeader] string timestamp,
         [FromBody] WinLossDetailRequest request)
     {
-        if (request.Level < 0 || 2 < request.Level)
+        if (!IsValidRequest(request, out IActionResult errorResult))
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail = LoggingConstants.InvalidLevel };
-        }
-
-        if (!request.ValidateDateRange())
-        {
-            throw new GrpcException { Code = (int)HttpStatusCode.BadRequest, Detail =  LoggingConstants.DateIsInvalid };
+            return errorResult;
         }
 
         var apiKeyRequest = new ApiKeyRequest
@@ -66,15 +61,16 @@ public class WinLossDetailController : Controller
         var viewerInfo = await customerService.GetCustomerInfo(apiKey.CustId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, request.CustName);
 
-        if (downlineInfo.RoleId == UserLevelModel.Member)
+        var downlineValidationResult = ValidateDownlineInfo(downlineInfo);
+        if (downlineValidationResult != null)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustNotBeMember };
+            return downlineValidationResult;
         }
 
         var accountStatus = await customerService.GetCustomerStatus(downlineInfo.CustId);
         if (accountStatus == null || accountStatus.IsProtectedMode)
         {
-            throw new GrpcException { Code = (int)HttpStatusCode.Forbidden, Detail = LoggingConstants.SearchAccountMustNotBeProtectedMode };
+            return Forbid(LoggingConstants.SearchAccountMustNotBeProtectedMode);
         }
 
         var reportRequest = new GetWinLossDetailReportRequest
@@ -86,13 +82,45 @@ public class WinLossDetailController : Controller
             CurrencyId = downlineInfo.Currency,
             ViewerId = viewerInfo.CustId,
             ViewerLevelId = viewerInfo.RoleId,
-            FromDate = request.FromDate.Date.ToString("yyyy-MM-dd"),
-            ToDate = request.ToDate.Date.ToString("yyyy-MM-dd"),
+            FromDate = request.FromDate?.Date.ToString("yyyy-MM-dd"),
+            ToDate = request.ToDate?.Date.ToString("yyyy-MM-dd"),
             ProductGroup = ProductGroupConstants.All,
-            Level = request.Level
+            Level = request.Level ?? 0
         };
 
-        return downlineInfo.RoleId switch
+        return await GetWinLossDetailByRole(downlineInfo.RoleId, reportRequest);
+    }
+
+    private bool IsValidRequest(WinLossDetailRequest request, out IActionResult errorResult)
+    {
+        errorResult = null;
+        if (request.Level < 0 || MaxAllowedLevel < request.Level)
+        {
+            errorResult = BadRequest(LoggingConstants.InvalidLevel);
+            return false;
+        }
+
+        if (!request.ValidateDateRange())
+        {
+            errorResult = BadRequest(LoggingConstants.DateIsInvalid);
+            return false;
+        }
+
+        return true;
+    }
+
+    private IActionResult ValidateDownlineInfo(dynamic downlineInfo)
+    {
+        if (downlineInfo.RoleId == UserLevelModel.Member)
+        {
+            return Unauthorized(LoggingConstants.SearchAccountMustNotBeMember);
+        }
+        return null;
+    }
+
+    private async Task<IActionResult> GetWinLossDetailByRole(int roleId, GetWinLossDetailReportRequest reportRequest)
+    {
+        return roleId switch
         {
             UserLevelModel.Super => await SuperWinLossDetail(reportRequest),
             UserLevelModel.Master => await MasterWinLossDetail(reportRequest),
