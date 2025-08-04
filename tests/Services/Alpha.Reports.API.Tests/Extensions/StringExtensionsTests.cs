@@ -9,10 +9,10 @@ public class StringExtensionsTests
     public void ToListInt_StringIsNull_ReturnEmptyListInt()
     {
         // Arrange
-        string s = null;
+        string? s = null;
 
         // Act
-        var expected = StringExtensions.ToListInt(s);
+        var expected = StringExtensions.ToListInt(s ?? string.Empty);
 
         // Assert
         Assert.Empty(expected);
