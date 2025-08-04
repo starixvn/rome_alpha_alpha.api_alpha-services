@@ -50,8 +50,7 @@ namespace Alpha.BetLists.API.Helpers
             var lowerChoice = choice.ToLower(System.Globalization.CultureInfo.InvariantCulture);
 
             var entry = mapper.Values
-                .Where(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)))
-                .FirstOrDefault();
+                .FirstOrDefault(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)));
 
             return entry.Equals(default(KeyValuePair<string, int>)) ? -1 : entry.Value;
         }
@@ -139,6 +138,9 @@ namespace Alpha.BetLists.API.Helpers
                     break;
                 case AgentViewWinLossBetTicketModel ticket:
                     break;
+                default:
+                    // No action needed for other types
+                    break;
             }
         }
 
@@ -146,8 +148,7 @@ namespace Alpha.BetLists.API.Helpers
         {
             var lowerChoice = choice.ToLower(System.Globalization.CultureInfo.InvariantCulture);
             var entry = mapper.ParlayProducts
-                .Where(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)))
-                .FirstOrDefault();
+                .FirstOrDefault(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)));
 
             return entry.Equals(default(KeyValuePair<string, byte>)) ? (byte)0 : entry.Value;
         }
@@ -273,32 +274,36 @@ namespace Alpha.BetLists.API.Helpers
             var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
 
             StringBuilder sb = new StringBuilder();
-            if (parlayDetail.HasValidData)
+            if (!parlayDetail.HasValidData)
             {
-                foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
-                {
-                    sb.Append("<div class='offer-name-list'>");
-                    sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
-                    sb.Append(DivCloseTag);
-                    sb.Append("<div class='line'></div>");
+                return sb;
+            }
+          
+            foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
+            {
+                sb.Append("<div class='offer-name-list'>");
+                sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
+                sb.Append(DivCloseTag);
+                sb.Append("<div class='line'></div>");
 
-                    var ticketList = parlayDetail.BetListData.Tickets.ToList();
-                    int lastIndex = ticketList.Count - 1;
-                    for (int i = 0; i < ticketList.Count; i++)
+                var ticketList = parlayDetail.BetListData.Tickets.ToList();
+                int lastIndex = ticketList.Count - 1;
+                for (int i = 0; i < ticketList.Count; i++)
+                {
+                    var ticket = ticketList[i];
+                    sb.Append("<div class='ticket-list'>");
+                    sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
+                    sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
+                    sb.Append(DivCloseTag);
+                    if (i != lastIndex)
                     {
-                        var ticket = ticketList[i];
-                        sb.Append("<div class='ticket-list'>");
-                        sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
-                        sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
-                        sb.Append(DivCloseTag);
-                        if (i != lastIndex)
-                        {
-                            sb.Append("<div class='line'></div>");
-                        }
+                        sb.Append("<div class='line'></div>");
                     }
                 }
             }
+
             return sb;
+
         }
 
         public static string GetTicketDetailSettingKey(int productId)
