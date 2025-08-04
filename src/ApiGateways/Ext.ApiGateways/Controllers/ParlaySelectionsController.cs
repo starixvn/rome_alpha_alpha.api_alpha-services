@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Ext.ApiGateways.Services;
 using Alpha.Utilities.Models;
@@ -45,7 +44,6 @@ public class ParlaySelectionsController : Controller
             return Unauthorized("NameIdentifier claim is missing.");
         }
         var custId = int.Parse(nameIdentifierClaim.Value);
-        var viewerInfo = await customerService.GetCustomerInfo(custId, string.Empty);
         var downlineInfo = await customerService.GetCustomerInfo(0, custName);
 
         if (downlineInfo.RoleId != UserLevelModel.Member)

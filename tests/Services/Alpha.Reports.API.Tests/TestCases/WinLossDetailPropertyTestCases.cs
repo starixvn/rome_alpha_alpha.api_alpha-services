@@ -2,7 +2,7 @@ namespace Alpha.Reports.API.Tests.TestCases;
 
 public static class WinLossDetailPropertyTestCases
 {
-    private static IEnumerable<object[]> allProperties = new List<object[]>()
+    private static IEnumerable<object[]> allProperties = new List<object[]>
     {
         new object[] { "CustId" },
         new object[] { "CustName" },

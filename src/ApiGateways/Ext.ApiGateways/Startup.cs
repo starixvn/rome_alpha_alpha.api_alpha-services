@@ -1,3 +1,4 @@
+using System.Globalization;
 using Alpha.Utilities.Configurations;
 using Alpha.Utilities.Models;
 using Ext.ApiGateways.Extensions;
@@ -101,7 +102,7 @@ public class Startup
         app.UseRouting();
         app.UseCors("CorsPolicy");
 
-        app.UseWhen(context => !context.Request.Path.Value.ToLower().Trim().Contains("/health"), applicationBuilder =>
+        app.UseWhen(context => !context.Request.Path.Value.ToLower(CultureInfo.InvariantCulture).Trim().Contains("/health", StringComparison.OrdinalIgnoreCase), applicationBuilder =>
         {
             applicationBuilder.UseRateLimiter();
             applicationBuilder.UseAuthentication();

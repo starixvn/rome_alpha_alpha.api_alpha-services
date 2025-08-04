@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Alpha.Utilities.Extensions;
 
 public static class StringExtensions
@@ -6,7 +8,7 @@ public static class StringExtensions
 
     public static string FormatNumber(this decimal numberValue)
     {
-        var result = numberValue.ToString("#,##0.00");
+        var result = numberValue.ToString("#,##0.00", CultureInfo.InvariantCulture);
 
         return numberValue < 0 && !result.StartsWith("-", StringComparison.OrdinalIgnoreCase)
             ? $"-{result}"
@@ -25,8 +27,8 @@ public static class StringExtensions
 
         var ids = delimitedString
             .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-            .Where(str => int.TryParse(str, out _))
-            .Select(str => Convert.ToInt32(str)).ToList();
+            .Where(str => int.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out _))
+            .Select(str => Convert.ToInt32(str, CultureInfo.InvariantCulture)).ToList();
 
         return ids;
     }
