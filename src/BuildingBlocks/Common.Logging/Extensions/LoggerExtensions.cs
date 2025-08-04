@@ -21,7 +21,7 @@ public static class LoggerExtensions
         }
         catch (Exception e)
         {
-            logger.LogError(e.Message);
+            logger.LogError(e, "Exception occurred in LogFailedAuthentication");
         }
     }
 
@@ -36,11 +36,11 @@ public static class LoggerExtensions
                 Serilog.Context.LogContext.PushProperty(key, headers[key]);
             }
 
-            logger.LogInformation("Request: " + functionName);
+            logger.LogInformation("Request: {FunctionName}", functionName);
         }
         catch (Exception e)
         {
-            logger.LogError(e.Message);
+            logger.LogError(e, "Exception occurred in LogRequest");
         }
     }
 
@@ -59,7 +59,7 @@ public static class LoggerExtensions
         }
         catch (Exception e)
         {
-            logger.LogError(e.Message);
+            logger.LogError(e, "Exception occurred in LogRateLimit");
         }
     }
 }

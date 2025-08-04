@@ -19,24 +19,19 @@ namespace Alpha.BetLists.API.Helpers
     public static class TicketDetailsHelper
     {
         private const string DivCloseTag = "</div>";
+        private const string DivLineTag = "<div class='line'></div>"; // Added constant
         public const byte SingleParlay = 1;
         public const byte MixParlay = 2;
         public const byte MixParlayDetail = 3;
-        private static readonly byte[] ParlayProducts =
-        {
-            SingleParlay,
-            MixParlay,
-            MixParlayDetail,
-        };
 
         private static readonly IDictionary<string, int[]> TicketDetailsSettingKeyMappers = new Dictionary<string, int[]>(){
             { "Acc_BetList_LC_Detail",
-            new int[] { ProductIdConstants.Allbet, ProductIdConstants.SAGaming, ProductIdConstants.AESexy, ProductIdConstants.IBCBetLiveCasino,
-            ProductIdConstants.ION, ProductIdConstants.PGSoft, ProductIdConstants.WMLiveCasino, ProductIdConstants.BGLiveCasino,
-            ProductIdConstants.PPLiveCasino, ProductIdConstants.FGG, ProductIdConstants.YeeBet, ProductIdConstants.WELiveCasino,
-            ProductIdConstants.ONCasino, ProductIdConstants.GPILiveCasino, ProductIdConstants.MicrogamingLive, ProductIdConstants.LiveCasinoDummy } },
+                new[] { ProductIdConstants.Allbet, ProductIdConstants.SAGaming, ProductIdConstants.AESexy, ProductIdConstants.IBCBetLiveCasino,
+                ProductIdConstants.ION, ProductIdConstants.PGSoft, ProductIdConstants.WMLiveCasino, ProductIdConstants.BGLiveCasino,
+                ProductIdConstants.PPLiveCasino, ProductIdConstants.FGG, ProductIdConstants.YeeBet, ProductIdConstants.WELiveCasino,
+                ProductIdConstants.ONCasino, ProductIdConstants.GPILiveCasino, ProductIdConstants.MicrogamingLive, ProductIdConstants.LiveCasinoDummy } },
             { "Acc_BetList_RNG_Detail",
-                new int[] { ProductIdConstants.SabaCasino, ProductIdConstants.FunkyGamesOld, ProductIdConstants.Joker,
+                new[] { ProductIdConstants.SabaCasino, ProductIdConstants.FunkyGamesOld, ProductIdConstants.Joker,
                 ProductIdConstants.MaxGame,ProductIdConstants.Habanero, ProductIdConstants.CreativeGaming, ProductIdConstants.AdvantPlay,
                 ProductIdConstants.AdvantPlayMini, ProductIdConstants.SEALEntertainment, ProductIdConstants.MGRNG, ProductIdConstants.Jili,
                 ProductIdConstants.Live22, ProductIdConstants.UUSLOTS, ProductIdConstants.SABAxD, ProductIdConstants.FastSpin,
@@ -144,6 +139,8 @@ namespace Alpha.BetLists.API.Helpers
             }
         }
 
+        // Remove redundant parentheses in the following lines:
+
         public static byte GetParlayProductId(string choice, TicketDetailsMapperModel mapper)
         {
             var lowerChoice = choice.ToLower(System.Globalization.CultureInfo.InvariantCulture);
@@ -210,31 +207,6 @@ namespace Alpha.BetLists.API.Helpers
             return sb;
         }
 
-        public static StringBuilder GetMixParlaySelections(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
-        {
-            var tickets = parlayService.GetParlayBetList(t.TransId, t.CustId).Result;
-            var message = new ParlayMeta()
-            {
-                BetCheck = t.BetCheck,
-                BetTeam = t.BetTeam,
-                Handicap1 = t.Handicap1,
-                Handicap2 = t.Handicap2
-            };
-            var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
-
-            StringBuilder sb = new StringBuilder();
-            if (!parlayDetail.HasValidData)
-            {
-                return sb;
-            }
-
-            AppendUnitStakeByOfferNames(sb, parlayDetail);
-            sb.Append("<div class='line'></div>");
-            AppendTickets(sb, parlayDetail, builder, ticketHelper);
-
-            return sb;
-        }
-
         private static void AppendUnitStakeByOfferNames(StringBuilder sb, ComboParlayViewModel parlayDetail)
         {
             foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
@@ -256,9 +228,34 @@ namespace Alpha.BetLists.API.Helpers
                 sb.Append(DivCloseTag);
                 if (i != tickets.Count - 1)
                 {
-                    sb.Append("<div class='line'></div>");
+                    sb.Append(DivLineTag); // Use constant
                 }
             }
+        }
+
+        public static StringBuilder GetMixParlaySelections(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
+        {
+            var tickets = parlayService.GetParlayBetList(t.TransId, t.CustId).Result;
+            var message = new ParlayMeta()
+            {
+                BetCheck = t.BetCheck,
+                BetTeam = t.BetTeam,
+                Handicap1 = t.Handicap1,
+                Handicap2 = t.Handicap2
+            };
+            var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
+
+            StringBuilder sb = new StringBuilder();
+            if (!parlayDetail.HasValidData)
+            {
+                return sb;
+            }
+
+            AppendUnitStakeByOfferNames(sb, parlayDetail);
+            sb.Append(DivLineTag); // Use constant
+            AppendTickets(sb, parlayDetail, builder, ticketHelper);
+
+            return sb;
         }
 
         public static StringBuilder GetMixParlayDetail(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
@@ -284,7 +281,7 @@ namespace Alpha.BetLists.API.Helpers
                 sb.Append("<div class='offer-name-list'>");
                 sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
                 sb.Append(DivCloseTag);
-                sb.Append("<div class='line'></div>");
+                sb.Append(DivLineTag); // Use constant
 
                 var ticketList = parlayDetail.BetListData.Tickets.ToList();
                 int lastIndex = ticketList.Count - 1;
@@ -297,7 +294,7 @@ namespace Alpha.BetLists.API.Helpers
                     sb.Append(DivCloseTag);
                     if (i != lastIndex)
                     {
-                        sb.Append("<div class='line'></div>");
+                        sb.Append(DivLineTag); // Use constant
                     }
                 }
             }
@@ -307,7 +304,6 @@ namespace Alpha.BetLists.API.Helpers
         }
 
         public static string GetTicketDetailSettingKey(int productId)
-    => TicketDetailsSettingKeyMappers.FirstOrDefault(mapper => mapper.Value.Contains(productId)).Key;
-
+            => TicketDetailsSettingKeyMappers.FirstOrDefault(mapper => mapper.Value.Contains(productId)).Key;
     }
 }

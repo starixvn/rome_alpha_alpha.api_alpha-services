@@ -22,9 +22,9 @@ namespace Ext.ApiGateways.Services
 
         public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string username, string password)
         {
-            logger.LogDebug($"grpc client created, api key = {key}");
+            logger.LogDebug("grpc client created, api key = {ApiKey}", key);
             var response = await apiKeyClient.VerifyExtApiKeyAsync(new VerifyExtApiKeyRequest { Key = key, Username = username, Password = password });
-            logger.LogDebug($"grpc response {ToJson(response)}");
+            logger.LogDebug("grpc response {GrpcResponse}", ToJson(response));
 
             return response == null
             ? new VerifyApiKeyResult

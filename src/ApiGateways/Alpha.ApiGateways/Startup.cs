@@ -80,7 +80,7 @@ public class Startup
 
         app.UseSwagger(c =>
         {
-            c.PreSerializeFilters.Add((swagger, httpReq) =>
+            c.PreSerializeFilters.Add((swagger, _) =>
             {
                 swagger.Servers = new List<OpenApiServer> {
                     new OpenApiServer { Url = Configuration.GetSection(UrlsConfig.Urls).Get<UrlsConfig>().ApiServer }

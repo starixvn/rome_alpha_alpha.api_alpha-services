@@ -62,8 +62,7 @@ public class WinLossBetListController : BaseAPIController
 
         if (downlineInfo.RoleId != UserLevelModel.Member)
         {
-            return BadRequest(LoggingConstants.SearchAccountMustBeMember);
-            //throw new GrpcException { Code = (int)HttpStatusCode.Unauthorized, Detail = LoggingConstants.SearchAccountMustBeMember };
+            return BadRequest(LoggingConstants.SearchAccountMustBeMember);          
         }
 
         var betListsRequest = new GetWinLossBetListRequest
