@@ -26,7 +26,10 @@ public static class ExceptionMiddlewareExtensions
                 {
                     var exception = contextFeature.Error;
                     var logger = app.ApplicationServices.GetService<Fanex.Logging.ILogger>();
-                    await logger.ErrorAsync(await BuildError(context.Request, exception));
+                    if (logger != null)
+                    {
+                        await logger.ErrorAsync(await BuildError(context.Request, exception));
+                    }
 
                     await ExceptionHandler.HandleAsync(exception, context).ConfigureAwait(false);
                     await context.Response.WriteAsync("Internal Server Error.");

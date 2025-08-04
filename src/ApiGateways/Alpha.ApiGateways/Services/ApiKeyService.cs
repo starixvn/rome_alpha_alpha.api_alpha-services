@@ -22,9 +22,9 @@ public class ApiKeyService : IApiKeyService
 
     public async Task<VerifyApiKeyResult> VerifyApiKey(string key, string passPhrase, string signature, string timestamp)
     {
-        logger.LogDebug("grpc client created, api key = {@key}", key);
+        logger.LogDebug("grpc client created, api key = {@Key}", key);
         var response = await apiKeyClient.VerifyApiKeyAsync(new VerifyApiKeyRequest { Key = key, Passphrase = passPhrase, Signature = signature, Timestamp = timestamp });
-        logger.LogDebug("grpc response {@response}", response);
+        logger.LogDebug("grpc response {@Response}", response);
 
         return new VerifyApiKeyResult
         {
