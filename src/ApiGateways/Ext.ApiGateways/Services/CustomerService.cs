@@ -20,10 +20,10 @@ public class CustomerService : ICustomerService
         this.logger = logger;
     }
 
-    public async Task<CustomerInfoModel> GetCustomerInfo(int custId, string username)
+    public async Task<CustomerInfoModel> GetCustomerInfo(int custId, string downlineUsername)
     {
         var response = await customerClient.GetCustomerInfoAsync(
-            new GetCustomerInfoRequest { CustId = custId, Username = username });
+            new GetCustomerInfoRequest { CustId = custId, Username = downlineUsername });
 
         return new CustomerInfoModel(response.CustId, (byte)response.RoleId, response.Site, response.Currency);
     }

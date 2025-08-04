@@ -23,9 +23,9 @@ public class CustomerService : ICustomerService
 
     public async Task<CustomerStatus> GetCustomerStatus(int custId, int subAccId = 0)
     {
-        logger.LogDebug("grpc client created, CustId = {@custId} SubAccId = {@subAccId}", custId, subAccId);
+        logger.LogDebug("grpc client created, CustId = {@CustId} SubAccId = {@SubAccId}", custId, subAccId);
         var response = await customerClient.GetCustomerStatusAsync(new GetCustomerStatusRequest { CustId = custId, SubAccId = subAccId });
-        logger.LogDebug("grpc response {@response}", response);
+        logger.LogDebug("grpc response {@Response}", response);
 
         return new CustomerStatus(
             response.CustId,
@@ -38,10 +38,10 @@ public class CustomerService : ICustomerService
             response.HasMemberInformationPermission);
     }
 
-    public async Task<CustomerInfoModel> GetCustomerInfo(int custId, string username)
+    public async Task<CustomerInfoModel> GetCustomerInfo(int custId, string downlineUsername)
     {
         var response = await customerClient.GetCustomerInfoAsync(
-            new GetCustomerInfoRequest { CustId = custId, Username = username });
+            new GetCustomerInfoRequest { CustId = custId, Username = downlineUsername });
 
         return new CustomerInfoModel(response.CustId, (byte)response.RoleId, response.Site, response.Currency);
     }
