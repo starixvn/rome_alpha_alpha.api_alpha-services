@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.HttpLogging;
 using Alpha.Utilities.Models;
 using Alpha.Utilities.Configurations;
+using System.Globalization;
 
 namespace Alpha.ApiGateways;
 
@@ -101,7 +102,7 @@ public class Startup
         app.UseRouting();
         app.UseCors("CorsPolicy");
 
-        app.UseWhen(context => !context.Request.Path.Value.ToLower().Trim().Contains("/health"), applicationBuilder =>
+        app.UseWhen(context => !context.Request.Path.Value.ToLower(CultureInfo.InvariantCulture).Trim().Contains("/health", StringComparison.InvariantCulture), applicationBuilder =>
         {
             applicationBuilder.UseRateLimiter();
             applicationBuilder.UseAuthentication();

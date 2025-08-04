@@ -47,30 +47,18 @@ namespace Alpha.BetLists.API.Helpers
 
         private static int GetProductIdByChoice(string choice, TicketDetailsMapperModel mapper)
         {
-            var lowerChoice = choice.ToLower();
+            var lowerChoice = choice.ToLower(System.Globalization.CultureInfo.InvariantCulture);
 
-            foreach (var entry in mapper.Values)
-            {
-                if (lowerChoice.Contains(entry.Key.ToLower()))
-                {
-                    return entry.Value;
-                }
-            }
+            var entry = mapper.Values
+                .Where(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)))
+                .FirstOrDefault();
 
-            return -1;
+            return entry.Equals(default(KeyValuePair<string, int>)) ? -1 : entry.Value;
         }
 
         public static bool CheckProductIdIsAllowed(this TicketDetailsMapperModel mapper, int productId)
         {
-            foreach (var entry in mapper.Values)
-            {
-                if (productId == entry.Value)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return mapper.Values.Any(entry => productId == entry.Value);
         }
 
         public static string GetDetailKey(string choice, TicketDto t, TicketDetailsMapperModel mapper)
@@ -151,27 +139,22 @@ namespace Alpha.BetLists.API.Helpers
                     break;
                 case AgentViewWinLossBetTicketModel ticket:
                     break;
-                default: break;
             }
         }
 
         public static byte GetParlayProductId(string choice, TicketDetailsMapperModel mapper)
         {
-            var lowerChoice = choice.ToLower();
-            foreach (var entry in mapper.ParlayProducts)
-            {
-                if (lowerChoice.Contains(entry.Key.ToLower()))
-                {
-                    return entry.Value;
-                }
-            }
+            var lowerChoice = choice.ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            var entry = mapper.ParlayProducts
+                .Where(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)))
+                .FirstOrDefault();
 
-            return 0;
+            return entry.Equals(default(KeyValuePair<string, byte>)) ? (byte)0 : entry.Value;
         }
 
         public static void GetTicketData(this List<ITicketData> list, IEnumerable<ITicket> tickets)
         {
-            list.AddRange(tickets.Select((detail) => new TicketData
+            list.AddRange(tickets.Select(detail => new TicketData
             {
                 RefNo = detail.TransId.ToString(),
                 BetTypeId = detail.BetTypeId,
@@ -266,10 +249,9 @@ namespace Alpha.BetLists.API.Helpers
             var tickets = parlayDetail.BetListData.Tickets.ToList();
             for (int i = 0; i < tickets.Count; i++)
             {
-                var ticket = tickets[i];
                 sb.Append("<div class='ticket-list'>");
-                sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
-                sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
+                sb.Append($"{builder.BuildChoice(tickets[i], ticketHelper, null, false).Replace("\"", "'")}");
+                sb.Append($"{builder.BuildTransEventDateAndStatusResult(tickets[i], null).Replace("\"", "'")}");
                 sb.Append(DivCloseTag);
                 if (i != tickets.Count - 1)
                 {
@@ -299,13 +281,17 @@ namespace Alpha.BetLists.API.Helpers
                     sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
                     sb.Append(DivCloseTag);
                     sb.Append("<div class='line'></div>");
-                    foreach (var ticket in parlayDetail.BetListData.Tickets)
+
+                    var ticketList = parlayDetail.BetListData.Tickets.ToList();
+                    int lastIndex = ticketList.Count - 1;
+                    for (int i = 0; i < ticketList.Count; i++)
                     {
+                        var ticket = ticketList[i];
                         sb.Append("<div class='ticket-list'>");
                         sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
                         sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
                         sb.Append(DivCloseTag);
-                        if (!ticket.Equals(parlayDetail.BetListData.Tickets.Last()))
+                        if (i != lastIndex)
                         {
                             sb.Append("<div class='line'></div>");
                         }
@@ -316,7 +302,7 @@ namespace Alpha.BetLists.API.Helpers
         }
 
         public static string GetTicketDetailSettingKey(int productId)
-            => TicketDetailsSettingKeyMappers.FirstOrDefault(mapper => mapper.Value.Contains(productId)).Key;
+    => TicketDetailsSettingKeyMappers.FirstOrDefault(mapper => mapper.Value.Contains(productId)).Key;
 
     }
 }

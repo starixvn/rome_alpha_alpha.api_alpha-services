@@ -44,17 +44,29 @@ public class CreateApiKeyCommand : NonQueryCommand
     public override bool IsValid()
     {
         if (CustId <= 0)
+        {
             return false;
+        }
         if (string.IsNullOrWhiteSpace(ApiName))
+        {
             return false;
+        }
         if (string.IsNullOrWhiteSpace(PassPhrase))
+        {
             return false;
+        }
         if (string.IsNullOrWhiteSpace(ScopeIDList))
+        {
             return false;
+        }
         if (string.IsNullOrWhiteSpace(ApiKey))
+        {
             return false;
+        }
         if (string.IsNullOrWhiteSpace(ApiSecret))
+        {
             return false;
+        }
         return true;
     }
 }
