@@ -91,7 +91,10 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
     private string GetParlayBoost(string originalOdds, string boostOdds, string boostRate)
     {
-        return $"<span class='underdog strikethrough'>{originalOdds}</span><br/><span class='oddstype'><span class='underdog'>{boostOdds}</span><br/><span class='boostrate'><span class='icon-boost'></span>{boostRate}</span></span>";
+        return
+            $"<span class='underdog strikethrough'>{originalOdds}</span><br/>" +
+            $"<span class='oddstype'><span class='underdog'>{boostOdds}</span><br/>" +
+            $"<span class='boostrate'><span class='icon-boost'></span>{boostRate}</span></span>";
     }
 
     private string GetEventsCombination(List<string> events)
