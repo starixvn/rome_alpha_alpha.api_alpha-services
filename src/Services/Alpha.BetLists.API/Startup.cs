@@ -1,5 +1,3 @@
-
-
 using Alpha.BetLists.API.Extensions;
 using Alpha.BetLists.API.Services;
 using FanexLibs.Data;
