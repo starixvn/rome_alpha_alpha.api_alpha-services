@@ -24,12 +24,13 @@ namespace Alpha.BetLists.API.Helpers
         public const byte MixParlay = 2;
         public const byte MixParlayDetail = 3;
 
-        private static readonly IDictionary<string, int[]> TicketDetailsSettingKeyMappers = new Dictionary<string, int[]>(){
+        private static readonly IDictionary<string, int[]> TicketDetailsSettingKeyMappers = new Dictionary<string, int[]>{
             { "Acc_BetList_LC_Detail",
                 new[] { ProductIdConstants.Allbet, ProductIdConstants.SAGaming, ProductIdConstants.AESexy, ProductIdConstants.IBCBetLiveCasino,
                 ProductIdConstants.ION, ProductIdConstants.PGSoft, ProductIdConstants.WMLiveCasino, ProductIdConstants.BGLiveCasino,
                 ProductIdConstants.PPLiveCasino, ProductIdConstants.FGG, ProductIdConstants.YeeBet, ProductIdConstants.WELiveCasino,
-                ProductIdConstants.ONCasino, ProductIdConstants.GPILiveCasino, ProductIdConstants.MicrogamingLive, ProductIdConstants.LiveCasinoDummy } },
+                ProductIdConstants.ONCasino, ProductIdConstants.GPILiveCasino, ProductIdConstants.MicrogamingLive, ProductIdConstants.LiveCasinoDummy }
+            },
             { "Acc_BetList_RNG_Detail",
                 new[] { ProductIdConstants.SabaCasino, ProductIdConstants.FunkyGamesOld, ProductIdConstants.Joker,
                 ProductIdConstants.MaxGame,ProductIdConstants.Habanero, ProductIdConstants.CreativeGaming, ProductIdConstants.AdvantPlay,
@@ -37,7 +38,8 @@ namespace Alpha.BetLists.API.Helpers
                 ProductIdConstants.Live22, ProductIdConstants.UUSLOTS, ProductIdConstants.SABAxD, ProductIdConstants.FastSpin,
                 ProductIdConstants.FACHAI, ProductIdConstants.Nextspin, ProductIdConstants.Playtech, ProductIdConstants.GPIRNG, ProductIdConstants.PLAYSTAR,
                 ProductIdConstants.ASKMESLOT, ProductIdConstants.SabaKeno, ProductIdConstants.FUNKYGAMES, ProductIdConstants.HOTDOG, ProductIdConstants.OdinGaming,
-                ProductIdConstants.RNGCasinoDummy } }
+                ProductIdConstants.RNGCasinoDummy }
+            }
         };
 
         private static int GetProductIdByChoice(string choice, TicketDetailsMapperModel mapper)
@@ -91,47 +93,48 @@ namespace Alpha.BetLists.API.Helpers
 
             switch (model)
             {
-                case SuperViewRunningBetTicketModel ticket:
-                    ticket.ExtraInfo = new ExtraInfoModel
+                case SuperViewRunningBetTicketModel superViewRunningBetTicketModel:
+                    superViewRunningBetTicketModel.ExtraInfo = new ExtraInfoModel
                     {
                         RefNo = t.TransId.ToString(),
                         TransType = int.Parse(t.GetTransactionType()),
                         ProductId = productId
                     };
                     break;
-                case MasterViewRunningBetTicketModel ticket:
-                    ticket.ExtraInfo = new ExtraInfoModel
+                case MasterViewRunningBetTicketModel masterViewRunningBetTicketModel:
+                    masterViewRunningBetTicketModel.ExtraInfo = new ExtraInfoModel
                     {
                         RefNo = t.TransId.ToString(),
                         TransType = int.Parse(t.GetTransactionType()),
                         ProductId = productId
                     };
                     break;
-                case AgentViewRunningBetTicketModel ticket:
-                    ticket.ExtraInfo = new ExtraInfoModel
+                case AgentViewRunningBetTicketModel agentViewRunningBetTicketModel:
+                    agentViewRunningBetTicketModel.ExtraInfo = new ExtraInfoModel
                     {
                         RefNo = t.TransId.ToString(),
                         TransType = int.Parse(t.GetTransactionType()),
                         ProductId = productId
                     };
                     break;
-                case SuperViewWinLossBetTicketModel ticket:
-                    ticket.ExtraInfo = new ExtraInfoModel
+                case SuperViewWinLossBetTicketModel superViewWinLossBetTicketModel:
+                    superViewWinLossBetTicketModel.ExtraInfo = new ExtraInfoModel
                     {
                         RefNo = t.TransId.ToString(),
                         TransType = int.Parse(t.GetTransactionType()),
                         ProductId = productId
                     };
                     break;
-                case MasterViewWinLossBetTicketModel ticket:
-                    ticket.ExtraInfo = new ExtraInfoModel
+                case MasterViewWinLossBetTicketModel masterViewWinLossBetTicketModel:
+                    masterViewWinLossBetTicketModel.ExtraInfo = new ExtraInfoModel
                     {
                         RefNo = t.TransId.ToString(),
                         TransType = int.Parse(t.GetTransactionType()),
                         ProductId = productId
                     };
                     break;
-                case AgentViewWinLossBetTicketModel ticket:
+                case AgentViewWinLossBetTicketModel:
+                    // No assignment needed, so do nothing
                     break;
                 default:
                     // No action needed for other types
@@ -169,7 +172,7 @@ namespace Alpha.BetLists.API.Helpers
 
         private static string GetParlayDetailKey(TicketDto t, byte parlayProductId, string choice)
         {
-            var key = JsonConvert.SerializeObject(new DetailKeyModel<TicketDto>()
+            var key = JsonConvert.SerializeObject(new DetailKeyModel<TicketDto>
             {
                 ticket = t,
                 ParlayProductId = parlayProductId,
@@ -233,10 +236,10 @@ namespace Alpha.BetLists.API.Helpers
             }
         }
 
-        public static StringBuilder GetMixParlaySelections(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
+        public static async Task<StringBuilder> GetMixParlaySelectionsAsync(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
         {
-            var tickets = parlayService.GetParlayBetList(t.TransId, t.CustId).Result;
-            var message = new ParlayMeta()
+            var tickets = await parlayService.GetParlayBetList(t.TransId, t.CustId);
+            var message = new ParlayMeta
             {
                 BetCheck = t.BetCheck,
                 BetTeam = t.BetTeam,
@@ -258,10 +261,10 @@ namespace Alpha.BetLists.API.Helpers
             return sb;
         }
 
-        public static StringBuilder GetMixParlayDetail(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
+        public static async Task<StringBuilder> GetMixParlayDetailAsync(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
         {
-            var tickets = parlayService.GetParlayBetList(t.TransId, t.CustId).Result;
-            var message = new ParlayMeta()
+            var tickets = await parlayService.GetParlayBetList(t.TransId, t.CustId);
+            var message = new ParlayMeta
             {
                 BetCheck = t.BetCheck,
                 BetTeam = t.BetTeam,
@@ -275,7 +278,7 @@ namespace Alpha.BetLists.API.Helpers
             {
                 return sb;
             }
-          
+
             foreach (var unitStakeByOfferNames in parlayDetail.UnitStakeByOfferNames)
             {
                 sb.Append("<div class='offer-name-list'>");
@@ -300,7 +303,12 @@ namespace Alpha.BetLists.API.Helpers
             }
 
             return sb;
+        }
 
+        // Make GetMixParlayDetail call GetMixParlayDetailAsync to avoid duplicate implementation
+        public static Task<StringBuilder> GetMixParlayDetail(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
+        {
+            return GetMixParlayDetailAsync(t, parlayService, ticketHelper, builder);
         }
 
         public static string GetTicketDetailSettingKey(int productId)

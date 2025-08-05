@@ -29,7 +29,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         response.Selections = detailKeyModel.ParlayProductId switch
         {
             TicketDetailsHelper.SingleParlay => TicketDetailsHelper.GetSingleParlaySelections(detailKeyModel.ticket, betBuilderService).ToString(),
-            TicketDetailsHelper.MixParlay => TicketDetailsHelper.GetMixParlaySelections(detailKeyModel.ticket, parlayService, ticketHelper, builder).ToString(),
+            TicketDetailsHelper.MixParlay => TicketDetailsHelper.GetMixParlaySelectionsAsync(detailKeyModel.ticket, parlayService, ticketHelper, builder).ToString(),
             _ => string.Empty,
         };
         return Task.FromResult(response);
