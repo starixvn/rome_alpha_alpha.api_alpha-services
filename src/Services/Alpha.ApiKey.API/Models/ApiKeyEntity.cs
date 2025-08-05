@@ -1,6 +1,6 @@
 namespace Alpha.ApiKey.API.Models;
 
-public record ApiKeyEntity()
+public record ApiKeyEntity
 {
     public int CustId { get; init; }
 
@@ -10,7 +10,7 @@ public record ApiKeyEntity()
 
     public string Key { get; init; }
 
-    public string Secret { get; init; } 
+    public string Secret { get; init; }
 
     public string PassPhrase { get; init; }
 

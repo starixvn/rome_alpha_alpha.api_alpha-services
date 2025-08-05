@@ -1,6 +1,6 @@
 namespace Alpha.PartialUM.Models;
 
-public record PartialUMFunctionSetting()
+public record PartialUMFunctionSetting
 {
     public string? Name { get; init; }
 

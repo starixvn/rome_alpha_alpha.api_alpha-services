@@ -13,6 +13,8 @@ namespace Alpha.ApiGateways;
 
 public class Startup
 {
+    private const int HttpBodyLogLimit = 4096;
+
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -37,8 +39,8 @@ public class Startup
             logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders;
             logging.RequestHeaders.Add("x-forwarded-for");
             logging.MediaTypeOptions.AddText("application/javascript");
-            logging.RequestBodyLogLimit = 4096;
-            logging.ResponseBodyLogLimit = 4096;
+            logging.RequestBodyLogLimit = HttpBodyLogLimit;
+            logging.ResponseBodyLogLimit = HttpBodyLogLimit;
         });
     }
 
