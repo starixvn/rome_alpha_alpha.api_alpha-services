@@ -8,5 +8,6 @@ public static class ProductIdConstants
     public const int Pragmatic = 32;
     public const int SpadeGaming = 36;
     public const int MgRng = 73;
+    public const int CashBilling = 111;
 
 }

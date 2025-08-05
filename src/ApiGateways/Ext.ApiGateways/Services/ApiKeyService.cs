@@ -29,7 +29,8 @@ namespace Ext.ApiGateways.Services
             return response == null
             ? new VerifyApiKeyResult
             {
-                IsAuthenticated = false
+                IsAuthenticated = false,
+                ErrMsg = "Unknown error"
             }
             : new VerifyApiKeyResult
             {
@@ -37,7 +38,8 @@ namespace Ext.ApiGateways.Services
                 CustId = response.CustId,
                 SubAccId = response.SubAccId,
                 SiteName = response.Site,
-                Currency = response.Currency
+                Currency = response.Currency,
+                ErrMsg = response.ErrMsg
             };
         }
 

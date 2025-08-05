@@ -67,16 +67,43 @@ public class ProductService : IProductService
 
     public IEnumerable<int> FilterProductIdsByGroup(IEnumerable<int> products, string group)
     {
-        if (string.Equals(group, ProductGroupConstants.All, StringComparison.OrdinalIgnoreCase))
+        if (products == null)
+        {
+            return Enumerable.Empty<int>();
+        }
+
+        if (IsAllGroup(group))
         {
             return products;
         }
 
-        if (string.Equals(group, ProductGroupConstants.Sportsbook, StringComparison.OrdinalIgnoreCase))
+        if (IsSportsbookGroup(group))
         {
-            return products.Where(p => p == ProductIdConstants.Sportsbook);
+            return FilterSportsbookProducts(products);
         }
 
-        return products.Where(p => p != ProductIdConstants.Sportsbook);
+        return FilterNonSportsbookProducts(products);
+    }
+
+    private static bool IsAllGroup(string group)
+    {
+        return string.IsNullOrWhiteSpace(group) || 
+               string.Equals(group, ProductGroupConstants.All, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsSportsbookGroup(string group)
+    {
+        return string.Equals(group, ProductGroupConstants.Sportsbook, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static IEnumerable<int> FilterSportsbookProducts(IEnumerable<int> products)
+    {
+        return products.Where(p => p == ProductIdConstants.Sportsbook);
+    }
+
+    private static IEnumerable<int> FilterNonSportsbookProducts(IEnumerable<int> products)
+    {
+        var excludedProducts = new[] { ProductIdConstants.Sportsbook, ProductIdConstants.CashBilling };
+        return products.Where(p => !excludedProducts.Contains(p));
     }
 }
