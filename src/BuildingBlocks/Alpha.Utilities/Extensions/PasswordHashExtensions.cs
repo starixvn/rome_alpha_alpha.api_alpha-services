@@ -39,6 +39,20 @@ public static class PasswordHashExtensions
         return str2;
     }
 
+    public static string RandomNumberString(int length)
+    {
+        const string chars = "0123456789";
+        string rndStr = string.Empty;
+        Random rnd = new Random();
+
+        for (int i = 0; i < length; ++i)
+        {
+            rndStr += chars[rnd.Next() % chars.Length];
+        }
+
+        return rndStr;
+    }
+
     private static string HashCode(string words)
     {
         string number = string.Empty;

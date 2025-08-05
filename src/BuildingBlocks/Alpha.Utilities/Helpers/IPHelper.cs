@@ -1,8 +1,10 @@
-namespace Alpha.ApiGateways.Helpers;
+using System;
+
+namespace Alpha.Utilities.Helpers;
 
 public static class IPHelper
 {
-    public static string[] GetClientIPs(HttpContext context)
+    public static string[] GetClientIPs(dynamic context)
     {
         var ip = context.Request.Headers["X-Actual-IP"];
 
@@ -26,7 +28,7 @@ public static class IPHelper
         return ip.ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
     }
 
-    public static string GetClientIP(HttpContext context)
+    public static string GetClientIP(dynamic context)
     {
         var ips = GetClientIPs(context);
         var ip = ips[0];
