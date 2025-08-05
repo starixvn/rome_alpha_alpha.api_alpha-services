@@ -40,7 +40,7 @@ public class CheckBelongingInterceptor : Interceptor
 
     private async Task<bool> CheckBelonging<TRequest>(TRequest request, ServerCallContext context)
     {
-        if (request == null)
+        if (EqualityComparer<TRequest>.Default.Equals(request, default))
         {
             return true;
         }
