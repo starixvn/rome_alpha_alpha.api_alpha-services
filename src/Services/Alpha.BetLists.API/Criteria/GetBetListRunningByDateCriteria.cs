@@ -14,9 +14,9 @@ public class GetBetListRunningByDateCriteria : CriteriaBase
 
     public int CustId { get; }
 
-    public DateTimeOffset FromDate { get; } = DateTimeOffset.Now;
+    public DateTime FromDate { get; } = DateTime.Now;
 
-    public DateTimeOffset ToDate { get; } = DateTimeOffset.Now;
+    public DateTime ToDate { get; } = DateTime.Now;
 
     public bool GetAll { get; }
 
@@ -28,5 +28,5 @@ public class GetBetListRunningByDateCriteria : CriteriaBase
         CustId > 0
         && !string.IsNullOrWhiteSpace(ProductIds)
         && ToDate >= FromDate
-        && FromDate > DateTimeOffset.MinValue;
+        && FromDate > DateTime.MinValue;
 }

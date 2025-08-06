@@ -12,11 +12,11 @@ public class WinLossDetailRequest
 
     [FromBody]
     [JsonRequired]
-    public DateTimeOffset? FromDate { get; set; } = DateTimeOffset.Now.AddDays(-MaxDateRangeInDays).Date;
+    public DateTime? FromDate { get; set; } = DateTime.Now.AddDays(-MaxDateRangeInDays).Date;
 
     [FromBody]
     [JsonRequired]
-    public DateTimeOffset? ToDate { get; set; } = DateTimeOffset.Now.Date;
+    public DateTime? ToDate { get; set; } = DateTime.Now.Date;
 
     [FromBody]
     [JsonRequired]
@@ -24,10 +24,10 @@ public class WinLossDetailRequest
 
     public bool ValidateDateRange()
     {
-        var fromDate = FromDate ?? DateTimeOffset.MinValue;
-        var toDate = ToDate ?? DateTimeOffset.MinValue;
+        var fromDate = FromDate ?? DateTime.MinValue;
+        var toDate = ToDate ?? DateTime.MinValue;
 
-        var currentDate = DateTimeOffset.Now.Date;
+        var currentDate = DateTime.Now.Date;
         var minDate = currentDate.AddDays(-MaxDateRangeInDays);
         var minFromDate = toDate.AddDays(-MaxDateRangeInDays);
 

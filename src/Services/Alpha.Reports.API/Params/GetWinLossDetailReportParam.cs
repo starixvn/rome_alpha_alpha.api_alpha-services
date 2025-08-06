@@ -18,10 +18,10 @@ public class GetWinLossDetailReportParam
         CurrencyId = request.CurrencyId;
         Settings = settings;
 
-        MinDate = DateTimeOffset.Now.Date.AddMonths(-1);
-        DateTimeOffset dt;
-        FromDate = DateTimeOffset.TryParse(request.FromDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt) ? dt : DateTimeOffset.MinValue;
-        ToDate = DateTimeOffset.TryParse(request.ToDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt) ? dt : DateTimeOffset.MinValue;
+        MinDate = DateTime.Now.Date.AddMonths(-1);
+        DateTime dt;
+        FromDate = DateTime.TryParse(request.FromDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt) ? dt : DateTime.MinValue;
+        ToDate = DateTime.TryParse(request.ToDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt) ? dt : DateTime.MinValue;
         SiteName = request.Site;
         ProductGroup = request.ProductGroup;
         ProductIds = request.ProductIds.ToListInt();
@@ -36,15 +36,15 @@ public class GetWinLossDetailReportParam
     public int CurrencyId { get; }
     public string SiteName { get; }
 
-    public DateTimeOffset FromDate { get; set; }
-    public DateTimeOffset ToDate { get; set; }
+    public DateTime FromDate { get; set; }
+    public DateTime ToDate { get; set; }
 
     public ReportsAppSettingsModel Settings { get; }
 
     public IEnumerable<int> ProductIds { get; set; }
     public string ProductGroup { get; set; }
 
-    public DateTimeOffset MinDate { get; }
+    public DateTime MinDate { get; }
     public int Level { get; }
 
     public bool IsValid()

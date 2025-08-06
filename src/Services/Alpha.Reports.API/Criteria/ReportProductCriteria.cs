@@ -6,8 +6,8 @@ public class ReportProductCriteria : ReportCriteriaBase
 {
     public ReportProductCriteria(
         int custId,
-        DateTimeOffset balanceUpDay,
-        DateTimeOffset moveBetsDay,
+        DateTime balanceUpDay,
+        DateTime moveBetsDay,
         IEnumerable<int> productIds)
         : base(custId, balanceUpDay, moveBetsDay)
     {

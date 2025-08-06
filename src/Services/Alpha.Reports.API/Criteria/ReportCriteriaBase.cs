@@ -6,8 +6,8 @@ public abstract class ReportCriteriaBase : CriteriaBase
 {
     protected ReportCriteriaBase(
         int custId,
-        DateTimeOffset balanceUpDay,
-        DateTimeOffset moveBetsDay)
+        DateTime balanceUpDay,
+        DateTime moveBetsDay)
     {
         CustId = custId;
         BalanceUpDay = balanceUpDay;
@@ -16,9 +16,9 @@ public abstract class ReportCriteriaBase : CriteriaBase
 
     public int CustId { get; }
 
-    public DateTimeOffset BalanceUpDay { get; }
+    public DateTime BalanceUpDay { get; }
 
-    public DateTimeOffset MoveBetsDay { get; }
+    public DateTime MoveBetsDay { get; }
 
     public override bool IsValid() => CustId > 0;
 

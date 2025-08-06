@@ -12,7 +12,7 @@ public class GetWinLossDetailCriteriaTests
     public void GetSettingKey_Always_ReturnsValidSettingKey(byte custLevel, string expectedSettingKey)
     {
         // Arrange
-        var now = DateTimeOffset.Now;
+        var now = DateTime.Now;
         var criteria = new GetWinLossDetailCriteria(0, now, now, Enumerable.Empty<int>(), custLevel, string.Empty, now, now, 0);
 
         // Act
@@ -26,7 +26,7 @@ public class GetWinLossDetailCriteriaTests
     public void IsValid_Always_ReturnsValid()
     {
         // Arrange
-        var now = DateTimeOffset.Now;
+        var now = DateTime.Now;
         var criteria = new GetWinLossDetailCriteria(0, now, now, Enumerable.Empty<int>(), 0, string.Empty, now, now, 0);
         var expectedIsValid = true;
 

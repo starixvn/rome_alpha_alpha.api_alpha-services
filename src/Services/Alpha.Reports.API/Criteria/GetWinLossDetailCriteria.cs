@@ -7,13 +7,13 @@ public class GetWinLossDetailCriteria : ReportProductCriteria
 {
     public GetWinLossDetailCriteria(
         int custId,
-        DateTimeOffset balanceUpDay,
-        DateTimeOffset moveBetsDay,
+        DateTime balanceUpDay,
+        DateTime moveBetsDay,
         IEnumerable<int> productIds,
         byte custLevel,
         string productDetails,
-        DateTimeOffset fromDate,
-        DateTimeOffset toDate,
+        DateTime fromDate,
+        DateTime toDate,
         int level)
         : base(custId, balanceUpDay, moveBetsDay, productIds)
     {
@@ -29,9 +29,9 @@ public class GetWinLossDetailCriteria : ReportProductCriteria
 
     public string ProductDetails { get; }
 
-    public DateTimeOffset FromDate { get; }
+    public DateTime FromDate { get; }
 
-    public DateTimeOffset ToDate { get; }
+    public DateTime ToDate { get; }
 
     [SpParam(SqlParamName = "LevelType")]
     public int Level { get; }
