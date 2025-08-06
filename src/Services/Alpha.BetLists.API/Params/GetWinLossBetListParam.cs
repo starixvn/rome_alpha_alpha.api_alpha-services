@@ -19,9 +19,9 @@ public class GetWinLossBetListParam
         CustId = custId;
         RoleId = roleId;
 
-        DateTimeOffset dto;
-        FromDate = DateTimeOffset.TryParse(fromDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dto) ? dto : DateTimeOffset.MinValue;
-        ToDate = DateTimeOffset.TryParse(toDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dto) ? dto : DateTimeOffset.MinValue;
+        DateTime dto;
+        FromDate = DateTime.TryParse(fromDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dto) ? dto : DateTime.MinValue;
+        ToDate = DateTime.TryParse(toDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out dto) ? dto : DateTime.MinValue;
 
         UserName = userName;
         ProductIds = productIds;
@@ -37,9 +37,9 @@ public class GetWinLossBetListParam
 
     public int CustId { get; }
 
-    public DateTimeOffset FromDate { get; }
+    public DateTime FromDate { get; }
 
-    public DateTimeOffset ToDate { get; }
+    public DateTime ToDate { get; }
 
     public string UserName { get; }
 

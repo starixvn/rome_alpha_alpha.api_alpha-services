@@ -16,9 +16,9 @@ public record ApiKeyEntity
 
     public string ScopeIdList { get; init; }
 
-    public DateTimeOffset CreatedDate { get; init; } = DateTimeOffset.Now;
+    public DateTime CreatedDate { get; init; } = DateTime.Now;
 
-    public DateTimeOffset? ExpirationDate { get; init; } = default!;
+    public DateTime? ExpirationDate { get; init; } = default!;
 
-    public bool IsExpired => ExpirationDate != null && ExpirationDate.Value < DateTimeOffset.Now;
+    public bool IsExpired => ExpirationDate != null && ExpirationDate.Value < DateTime.Now;
 }

@@ -1,4 +1,3 @@
-
 using Fanex.Data;
 using Fanex.Data.Repository;
 
@@ -9,10 +8,10 @@ public class GetBetListWinLossByDateCriteria : CriteriaBase
     public GetBetListWinLossByDateCriteria(
         int custId,
         string productIds,
-        DateTimeOffset fromDate,
-        DateTimeOffset toDate,
+        DateTime fromDate,
+        DateTime toDate,
         string productDetails,
-        DateTimeOffset moveBetsDate,
+        DateTime moveBetsDate,
         int maxTotalRow)
     {
         CustId = custId;
@@ -29,16 +28,16 @@ public class GetBetListWinLossByDateCriteria : CriteriaBase
 
     public int CustId { get; }
 
-    public DateTimeOffset FromDate { get; }
+    public DateTime FromDate { get; }
 
-    public DateTimeOffset ToDate { get; }
+    public DateTime ToDate { get; }
 
     public string ProductIds { get; }
 
     public string ProductDetails { get; }
 
     [SpParam(SqlParamName = "movebetsday")]
-    public DateTimeOffset MoveBetsDate { get; }
+    public DateTime MoveBetsDate { get; }
 
     public bool ShowProgressiveBonus { get; }
 
@@ -56,5 +55,5 @@ public class GetBetListWinLossByDateCriteria : CriteriaBase
         CustId > 0
         && !string.IsNullOrWhiteSpace(ProductIds)
         && ToDate >= FromDate
-        && FromDate > DateTimeOffset.MinValue;
+        && FromDate > DateTime.MinValue;
 }
