@@ -60,7 +60,7 @@ public class WinLossDetailServiceTests
         {
             CustId = 1,
             CustLevelId = 2,
-            ViewerLevelId = 1,
+            ViewerLevelId = 2,
             Level = 1,
             Site = "site",
             ProductGroup = "1",

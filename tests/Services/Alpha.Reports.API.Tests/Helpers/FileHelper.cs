@@ -8,11 +8,7 @@ public static class FileHelper
 {
     public static string GetFilePath(string relativeFilePath)
     {
-        string codeBase = typeof(FileHelper).Assembly.Location;
-        var uri = new UriBuilder(codeBase);
-        string path = Uri.UnescapeDataString(uri.Path);
-
-        return Path.GetDirectoryName(path) + relativeFilePath;
+        return relativeFilePath.TrimStart('\\').Replace('\\', '/');
     }
 
     public static DataSet LoadDataSet(string relativeFilePath)

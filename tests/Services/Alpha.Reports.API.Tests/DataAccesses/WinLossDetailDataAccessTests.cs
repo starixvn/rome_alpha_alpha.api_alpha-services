@@ -57,6 +57,7 @@ public class WinLossDetailDataAccessTests
                 CustName = "Master1",
                 BetCount = 11,
                 Turnover = 0,
+                NetTurnover = 0,
                 MemberWinLoss = 3,
                 MemberComm = 4,
                 AgentWinLoss = 5,
@@ -66,12 +67,16 @@ public class WinLossDetailDataAccessTests
                 SuperWinLoss = 9,
                 SuperComm = 10,
                 GrossComm = 2,
+                RewardAmount = 0,
+                RewardCurrency = "USD",
+                IsDirectMember = true
             },
             new SuperWinLossDetailModel {
                 CustId = 11,
                 CustName = "Master2",
                 BetCount = 111,
                 Turnover = 10,
+                NetTurnover = 0,
                 MemberWinLoss = 13,
                 MemberComm = 14,
                 AgentWinLoss = 15,
@@ -81,6 +86,9 @@ public class WinLossDetailDataAccessTests
                 SuperWinLoss = 19,
                 SuperComm = 110,
                 GrossComm = 12,
+                RewardAmount = 5,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             }
         };
 
@@ -90,6 +98,7 @@ public class WinLossDetailDataAccessTests
             CustName = "Total",
             BetCount = 211,
             Turnover = 20,
+            NetTurnover = 0,
             MemberWinLoss = 23,
             MemberComm = 24,
             AgentWinLoss = 25,
@@ -99,6 +108,9 @@ public class WinLossDetailDataAccessTests
             SuperWinLoss = 29,
             SuperComm = 210,
             GrossComm = 22,
+            RewardAmount = 5,
+            RewardCurrency = "USD",
+            IsDirectMember = false
         };
 
         var expectedValue = new ReportDataModel<SuperWinLossDetailModel>(winLossDetails, total);
@@ -126,6 +138,7 @@ public class WinLossDetailDataAccessTests
                 CustName = "Master1",
                 BetCount = 11,
                 Turnover = 0,
+                NetTurnover = 0,
                 MemberWinLoss = 3,
                 MemberComm = 4,
                 AgentWinLoss = 5,
@@ -135,12 +148,16 @@ public class WinLossDetailDataAccessTests
                 SuperWinLoss = 9,
                 SuperComm = 10,
                 GrossComm = 2,
+                RewardAmount = 0,
+                RewardCurrency = "USD",
+                IsDirectMember = true
             },
             new SuperWinLossDetailModel {
                 CustId = 11,
                 CustName = "Master2",
                 BetCount = 111,
                 Turnover = 10,
+                NetTurnover = 0,
                 MemberWinLoss = 13,
                 MemberComm = 14,
                 AgentWinLoss = 15,
@@ -150,6 +167,9 @@ public class WinLossDetailDataAccessTests
                 SuperWinLoss = 19,
                 SuperComm = 110,
                 GrossComm = 12,
+                RewardAmount = 5,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             }
         };
 
@@ -197,6 +217,7 @@ public class WinLossDetailDataAccessTests
                 CustName = "Agent1",
                 BetCount = 11,
                 Turnover = 0,
+                NetTurnover = 0,
                 MemberWinLoss = 3,
                 MemberComm = 4,
                 AgentWinLoss = 5,
@@ -204,12 +225,16 @@ public class WinLossDetailDataAccessTests
                 MasterWinLoss = 7,
                 MasterComm = 8,
                 GrossComm = 2,
+                RewardAmount = 0,
+                RewardCurrency = "USD",
+                IsDirectMember = true
             },
             new MasterWinLossDetailModel {
                 CustId = 11,
                 CustName = "Agent2",
                 BetCount = 111,
                 Turnover = 10,
+                NetTurnover = 0,
                 MemberWinLoss = 13,
                 MemberComm = 14,
                 AgentWinLoss = 15,
@@ -217,6 +242,9 @@ public class WinLossDetailDataAccessTests
                 MasterWinLoss = 17,
                 MasterComm = 18,
                 GrossComm = 12,
+                RewardAmount = 5,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             }
         };
 
@@ -226,6 +254,7 @@ public class WinLossDetailDataAccessTests
             CustName = "Total",
             BetCount = 211,
             Turnover = 20,
+            NetTurnover = 0,
             MemberWinLoss = 23,
             MemberComm = 24,
             AgentWinLoss = 25,
@@ -233,6 +262,9 @@ public class WinLossDetailDataAccessTests
             MasterWinLoss = 27,
             MasterComm = 28,
             GrossComm = 22,
+            RewardAmount = 5,
+            RewardCurrency = "USD",
+            IsDirectMember = false
         };
 
         var expectedValue = new ReportDataModel<MasterWinLossDetailModel>(winLossDetails, total);
@@ -260,6 +292,7 @@ public class WinLossDetailDataAccessTests
                 CustName = "Master1",
                 BetCount = 11,
                 Turnover = 0,
+                NetTurnover = 0,
                 MemberWinLoss = 3,
                 MemberComm = 4,
                 AgentWinLoss = 5,
@@ -267,12 +300,16 @@ public class WinLossDetailDataAccessTests
                 MasterWinLoss = 7,
                 MasterComm = 8,
                 GrossComm = 2,
+                RewardAmount = 0,
+                RewardCurrency = "USD",
+                IsDirectMember = true
             },
             new MasterWinLossDetailModel {
                 CustId = 11,
                 CustName = "Master2",
                 BetCount = 111,
                 Turnover = 10,
+                NetTurnover = 0,
                 MemberWinLoss = 13,
                 MemberComm = 14,
                 AgentWinLoss = 15,
@@ -280,6 +317,9 @@ public class WinLossDetailDataAccessTests
                 MasterWinLoss = 17,
                 MasterComm = 18,
                 GrossComm = 12,
+                RewardAmount = 5,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             }
         };
 
@@ -301,7 +341,7 @@ public class WinLossDetailDataAccessTests
         var criteria = new GetMemberWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var expectedValue = new ReportDataModel<AgentWinLossDetailModel>(new List<AgentWinLossDetailModel>(), new AgentWinLossDetailModel());
         IDataReader dataReader = null;
-        objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>())
+        objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetMemberWinLossDetailCriteria>())
             .Returns(dataReader);
 
         // Act
@@ -317,7 +357,7 @@ public class WinLossDetailDataAccessTests
         // Arrange
         var criteria = new GetMemberWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.MemberWinLoss.CreateDataReader();
-        objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
+        objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetMemberWinLossDetailCriteria>()).Returns(dataSet);
 
         var winLossDetails = new List<AgentWinLossDetailModel>
         {
@@ -327,22 +367,30 @@ public class WinLossDetailDataAccessTests
                 CustName = "Member1",
                 BetCount = 11,
                 Turnover = 0,
+                NetTurnover = 0,
                 MemberWinLoss = 3,
                 MemberComm = 4,
                 AgentWinLoss = 5,
                 AgentComm = 6,
                 GrossComm = 2,
+                RewardAmount = 0,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             },
             new AgentWinLossDetailModel {
                 CustId = 11,
                 CustName = "Member2",
                 BetCount = 111,
                 Turnover = 10,
+                NetTurnover = 0,
                 MemberWinLoss = 13,
                 MemberComm = 14,
                 AgentWinLoss = 15,
                 AgentComm = 16,
                 GrossComm = 12,
+                RewardAmount = 5,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             }
         };
 
@@ -352,11 +400,15 @@ public class WinLossDetailDataAccessTests
             CustName = "Total",
             BetCount = 211,
             Turnover = 20,
+            NetTurnover = 0,
             MemberWinLoss = 23,
             MemberComm = 24,
             AgentWinLoss = 25,
             AgentComm = 26,
             GrossComm = 22,
+            RewardAmount = 5,
+            RewardCurrency = "USD",
+            IsDirectMember = false
         };
 
         var expectedValue = new ReportDataModel<AgentWinLossDetailModel>(winLossDetails, total);
@@ -374,7 +426,7 @@ public class WinLossDetailDataAccessTests
         // Arrange
         var criteria = new GetMemberWinLossDetailCriteria(1, DateTime.Now, DateTime.Now, Enumerable.Empty<int>(), 0, string.Empty, DateTime.Now, DateTime.Now);
         var dataSet = WinLossDetailDatabase.MasterWinLossWinNoTotalTable.CreateDataReader();
-        objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetWinLossDetailCriteria>()).Returns(dataSet);
+        objectDbFixture.ObjectDb.ExecuteReaderAsync(Arg.Any<GetMemberWinLossDetailCriteria>()).Returns(dataSet);
 
         var winLossDetails = new List<AgentWinLossDetailModel>
         {
@@ -384,22 +436,30 @@ public class WinLossDetailDataAccessTests
                 CustName = "Master1",
                 BetCount = 11,
                 Turnover = 0,
+                NetTurnover = 0,
                 MemberWinLoss = 3,
                 MemberComm = 4,
                 AgentWinLoss = 5,
                 AgentComm = 6,
                 GrossComm = 2,
+                RewardAmount = 0,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             },
             new AgentWinLossDetailModel {
                 CustId = 11,
                 CustName = "Master2",
                 BetCount = 111,
                 Turnover = 10,
+                NetTurnover = 0,
                 MemberWinLoss = 13,
                 MemberComm = 14,
                 AgentWinLoss = 15,
                 AgentComm = 16,
                 GrossComm = 12,
+                RewardAmount = 5,
+                RewardCurrency = "USD",
+                IsDirectMember = false
             }
         };
 
