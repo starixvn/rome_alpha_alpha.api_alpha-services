@@ -39,7 +39,7 @@ public class OutstandingServiceTests
     public async Task GetReport_ValidParam_ReturnsData()
     {
         // Arrange
-        var param = new GetOutstandingReportParam(1, 2, 1, "1,2", false, "site", 1);
+        var param = new GetOutstandingReportParam(2, 2, 1, "1,2", false, "site", 1);
         var expected = new List<OutstandingModel> { new OutstandingModel { CustId = 1, CustName = "Test" } };
         dynamicRepository.FetchAsync<OutstandingModel>(Arg.Any<ICriteria>()).Returns(expected);
 

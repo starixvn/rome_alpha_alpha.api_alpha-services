@@ -163,7 +163,8 @@ public class WinLossDetailDataAccess : IWinLossDetailDataAccess
             NetTurnover = reader.ToDecimal("TurnoverNoDraw"),
             GrossComm = reader.ToDecimal("GrossComm"),
             RewardAmount = reader.ToDecimal("RewardAmount"),
-            RewardCurrency = reader.ToString("RewardCurrency")
+            RewardCurrency = reader.ToString("RewardCurrency"),
+            IsDirectMember = false
         };
 
         return winLossDetail;

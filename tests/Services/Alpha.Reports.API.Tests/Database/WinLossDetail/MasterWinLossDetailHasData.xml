@@ -17,6 +17,9 @@
     <NumberOfTickets>11</NumberOfTickets>
     <RowNum>12</RowNum>
     <TurnoverNoDraw>0</TurnoverNoDraw>
+    <IsDirectMember>1</IsDirectMember>
+    <RewardAmount>0</RewardAmount>
+    <RewardCurrency>USD</RewardCurrency>
   </TableWinLoss>
   <TableWinLoss>
     <CustId>11</CustId>
@@ -35,6 +38,9 @@
     <NumberOfTickets>111</NumberOfTickets>
     <RowNum>112</RowNum>
     <TurnoverNoDraw>0</TurnoverNoDraw>
+    <IsDirectMember>0</IsDirectMember>
+    <RewardAmount>5</RewardAmount>
+    <RewardCurrency>USD</RewardCurrency>
   </TableWinLoss>
   <TableTotal>
     <CustId></CustId>
@@ -53,5 +59,8 @@
     <NumberOfTickets>211</NumberOfTickets>
     <RowNum>212</RowNum>
     <TurnoverNoDraw>0</TurnoverNoDraw>
+    <IsDirectMember>0</IsDirectMember>
+    <RewardAmount>5</RewardAmount>
+    <RewardCurrency>USD</RewardCurrency>
   </TableTotal>
 </WinLossDetail>
