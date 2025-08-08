@@ -1,6 +1,6 @@
-using Alpha.BetLists.API.Models;
-using Alpha.BetLists.API.Services;
-using Alpha.BetLists.API.Criteria;
+using Alpha.Shared.Services.Models;
+using Alpha.Shared.Services.Services;
+using Alpha.Shared.Services.Criteria;
 using Fanex.Data.Repository;
 using Fanex.Caching;
 using NSubstitute;
@@ -17,7 +17,7 @@ public class ReportDateServiceTests
     {
         dynamicRepository = Substitute.For<IDynamicRepository>();
         cacheService = Substitute.For<ICacheService>();
-        service = new ReportDateService(dynamicRepository, cacheService);
+        service = new ReportDateService(dynamicRepository, cacheService, "Alpha.BetLists");
     }
 
     [Fact]

@@ -1,5 +1,6 @@
 using Alpha.Reports.API.Models;
-using Alpha.Reports.API.Services;
+using Alpha.Shared.Services.Models;
+using Alpha.Shared.Services.Services;
 using Fanex.Caching;
 using Fanex.Data.Repository;
 using NSubstitute;

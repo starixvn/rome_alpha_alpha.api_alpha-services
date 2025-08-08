@@ -1,6 +1,7 @@
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Params;
 using Alpha.BetLists.API.Services;
+using Alpha.Shared.Services.Services;
 using Fanex.Data.Repository;
 using NSubstitute;
 

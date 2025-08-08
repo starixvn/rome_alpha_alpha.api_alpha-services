@@ -2,6 +2,7 @@ using Alpha.BetLists.API.Criteria.Parlay;
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.Parlay;
 using Fanex.Data.Repository;
+using Alpha.Shared.Services.Services;
 
 namespace Alpha.BetLists.API.Services
 {

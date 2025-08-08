@@ -4,6 +4,7 @@ using Alpha.BetLists.API.Params;
 using Alpha.BetLists.API.Criteria;
 using Alpha.BetLists.API.Tests.Helpers;
 using Alpha.PartialUM.Services;
+using Alpha.Shared.Services.Services;
 using Fanex.Data.Repository;
 using Fanex.BetList.Core.Entities;
 using NSubstitute;

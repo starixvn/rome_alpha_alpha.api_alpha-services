@@ -4,6 +4,7 @@ using Alpha.Reports.API.DataAccesses;
 using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Params;
 using Alpha.Reports.API.Services;
+using Alpha.Shared.Services.Services;
 using GrpcReports;
 using NSubstitute;
 

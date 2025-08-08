@@ -1,5 +1,6 @@
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.Parlay;
+using Alpha.Shared.Services.Models;
 using Fanex.BetList.Core.Entities;
 
 namespace Alpha.BetLists.API.Tests.Fixtures;
