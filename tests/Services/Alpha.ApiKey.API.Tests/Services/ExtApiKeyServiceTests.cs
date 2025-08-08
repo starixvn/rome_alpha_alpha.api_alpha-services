@@ -66,7 +66,7 @@ public class ExtApiKeyServiceTests
         };
 
         mockCacheService.GetAsync<VerifyExtApiKeyResult>(cachedKey).Returns(cachedResult);
-        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.CompletedTask);
+        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.FromResult(1));
 
         // Act
         var result = await service.VerifyApiKey(key, username, password);
@@ -86,7 +86,7 @@ public class ExtApiKeyServiceTests
         var cachedKey = $"{key}_{username}";
 
         mockCacheService.GetAsync<VerifyExtApiKeyResult>(cachedKey).Returns((VerifyExtApiKeyResult)null);
-        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.CompletedTask);
+        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.FromResult(1));
 
         // Act
         var result = await service.VerifyApiKey(key, username, password);
@@ -106,7 +106,7 @@ public class ExtApiKeyServiceTests
         var expectedCachedKey = $"{key}_{username}";
 
         mockCacheService.GetAsync<VerifyExtApiKeyResult>(expectedCachedKey).Returns((VerifyExtApiKeyResult)null);
-        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.CompletedTask);
+        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.FromResult(1));
 
         // Act
         await service.VerifyApiKey(key, username, password);
@@ -124,7 +124,7 @@ public class ExtApiKeyServiceTests
         var password = "testpass";
 
         mockCacheService.GetAsync<VerifyExtApiKeyResult>(Arg.Any<string>()).Returns((VerifyExtApiKeyResult)null);
-        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.CompletedTask);
+        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.FromResult(1));
 
         // Act
         var result = await service.VerifyApiKey(key, username, password);
@@ -143,7 +143,7 @@ public class ExtApiKeyServiceTests
         var password = "testpass";
 
         mockCacheService.GetAsync<VerifyExtApiKeyResult>(Arg.Any<string>()).Returns((VerifyExtApiKeyResult)null);
-        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.CompletedTask);
+        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.FromResult(1));
 
         // Act
         var result = await service.VerifyApiKey(key, username, password);
@@ -162,7 +162,7 @@ public class ExtApiKeyServiceTests
         var password = "";
 
         mockCacheService.GetAsync<VerifyExtApiKeyResult>(Arg.Any<string>()).Returns((VerifyExtApiKeyResult)null);
-        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.CompletedTask);
+        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.FromResult(1));
 
         // Act
         var result = await service.VerifyApiKey(key, username, password);
@@ -181,7 +181,7 @@ public class ExtApiKeyServiceTests
         var password = "testpass";
 
         mockCacheService.GetAsync<VerifyExtApiKeyResult>(Arg.Any<string>()).Returns((VerifyExtApiKeyResult)null);
-        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.CompletedTask);
+        mockDynamicRepository.ExecuteAsync(Arg.Any<INonQueryCommand>()).Returns(Task.FromResult(1));
 
         // Act
         var result = await service.VerifyApiKey(key, username, password);
