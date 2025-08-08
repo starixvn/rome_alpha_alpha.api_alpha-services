@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Alpha.ApiKey.API.Models;
 using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Services;
 using Fanex.Data.Repository;
 using NSubstitute;
-using Xunit;
 
 namespace Alpha.Reports.API.Tests.Services;
 

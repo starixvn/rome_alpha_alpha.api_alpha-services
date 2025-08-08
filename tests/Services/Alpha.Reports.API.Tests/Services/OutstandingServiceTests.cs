@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Alpha.PartialUM.Services;
 using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Params;
 using Alpha.Reports.API.Services;
-using Alpha.PartialUM.Services;
 using Fanex.Data.Repository;
 using NSubstitute;
-using Xunit;
 
 namespace Alpha.Reports.API.Tests.Services;
 

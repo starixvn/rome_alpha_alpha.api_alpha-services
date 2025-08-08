@@ -1,10 +1,8 @@
-using System;
 using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Services;
 using Fanex.Caching;
 using Fanex.Data.Repository;
 using NSubstitute;
-using Xunit;
 
 namespace Alpha.Reports.API.Tests.Services;
 

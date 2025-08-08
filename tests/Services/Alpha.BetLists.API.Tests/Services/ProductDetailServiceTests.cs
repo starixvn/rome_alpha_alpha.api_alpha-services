@@ -1,9 +1,6 @@
-using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Services;
-using Alpha.BetLists.API.Criteria;
 using Fanex.Data.Repository;
 using NSubstitute;
-using Xunit;
 
 namespace Alpha.BetLists.API.Tests.Services;
 
