@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Services\Alpha.BetLists.API\Alpha.BetLists.API.csproj" />
+    <ProjectReference Include="..\..\..\src\BuildingBlocks\Alpha.Shared.Services\Alpha.Shared.Services.csproj" />
   </ItemGroup>
 </Project>

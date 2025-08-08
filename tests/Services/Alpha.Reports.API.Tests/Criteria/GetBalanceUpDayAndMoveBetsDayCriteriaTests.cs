@@ -1,4 +1,4 @@
-using Alpha.Reports.API.Criteria;
+using Alpha.Shared.Services.Criteria;
 
 namespace Alpha.Reports.API.Tests.Criteria;
 

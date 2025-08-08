@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Services\Alpha.Reports.API\Alpha.Reports.API.csproj" />
+    <ProjectReference Include="..\..\..\src\BuildingBlocks\Alpha.Shared.Services\Alpha.Shared.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Database\WinLossDetail\AgentWinLossDetailHasData.xml">
