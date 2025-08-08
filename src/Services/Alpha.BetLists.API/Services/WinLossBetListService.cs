@@ -7,6 +7,7 @@ using Alpha.BetLists.API.Criteria;
 using Alpha.Utilities.Extensions;
 using Fanex.BetList.Core.Entities;
 using Alpha.BetLists.API.Resources;
+using Alpha.Shared.Services.Services;
 
 namespace Alpha.BetLists.API.Services;
 

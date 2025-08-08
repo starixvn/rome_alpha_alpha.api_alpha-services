@@ -18,6 +18,8 @@ using Fanex.RemotingRef;
 using Fanex.BetList.Core.RemotingRef;
 using Alpha.IPInfo.Services;
 using Alpha.BetLists.API.Repositories;
+using Fanex.Data.Repository;
+using Fanex.Caching;
 using Alpha.IPInfo.DataAccess;
 using Alpha.IPInfo.Models;
 using Alpha.Utilities.Interceptors;
@@ -157,7 +159,11 @@ public class Startup
             .ConnectTo(new Uri(Configuration.GetSection("BetListsAppSettings").Get<BetListsAppSettingsModel>().RemoteRefURL))
             .FromApplication("Alpha.Reports.Site");
 
-        services.AddTransient<IReportDateService, ReportDateService>();
+        services.AddTransient<Alpha.Shared.Services.Services.IReportDateService>(serviceProvider =>
+            new Alpha.Shared.Services.Services.ReportDateService(
+                serviceProvider.GetRequiredService<IDynamicRepository>(),
+                serviceProvider.GetRequiredService<ICacheService>(),
+                "Alpha.BetLists"));
         services.AddTransient<IRunningBetListService, RunningBetListService>();
         services.AddTransient<IWinLossBetListService, WinLossBetListService>();
         services.AddTransient<IBetBuilderService, BetBuilderService>();

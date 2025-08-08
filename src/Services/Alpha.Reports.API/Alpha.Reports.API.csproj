@@ -28,7 +28,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    <PackageReference Include="Fanex.Logging" Version="2.0.1"/>
+    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +42,7 @@
     <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\Alpha.PartialUM\Alpha.PartialUM.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\Alpha.Utilities\Alpha.Utilities.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Alpha.Shared.Services\Alpha.Shared.Services.csproj" />
   </ItemGroup>
 </Project>
  

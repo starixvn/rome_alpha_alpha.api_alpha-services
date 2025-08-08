@@ -12,6 +12,8 @@ using Alpha.Reports.API.Interceptors;
 using Alpha.Reports.API.DataAccesses;
 using Microsoft.AspNetCore.Diagnostics;
 using Alpha.Utilities.Interceptors;
+using Fanex.Data.Repository;
+using Fanex.Caching;
 
 namespace Alpha.Reports.API;
 
@@ -109,7 +111,11 @@ public class Startup
         services.Configure<ReportsAppSettingsModel>(Configuration.GetSection("ReportsAppSettings"));
         services.AddTransient<IWinLossDetailDataAccess, WinLossDetailDataAccess>();
 
-        services.AddTransient<IReportDateService, ReportDateService>();
+        services.AddTransient<Alpha.Shared.Services.Services.IReportDateService>(serviceProvider =>
+            new Alpha.Shared.Services.Services.ReportDateService(
+                serviceProvider.GetRequiredService<IDynamicRepository>(),
+                serviceProvider.GetRequiredService<ICacheService>(),
+                "Alpha.Reports"));
 
         services.AddTransient<IProductService, ProductService>();
         services.AddTransient<IProductDetailService, ProductDetailService>();
