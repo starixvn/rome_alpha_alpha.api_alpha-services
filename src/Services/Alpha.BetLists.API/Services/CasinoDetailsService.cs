@@ -2,6 +2,7 @@ using Alpha.BetLists.API.Criteria;
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Params;
 using Fanex.Data.Repository;
+using Alpha.Shared.Services.Services;
 
 namespace Alpha.BetLists.API.Services
 {

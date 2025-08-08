@@ -4,6 +4,7 @@ using Alpha.Reports.API.DataAccesses;
 using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Models.WinLossDetail;
 using Alpha.Reports.API.Params;
+using Alpha.Shared.Services.Services;
 
 namespace Alpha.Reports.API.Services;
 
