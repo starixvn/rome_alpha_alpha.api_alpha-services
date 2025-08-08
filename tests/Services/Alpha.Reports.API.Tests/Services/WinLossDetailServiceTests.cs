@@ -1,18 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Alpha.ApiKey.API.Models;
 using Alpha.PartialUM.Services;
-using Alpha.Reports.API.Criteria;
 using Alpha.Reports.API.DataAccesses;
-using Alpha.Reports.API.Models.WinLossDetail;
+using Alpha.Reports.API.Models;
 using Alpha.Reports.API.Params;
 using Alpha.Reports.API.Services;
-using NSubstitute;
-using Xunit;
-using System;
-using Alpha.ApiKey.API.Models;
 using GrpcReports;
-using Alpha.Reports.API.Models;
+using NSubstitute;
 
 namespace Alpha.Reports.API.Tests.Services;
 
