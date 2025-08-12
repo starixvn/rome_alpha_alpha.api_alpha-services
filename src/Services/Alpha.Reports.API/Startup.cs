@@ -121,6 +121,7 @@ public class Startup
         services.AddTransient<IProductDetailService, ProductDetailService>();
         services.AddTransient<IOutstandingService, OutstandingService>();
         services.AddTransient<IWinLossDetailService, WinLossDetailService>();
+        services.AddTransient<Alpha.Reports.API.Services.IBelongingCheckService, Alpha.Reports.API.Services.BelongingCheckService>();
 
         services.AddTransient<GrpcExceptionInterceptor>();
         services.AddGrpcClient<Customer.CustomerClient>((services, options) =>
