@@ -20,14 +20,19 @@ public class ProductDetailService : IProductDetailService
     private const int ProductDetailsCacheInDay = 1;
 
     private readonly IDynamicRepository dynamicRepository;
+    private readonly ICacheService cacheService;
 
-    public ProductDetailService(IDynamicRepository dynamicRepository)
+    public ProductDetailService(IDynamicRepository dynamicRepository, ICacheService cacheService)
     {
         this.dynamicRepository = dynamicRepository;
+        this.cacheService = cacheService;
     }    
 
     public string BuildProductDetailsXML(IEnumerable<int> validProductIds)
     {
+        if (validProductIds == null || !validProductIds.Any())
+            return string.Empty;
+
         var existProducts = validProductIds.ToExistingDictionary();
         var validProductDetails = new List<ProductDetailModel>();
 
@@ -46,7 +51,7 @@ public class ProductDetailService : IProductDetailService
     }
   
     private IEnumerable<ProductDetailModel> GetProductDetails() =>
-        ConfiguredCacheService.GetOrSet(
+        cacheService.GetOrSet(
             ProductDetailsCacheKey,
             () => dynamicRepository.Fetch<ProductDetailModel>(new GetProductsDetailCriteria()),
             new CacheItemOptions().SetAbsoluteExpiration(
