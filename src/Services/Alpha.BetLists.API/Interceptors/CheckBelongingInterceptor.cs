@@ -1,5 +1,6 @@
 using System.Net;
 using Alpha.BetLists.API.Requests;
+using Alpha.Shared.Services.Interceptors;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using GrpcCustomer;
@@ -40,13 +41,13 @@ public class CheckBelongingInterceptor : Interceptor
 
     private async Task<bool> CheckBelonging<TRequest>(TRequest request, ServerCallContext context)
     {
-        if (EqualityComparer<TRequest>.Default.Equals(request, default))
+        if (BelongingCheckHelper.ShouldSkipBelongingCheck(request))
         {
             return true;
         }
 
         var baseRequest = JsonConvert.DeserializeObject<BaseRequest>(request.ToString());
-        if (baseRequest == null || baseRequest.ViewerId == 0 || string.IsNullOrWhiteSpace(baseRequest.CustName))
+        if (!BelongingCheckHelper.IsBaseRequestValid(baseRequest))
         {
             return true;
         }
@@ -61,7 +62,8 @@ public class CheckBelongingInterceptor : Interceptor
 
         if (!downlineInfo.IsBelonging)
         {
-            await HandleForbiddenResponse(context, $"{baseRequest.CustName} is not belonging to ${baseRequest.ViewerId}");
+            var errorMessage = BelongingCheckHelper.FormatBelongingErrorMessage(baseRequest);
+            await HandleForbiddenResponse(context, errorMessage);
         }
 
         return downlineInfo.IsBelonging;
