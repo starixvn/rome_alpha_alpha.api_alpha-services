@@ -1,4 +1,3 @@
-using Alpha.Reports.API.Models;
 using Alpha.Shared.Services.Models;
 using Alpha.Shared.Services.Services;
 using Fanex.Caching;

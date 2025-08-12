@@ -1,6 +1,5 @@
 using Alpha.Customer.API.Criteria;
 using Alpha.Customer.API.DataAccesses;
-using NSubstitute;
 
 namespace Alpha.Customer.API.Tests.DataAccesses;
 

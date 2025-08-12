@@ -1,9 +1,5 @@
 using Alpha.Reports.API.Params;
 using Alpha.Utilities.Models;
-using Alpha.ApiKey.API.Models;
-using GrpcReports;
-using NSubstitute;
-using Xunit;
 
 namespace Alpha.Reports.API.Tests.Params
 {

@@ -1,6 +1,5 @@
 using Alpha.ApiKey.API.Models;
 using Alpha.ApiKey.API.Services;
-using Alpha.Utilities.Helpers;
 using Fanex.Caching;
 using Fanex.Data.Repository;
 using NSubstitute;

@@ -1,17 +1,15 @@
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.TicketDetail;
-using Alpha.BetLists.API.Services;
 using Alpha.BetLists.API.Params;
-using Alpha.BetLists.API.Helpers;
+using Alpha.BetLists.API.Services;
 using Alpha.IPInfo.Services;
 using Fanex.BetDetails.BetBuilder.Services;
 using Fanex.BetList.Core.Builder;
 using Fanex.BetList.Core.Entities;
-using GrpcBetLists;
 using Grpc.Core;
+using GrpcBetLists;
 using Microsoft.Extensions.Options;
 using NSubstitute;
-using Xunit;
 
 namespace Alpha.BetLists.API.Tests.Grpc
 {

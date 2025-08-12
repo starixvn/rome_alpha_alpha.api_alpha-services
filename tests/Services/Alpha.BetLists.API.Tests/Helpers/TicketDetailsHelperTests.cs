@@ -1,19 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alpha.BetLists.API.Constants;
 using Alpha.BetLists.API.Helpers;
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.TicketDetail;
-using Alpha.BetLists.API.Services;
-using Fanex.BetDetails.BetBuilder.Criteria;
-using Fanex.BetDetails.BetBuilder.Services;
-using Fanex.BetList.Core.Builder;
 using Fanex.BetList.Core.Entities;
 using GrpcBetLists;
 using NSubstitute;
-using Xunit;
 
 namespace Alpha.BetLists.API.Tests.Helpers;
 
@@ -268,7 +259,7 @@ public class TicketDetailsHelperTests
         list.GetTicketData(tickets);
         
         Assert.Single(list);
-        var ticketData = list.First();
+        var ticketData = list[0];
         Assert.Equal("123", ticketData.RefNo);
         Assert.Equal(1, ticketData.BetTypeId);
         Assert.Equal("Won", ticketData.Status);
