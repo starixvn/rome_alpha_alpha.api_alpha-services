@@ -31,7 +31,9 @@ public class ProductDetailService : IProductDetailService
     public string BuildProductDetailsXML(IEnumerable<int> validProductIds)
     {
         if (validProductIds == null || !validProductIds.Any())
+        {
             return string.Empty;
+        }
 
         var existProducts = validProductIds.ToExistingDictionary();
         var validProductDetails = new List<ProductDetailModel>();
