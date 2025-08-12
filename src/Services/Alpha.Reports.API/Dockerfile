@@ -7,6 +7,7 @@ COPY ./src/BuildingBlocks/FanexLibs/FanexLibs.Data/FanexLibs.Data.csproj ./Build
 COPY ./src/BuildingBlocks/FanexLibs/FanexLibs.Logging/FanexLibs.Logging.csproj ./BuildingBlocks/FanexLibs/FanexLibs.Logging/FanexLibs.Logging.csproj
 COPY ./src/BuildingBlocks/Alpha.PartialUM/Alpha.PartialUM.csproj ./BuildingBlocks/Alpha.PartialUM/Alpha.PartialUM.csproj
 COPY ./src/BuildingBlocks/Alpha.Utilities/Alpha.Utilities.csproj ./BuildingBlocks/Alpha.Utilities/
+COPY ./src/BuildingBlocks/Alpha.Shared.Services/Alpha.Shared.Services.csproj ./BuildingBlocks/Alpha.Shared.Services/Alpha.Shared.Services.csproj
 
 COPY ./src/Services/Alpha.Reports.API/Alpha.Reports.API.csproj ./Services/Alpha.Reports.API/Alpha.Reports.API.csproj
 RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
@@ -18,6 +19,7 @@ COPY /src/BuildingBlocks/FanexLibs/FanexLibs.Data ./BuildingBlocks/FanexLibs/Fan
 COPY /src/BuildingBlocks/FanexLibs/FanexLibs.Logging ./BuildingBlocks/FanexLibs/FanexLibs.Logging
 COPY /src/BuildingBlocks/Alpha.PartialUM ./BuildingBlocks/Alpha.PartialUM
 COPY /src/BuildingBlocks/Alpha.Utilities ./BuildingBlocks/Alpha.Utilities
+COPY /src/BuildingBlocks/Alpha.Shared.Services ./BuildingBlocks/Alpha.Shared.Services
 COPY /src/Services/Alpha.Reports.API ./Services/Alpha.Reports.API
 WORKDIR /src/Services/Alpha.Reports.API
 RUN dotnet publish -r linux-x64 --self-contained false -o /app

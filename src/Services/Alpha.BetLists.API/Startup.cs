@@ -169,6 +169,7 @@ public class Startup
         services.AddTransient<IBetBuilderService, BetBuilderService>();
         services.AddTransient<IBetBuilderDataAccess, BetBuilderDataAccess>();
         services.AddTransient<IParlayService, ParlayService>();
+        services.AddTransient<Alpha.BetLists.API.Services.IBelongingCheckService, Alpha.BetLists.API.Services.BelongingCheckService>();
     }
 
     private void SetDefaultCulture(IApplicationBuilder app) {
