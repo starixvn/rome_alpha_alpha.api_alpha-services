@@ -1,6 +1,5 @@
-using System.Net;
-using Alpha.Shared.Services.Contracts;
 using Alpha.Shared.Services.Models;
+using Grpc.Core;
 using Newtonsoft.Json;
 
 namespace Alpha.Shared.Services.Interceptors;
@@ -59,8 +58,7 @@ public static class CheckBelongingInterceptorHelper
 
     public static Task CreateForbiddenResponse(dynamic context, string message)
     {
-        var httpContext = context.GetHttpContext();
-        httpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-        return httpContext.Response.WriteAsync($"Forbidden: {message}");
+        // For gRPC contexts, we throw an RpcException instead of modifying HTTP response
+        throw new RpcException(new Status(StatusCode.PermissionDenied, $"Forbidden: {message}"));
     }
 }
