@@ -42,8 +42,8 @@ public class BetListsGrpcServiceTests
         var settings = Options.Create(new BetListsAppSettingsModel());
         var ticketDetailsMapper = Options.Create(new TicketDetailsMapperModel 
         { 
-            Values = new Dictionary<string, int>(),
-            ParlayProducts = new Dictionary<string, byte>()
+            Values = [],
+            ParlayProducts = []
         });
 
         service = new BetListsGrpcService(

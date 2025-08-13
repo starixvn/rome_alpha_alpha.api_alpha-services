@@ -109,7 +109,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var ipList = ticketDetails.Tickets.Where(t => !string.IsNullOrWhiteSpace(t.IP)).Select(t => t.IP.Trim()).Distinct();
         var countries = await ipInfoService.GetCountries(ipList);
 
-        List<ITicketData> ticketData = new();
+        List<ITicketData> ticketData = [];
         ticketData.GetTicketData(ticketDetails.Tickets);
 
         return (ticketDetails, ticketData, countries);

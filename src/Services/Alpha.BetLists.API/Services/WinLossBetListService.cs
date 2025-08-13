@@ -16,31 +16,23 @@ public interface IWinLossBetListService
     Task<BetListData> GetBetList(GetWinLossBetListParam param);
 }
 
-public class WinLossBetListService : IWinLossBetListService
-{
-    private readonly IDynamicRepository dynamicRepository;
-    private readonly IPartialUMService partialUMService;
-    private readonly IReportDateService reportDateService;
-    private readonly IProductDetailService productDetailService;
-
-    public WinLossBetListService(
+public class WinLossBetListService(
         IDynamicRepository dynamicRepository,
         IPartialUMService partialUMService,
         IReportDateService reportDateService,
-        IProductDetailService productDetailService)
-    {
-        this.dynamicRepository = dynamicRepository;
-        this.partialUMService = partialUMService;
-        this.reportDateService = reportDateService;
-        this.productDetailService = productDetailService;
-    }
+        IProductDetailService productDetailService) : IWinLossBetListService
+{
+    private readonly IDynamicRepository dynamicRepository = dynamicRepository;
+    private readonly IPartialUMService partialUMService = partialUMService;
+    private readonly IReportDateService reportDateService = reportDateService;
+    private readonly IProductDetailService productDetailService = productDetailService;
 
     public async Task<BetListData> GetBetList(GetWinLossBetListParam param)
     {
         var fromDate = param.FromDate;
         var betListDataTuple = await GetBetList(param, fromDate);
 
-        return new BetListData(betListDataTuple.Item1, betListDataTuple.Item2.ToList<ITicketData>(), betListDataTuple.Item3);
+        return new BetListData(betListDataTuple.Item1, [.. betListDataTuple.Item2], betListDataTuple.Item3);
     }
 
     private async Task<Tuple<IEnumerable<TicketDto>, IEnumerable<TicketData>, BetlistOutputParams>> GetBetList(GetWinLossBetListParam param, DateTime fromDate)
