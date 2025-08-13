@@ -1,6 +1,4 @@
-using System.Net;
 using Alpha.BetLists.API.Services;
-using Alpha.Shared.Services.Contracts;
 using Alpha.Shared.Services.Interceptors;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
@@ -21,14 +19,11 @@ public class CheckBelongingInterceptor : Interceptor
         ServerCallContext context,
         UnaryServerMethod<TRequest, TResponse> continuation)
     {
-        if (await CheckBelongingInterceptorHelper.CheckBelongingWithErrorHandling(
+        await CheckBelongingInterceptorHelper.CheckBelongingWithErrorHandling(
             request,
             belongingCheckService.CheckBelongingAsync,
-            async (errorMessage) => await CheckBelongingInterceptorHelper.CreateForbiddenResponse(context, errorMessage)))
-        {
-            return await base.UnaryServerHandler(request, context, continuation);
-        }
+            async (errorMessage) => await CheckBelongingInterceptorHelper.CreateForbiddenResponse(context, errorMessage));
 
-        throw new RpcException(new Status(StatusCode.PermissionDenied, ((int)HttpStatusCode.Forbidden).ToString()));
+        return await base.UnaryServerHandler(request, context, continuation);
     }
 }

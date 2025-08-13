@@ -1,6 +1,4 @@
-using System.Net;
 using Alpha.Reports.API.Services;
-using Alpha.Shared.Services.Contracts;
 using Alpha.Shared.Services.Interceptors;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
@@ -21,18 +19,13 @@ public class CheckBelongingInterceptor : Interceptor
         ServerCallContext context,
         UnaryServerMethod<TRequest, TResponse> continuation)
     {
-        // Check belonging status using shared helper
-        var belongingResult = await CheckBelongingInterceptorHelper.CheckBelongingWithErrorHandling(
+        // Check belonging status using shared helper - throws RpcException if forbidden
+        await CheckBelongingInterceptorHelper.CheckBelongingWithErrorHandling(
             request,
             belongingCheckService.CheckBelongingAsync,
             async (errorMessage) => await CheckBelongingInterceptorHelper.CreateForbiddenResponse(context, errorMessage));
 
-        if (belongingResult)
-        {
-            return await base.UnaryServerHandler(request, context, continuation);
-        }
-
-        // Return forbidden status
-        throw new RpcException(new Status(StatusCode.PermissionDenied, ((int)HttpStatusCode.Forbidden).ToString()));
+        // If we reach here, belonging check passed
+        return await base.UnaryServerHandler(request, context, continuation);
     }
 }
