@@ -1,5 +1,6 @@
 using System.Net;
 using Alpha.Shared.Services.Contracts;
+using Alpha.Shared.Services.Models;
 using Newtonsoft.Json;
 
 namespace Alpha.Shared.Services.Interceptors;
@@ -21,7 +22,7 @@ public static class CheckBelongingInterceptorHelper
             return true;
         }
 
-        var baseRequest = JsonConvert.DeserializeObject<IBaseRequest>(requestJson);
+        var baseRequest = JsonConvert.DeserializeObject<BaseRequest>(requestJson);
         if (baseRequest == null || !BelongingCheckHelper.IsBaseRequestValid(baseRequest))
         {
             return true;
@@ -44,7 +45,7 @@ public static class CheckBelongingInterceptorHelper
             var requestJson = request?.ToString();
             if (!string.IsNullOrEmpty(requestJson))
             {
-                var baseRequest = JsonConvert.DeserializeObject<IBaseRequest>(requestJson);
+                var baseRequest = JsonConvert.DeserializeObject<BaseRequest>(requestJson);
                 if (baseRequest != null)
                 {
                     var errorMessage = BelongingCheckHelper.FormatBelongingErrorMessage(baseRequest);
