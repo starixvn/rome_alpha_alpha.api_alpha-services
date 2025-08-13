@@ -7,15 +7,10 @@ public interface IBelongingCheckService
     Task<dynamic> CheckBelongingAsync(int viewerId, string custName);
 }
 
-public class BelongingCheckService : IBelongingCheckService
+public class BelongingCheckService(Customer.CustomerClient customerClient) : IBelongingCheckService
 {
-    private readonly Customer.CustomerClient customerClient;
-
-    public BelongingCheckService(Customer.CustomerClient customerClient)
-    {
-        this.customerClient = customerClient;
-    }
-
+    private readonly Customer.CustomerClient customerClient = customerClient;
+   
     public async Task<dynamic> CheckBelongingAsync(int viewerId, string custName)
     {
         var getDownlineRequest = new GetDownlineInfoRequest

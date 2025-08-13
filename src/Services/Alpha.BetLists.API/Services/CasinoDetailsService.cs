@@ -11,16 +11,10 @@ namespace Alpha.BetLists.API.Services
         PagedData<TicketDto> GetCasinoDetails(CasinoDetailsParam param);
     }
 
-    public class CasinoDetailsService : ICasinoDetailsService
+    public class CasinoDetailsService(IDynamicRepository dynamicRepository, IReportDateService reportDateService) : ICasinoDetailsService
     {
-        private readonly IDynamicRepository dynamicRepository;
-        private readonly IReportDateService reportDateService;
-
-        public CasinoDetailsService(IDynamicRepository dynamicRepository, IReportDateService reportDateService)
-        {
-            this.dynamicRepository = dynamicRepository;
-            this.reportDateService = reportDateService;
-        }
+        private readonly IDynamicRepository dynamicRepository = dynamicRepository;
+        private readonly IReportDateService reportDateService = reportDateService;
 
         public PagedData<TicketDto> GetCasinoDetails(CasinoDetailsParam param)
         {

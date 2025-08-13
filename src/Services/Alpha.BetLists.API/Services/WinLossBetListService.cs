@@ -58,13 +58,13 @@ public class WinLossBetListService : IWinLossBetListService
 
         partialUMService.ThrowIfUM(criteria.GetSettingKey(), param.SiteName);
 
-        var result = await dynamicRepository.FetchMultipleAsync<TicketDto, TicketData>(criteria);
+        var (tickets, details) = await dynamicRepository.FetchMultipleAsync<TicketDto, TicketData>(criteria);
         var errFormat =
             string.Format(BetListResources.ExceededMaxTotalRowWithExcelFunc, criteria.MaxTotalRow, param.MaxTotalRow);
 
         return new Tuple<IEnumerable<TicketDto>, IEnumerable<TicketData>, BetlistOutputParams>(
-            result.Item1,
-            result.Item2,
+            tickets,
+            details,
             new BetlistOutputParams(criteria.ErrCode, criteria.ErrCode != 0 ?
                 errFormat : criteria.ErrMsg, criteria.MaxTotalRow));
     }

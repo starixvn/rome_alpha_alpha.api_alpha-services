@@ -2,9 +2,9 @@ using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.TicketDetail;
 using Alpha.BetLists.API.Services;
 using Alpha.IPInfo.Services;
-using Fanex.BetDetails.BetBuilder.Services;
 using Fanex.BetList.Core.Builder;
 using Fanex.BetList.Core.Entities;
+using Fanex.RemotingRef;
 using Microsoft.Extensions.Options;
 
 namespace GrpcBetLists;
@@ -23,6 +23,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     private readonly Fanex.Logging.ILogger logger;
     private readonly IBetBuilderService betBuilderService;
     private readonly IParlayService parlayService;
+
 
     public BetListsGrpcService(
         IOptions<BetListsAppSettingsModel> settings,
@@ -49,7 +50,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         this.casinoDetailsService = casinoDetailsService;
         this.betBuilderService = betBuilderService;
         this.parlayService = parlayService;
-
         this.logger = logger;
     }
 

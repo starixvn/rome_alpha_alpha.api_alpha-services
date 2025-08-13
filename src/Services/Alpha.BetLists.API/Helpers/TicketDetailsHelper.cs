@@ -1,4 +1,3 @@
-using System.Text;
 using Alpha.BetLists.API.Constants;
 using Alpha.BetLists.API.Models;
 using Alpha.BetLists.API.Models.Parlay;
@@ -6,13 +5,12 @@ using Alpha.BetLists.API.Models.TicketDetail;
 using Alpha.BetLists.API.Services;
 using Alpha.Utilities.Helpers;
 using Alpha.Utilities.Models;
-using Fanex.BetDetails.BetBuilder.Criteria;
-using Fanex.BetDetails.BetBuilder.Services;
 using Fanex.BetList.Core.Builder;
 using Fanex.BetList.Core.Entities;
 using Fanex.BetList.Core.Utils.TicketExt;
 using GrpcBetLists;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Alpha.BetLists.API.Helpers
 {
@@ -179,27 +177,22 @@ namespace Alpha.BetLists.API.Helpers
                 RefNo = t.TransId,
                 SupportDetails = choice.Contains("detail-link")
             });
-            
+
             return AesService.Encrypt(key);
         }
 
-        public static StringBuilder GetSingleParlaySelections(TicketDto t, IBetBuilderService betBuilderService)
+        public static async Task<StringBuilder> GetSingleParlaySelections(TicketDto t, IBetBuilderService betBuilderService)
         {
-            var parameter = new GetBetBuilderDetailParameter
-            {
-                CustomerId = t.CustId,
-                TransactionId = t.TransId,
-                Status = t.Status
-            };
-            var parlayDetail = betBuilderService.GetBetListDetail(parameter);
+            var settledStatus = new List<string> { BetStatus.Won, BetStatus.Lose, BetStatus.Refund };
+            var details = await betBuilderService.GetBetList(t.CustId, t.TransId);
             StringBuilder sb = new();
-            if (parlayDetail.Details.Any())
+            if (details.Any())
             {
                 sb.Append("<div class='betbuilder'>");
-                foreach (var detail in parlayDetail.Details)
+                foreach (var detail in details)
                 {
                     sb.Append($"<div>{detail.SelectionName}");
-                    if (parlayDetail.IsSettled && !string.IsNullOrEmpty(detail.Result))
+                    if (settledStatus.Exists(i => i.Equals(t.Status)) && !string.IsNullOrEmpty(detail.Result))
                     {
                         sb.Append($"<span> - {detail.Result}</span>");
                     }
@@ -248,7 +241,7 @@ namespace Alpha.BetLists.API.Helpers
             };
             var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             if (!parlayDetail.HasValidData)
             {
                 return sb;
@@ -273,7 +266,7 @@ namespace Alpha.BetLists.API.Helpers
             };
             var parlayDetail = new ComboParlayViewModel(message, new BetListData(tickets, null), ticketHelper);
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             if (!parlayDetail.HasValidData)
             {
                 return sb;
