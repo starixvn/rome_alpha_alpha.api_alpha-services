@@ -1,25 +1,12 @@
-using Fanex.BetDetails.BetBuilder.Criteria;
-using Fanex.Data;
+namespace Alpha.BetLists.API.Criteria;
 using Fanex.Data.Repository;
-
-namespace Alpha.BetLists.API.Criteria
+public class GetBetBuilderDetailCriteria(long custId, long transId) : CriteriaBase
 {
-    public class GetBetBuilderDetailCriteria : CriteriaBase
-    {
-        public GetBetBuilderDetailCriteria(IGetBetBuilderDetailParameter commandData)
-        {
-            Criteria = commandData;
-        }
+    public long CustId { get; } = custId;
 
-        [SpParam(Ignored = true)]
-        private IGetBetBuilderDetailParameter Criteria { get; set; }
+    public long TransId { get; } = transId;
 
-        public long CustId => Criteria.CustomerId;
+    public override string GetSettingKey() => "Acc_BetList_BetBuilder_Detail";
 
-        public long TransId => Criteria.TransactionId;
-
-        public override string GetSettingKey() => "Acc_BetList_BetBuilder_Detail";
-
-        public override bool IsValid() => Criteria.IsValid();
-    }
+    public override bool IsValid() => CustId > 0 && TransId > 0;
 }

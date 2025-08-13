@@ -3,17 +3,15 @@ using Alpha.BetLists.API.Models.Parlay;
 using Alpha.BetLists.API.Models.TicketDetail;
 using Alpha.BetLists.API.Services;
 using Alpha.IPInfo.Services;
-using Fanex.BetDetails.BetBuilder.Services;
+using Alpha.Utilities.Helpers;
+using Alpha.Utilities.Models;
 using Fanex.BetList.Core.Builder;
 using Fanex.BetList.Core.Entities;
-using GrpcBetLists;
 using Grpc.Core;
+using GrpcBetLists;
 using Microsoft.Extensions.Options;
-using NSubstitute;
-using Xunit;
-using Alpha.Utilities.Helpers;
 using Newtonsoft.Json;
-using Alpha.Utilities.Models;
+using NSubstitute;
 
 namespace Alpha.BetLists.API.Tests.Grpc
 {
@@ -31,9 +29,6 @@ namespace Alpha.BetLists.API.Tests.Grpc
             ticketHelper = Substitute.For<ITicketHelper>();
             betBuilderService = Substitute.For<IBetBuilderService>();
             builder = Substitute.For<IBetListHTMLBuilder>();
-
-            // Setup betBuilderService mock to return null (which will be handled gracefully)
-            betBuilderService.GetBetListDetail(Arg.Any<Fanex.BetDetails.BetBuilder.Criteria.IGetBetBuilderDetailParameter>()).Returns((object)null);
 
             var productService = Substitute.For<IProductService>();
             var runningBetListService = Substitute.For<IRunningBetListService>();

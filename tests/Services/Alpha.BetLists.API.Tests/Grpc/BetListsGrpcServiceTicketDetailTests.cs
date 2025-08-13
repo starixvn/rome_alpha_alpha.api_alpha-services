@@ -3,7 +3,6 @@ using Alpha.BetLists.API.Models.TicketDetail;
 using Alpha.BetLists.API.Params;
 using Alpha.BetLists.API.Services;
 using Alpha.IPInfo.Services;
-using Fanex.BetDetails.BetBuilder.Services;
 using Fanex.BetList.Core.Builder;
 using Fanex.BetList.Core.Entities;
 using Grpc.Core;

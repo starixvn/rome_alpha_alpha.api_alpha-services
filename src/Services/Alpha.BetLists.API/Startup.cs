@@ -23,12 +23,10 @@ using Fanex.Caching;
 using Alpha.IPInfo.DataAccess;
 using Alpha.IPInfo.Models;
 using Alpha.Utilities.Interceptors;
-using Fanex.BetDetails.BetBuilder.Services;
-using Alpha.BetLists.API.DataAccesses;
-using Fanex.BetDetails.BetBuilder.DataAccesses;
 using Alpha.BetLists.API.Models.TicketDetail;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using IBetBuilderService = Alpha.BetLists.API.Services.IBetBuilderService;
 
 namespace Alpha.BetLists.API;
 
@@ -167,7 +165,6 @@ public class Startup
         services.AddTransient<IRunningBetListService, RunningBetListService>();
         services.AddTransient<IWinLossBetListService, WinLossBetListService>();
         services.AddTransient<IBetBuilderService, BetBuilderService>();
-        services.AddTransient<IBetBuilderDataAccess, BetBuilderDataAccess>();
         services.AddTransient<IParlayService, ParlayService>();
         services.AddTransient<Alpha.BetLists.API.Services.IBelongingCheckService, Alpha.BetLists.API.Services.BelongingCheckService>();
     }

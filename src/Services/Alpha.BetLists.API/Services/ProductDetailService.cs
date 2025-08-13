@@ -12,21 +12,15 @@ public interface IProductDetailService
     string BuildProductDetailsXML(IEnumerable<int> validProductIds);
 }
 
-public class ProductDetailService : IProductDetailService
+public class ProductDetailService(IDynamicRepository dynamicRepository, ICacheService cacheService) : IProductDetailService
 {
     private const string ProductDetailsCacheKey =
         "Alpha.BetLists.API.Services.ProductDetailService.ProductDetails";
 
     private const int ProductDetailsCacheInDay = 1;
 
-    private readonly IDynamicRepository dynamicRepository;
-    private readonly ICacheService cacheService;
-
-    public ProductDetailService(IDynamicRepository dynamicRepository, ICacheService cacheService)
-    {
-        this.dynamicRepository = dynamicRepository;
-        this.cacheService = cacheService;
-    }    
+    private readonly IDynamicRepository dynamicRepository = dynamicRepository;
+    private readonly ICacheService cacheService = cacheService;
 
     public string BuildProductDetailsXML(IEnumerable<int> validProductIds)
     {

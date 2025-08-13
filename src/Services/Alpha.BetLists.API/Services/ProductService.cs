@@ -11,17 +11,11 @@ public interface IProductService
     IEnumerable<int> GetAllProductIds(string group);
 }
 
-public class ProductService : IProductService
+public class ProductService(IDynamicRepository dynamicRepository, ICacheService cacheService) : IProductService
 {
     private const string ProductsCacheKey = "Alpha.BetLists.Services.ProductService.Products";
-    private readonly IDynamicRepository dynamicRepository;
-    private readonly ICacheService cacheService;
-
-    public ProductService(IDynamicRepository dynamicRepository, ICacheService cacheService)
-    {
-        this.dynamicRepository = dynamicRepository;
-        this.cacheService = cacheService;
-    }
+    private readonly IDynamicRepository dynamicRepository = dynamicRepository;
+    private readonly ICacheService cacheService = cacheService;
 
     public IEnumerable<int> GetAllProductIds(string group)
     {

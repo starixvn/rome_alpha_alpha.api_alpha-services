@@ -60,14 +60,14 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         var comboParlayDetailViewModel = new ComboParlayDetailViewModel(comboParlayDetailData, ticketHelper);
         response.ParlayDetailItems.AddRange(comboParlayDetailViewModel.ComboParlayDetailWrapperGroups.Select(group =>
         {
-            ParlayDetailItem detailItem = new ParlayDetailItem
+            var detailItem = new ParlayDetailItem
             {
                 Date = group.Key,
                 SubTotal = comboParlayDetailViewModel.SubTotalWinLost(group)
             };
             detailItem.Events.AddRange(group.Select(item =>
             {
-                ParlayEventModel eventModel = new ParlayEventModel
+                var eventModel = new ParlayEventModel
                 {
                     Event = GetEventsCombination(item.Events),
                     Odds = comboParlayDetailData.IsParlayBoost ? GetParlayBoost(item.Odds, item.MasterOdds, item.BoostRate) : item.MasterOdds,

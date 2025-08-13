@@ -13,18 +13,10 @@ namespace Alpha.BetLists.API.Services
         Task<ComboParlayDetailData> GetComboParlayDetail(long refNo, int custId);
     }
 
-    public class ParlayService : IParlayService
+    public class ParlayService(IReportDateService reportDateService, IDynamicRepository dynamicRepository) : IParlayService
     {
-        private readonly IReportDateService reportDateService;
-        private readonly IDynamicRepository dynamicRepository;
-
-        public ParlayService(
-            IReportDateService reportDateService,
-            IDynamicRepository dynamicRepository)
-        {
-            this.reportDateService = reportDateService;
-            this.dynamicRepository = dynamicRepository;
-        }
+        private readonly IReportDateService reportDateService = reportDateService;
+        private readonly IDynamicRepository dynamicRepository = dynamicRepository;
 
         public async Task<IEnumerable<TicketDto>> GetParlayBetList(long transId, long custId)
         {
@@ -41,9 +33,9 @@ namespace Alpha.BetLists.API.Services
                     reportDateService.GetBalanceUpDay(),
                     reportDateService.GetMoveBetsDay());
 
-            var comboParlayDetailTuple = await dynamicRepository.FetchMultipleAsync<ComboParlayDetail, MatchDetail>(criteria);
+            var (details, matchs) = await dynamicRepository.FetchMultipleAsync<ComboParlayDetail, MatchDetail>(criteria);
 
-            return new ComboParlayDetailData(comboParlayDetailTuple.Item1, comboParlayDetailTuple.Item2, criteria.Outstanding, criteria.IsParlayBoost);
+            return new ComboParlayDetailData(details, matchs, criteria.Outstanding, criteria.IsParlayBoost);
         }
     }
 }
