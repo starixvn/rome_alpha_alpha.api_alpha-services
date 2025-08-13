@@ -1,12 +1,5 @@
-FROM hub.nexdev.net/base/dotnet/core/sdk:9.0-alpine AS builder
+FROM hub.nexdev.net/base/dotnet/core/sdk:8.0 AS builder
 WORKDIR /src
-
-RUN apk add --no-cache bash curl && \
-    GLIBC_VER="2.35-r0" && \
-    curl -sSL -o /tmp/glibc.apk https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VER}/glibc-${GLIBC_VER}.apk && \
-    curl -sSL -o /tmp/glibc-bin.apk https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VER}/glibc-bin-${GLIBC_VER}.apk && \
-    apk add --no-cache /tmp/glibc.apk /tmp/glibc-bin.apk && \
-    rm -f /tmp/*.apk
 
 # Copy csproj and restore as distinct layers
 COPY ./src/BuildingBlocks/Common.Logging/Common.Logging.csproj ./BuildingBlocks/Common.Logging/Common.Logging.csproj
@@ -31,7 +24,7 @@ COPY /src/Services/Alpha.BetLists.API ./Services/Alpha.BetLists.API
 WORKDIR /src/Services/Alpha.BetLists.API
 RUN dotnet publish -r linux-x64 --self-contained false -o /app
 
-FROM hub.nexdev.net/base/dotnet/core/aspnet:9.0-alpine AS base
+FROM hub.nexdev.net/base/dotnet/core/aspnet:8.0-alpine AS base
 
 RUN adduser --disabled-password \
     --home /app \
