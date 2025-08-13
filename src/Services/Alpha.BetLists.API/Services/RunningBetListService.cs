@@ -29,6 +29,6 @@ public class RunningBetListService(IDynamicRepository dynamicRepository, IPartia
 
         var (tickets, details) = await dynamicRepository.FetchMultipleAsync<TicketDto, TicketData>(criteria);
 
-        return new BetListData(tickets, details.ToList<ITicketData>());
+        return new BetListData(tickets, [.. details]);
     }
 }

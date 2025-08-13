@@ -41,7 +41,7 @@ public class ProductDetailService(IDynamicRepository dynamicRepository, ICacheSe
                 validProductDetails.AddRange(group.Select(i => i));
             });
 
-        return validProductDetails.Any()
+        return validProductDetails.Count > 0
             ? BuildProductDetailsXML(validProductDetails)
             : string.Empty;
     }

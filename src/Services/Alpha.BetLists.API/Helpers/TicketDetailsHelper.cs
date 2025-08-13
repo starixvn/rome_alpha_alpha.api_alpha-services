@@ -45,7 +45,7 @@ namespace Alpha.BetLists.API.Helpers
             var lowerChoice = choice.ToLower(System.Globalization.CultureInfo.InvariantCulture);
 
             var entry = mapper.Values
-                .FirstOrDefault(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)));
+                .FirstOrDefault(e => lowerChoice.Contains(e.Key, StringComparison.CurrentCultureIgnoreCase));
 
             return entry.Equals(default(KeyValuePair<string, int>)) ? -1 : entry.Value;
         }
@@ -146,7 +146,7 @@ namespace Alpha.BetLists.API.Helpers
         {
             var lowerChoice = choice.ToLower(System.Globalization.CultureInfo.InvariantCulture);
             var entry = mapper.ParlayProducts
-                .FirstOrDefault(e => lowerChoice.Contains(e.Key.ToLower(System.Globalization.CultureInfo.InvariantCulture)));
+                .FirstOrDefault(e => lowerChoice.Contains(e.Key, StringComparison.CurrentCultureIgnoreCase));
 
             return entry.Equals(default(KeyValuePair<string, byte>)) ? (byte)0 : entry.Value;
         }
