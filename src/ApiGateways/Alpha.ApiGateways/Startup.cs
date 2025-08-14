@@ -66,10 +66,8 @@ public class Startup
                     return;
                 }
 
-                if (ex.Error is GrpcException)
+                if (ex.Error is GrpcException info)
                 {
-                    var info = ex.Error as GrpcException;
-
                     context.Response.StatusCode = info.Code;
                     context.Response.ContentType = Text.Plain;
                     await context.Response.WriteAsync(info.Detail);

@@ -32,8 +32,7 @@ namespace Alpha.BetLists.API.Tests.Grpc
             var winLossBetListService = Substitute.For<IWinLossBetListService>();
             var casinoDetailsService = Substitute.For<ICasinoDetailsService>();
             var parlayService = Substitute.For<IParlayService>();
-            var betBuilderService = Substitute.For<IBetBuilderService>();
-            var logger = Substitute.For<Fanex.Logging.ILogger>();
+            var betBuilderService = Substitute.For<IBetBuilderService>();           
 
             var appSettings = Substitute.For<IOptions<BetListsAppSettingsModel>>();
             appSettings.Value.Returns(new BetListsAppSettingsModel());
@@ -94,8 +93,8 @@ namespace Alpha.BetLists.API.Tests.Grpc
                 ipInfoService,
                 casinoDetailsService,
                 betBuilderService,
-                parlayService,
-                logger);
+                parlayService
+                );
         }
 
         [Fact]

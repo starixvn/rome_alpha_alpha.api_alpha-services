@@ -30,8 +30,7 @@ namespace Alpha.BetLists.API.Tests.Grpc
             var parlayService = Substitute.For<IParlayService>();
             builder = Substitute.For<IBetListHTMLBuilder>();
             var ticketHelper = Substitute.For<ITicketHelper>();
-            var betBuilderService = Substitute.For<IBetBuilderService>();
-            var logger = Substitute.For<Fanex.Logging.ILogger>();
+            var betBuilderService = Substitute.For<IBetBuilderService>();          
 
             var settings = Options.Create(new BetListsAppSettingsModel());
             var ticketDetailsMapper = Options.Create(new TicketDetailsMapperModel 
@@ -51,8 +50,8 @@ namespace Alpha.BetLists.API.Tests.Grpc
                 ipInfoService,
                 casinoDetailsService,
                 betBuilderService,
-                parlayService,
-                logger);
+                parlayService
+                );
         }
 
         [Fact]

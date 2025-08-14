@@ -194,25 +194,25 @@ public class ExtApiKeyServiceTests
     public void Constructor_WithValidParameters_InitializesCorrectly()
     {
         // Arrange & Act
-        var service = new ExtApiKeyService(mockDynamicRepository, mockCacheService);
+        var localService = new ExtApiKeyService(mockDynamicRepository, mockCacheService);
 
         // Assert
-        Assert.NotNull(service);
+        Assert.NotNull(localService);
     }
 
     [Fact]
     public void Constructor_WithNullDynamicRepository_DoesNotThrowException()
     {
         // Arrange & Act & Assert
-        var service = new ExtApiKeyService(null, mockCacheService);
-        Assert.NotNull(service);
+        var localService = new ExtApiKeyService(null, mockCacheService);
+        Assert.NotNull(localService);
     }
 
     [Fact]
     public void Constructor_WithNullCacheService_DoesNotThrowException()
     {
         // Arrange & Act & Assert
-        var service = new ExtApiKeyService(mockDynamicRepository, null);
-        Assert.NotNull(service);
+        var localService = new ExtApiKeyService(mockDynamicRepository, null);
+        Assert.NotNull(localService);
     }
 }

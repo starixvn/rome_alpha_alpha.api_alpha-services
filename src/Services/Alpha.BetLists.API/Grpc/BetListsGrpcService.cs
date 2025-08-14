@@ -4,7 +4,6 @@ using Alpha.BetLists.API.Services;
 using Alpha.IPInfo.Services;
 using Fanex.BetList.Core.Builder;
 using Fanex.BetList.Core.Entities;
-using Fanex.RemotingRef;
 using Microsoft.Extensions.Options;
 
 namespace GrpcBetLists;
@@ -20,7 +19,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     private readonly IWinLossBetListService winLossBetListService;
     private readonly IIPInfoService ipInfoService;
     private readonly ICasinoDetailsService casinoDetailsService;
-    private readonly Fanex.Logging.ILogger logger;
     private readonly IBetBuilderService betBuilderService;
     private readonly IParlayService parlayService;
 
@@ -36,8 +34,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         IIPInfoService ipInfoService,
         ICasinoDetailsService casinoDetailsService,
         IBetBuilderService betBuilderService,
-        IParlayService parlayService,
-        Fanex.Logging.ILogger logger)
+        IParlayService parlayService)
     {
         this.settings = settings.Value;
         this.ticketDetailsMapper = ticketDetailsMapper.Value;
@@ -50,7 +47,6 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         this.casinoDetailsService = casinoDetailsService;
         this.betBuilderService = betBuilderService;
         this.parlayService = parlayService;
-        this.logger = logger;
     }
 
     private static string GetCountry(string ip, IDictionary<string, string> countries)

@@ -6,7 +6,7 @@ public static class BelongingCheckHelper
 {
     public static bool ShouldSkipBelongingCheck<TRequest>(TRequest request)
     {
-        return request == null;
+        return EqualityComparer<TRequest>.Default.Equals(request, default(TRequest));
     }
 
     public static bool IsBaseRequestValid(IBaseRequest baseRequest)
