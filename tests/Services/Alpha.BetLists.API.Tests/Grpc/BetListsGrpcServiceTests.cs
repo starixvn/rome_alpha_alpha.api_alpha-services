@@ -24,7 +24,6 @@ public class BetListsGrpcServiceTests
     private readonly IBetListHTMLBuilder builder;
     private readonly ITicketHelper ticketHelper;
     private readonly IBetBuilderService betBuilderService;
-    private readonly Fanex.Logging.ILogger logger;
 
     public BetListsGrpcServiceTests()
     {
@@ -37,7 +36,7 @@ public class BetListsGrpcServiceTests
         builder = Substitute.For<IBetListHTMLBuilder>();
         ticketHelper = Substitute.For<ITicketHelper>();
         betBuilderService = Substitute.For<IBetBuilderService>();
-        logger = Substitute.For<Fanex.Logging.ILogger>();
+      
 
         var settings = Options.Create(new BetListsAppSettingsModel());
         var ticketDetailsMapper = Options.Create(new TicketDetailsMapperModel 
@@ -57,8 +56,8 @@ public class BetListsGrpcServiceTests
             ipInfoService,
             casinoDetailsService,
             betBuilderService,
-            parlayService,
-            logger);
+            parlayService
+            );
     }
 
     [Fact]
@@ -235,7 +234,7 @@ public class BetListsGrpcServiceTests
             ipInfoService,
             casinoDetailsService,
             betBuilderService,
-            parlayService,
-            logger));
+            parlayService
+            ));
     }
 }

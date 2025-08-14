@@ -41,8 +41,7 @@ namespace Alpha.BetLists.API.Tests.Grpc
             var winLossBetListService = Substitute.For<IWinLossBetListService>();
             var runningBetListService = Substitute.For<IRunningBetListService>();
             var betBuilderService = Substitute.For<IBetBuilderService>();
-            var parlayService = Substitute.For<IParlayService>();
-            var logger = Substitute.For<Fanex.Logging.ILogger>();
+            var parlayService = Substitute.For<IParlayService>();         
 
             // Setup default mock returns to prevent null reference exceptions
             var emptyPagedData = new PagedData<TicketDto>(new List<TicketDto>(), 1, 10, 0);
@@ -60,8 +59,8 @@ namespace Alpha.BetLists.API.Tests.Grpc
                 ipInfoService,
                 casinoDetailsService,
                 betBuilderService,
-                parlayService,
-                logger);
+                parlayService
+                );
         }
 
         [Fact]

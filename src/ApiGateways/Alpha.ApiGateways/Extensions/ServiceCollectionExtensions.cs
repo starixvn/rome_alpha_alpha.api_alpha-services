@@ -48,7 +48,7 @@ public static class ServiceCollectionExtensions
         {
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "Alpha API Gateways", Version = "v1" });
             options.CustomSchemaIds(type => type.FullName);
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlFilename = $"{typeof(ServiceCollectionExtensions).Assembly.GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 

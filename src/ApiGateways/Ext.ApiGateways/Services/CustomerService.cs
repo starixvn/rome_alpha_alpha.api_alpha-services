@@ -12,12 +12,10 @@ public interface ICustomerService
 public class CustomerService : ICustomerService
 {
     private readonly Customer.CustomerClient customerClient;
-    private readonly ILogger<Customer.CustomerClient> logger;
 
-    public CustomerService(Customer.CustomerClient customerClient, ILogger<Customer.CustomerClient> logger)
+    public CustomerService(Customer.CustomerClient customerClient)
     {
         this.customerClient = customerClient;
-        this.logger = logger;
     }
 
     public async Task<CustomerInfoModel> GetCustomerInfo(int custId, string downlineUsername)
