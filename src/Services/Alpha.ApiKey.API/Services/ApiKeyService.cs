@@ -67,12 +67,12 @@ public class ApiKeyService : IApiKeyService
 
         if (passPhraseInvalid)
         {
-            return new VerifyApiKeyResult(false, "Pass phrase is invalid: " + passPhrase + " vs " + apiKey.PassPhrase);
+            return new VerifyApiKeyResult(false, "Pass phrase is invalid: " + passPhrase);
         }
 
         if (signatureInvalid)
         {
-            return new VerifyApiKeyResult(false, "Signature is invalid: " + signature + " vs " + Convert.ToBase64String(signatureValue));
+            return new VerifyApiKeyResult(false, "Signature is invalid: " + signature);
         }
 
         return new VerifyApiKeyResult(true) { CustId = apiKey.CustId, RoleId = apiKey.RoleId, Scopes = apiKey.ScopeIdList };
