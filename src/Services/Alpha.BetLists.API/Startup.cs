@@ -1,6 +1,6 @@
 using Alpha.BetLists.API.Extensions;
 using Alpha.BetLists.API.Services;
-using FanexLibs.Data;
+using Fanex.Data.SqlServer;
 using FanexLibs.Logging;
 using Microsoft.OpenApi.Models;
 using Alpha.PartialUM;
@@ -37,9 +37,10 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         services
-           .AddFanexData(Configuration)
+           .AddFanexSql(Configuration)
            .AddFanexLogging(Configuration)
            .AddFanexCachingMemory()
+           .AddSingleton<IDynamicRepository, DynamicRepository>()
            .ConfigurePartialUMServices(Configuration);
 
         services.AddGrpc(options =>
