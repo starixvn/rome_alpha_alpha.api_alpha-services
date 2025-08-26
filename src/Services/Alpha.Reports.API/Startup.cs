@@ -1,7 +1,7 @@
 using Alpha.ApiKey.API.Models;
 using Alpha.Reports.API.Extensions;
 using Alpha.Reports.API.Services;
-using FanexLibs.Data;
+using Fanex.Data.SqlServer;
 using FanexLibs.Logging;
 using GrpcReports;
 using Microsoft.OpenApi.Models;
@@ -29,9 +29,10 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
-           .AddFanexData(Configuration)
+           .AddFanexSql(Configuration)
            .AddFanexLogging(Configuration)
            .AddFanexCachingMemory()
+           .AddSingleton<IDynamicRepository, DynamicRepository>()
            .ConfigurePartialUMServices(Configuration);
 
         services.AddGrpc(options =>

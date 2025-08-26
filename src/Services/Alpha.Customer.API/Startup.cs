@@ -1,6 +1,7 @@
 using Alpha.Customer.API.Extensions;
 using Alpha.Utilities.Interceptors;
-using FanexLibs.Data;
+using Fanex.Data.Repository;
+using Fanex.Data.SqlServer;
 using FanexLibs.Logging;
 using GrpcCustomer;
 using Microsoft.OpenApi.Models;
@@ -19,9 +20,10 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
-            .AddFanexData(Configuration)
+            .AddFanexSql(Configuration)
             .AddFanexLogging(Configuration)
             .AddFanexCachingMemory()
+            .AddSingleton<IDynamicRepository, DynamicRepository>()
             .AddCustomerServices(Configuration);
 
         services.AddGrpc(options =>

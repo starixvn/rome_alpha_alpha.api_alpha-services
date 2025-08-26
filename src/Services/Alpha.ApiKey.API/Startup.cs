@@ -2,7 +2,8 @@ using Alpha.ApiKey.API.Models;
 using Alpha.ApiKey.API.Services;
 using Alpha.Utilities.Interceptors;
 using Fanex.Caching;
-using FanexLibs.Data;
+using Fanex.Data.Repository;
+using Fanex.Data.SqlServer;
 using FanexLibs.Logging;
 using GrpcApiKey;
 using GrpcExtApiKey;
@@ -23,10 +24,10 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.Configure<APIKeyAppSettings>(Configuration.GetSection("APIKeyAppSettings"));
-
         services
-            .AddFanexData(Configuration)
             .AddFanexLogging(Configuration)
+            .AddFanexSql(Configuration)
+            .AddSingleton<IDynamicRepository, DynamicRepository>()
             .AddSingleton<ICacheService, CacheService>()
             .AddTransient<IApiKeyService, ApiKeyService>()
             .AddTransient<IExtApiKeyService, ExtApiKeyService>();
