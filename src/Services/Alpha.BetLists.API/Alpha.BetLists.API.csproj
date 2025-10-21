@@ -32,7 +32,7 @@
     </PackageReference>
   <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Fanex.BetDetails.BetBuilder" Version="1.0.0.2" />
-    <PackageReference Include="Fanex.BetList.Core" Version="3.0.5.7" />
+    <PackageReference Include="Fanex.BetList.Core" Version="3.0.5.9" />
     <PackageReference Include="Fanex.BetList.Core.RemotingRef" Version="2.0.0.3" />
     <PackageReference Include="Fanex.BetList.AdvantPlay" Version="2.0.0.2" />
     <PackageReference Include="Fanex.BetList.AdvantPlayMini" Version="2.0.0" />
@@ -71,9 +71,9 @@
     <PackageReference Include="Fanex.BetList.PP" Version="2.0.0.4" />
     <PackageReference Include="Fanex.BetList.PragmaticLiveCasino" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.RnGCasino" Version="2.0.0.2" />
-    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.0.9.3" />
+    <PackageReference Include="Fanex.BetList.RNGCore" Version="1.1.0" />
     <PackageReference Include="Fanex.BetList.RNGWar" Version="2.0.0.1" />
-    <PackageReference Include="Fanex.BetList.SabaClub" Version="2.0.0.4" />
+    <PackageReference Include="Fanex.BetList.SabaClub" Version="2.0.0.5" />
     <PackageReference Include="Fanex.BetList.SAGaming" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SealEntertainment" Version="2.0.0.1" />
     <PackageReference Include="Fanex.BetList.SexyGaming" Version="2.0.0.6" />
