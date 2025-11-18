@@ -4,6 +4,7 @@ using Alpha.BetLists.API.Services;
 using Alpha.IPInfo.Services;
 using Fanex.BetDetails.BetBuilder.Services;
 using Fanex.BetList.Core.Builder;
+using Fanex.BetList.Core.Builder.HybridParlayBuilder;
 using Fanex.BetList.Core.Entities;
 using Microsoft.Extensions.Options;
 
@@ -15,12 +16,12 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
     private readonly TicketDetailsMapperModel ticketDetailsMapper;
     private readonly IProductService productService;
     private readonly IBetListHTMLBuilder builder;
+    private readonly IHybridParlayBuilder hybridParlayBuilder;
     private readonly ITicketHelper ticketHelper;
     private readonly IRunningBetListService runningBetListService;
     private readonly IWinLossBetListService winLossBetListService;
     private readonly IIPInfoService ipInfoService;
     private readonly ICasinoDetailsService casinoDetailsService;
-    private readonly Fanex.Logging.ILogger logger;
     private readonly IBetBuilderService betBuilderService;
     private readonly IParlayService parlayService;
 
@@ -29,14 +30,14 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         IOptions<TicketDetailsMapperModel> ticketDetailsMapper,
         IProductService productService,
         IBetListHTMLBuilder builder,
+        IHybridParlayBuilder hybridParlayBuilder,
         ITicketHelper ticketHelper,
         IRunningBetListService runningBetListService,
         IWinLossBetListService winLossBetListService,
         IIPInfoService ipInfoService,
         ICasinoDetailsService casinoDetailsService,
         IBetBuilderService betBuilderService,
-        IParlayService parlayService,
-        Fanex.Logging.ILogger logger)
+        IParlayService parlayService)
     {
         this.settings = settings.Value;
         this.ticketDetailsMapper = ticketDetailsMapper.Value;
@@ -49,8 +50,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
         this.casinoDetailsService = casinoDetailsService;
         this.betBuilderService = betBuilderService;
         this.parlayService = parlayService;
-
-        this.logger = logger;
+        this.hybridParlayBuilder = hybridParlayBuilder;
     }
 
     private static string GetCountry(string ip, IDictionary<string, string> countries)
