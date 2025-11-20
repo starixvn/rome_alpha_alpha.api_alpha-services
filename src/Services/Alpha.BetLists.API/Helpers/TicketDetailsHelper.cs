@@ -45,10 +45,9 @@ namespace Alpha.BetLists.API.Helpers
         private static int GetProductIdByChoice(string choice, TicketDetailsMapperModel mapper)
         {
             var lowerChoice = choice.ToLowerInvariant();
-
-            var productId = mapper.Values.Where(entry => lowerChoice.Contains(entry.Key.ToLowerInvariant())).Select(entry => entry.Value);
+            var entry = mapper.Values.FirstOrDefault(entry => lowerChoice.Contains(entry.Key.ToLowerInvariant()));
             
-            return productId.Any() ? productId.FirstOrDefault() : -1;
+            return entry.Key != null ? entry.Value : -1;
         }
 
         public static bool CheckProductIdIsAllowed(this TicketDetailsMapperModel mapper, int productId)
@@ -89,21 +88,8 @@ namespace Alpha.BetLists.API.Helpers
             return AesService.Encrypt(key);
         }
 
-        public static void GetExtraInfo(this object model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+        private static void SetExtraInfo(ExtraInfoModel extraInfo, object model)
         {
-            var productId = GetProductIdByChoice(choice, mapper);
-            if (productId == -1)
-            {
-                return;
-            }
-
-            var extraInfo = new ExtraInfoModel
-            {
-                RefNo = t.TransId.ToString(),
-                TransType = int.Parse(t.GetTransactionType()),
-                ProductId = productId
-            };
-
             switch (model)
             {
                 case SuperViewRunningBetTicketModel ticket:
@@ -122,9 +108,45 @@ namespace Alpha.BetLists.API.Helpers
                     ticket.ExtraInfo = extraInfo;
                     break;
                 default:
-                    break;
+                    return;
             }
         }
+
+        private static void GetExtraInfoInternal(object model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+        {
+            var productId = GetProductIdByChoice(choice, mapper);
+            if (productId == -1)
+            {
+                return;
+            }
+
+            var extraInfo = new ExtraInfoModel
+            {
+                RefNo = t.TransId.ToString(),
+                TransType = int.Parse(t.GetTransactionType()),
+                ProductId = productId
+            };
+
+            SetExtraInfo(extraInfo, model);
+        }
+
+        public static void GetExtraInfo(this SuperViewRunningBetTicketModel model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+            => GetExtraInfoInternal(model, choice, t, mapper);
+
+        public static void GetExtraInfo(this MasterViewRunningBetTicketModel model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+            => GetExtraInfoInternal(model, choice, t, mapper);
+
+        public static void GetExtraInfo(this AgentViewRunningBetTicketModel model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+            => GetExtraInfoInternal(model, choice, t, mapper);
+
+        public static void GetExtraInfo(this SuperViewWinLossBetTicketModel model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+            => GetExtraInfoInternal(model, choice, t, mapper);
+
+        public static void GetExtraInfo(this MasterViewWinLossBetTicketModel model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+            => GetExtraInfoInternal(model, choice, t, mapper);
+
+        public static void GetExtraInfo(this AgentViewWinLossBetTicketModel model, string choice, TicketDto t, TicketDetailsMapperModel mapper)
+            => GetExtraInfoInternal(model, choice, t, mapper);
 
         public static byte GetParlayProductId(string choice, TicketDetailsMapperModel mapper)
         {
@@ -191,7 +213,7 @@ namespace Alpha.BetLists.API.Helpers
             return sb;
         }
 
-        public static async Task<StringBuilder> GetMixParlaySelections(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
+        public static async Task<string> GetMixParlaySelections(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
         {
             var tickets = await parlayService.GetParlayBetList(t.TransId, t.CustId);
             var message = new ParlayMeta
@@ -225,7 +247,7 @@ namespace Alpha.BetLists.API.Helpers
                     }
                 }
             }
-            return sb;
+            return sb.ToString();
         }
 
         public static async Task<string> GetBetBuilderPlusSelections(TicketDto t, IParlayService parlayService,ITicketHelper ticketHelper, IHybridParlayBuilder hybridParlayBuilder)
@@ -236,7 +258,7 @@ namespace Alpha.BetLists.API.Helpers
                 return string.Empty;
             }
 
-            var ticketHasStake = tickets.FirstOrDefault(t => t.Stake > 0);
+            var ticketHasStake = tickets.FirstOrDefault(t => t.Stake > 0) ?? tickets.First();
             var hybridParlay = hybridParlayBuilder.Build(
                 ticketHelper, 
                 tickets.Select(t => t as ITicket).ToList(), 
@@ -248,7 +270,7 @@ namespace Alpha.BetLists.API.Helpers
                 ticketHasStake.Currency, ticketHasStake.Stake,
                 false);
             
-            return hybridParlay;
+            return hybridParlay.Replace("\"", "'");
         }
 
         public static async Task<StringBuilder> GetMixParlayDetail(TicketDto t, IParlayService parlayService, ITicketHelper ticketHelper, IBetListHTMLBuilder builder)
@@ -272,18 +294,17 @@ namespace Alpha.BetLists.API.Helpers
                     sb.Append($"{unitStakeByOfferNames.Key} x <span class='unit-stake'>{unitStakeByOfferNames.Value}</span>");
                     sb.Append("</div>");
                     sb.Append("<div class='line'></div>");
+                    var selectionList = new List<string>();
                     foreach (var ticket in parlayDetail.BetListData.Tickets)
                     {
-                        sb.Append("<div class='ticket-list'>");
-                        sb.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
-                        sb.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
-                        sb.Append("</div>");
-                        var isLastTicket = ticket.Equals(parlayDetail.BetListData.Tickets.Last());
-                        if (!isLastTicket)
-                        {
-                            sb.Append("<div class='line'></div>");
-                        }
+                        var selection = new StringBuilder();
+                        selection.Append("<div class='ticket-list'>");
+                        selection.Append($"{builder.BuildChoice(ticket, ticketHelper, null, false).Replace("\"", "'")}");
+                        selection.Append($"{builder.BuildTransEventDateAndStatusResult(ticket, null).Replace("\"", "'")}");
+                        selection.Append("</div>");
+                        selectionList.Add(selection.ToString());
                     }
+                    sb.Append(string.Join("<div class='line'></div>", selectionList));
                 }
             }
             return sb;

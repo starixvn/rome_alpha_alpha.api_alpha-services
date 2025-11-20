@@ -32,7 +32,7 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
                 response.Selections = TicketDetailsHelper.GetSingleParlaySelections(detailKeyModel.ticket, betBuilderService).ToString();
                 break;
             case TicketDetailsHelper.MixParlay:
-                response.Selections = TicketDetailsHelper.GetMixParlaySelections(detailKeyModel.ticket, parlayService, ticketHelper, builder).ToString();
+                response.Selections = await TicketDetailsHelper.GetMixParlaySelections(detailKeyModel.ticket, parlayService, ticketHelper, builder);
                 break;
             case TicketDetailsHelper.BetBuilderPlus:
                 response.Selections = await TicketDetailsHelper.GetBetBuilderPlusSelections(detailKeyModel.ticket, parlayService, ticketHelper, hybridParlayBuilder);
