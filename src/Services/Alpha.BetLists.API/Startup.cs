@@ -28,6 +28,7 @@ using Fanex.BetDetails.BetBuilder.DataAccesses;
 using Alpha.BetLists.API.Models.TicketDetail;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Fanex.BetList.Core.Builder.HybridParlayBuilder;
 
 namespace Alpha.BetLists.API;
 
@@ -154,6 +155,7 @@ public class Startup
         services.AddTransient<ITicketHelper, TicketHelper>();
         services.AddTransient<IBetListFactory<BetListHTMLBuilder>, BetListHTMLFactory>();
         services.AddTransient<IBetListHTMLBuilder>((s) => s.GetService<IBetListFactory<BetListHTMLBuilder>>().CreateBuilder());
+        services.AddTransient<IHybridParlayBuilder, HyBridParlayBuilder>();
         RefDataTypeContainer
             .ConnectTo(new Uri(Configuration.GetSection("BetListsAppSettings").Get<BetListsAppSettingsModel>().RemoteRefURL))
             .FromApplication("Alpha.Reports.Site");

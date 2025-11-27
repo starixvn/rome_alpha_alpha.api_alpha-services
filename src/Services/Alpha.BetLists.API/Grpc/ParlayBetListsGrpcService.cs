@@ -10,20 +10,20 @@ namespace GrpcBetLists;
 
 public partial class BetListsGrpcService : BetLists.BetListsBase
 {
-    public override Task<ParlaySelectionsResponse> ParlaySelections(GetParlaySelectionsRequest request, ServerCallContext context)
+    public override async Task<ParlaySelectionsResponse> ParlaySelections(GetParlaySelectionsRequest request, ServerCallContext context)
     {
         var response = new ParlaySelectionsResponse();
         var key = AesService.Decrypt(request.DetailKey);
 
         if (string.IsNullOrEmpty(key))
         {
-            return Task.FromResult(response);
+            return response;
         }
 
         var detailKeyModel = JsonConvert.DeserializeObject<DetailKeyModel<TicketDto>>(key);
         if (request.RefNo != detailKeyModel.RefNo)
         {
-            return Task.FromResult(response);
+            return response;
         }
 
         switch (detailKeyModel.ParlayProductId)
@@ -32,13 +32,16 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
                 response.Selections = TicketDetailsHelper.GetSingleParlaySelections(detailKeyModel.ticket, betBuilderService).ToString();
                 break;
             case TicketDetailsHelper.MixParlay:
-                response.Selections = TicketDetailsHelper.GetMixParlaySelections(detailKeyModel.ticket, parlayService, ticketHelper, builder).ToString();
+                response.Selections = await TicketDetailsHelper.GetMixParlaySelections(detailKeyModel.ticket, parlayService, ticketHelper, builder);
+                break;
+            case TicketDetailsHelper.BetBuilderPlus:
+                response.Selections = await TicketDetailsHelper.GetBetBuilderPlusSelections(detailKeyModel.ticket, parlayService, ticketHelper, hybridParlayBuilder);
                 break;
             default:
                 response.Selections = string.Empty;
                 break;
         }
-        return Task.FromResult(response);
+        return response;
 
     }
 
@@ -97,7 +100,9 @@ public partial class BetListsGrpcService : BetLists.BetListsBase
 
     private string GetParlayBoost(string originalOdds, string boostOdds, string boostRate)
     {
-        return $"<span class='underdog strikethrough'>{originalOdds}</span><br/><span class='oddstype'><span class='underdog'>{boostOdds}</span><br/><span class='boostrate'><span class='icon-boost'></span>{boostRate}</span></span>";
+        return $"<span class='underdog strikethrough'>{originalOdds}</span><br/>" +
+               $"<span class='oddstype'><span class='underdog'>{boostOdds}</span><br/>" +
+               $"<span class='boostrate'><span class='icon-boost'></span>{boostRate}</span></span>";
     }
 
     private string GetEventsCombination(List<string> events)
